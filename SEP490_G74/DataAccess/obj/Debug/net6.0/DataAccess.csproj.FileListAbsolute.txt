@@ -1,0 +1,12 @@
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.dll
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.dll
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
