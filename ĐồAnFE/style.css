@@ -22,61 +22,6 @@ body {
     background-color: #DEDEDE !important;
 }
 
-#header {
-    background-color: #A2A2A2;
-}
-
-.text-stanfor-header {
-    position: absolute;
-    width: 61px;
-    height: 31px;
-    left: 12px;
-    top: 11px;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 29px;
-
-    color: #000000;
-
-    mix-blend-mode: normal;
-
-    border-right: 1px solid #0f0e0e;
-    margin: 0px;
-
-}
-
-.text-header-fullname {
-    /* HealthCheck System */
-    position: absolute;
-    width: 157px;
-    height: 24px;
-    left: 80px;
-    top: 14px;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 24px;
-    /* identical to box height, or 150% */
-    text-align: center;
-    color: #000000;
-
-
-}
-
-#body-content {
-    background-color: #DEDEDE;
-    height: 100vh;
-}
-
-.container .row {
-    width: 100%;
-    height: 53px
-}
 
 
 

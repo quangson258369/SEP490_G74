@@ -1,0 +1,24 @@
+.sidebar {
+    height: 100vh;
+}
+
+.col-sm-auto {
+    height: 100vh;
+}
+
+.nav-item-sidebar {
+    margin: 10px;
+    padding: 24px;
+    background: #D9D9D9;
+    border-radius: 20px;
+    width: 117px;
+    height: 113px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.nav-item-sidebar p{
+    font-size: small;
+}

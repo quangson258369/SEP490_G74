@@ -7,7 +7,9 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" type="text/css" href="/StyleInsidePagee.css">
+    <link rel="stylesheet" type="text/css" href="/HeaderStyle.css">
+    <link rel="stylesheet" type="text/css" href="/HomeStyle.css">
+    <link rel="stylesheet" type="text/css" href="/Sidebar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -22,52 +24,29 @@
         crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-color: #DEDEDE;">
     <div id="main">
         <div id="header">          
         </div>
         <div id="body-content">
-            <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 6.5rem;">
-                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link  py-3 border-bottom" aria-current="page" title=""
-                            data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="51" height="42" viewBox="0 0 51 42"
-                                fill="none">
-                                <path
-                                    d="M50.9866 20.959C50.9866 22.4355 49.6584 23.5922 48.1531 23.5922H45.3195L45.3815 36.7336C45.3815 36.9551 45.3638 37.1766 45.3372 37.398V38.7188C45.3372 40.5316 43.7522 42 41.7952 42H40.3784C40.281 42 40.1836 42 40.0862 41.9918C39.9623 42 39.8383 42 39.7143 42H36.8365H34.7113C32.7543 42 31.1693 40.5316 31.1693 38.7188V36.75V31.5C31.1693 30.048 29.9031 28.875 28.3357 28.875H22.6686C21.1013 28.875 19.835 30.048 19.835 31.5V36.75V38.7188C19.835 40.5316 18.25 42 16.2931 42H14.1679H11.3432C11.2103 42 11.0775 41.9918 10.9447 41.9836C10.8384 41.9918 10.7322 42 10.6259 42H9.20912C7.25218 42 5.66715 40.5316 5.66715 38.7188V29.5312C5.66715 29.4574 5.66715 29.3754 5.676 29.3016V23.5922H2.83357C1.23969 23.5922 0 22.4438 0 20.959C0 20.2207 0.265648 19.5645 0.885492 18.9902L23.5895 0.65625C24.2094 0.0820312 24.9177 0 25.5376 0C26.1574 0 26.8658 0.164062 27.3971 0.574219L50.0126 18.9902C50.721 19.5645 51.0752 20.2207 50.9866 20.959Z"
-                                    fill="#B3B2B2" />
-                            </svg> </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip"
-                            data-bs-placement="right" data-bs-original-title="Dashboard">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="47" viewBox="0 0 40 47"
-                                fill="none">
-                                <g clip-path="url(#clip0_7_1435)">
-                                    <path
-                                        d="M20 0C15.6458 0 11.9375 2.45098 10.5729 5.875H6.66667C2.98958 5.875 0 8.50957 0 11.75V41.125C0 44.3654 2.98958 47 6.66667 47H33.3333C37.0104 47 40 44.3654 40 41.125V11.75C40 8.50957 37.0104 5.875 33.3333 5.875H29.4271C28.0625 2.45098 24.3542 0 20 0ZM20 5.875C20.8841 5.875 21.7319 6.18449 22.357 6.73537C22.9821 7.28626 23.3333 8.03343 23.3333 8.8125C23.3333 9.59157 22.9821 10.3387 22.357 10.8896C21.7319 11.4405 20.8841 11.75 20 11.75C19.1159 11.75 18.2681 11.4405 17.643 10.8896C17.0179 10.3387 16.6667 9.59157 16.6667 8.8125C16.6667 8.03343 17.0179 7.28626 17.643 6.73537C18.2681 6.18449 19.1159 5.875 20 5.875ZM11.6667 17.625H28.3333C29.25 17.625 30 18.2859 30 19.0938C30 19.9016 29.25 20.5625 28.3333 20.5625H11.6667C10.75 20.5625 10 19.9016 10 19.0938C10 18.2859 10.75 17.625 11.6667 17.625Z"
-                                        fill="#B3B2B2" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_7_1435">
-                                        <rect width="40" height="47" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </a>
-                    </li>
-
-                </ul>
-
+            <div class="container-fluid">
+                <div class="row">
+                   <div class="sidebar"></div>
+                    <div class="col-sm p-3 min-vh-100">
+                        <!-- content -->
+                        <h2>A glorious Bootstrap 5 icon sidebar menu!</h2>
+                        <hr />
+                        <h3>More content...</h3>
+                        <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch. Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid tote bag. Tote bag cronut semiotics, raw denim deep v taxidermy messenger bag. Tofu YOLO Etsy, direct trade ethical Odd Future jean shorts paleo. Forage Shoreditch tousled aesthetic irony, street art organic Bushwick artisan cliche semiotics ugh synth chillwave meditation. Shabby chic lomo plaid vinyl chambray Vice. Vice sustainable cardigan, Williamsburg master cleanse hella DIY 90's blog.</p>
+                        <p>Ethical Kickstarter PBR asymmetrical lo-fi. Dreamcatcher street art Carles, stumptown gluten-free Kickstarter artisan Wes Anderson wolf pug. Godard sustainable you probably haven't heard of them, vegan farm-to-table Williamsburg slow-carb readymade disrupt deep v. Meggings seitan Wes Anderson semiotics, cliche American Apparel whatever. Helvetica cray plaid, vegan brunch Banksy leggings +1 direct trade. Wayfarers codeply PBR selfies. Banh mi McSweeney's Shoreditch selfies, forage fingerstache food truck occupy YOLO Pitchfork fixie iPhone fanny pack art party Portland.</p>
+                        <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch. Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid tote bag. Tote bag cronut semiotics, raw denim deep v taxidermy messenger bag. Tofu YOLO Etsy, direct trade ethical Odd Future jean shorts paleo. Forage Shoreditch tousled aesthetic irony, street art organic Bushwick artisan cliche semiotics ugh synth chillwave meditation. Shabby chic lomo plaid vinyl chambray Vice. Vice sustainable cardigan, Williamsburg master cleanse hella DIY 90's blog.</p>
+                    </div>
+                </div>
             </div>
 
         </div>
-
-
     </div>
-
-
 </body>
 <script type="text/javascript" src="/HeaderScript.js"></script>
+<script type="text/javascript" src="/Sidebar.js"></script>
 </html>
