@@ -27,24 +27,24 @@
     <div id="main">
        <div id="header"></div>
         <div id="body-content">
-            <h2 class="body-content-header">Thông Tin Cá Nhân</h2>
+            <h2 class="body-content-header">Sửa Thông Tin Cá Nhân</h2>
             <form class=" form-profile">
                 <div class="col-md-12 form-group">
                     <div class="col-md-3 content-right">
                         <div id="image-container">
-                            <img src="/asset/img/default.png" id="uploaded-image" alt="Default Image">
-                            <input type="file" id="image-input" accept="image/*" onchange="displayImage()">
+                            <img src="/asset/img/default.png" class="rounded-circle" id="uploaded-image" alt="Default Image">
+                            <input type="file" name="img" id="image-input" accept="image/*" onchange="displayImage()">
                         </div>
                     </div>
                     <div class="col-md-9 content-left">
                         <div class="line1 row">
                             <div class="col-md-5 form-group">
                                 <label class="title-fullname">Họ và tên</label>
-                                <input type="text" class="fullname form-control" name="fullname" readonly />
+                                <input type="text" class="fullname form-control" name="fullname"  />
                             </div>
                             <div class="col-md-4 form-group">
                                 <label class="title-fullname">Ngày sinh</label>
-                                <input type="text" class="dob form-control" name="fullname" readonly />
+                                <input type="text" class="dob form-control" name="fullname"  />
                             </div>
 
                             <div class="col-md-3 form-group">
@@ -67,16 +67,16 @@
                         </div>
                         <div class="col-md-12 line2 row">
                             <label class="title-address">Quê quán</label>
-                            <input type="text" class="address form-control" name="address" readonly />
+                            <input type="text" class="address form-control" name="address"  />
                         </div>
                         <div class="col-md-12 line3 row">
                             <div class="col-md-6 form-group-phone">
                                 <label class="title-phone">Số điện thoại</label>
-                                <input type="text" class="phone form-control" name="address" readonly />
+                                <input type="text" class="phone form-control" name="address"  />
                             </div>
                             <div class="col-md-6 form-group-email">
                                 <label class="title-email">Email</label>
-                                <input type="text" class="email form-control" name="address" readonly />
+                                <input type="text" class="email form-control" name="address"  />
                             </div>
 
 
@@ -91,10 +91,7 @@
                     </div>
                     <div class="line5 row">
                         <div class="col-md-6">
-                            <button class="btn-change-password">Đổi mật khẩu</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn-change-profile">Chỉnh sửa</button>
+                            <button class="btn-change-profile">Lưu Chỉnh Sửa</button>
                         </div>
                         
                     </div>
