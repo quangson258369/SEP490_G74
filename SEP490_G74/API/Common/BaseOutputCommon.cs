@@ -1,4 +1,4 @@
-﻿namespace HcsBE.Common
+﻿namespace API.Common
 {
     public class BaseOutputCommon
     {

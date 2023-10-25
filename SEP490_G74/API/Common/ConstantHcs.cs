@@ -1,4 +1,4 @@
-﻿namespace HcsBE.Common
+﻿namespace API.Common
 {
     public class ConstantHcs
     {
@@ -10,5 +10,8 @@
 
         // Exception status
         public const int ExceptionStatus = 2;
+
+        // Login Failed
+        public const string LoginFailedMessage = "User Not Found";
     }
 }

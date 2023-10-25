@@ -1,5 +1,5 @@
-﻿using HcsBE.Bussiness.Login;
-using HcsBE.Common;
+﻿using API.Common;
+using HcsBE.Bussiness.Login;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Login

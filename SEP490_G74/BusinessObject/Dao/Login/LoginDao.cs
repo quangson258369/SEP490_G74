@@ -1,4 +1,5 @@
-﻿using HcsBE.Common;
+﻿using API.Common;
+using API.Common.Entity;
 
 namespace HcsBE.Dao.Login
 {
@@ -8,8 +9,22 @@ namespace HcsBE.Dao.Login
         {
             try
             {
-                //var loginDao = this.DbContext;
+                var dbContext = new ApplicationDbContext();
                 var output = new LoginDaoOutputDto();
+
+                var loginDao = dbContext.Users.Where(
+                    record => record.UserId.Equals(inputDto.Username)
+                        && record.Password.Equals(inputDto.Password)
+                    );
+                if (loginDao == null) 
+                {
+                    return new LoginDaoOutputDto()
+                    {
+                        ExceptionMessage = ConstantHcs.LoginFailedMessage,
+                        ResultCd = ConstantHcs.ExceptionStatus
+                    };
+                }
+                output.Token = loginDao.ToList().First().UserId.ToString();
 
                 return output;
             }

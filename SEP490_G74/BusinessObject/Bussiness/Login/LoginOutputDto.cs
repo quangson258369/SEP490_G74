@@ -1,4 +1,4 @@
-﻿using HcsBE.Common;
+﻿using API.Common;
 
 namespace HcsBE.Bussiness.Login
 {
