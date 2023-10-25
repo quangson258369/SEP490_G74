@@ -5,13 +5,13 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{8CCB7D43-E59A-448D-AF77-52C898EE5B65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCLient", "WebCLient\WebCLient.csproj", "{97C3D011-BAFB-4DC2-ADF7-F864FB351D4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCLient", "WebCLient\WebCLient.csproj", "{97C3D011-BAFB-4DC2-ADF7-F864FB351D4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{6912B737-7246-434D-A984-47C31CE16CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{6912B737-7246-434D-A984-47C31CE16CC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{5B893165-C1EA-483B-B3CB-1EE4969BD096}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{5B893165-C1EA-483B-B3CB-1EE4969BD096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{B1442A41-BA7A-4FE6-951F-C5E71248A281}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HcsBE", "BusinessObject\HcsBE.csproj", "{B1442A41-BA7A-4FE6-951F-C5E71248A281}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
