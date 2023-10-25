@@ -46,7 +46,7 @@
                             <div class="header-container">
                                 <h2 class="header-text">Quản lí nhân sự</h2>
                             </div>
-                            <h4 class="body-content-header">Thêm Nhân Viên</h4>
+                            <h4 class="body-content-header">Thông Tin Nhân Viên</h4>
                             <form class=" form-profile">
                                 <div class="col-md-12 form-group">
                                     <div class="col-md-3 content-right">
@@ -72,7 +72,7 @@
                                                 <input type="text"
                                                     class="fullname
                                                     form-control"
-                                                    name="fullname"
+                                                    name="fullname" readonly
                                                     />
                                             </div>
                                             <div class="col-md-4
@@ -83,7 +83,7 @@
                                                 <input type="text"
                                                     class="dob
                                                     form-control"
-                                                    name="fullname"
+                                                    name="fullname" readonly
                                                     />
                                             </div>
 
@@ -100,7 +100,7 @@
                                                             class="form-check-input"
                                                             type="radio"
                                                             name="gender"
-                                                            id="male"
+                                                            id="male" 
                                                             value="male">
                                                         <label
                                                             class="form-check-label"
@@ -114,7 +114,7 @@
                                                             class="form-check-input"
                                                             type="radio"
                                                             name="gender"
-                                                            id="female"
+                                                            id="female" 
                                                             value="female">
                                                         <label
                                                             class="form-check-label"
@@ -131,7 +131,7 @@
                                             <input type="text"
                                                 class="address
                                                 form-control"
-                                                name="address"
+                                                name="address" readonly
                                                 />
                                         </div>
                                         <div class="col-md-12 line3
@@ -144,7 +144,7 @@
                                                 <input type="text"
                                                     class="phone
                                                     form-control"
-                                                    name="address"
+                                                    name="address" readonly
                                                     />
                                             </div>
                                             <div class="col-md-6
@@ -154,7 +154,7 @@
                                                 <input type="text"
                                                     class="email
                                                     form-control"
-                                                    name="address"
+                                                    name="address" readonly
                                                     />
                                             </div>
 
@@ -164,11 +164,12 @@
                                             <div class=" col-md-6
                                                 form-group-phone">
                                                 <label
-                                                    class="title-role">Vị Trí Công Việc</label>
+                                                    class="title-role">Vai
+                                                    trò</label>
                                                 <input type="text"
                                                     class="role
                                                     form-control"
-                                                    name="role"
+                                                    name="role" readonly
                                                     />
                                             </div>
                                             <div class="col-md-6
@@ -184,10 +185,13 @@
                                         </div>
                                     </div>
                                     <div class="line5 row">
-                                        <div>
-                                            <button
-                                                class="btn-change-profile">Thêm
-                                                Nhân Viên</button>
+                                        <div class="col-md-6">
+                                            <button class="btn-change-password">
+                                                <a class="btn text-dark" href="EditEmployee.html">Sửa Thông Tin</a>
+                                                </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn-change-profile">Xoá Nhân Viên</button>
                                         </div>
 
                                     </div>

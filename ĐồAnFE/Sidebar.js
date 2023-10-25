@@ -55,7 +55,7 @@ function setActiveLink() {
           activeItem = document.querySelector('.nav-item-sidebar[data-section="UserManage"]');
           console.log("Trying to select UserManage:", activeItem);
           break;
-          case "/ShowInvoice.html":
+          case "/ManageInvoice.html":
             console.log(currentPath);
             activeItem = document.querySelector('.nav-item-sidebar[data-section="Invoice"]');
             console.log("Trying to select Invoice:", activeItem);
