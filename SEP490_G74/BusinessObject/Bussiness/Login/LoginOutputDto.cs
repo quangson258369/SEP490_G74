@@ -4,6 +4,12 @@ namespace HcsBE.Bussiness.Login
 {
     public class LoginOutputDto : BaseOutputCommon
     {
-        public string? Token { get; set; }
+        public UserInfo? UserInfoDto { get; set; }
+    }
+    public class UserInfo
+    {
+        public string? UserId { get; set; }
+        public string? UserName { get; set; }
+        public string? Role { get; set; }
     }
 }

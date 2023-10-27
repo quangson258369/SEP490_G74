@@ -13,10 +13,18 @@ namespace HcsBE.Dao.Login
                 var output = new LoginDaoOutputDto();
 
                 var loginDao = dbContext.Users.Where(
-                    record => record.UserId.Equals(inputDto.Username)
+                    record => record.Email.Equals(inputDto.Email)
                         && record.Password.Equals(inputDto.Password)
                     );
-                if (loginDao == null) 
+                var loginDao2 = from user in dbContext.Users
+                                from role in dbContext.Roles
+                                where role.Users.Any(r => r.UserId == user.UserId)
+                                where user.Email.Equals(inputDto.Email)
+                                && user.Password.Equals(inputDto.Password)
+                                select new { user, role};
+                
+                // Validate empty list
+                if (!loginDao.Any()) 
                 {
                     return new LoginDaoOutputDto()
                     {
@@ -24,7 +32,8 @@ namespace HcsBE.Dao.Login
                         ResultCd = ConstantHcs.ExceptionStatus
                     };
                 }
-                output.Token = loginDao.ToList().First().UserId.ToString();
+
+                output.UserInfoDto = loginDao.ToList().First();
 
                 return output;
             }

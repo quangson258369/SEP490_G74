@@ -30,9 +30,12 @@ D:\Đồ Án\sep490_g74\SEP490_G74\API\obj\Debug\net6.0\refint\API.dll
 D:\Đồ Án\sep490_g74\SEP490_G74\API\obj\Debug\net6.0\API.pdb
 D:\Đồ Án\sep490_g74\SEP490_G74\API\obj\Debug\net6.0\API.genruntimeconfig.cache
 D:\Đồ Án\sep490_g74\SEP490_G74\API\obj\Debug\net6.0\ref\API.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\App.Config
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\web.config
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\appsettings.Development.json
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\appsettings.json
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\API.exe
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\API.dll.config
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\API.deps.json
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\API.runtimeconfig.json
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\API.dll
@@ -42,12 +45,10 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Azure.Core.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Azure.Identity.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\EntityFramework.SqlServer.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\EntityFramework.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Humanizer.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
@@ -55,7 +56,6 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extens
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
@@ -71,7 +71,6 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Identi
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.OpenApi.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Mono.TextTemplating.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -84,8 +83,6 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Memory.Da
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Runtime.Caching.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Security.Permissions.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Text.Encodings.Web.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Text.Json.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\System.Windows.Extensions.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
@@ -103,8 +100,11 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\li
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\DataAccess.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\HcsBE.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\HcsBE.pdb
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\DataAccess.pdb
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
