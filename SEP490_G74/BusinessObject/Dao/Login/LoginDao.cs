@@ -21,7 +21,7 @@ namespace HcsBE.Dao.Login
                                 where role.Users.Any(r => r.UserId == user.UserId)
                                 where user.Email.Equals(inputDto.Email)
                                 && user.Password.Equals(inputDto.Password)
-                                select new { user, role};
+                                select new { user, role };
                 
                 // Validate empty list
                 if (!loginDao.Any()) 
