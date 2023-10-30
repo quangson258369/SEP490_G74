@@ -15,3 +15,10 @@ function displayImage() {
     const imageInput = document.getElementById('image-input');
     imageInput.click();
   });
+
+  function loadModalAndShow() {
+    $.get("PopUpSuccess.html", function(data) {
+      $("body").append(data);
+      $("#successModal").modal("show");
+    });
+  }
