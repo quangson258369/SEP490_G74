@@ -1,0 +1,17 @@
+
+  .navbar-nav{
+    color: black;
+    flex-direction: row;
+  }
+  .item-page {
+    flex-grow: 1;
+    text-align: center;
+  }
+  .item-page .link-room {
+    color: black;
+    padding: 8px 0;
+    border-bottom:1px solid #A6A5A5 ;
+  }
+  .item-page  .link-room:hover{
+    border-bottom: 3px solid black;
+  }

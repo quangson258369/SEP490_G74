@@ -1,0 +1,25 @@
+body {
+    background-color: #DEDEDE !important;
+}
+.body-content-header{
+    color: black;
+    font-size: 24px;
+    font-family: Inter;
+    font-weight: 700;
+    word-wrap: break-word;
+    border-bottom: 1px #A6A5A5 solid;
+}
+.form-profile {
+    max-width: 1060px;
+    max-height: 730px;
+    padding: 40px 35px 503px;
+    margin: 65px auto;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.line4 .col-md-4{
+    height: 250px;
+}
+textarea.form-control.ReasonExamination{   
+    height: 200px;
+}

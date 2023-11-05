@@ -1,45 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form</title>
-  <!-- Include Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/PopupStyle.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Textarea Example</title>
+<style>
+  textarea.custom-textarea {
+    width: 100%; /* Set textarea width to 100% of its container */
+    height: 150px; /* Set the height of the textarea */
+    padding: 10px; /* Add some padding inside the textarea */
+    
+    background-color: #f0f0f0; /* Light grey background */
+    border: 2px solid #ddd; /* Solid border with a light grey color */
+    border-radius: 4px; /* Rounded corners */
+    
+    font-family: 'Arial', sans-serif; /* Font family */
+    font-size: 16px; /* Font size */
+    line-height: 1.5; /* Line height */
+    color: #333; /* Text color */
+    
+    resize: vertical; /* Allows vertical resizing, none to disable it */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for a subtle depth effect */
+    transition: border-color 0.3s; /* Smooth transition for the border color */
+  }
+  
+  textarea.custom-textarea:focus {
+    border-color: #88aaff; /* Changes the border color when the textarea is focused */
+    outline: none; /* Removes the default focus outline */
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <form class="login-form">
-      <h2 class="text-center mb-4">Login</h2>
-      <div class="form-group">
-        <label for="email" class="sr-only">Email address</label>
-        <input type="email" id="email" class="form-control" placeholder="Email address" required autofocus>
-      </div>
-      <div class="form-group">
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Password" required>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="button" onclick="loadModalAndShow()">Sign in</button>
-    </form>
-  </div>
 
-  <!-- Modal -->
- 
+<textarea class="custom-textarea"></textarea>
 
-  <!-- Include Bootstrap and jQuery JavaScript -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script>
-    function loadModalAndShow() {
-      $.get("PopUpSuccess.html", function(data) {
-        $("body").append(data);
-        $("#successModal").modal("show");
-      });
-    }
-  </script>
 </body>
 </html>
