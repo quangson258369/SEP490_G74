@@ -1,5 +1,6 @@
 ﻿using API.Common;
 using API.Common.Entity;
+using System.Security.Claims;
 
 namespace HcsBE.Dao.Login
 {
@@ -12,11 +13,8 @@ namespace HcsBE.Dao.Login
                 var dbContext = new ApplicationDbContext();
                 var output = new LoginDaoOutputDto();
 
-                var loginDao = dbContext.Users.Where(
-                    record => record.Email.Equals(inputDto.Email)
-                        && record.Password.Equals(inputDto.Password)
-                    );
-                var loginDao2 = from user in dbContext.Users
+               
+                var loginDao = from user in dbContext.Users
                                 from role in dbContext.Roles
                                 where role.Users.Any(r => r.UserId == user.UserId)
                                 where user.Email.Equals(inputDto.Email)
@@ -32,8 +30,9 @@ namespace HcsBE.Dao.Login
                         ResultCd = ConstantHcs.ExceptionStatus
                     };
                 }
+                output.UserInfoDto = loginDao.First().user;
 
-                output.UserInfoDto = loginDao.ToList().First();
+                
 
                 return output;
             }

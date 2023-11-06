@@ -5,7 +5,7 @@ namespace HcsBE.Dao.Login
 {
     public class LoginDaoOutputDto : BaseOutputCommon
     {
-        public User? UserInfoDto { get; set; }
+        public User UserInfoDto { get; set; }
     }
 
     

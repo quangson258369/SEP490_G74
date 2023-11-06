@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using API.Common.Entity;
+using AutoMapper;
 using HcsBE.Dao.Login;
 
 namespace HcsBE.Bussiness.Login
@@ -9,8 +10,7 @@ namespace HcsBE.Bussiness.Login
         {
             // config syntax => cfg.CreateMap<OriginDto, DestinationDto>();
             cfg.CreateMap<LoginInputDto, LoginDaoInputDto>();
-            cfg.CreateMap<LoginDaoOutputDto, LoginOutputDto>();
-
+            cfg.CreateMap<User, UserInfo>();
         }
     }
 
@@ -19,7 +19,7 @@ namespace HcsBE.Bussiness.Login
         public MappingData() 
         {
             CreateMap<LoginInputDto, LoginDaoInputDto>();
-            CreateMap<LoginDaoOutputDto, LoginOutputDto>();
+            CreateMap<User, UserInfo>();
         }
     }
 }

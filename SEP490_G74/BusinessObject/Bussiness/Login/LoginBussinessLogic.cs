@@ -34,7 +34,7 @@ namespace HcsBE.Bussiness.Login
                     };
                 }
 
-
+                
 
                 output.UserInfoDto = mapper.Map<User, UserInfo> (loginDaoOutput.UserInfoDto);
 
