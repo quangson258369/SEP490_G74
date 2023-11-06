@@ -53,8 +53,11 @@ body {
     display: block;
 }
 
-.table-header, .table-body {
+.table-body {
     width: 100%;
+}
+table.table.table-header{
+    width: 95%;
 }
 
 .table-header th, .table-body td {
