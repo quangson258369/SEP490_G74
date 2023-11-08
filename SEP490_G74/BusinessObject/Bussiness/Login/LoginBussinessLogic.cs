@@ -2,11 +2,19 @@
 using API.Common.Entity;
 using AutoMapper;
 using HcsBE.Dao.Login;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace HcsBE.Bussiness.Login
 {
     public class LoginBussinessLogic
     {
+          
         public LoginOutputDto Login(LoginInputDto inputDto)
         {
             try
@@ -37,6 +45,7 @@ namespace HcsBE.Bussiness.Login
                 
 
                 output.UserInfoDto = mapper.Map<User, UserInfo> (loginDaoOutput.UserInfoDto);
+                
 
                 return output;
             }catch (Exception ex)
@@ -48,5 +57,7 @@ namespace HcsBE.Bussiness.Login
                 };
             }
         }
+
+       
     }
 }

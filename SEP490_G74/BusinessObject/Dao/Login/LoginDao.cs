@@ -31,7 +31,8 @@ namespace HcsBE.Dao.Login
                     };
                 }
                 output.UserInfoDto = loginDao.First().user;
-
+                output.UserInfoDto.Roles = loginDao.Select(r => r.role).ToList();
+               
                 
 
                 return output;

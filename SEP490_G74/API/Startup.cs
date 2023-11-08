@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using HcsBE.Bussiness.Login;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API
 {
@@ -15,14 +17,29 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddSingleton<IConfiguration>(Configuration);
+
+            var jwtToken = Configuration["Jwt:Key"];
+            var jwtTokenBytes = Encoding.UTF8.GetBytes(jwtToken);
+
+            
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        vali
-                    }
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(jwtTokenBytes),
+
+                        ClockSkew = TimeSpan.Zero,
+
+                    };
                 });
+            
             services.AddRazorPages();
         }
 

@@ -19,7 +19,7 @@ namespace HcsBE.Bussiness.Login
         public MappingData() 
         {
             CreateMap<LoginInputDto, LoginDaoInputDto>();
-            CreateMap<User, UserInfo>();
+            CreateMap<User, UserInfo>(); 
         }
     }
 }
