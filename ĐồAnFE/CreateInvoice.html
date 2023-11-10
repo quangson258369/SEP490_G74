@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/1d6b4c4b00.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
                                         <label class="date-create">Ngày tạo</label>
                                         <input type="text" class="date-create form-control" name="address"  />
                                     </div>
-                                    <div class="col-md-6 form-group ">
+                                    <div class="col-md-5 form-group ">
                                         <label class="title-email">Chọn dịch vụ khám</label>
                                         <div class="card">
                                             <div class="card-body">
@@ -109,19 +109,17 @@
                                                         <table class="table table-bordered table-header">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Tên dịch vụ</th>
-                                                                    <th>Giá</th>
+                                                                    <th>Tên dịch vụ</th>                                                             
                                                                     <th></th>
                                                                 </tr>
-                                                            </thead>
+                                                            </thead> 
                                                         </table>
                                                         <div class="scrollable-tbody">
                                                             <table class="table table-bordered table-body">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td>siêu âm</td>
-                                                                        <td>12k</td>
-                                                                        <td><input type="checkbox"></td>
+                                                                        <td>siêu âm</td>               
+                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
                                                                     </tr>
                                                                     
                                                                     <!-- Add more rows here to see the scrolling effect -->
@@ -130,27 +128,56 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="title-role">Thành tiền</label>
-                                                    <input type="text" class="role form-control" name="role"  />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="title-role">Thuế</label>
-                                                    <input type="text" class="role form-control" name="role"  />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="title-role">Giảm</label>
-                                                    <input type="text" class="role form-control" name="role"  />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="title-role">Tổng</label>
-                                                    <input type="text" class="role form-control" name="role"  />
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <div class="col-md-4 form-group ">
+                                        <label class="title-email">Chọn dịch vụ khám</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-bordered table-header">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên dịch vụ</th>
+                                                            <th>Giá</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead> 
+                                                </table>
+                                                <div class="scrollable-tbody">
+                                                    <table class="table table-bordered table-body selected-service-table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>siêu âm</td>
+                                                                <td>12k</td>
+                                                                <td><button onclick="RemoveService(name,price)">Xóa</button></td>
+                                                            </tr>
+                                                            
+                                                            <!-- Add more rows here to see the scrolling effect -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="title-role">Thành tiền</label>
+                                            <input type="text" class="role form-control" name="role"  />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="title-role">Thuế</label>
+                                            <input type="text" class="role form-control" name="role"  />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="title-role">Giảm</label>
+                                            <input type="text" class="role form-control" name="role"  />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="title-role">Tổng</label>
+                                            <input type="text" class="role form-control" name="role"  />
+                                        </div>
 
+                                    </div>
 
                                 </div>
                                 <div class="col-md-3 line4 row">
@@ -184,7 +211,7 @@
                                     <img src="asset/img/icons8-print-30 1.png" />
                                     in
                                 </button>
-                                <button class="submit">Tạo hóa đơn</button> 
+                                <button type="submit" class="submitBtn">Tạo hóa đơn</button> 
                            
                            
                         </form>
@@ -200,5 +227,5 @@
 </body>
 <script type="text/javascript" src="/Sidebar.js"></script>
 <script type="text/javascript" src="/HeaderScript.js"></script>
-
+<script type="text/javascript" src="/ServiceScript.js"></script>
 </html>
