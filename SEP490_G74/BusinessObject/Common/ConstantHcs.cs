@@ -13,5 +13,8 @@
 
         // Login Failed
         public const string LoginFailedMessage = "User Not Found";
+
+        // List Medical Record Empty
+        public const string EmptyList = "Medical Record List Is Empty!";
     }
 }
