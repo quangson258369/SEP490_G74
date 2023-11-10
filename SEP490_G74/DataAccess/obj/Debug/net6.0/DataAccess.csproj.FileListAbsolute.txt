@@ -10,3 +10,17 @@ D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.dll
 D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\Đồ Án\sep490_g74\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
+E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
