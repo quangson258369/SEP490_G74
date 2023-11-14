@@ -11,5 +11,9 @@ namespace HcsBE.Dao.MedicalRecordDAO
     public class MedicalRecordDaoOutputDto:BaseOutputCommon
     {
         public MedicalRecord medicalRecordDto { get; set; }
+        public ExaminationResultId ExaminationResultDTO { get; set; }
+        public Patient Patient { get; set; }
+        public Prescription Prescription { get; set; }
+        public Service Service { get; set; }
     }
 }

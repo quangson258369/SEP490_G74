@@ -20,9 +20,13 @@ namespace HcsBE.Dao.MedicalRecordDAO
                         from patient in context.Patients
                         from prescription in context.Prescriptions
                         from service in context.Services
-                        from contact in context.Contacts
-                        from user in context.Users
                         from examinationResultId in context.ExaminationResultIds
+
+                        where medicalrecord.Patient.PatientId == patient.PatientId
+                        where examinationResultId.MedicalRecord.MedicalRecordId == medicalrecord.MedicalRecordId
+                        where service.MedicalRecords.Any(x=>x.MedicalRecordId==medicalrecord.MedicalRecordId)
+                        where prescription.MedicalRecordId == medicalrecord.MedicalRecordId
+
                         select new {medicalrecord};
             if (!query.Any())
             {
@@ -37,5 +41,37 @@ namespace HcsBE.Dao.MedicalRecordDAO
 
             return output;
         }
+
+        public MedicalRecordDaoOutputDto GetMedicalRecord(int id)
+        {
+            var context = new ApplicationDbContext();
+            var output = new MedicalRecordDaoOutputDto();
+
+            var query = from medicalrecord in context.MedicalRecords
+                        from patient in context.Patients
+                        from prescription in context.Prescriptions
+                        from service in context.Services
+                        from examinationResultId in context.ExaminationResultIds
+
+                        where medicalrecord.MedicalRecordId == id
+                        where medicalrecord.Patient.PatientId == patient.PatientId
+                        where examinationResultId.MedicalRecord.MedicalRecordId == medicalrecord.MedicalRecordId
+                        where service.MedicalRecords.Any(x => x.MedicalRecordId == medicalrecord.MedicalRecordId)
+                        where prescription.MedicalRecordId == medicalrecord.MedicalRecordId
+                        select new { medicalrecord, patient , service,examinationResultId,prescription};
+
+            if (!query.Any())
+            {
+                return output;
+            }
+            output.medicalRecordDto = query.First().medicalrecord;
+            output.Service = query.First().service;
+            output.Patient = query.First().patient;
+            output.ExaminationResultDTO = query.First().examinationResultId;
+            output.Prescription = query.First().prescription;
+            return output;
+        }
+
+
     }
 }
