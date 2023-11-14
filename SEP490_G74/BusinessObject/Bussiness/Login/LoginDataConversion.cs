@@ -16,10 +16,10 @@ namespace HcsBE.Bussiness.Login
 
     public class MappingData : Profile
     {
-        public MappingData() 
+        public MappingData()
         {
             CreateMap<LoginInputDto, LoginDaoInputDto>();
-            CreateMap<User, UserInfo>(); 
+            CreateMap<User, UserInfo>();
         }
     }
 }

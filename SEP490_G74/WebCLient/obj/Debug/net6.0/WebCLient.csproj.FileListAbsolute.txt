@@ -6,6 +6,7 @@ D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\bin\Debug\net6.0\WebCLient.deps.jso
 D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\bin\Debug\net6.0\WebCLient.runtimeconfig.json
 D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\bin\Debug\net6.0\WebCLient.dll
 D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\bin\Debug\net6.0\WebCLient.pdb
+D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.csproj.AssemblyReference.cache
 D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.GeneratedMSBuildEditorConfig.editorconfig
 D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.AssemblyInfoInputs.cache
 D:\Đồ Án\sep490_g74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.AssemblyInfo.cs
@@ -67,12 +68,3 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\WebCLient\obj\Debug\net6.0\refint\Web
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.pdb
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.genruntimeconfig.cache
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\WebCLient\obj\Debug\net6.0\ref\WebCLient.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Humanizer.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
-D:\Đồ Án\SEP490_G74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.csproj.CopyComplete
