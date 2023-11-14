@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "H+N1ZqX0sugXlb2qtY7K6SLABTI/aZw9nIL7MLebscPXa1R0ezyH0fDwDcf0jk8jaSxkLtymcBUl7yIhUmXViw==",
+  "dgSpecHash": "FBSoQEXXqnS/JwtVtjglyb7SxoFspUg093n4CUBKWV0Fhirn1XFcrbDOFKfAPtGxpT2LpAPMD10Ig9tInZF8Hw==",
   "success": true,
-  "projectFilePath": "E:\\LamViec_HocTap\\Semester9\\SEP\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
+  "projectFilePath": "D:\\Đồ Án\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
