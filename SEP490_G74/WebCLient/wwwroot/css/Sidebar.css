@@ -1,0 +1,37 @@
+.sidebar {
+    max-height: 100%;
+}
+
+.col-sm-auto {
+    height: 100%;
+}
+
+.nav-item-sidebar {
+    margin: 10px;
+    padding: 10px;
+    width: 117px;
+    height: 113px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.nav-item-sidebar p{
+    font-size: small;
+    color: black;
+}
+
+.nav-item-sidebar:hover,.active-link{
+    background: #D9D9D9;
+    border-radius: 20px;
+    color: black;
+}
+.nav-link:hover .img-icon-sidebar path {
+    fill: black; 
+  }
+  
+  .nav-link:hover p {
+    font-weight: bold; 
+  }
+  
