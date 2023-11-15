@@ -1122,11 +1122,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
+      "projectUniqueName": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
       "projectName": "WebCLient",
-      "projectPath": "D:\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
+      "projectPath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\",
+      "outputPath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

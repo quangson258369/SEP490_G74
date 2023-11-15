@@ -156,9 +156,6 @@ public partial class ApplicationDbContext : DbContext
         modelBuilder.Entity<Service>(entity =>
         {
             entity.Property(e => e.ServiceId).ValueGeneratedNever();
-            entity.Property(e => e.DetailId)
-                .IsFixedLength()
-                .UseCollation("Vietnamese_CI_AS");
             entity.Property(e => e.ServiceName).UseCollation("Vietnamese_CI_AS");
 
             entity.HasOne(d => d.ServiceType).WithMany(p => p.Services)

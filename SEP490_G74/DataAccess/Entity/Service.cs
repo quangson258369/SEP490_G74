@@ -20,9 +20,6 @@ public partial class Service
     [StringLength(150)]
     public string ServiceName { get; set; } = null!;
 
-    [Column("detailId")]
-    [StringLength(10)]
-    public string? DetailId { get; set; }
 
     [InverseProperty("Service")]
     public virtual ICollection<ServiceSupply> ServiceSupplies { get; set; } = new List<ServiceSupply>();

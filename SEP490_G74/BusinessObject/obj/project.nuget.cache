@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EObpjydtDBBWnyIEutMWmLX2QYgAKDf0GGgyhNLY88yFWLt25KoSD7fiXoOWKZhtZOPnAyj9mG9ftEx73T5xVg==",
+  "dgSpecHash": "ZvmlsG0m9M/EHaCduAOQdOanlQlUhvxFk7Mmb8jCz3BFmimYN5abQdVhDawt7wjEmEsVg31rhxemh0QwV0tDTA==",
   "success": true,
-  "projectFilePath": "D:\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
+  "projectFilePath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",

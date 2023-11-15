@@ -33,19 +33,19 @@ public partial class MedicalRecord
 
     [ForeignKey("DoctorId")]
     [InverseProperty("MedicalRecords")]
-    public virtual Doctor Doctor { get; set; } = null!;
+    public virtual Doctor? Doctor { get; set; }
 
     [InverseProperty("MedicalRecord")]
-    public virtual ICollection<ExaminationResultId> ExaminationResultIds { get; set; } = new List<ExaminationResultId>();
+    public virtual ICollection<ExaminationResultId>? ExaminationResultIds { get; set; }
 
     [ForeignKey("PatientId")]
     [InverseProperty("MedicalRecords")]
-    public virtual Patient Patient { get; set; } = null!;
+    public virtual Patient? Patient { get; set; }
 
     [InverseProperty("MedicalRecord")]
-    public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+    public virtual ICollection<Prescription>? Prescriptions { get; set; }
 
     [ForeignKey("MedicalRecordId")]
     [InverseProperty("MedicalRecords")]
-    public virtual ICollection<Service> Services { get; set; } = new List<Service>();
+    public virtual ICollection<Service>? Services { get; set; }
 }

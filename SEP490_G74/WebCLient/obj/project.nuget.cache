@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XNgRQJyvYwM/LLhsHSbS0Wsv6hNh6RHNLRrYQNEuYH4NSop4taVqIU+Pu/qfDGlVBAW6WVI0JB6m/JCKkzFPYQ==",
+  "dgSpecHash": "ci1a1yc0QwRPWSQYJ0TQET3w/5l6PDIlb8khKr6Je2RxOqK3XoEyIsoXsekorPEjjasrm555SC0NW6B7BAM4OA==",
   "success": true,
-  "projectFilePath": "D:\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
+  "projectFilePath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.20\\microsoft.entityframeworkcore.6.0.20.nupkg.sha512",

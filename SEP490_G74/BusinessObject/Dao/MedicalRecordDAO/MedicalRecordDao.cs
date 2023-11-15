@@ -1,8 +1,10 @@
 ﻿using API.Common;
 using API.Common.Entity;
 using HcsBE.Dao.Login;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,65 +13,36 @@ namespace HcsBE.Dao.MedicalRecordDAO
 {
     public class MedicalRecordDao
     {
-        public List<MedicalRecordDaoOutputDto> MedicalRecordList()
+        private ApplicationDbContext context = new ApplicationDbContext();
+
+        public List<MedicalRecord> MedicalRecordList()
         {
-            var context = new ApplicationDbContext();
-            var output = new List<MedicalRecordDaoOutputDto>();
-
-            var query = from medicalrecord in context.MedicalRecords
-                        from patient in context.Patients
-                        from prescription in context.Prescriptions
-                        from service in context.Services
-                        from examinationResultId in context.ExaminationResultIds
-
-                        where medicalrecord.Patient.PatientId == patient.PatientId
-                        where examinationResultId.MedicalRecord.MedicalRecordId == medicalrecord.MedicalRecordId
-                        where service.MedicalRecords.Any(x=>x.MedicalRecordId==medicalrecord.MedicalRecordId)
-                        where prescription.MedicalRecordId == medicalrecord.MedicalRecordId
-
-                        select new {medicalrecord};
-            if (!query.Any())
-            {
-                return new List<MedicalRecordDaoOutputDto>(){
-                    new MedicalRecordDaoOutputDto()
-                {
-                    ExceptionMessage = ConstantHcs.EmptyList,
-                    ResultCd = ConstantHcs.Success
-                }};
-            }
-            output.AddRange((IEnumerable<MedicalRecordDaoOutputDto>)query.ToList());
-
-            return output;
+            var query = context.MedicalRecords.ToList();
+            return query;
         }
 
-        public MedicalRecordDaoOutputDto GetMedicalRecord(int id)
+        public MedicalRecord GetMedicalRecord(int id)
         {
-            var context = new ApplicationDbContext();
-            var output = new MedicalRecordDaoOutputDto();
-
-            var query = from medicalrecord in context.MedicalRecords
-                        from patient in context.Patients
-                        from prescription in context.Prescriptions
-                        from service in context.Services
-                        from examinationResultId in context.ExaminationResultIds
-
-                        where medicalrecord.MedicalRecordId == id
-                        where medicalrecord.Patient.PatientId == patient.PatientId
-                        where examinationResultId.MedicalRecord.MedicalRecordId == medicalrecord.MedicalRecordId
-                        where service.MedicalRecords.Any(x => x.MedicalRecordId == medicalrecord.MedicalRecordId)
-                        where prescription.MedicalRecordId == medicalrecord.MedicalRecordId
-                        select new { medicalrecord, patient , service,examinationResultId,prescription};
-
-            if (!query.Any())
-            {
-                return output;
-            }
-            output.medicalRecordDto = query.First().medicalrecord;
-            output.Service = query.First().service;
-            output.Patient = query.First().patient;
-            output.ExaminationResultDTO = query.First().examinationResultId;
-            output.Prescription = query.First().prescription;
-            return output;
+            var query = context.MedicalRecords.Include(x => x.Doctor)
+                .Include(y => y.Patient)
+                .Include(x => x.Services)
+                .Include(x => x.ExaminationResultIds)
+                .Include(x => x.Prescriptions)
+                .Select( x => new MedicalRecord
+                {
+                    Doctor = x.Doctor,
+                    DoctorId = x.DoctorId,
+                    ExamCode = x.ExamCode,
+                    ExaminationResultIds = x.ExaminationResultIds,
+                    ExamReason = x.ExamReason,
+                    MedicalRecordDate = x.MedicalRecordDate,
+                    MedicalRecordId = x.MedicalRecordId,
+                    Patient = x.Patient,
+                    PatientId = x.PatientId,
+                    Prescriptions = x.Prescriptions,
+                    Services = x.Services
+                }).SingleOrDefault(x => x.MedicalRecordId == id);
+            return query;
         }
 
 

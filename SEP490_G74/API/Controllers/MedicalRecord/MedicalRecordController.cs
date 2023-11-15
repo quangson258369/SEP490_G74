@@ -1,5 +1,8 @@
-﻿using HcsBE.Bussiness.Login;
+﻿using AutoMapper;
+using HcsBE.Bussiness.Login;
 using HcsBE.Bussiness.MedicalRecord;
+using HcsBE.Dao.MedicalRecordDAO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.MedicalRecord
@@ -8,20 +11,23 @@ namespace API.Controllers.MedicalRecord
     [ApiController]
     public class MedicalRecordController : ControllerBase
     {
-        [HttpGet]
+
+        [HttpGet("ListMedicalRecord")]
         public IActionResult MedicalRecordList()
         {
             var res = new MedicalRecordBusinessLogic();
             var list = res.GetListMedicalRecord();
-            if (list == null) return BadRequest();
+            if (list == null) return NotFound();
             return Ok(list);
         }
 
         [HttpGet("GetMedicalRecord/{id}")]
         public IActionResult GetMedicalRecord(int id) 
         {
-
-            return Ok();
+            var resDao = new MedicalRecordBusinessLogic();
+            var medicalRecord = resDao.GetMedicalRecord(id);
+            if (medicalRecord == null) return NotFound();
+            return Ok(medicalRecord);
         }
     }
 }
