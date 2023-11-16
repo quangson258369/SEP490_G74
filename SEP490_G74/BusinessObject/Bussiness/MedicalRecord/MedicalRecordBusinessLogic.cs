@@ -22,9 +22,20 @@ namespace HcsBE.Bussiness.MedicalRecord
                 cfg.AddProfile(new MedicalRCMapper());
             });
             var mapper = config.CreateMapper();
-
+            
             List<API.Common.Entity.MedicalRecord> list = dao.MedicalRecordList();
             var output = mapper.Map<List<MedicalRecordDaoOutputDto>>(list);
+            if(list == null)
+            {
+                return new List<MedicalRecordDaoOutputDto>()
+                {
+                    new MedicalRecordDaoOutputDto()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
             return output;
         }
 
@@ -37,8 +48,18 @@ namespace HcsBE.Bussiness.MedicalRecord
             var mapper = config.CreateMapper();
 
             var mr = dao.GetMedicalRecord(id);
-            if (mr == null) return null;
-            return mapper.Map<MedicalRecordDaoOutputDto>(mr);
+            var output = mapper.Map<MedicalRecordDaoOutputDto>(mr);
+
+            if (mr == null)
+            {
+                return new MedicalRecordDaoOutputDto()
+                {
+                    ExceptionMessage = ConstantHcs.NotFound,
+                    ResultCd = ConstantHcs.BussinessError
+                };
+            }
+            return output;
         }
+
     }
 }
