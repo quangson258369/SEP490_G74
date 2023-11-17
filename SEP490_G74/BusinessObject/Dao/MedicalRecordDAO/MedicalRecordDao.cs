@@ -96,11 +96,8 @@ namespace HcsBE.Dao.MedicalRecordDAO
               -1 - can't delete cause patient is already treatment
              */
             var mr = GetMedicalRecord(id);
-            if (mr == null)
-            {
-                return "0";
-            }
-            else if (mr.ExaminationResultIds != null)
+            
+            if (mr.ExaminationResultIds != null)
             {
                 return "-1";
             }

@@ -61,5 +61,50 @@ namespace HcsBE.Bussiness.MedicalRecord
             return output;
         }
 
+        public bool Update( MedicalRecordDaoOutputDto mdto)
+        {
+            // khoi tao mapper
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MedicalRCMapper());
+            });
+            var mapper = config.CreateMapper();
+            var mr = mapper.Map<API.Common.Entity.MedicalRecord>(mdto);
+            var status = dao.UpdateMedicalRecord(mr);
+            return status;
+        }
+
+        public bool AddMR(MedicalRecordDaoOutputDto mdto) 
+        {
+            // khoi tao mapper
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MedicalRCMapper());
+            });
+            var mapper = config.CreateMapper();
+            var mr = mapper.Map<API.Common.Entity.MedicalRecord>(mdto);
+            var status = dao.AddMedicalRecord(mr);
+            return status;
+        }
+        
+        public string DeleteMR(int id) 
+        {
+            // khoi tao mapper
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MedicalRCMapper());
+            });
+            var mapper = config.CreateMapper();
+            var mdto = dao.GetMedicalRecord(id);
+            if(mdto != null)
+            {
+                var mr = mapper.Map<API.Common.Entity.MedicalRecord>(mdto);
+                var status = dao.DeleteMedicalRecord(mr.MedicalRecordId);
+                return status;
+            }
+            return "0";
+        }
+
+
     }
 }

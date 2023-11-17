@@ -29,5 +29,44 @@ namespace API.Controllers.MedicalRecord
             if (medicalRecord == null) return NotFound();
             return Ok(medicalRecord);
         }
+
+        [HttpPut("UpdateMedicalRecord")]
+        public IActionResult updateMedicalRecord(MedicalRecordDaoOutputDto mdto)
+        {
+            var resDao = new MedicalRecordBusinessLogic();
+            var status = resDao.Update(mdto);
+            if (status == false)
+            {
+                return NotFound();
+            }
+            return Ok("Update successfully!");
+        }
+
+        [HttpPost("AddMedicalRecord")]
+        public IActionResult AddMedicalRecord(MedicalRecordDaoOutputDto m)
+        {
+            var resDao = new MedicalRecordBusinessLogic();
+            var status = resDao.AddMR(m);
+            if (status == false)
+            {
+                return StatusCode(304);
+            }
+            return Ok("Add successfully!");
+        }
+
+        [HttpDelete("DeleteMedicalRecord")]
+        public IActionResult DeleteMedicalRecord(int id)
+        {
+            var resDao = new MedicalRecordBusinessLogic();
+            var status = resDao.DeleteMR(id);
+
+            if (status == "-1")
+            {
+                return StatusCode(304);
+            }else if(status == "0") {
+                return NotFound();
+            }
+            return Ok("Delete successfully!");
+        }
     }
 }
