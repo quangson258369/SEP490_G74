@@ -19,8 +19,8 @@ namespace HcsBE.Dao.MedicalRecordDAO
                 .Include(x => x.Services)
                 .Include(x => x.ExaminationResultIds)
                 .Include(x => x.Prescriptions)
-                //.Where(x => x.Doctor.Contacts.(y => y.UserId == x.Doctor.UserId))
-                //.Where(x => x.Patient.Contacts.All(y => y.UserId == x.Patient.PatientId))
+                //.Where(x => x.Doctor.Contacts.Contains(x.Doctor))
+                .Where(x => x.Patient.Contacts.All(y => y.PatientId == x.Patient.PatientId))
                 .Select(x => new MedicalRecord
                 {
                     Doctor = x.Doctor,
@@ -33,7 +33,8 @@ namespace HcsBE.Dao.MedicalRecordDAO
                     Patient = x.Patient,
                     PatientId = x.PatientId,
                     Prescriptions = x.Prescriptions,
-                    Services = x.Services
+                    Services = x.Services,
+                    
                 }).ToList();
             return query;
         }

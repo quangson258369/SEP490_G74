@@ -130,103 +130,74 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\obj\Debug\net6.0\API.genruntimeco
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\obj\Debug\net6.0\ref\API.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Owin.dll
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\API\bin\Debug\net6.0\Owin.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\App.Config
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\web.config
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\appsettings.Development.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\appsettings.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.exe
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.dll.config
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.deps.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.runtimeconfig.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.pdb
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\AutoMapper.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Azure.Core.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Azure.Identity.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\EntityFramework.SqlServer.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\EntityFramework.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Identity.Client.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.OpenApi.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Owin.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Newtonsoft.Json.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Owin.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.CodeDom.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Data.SqlClient.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Drawing.Common.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Memory.Data.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Runtime.Caching.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Security.Permissions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Windows.Extensions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\HcsBE.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\HcsBE.pdb
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.pdb
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfo.cs
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cs
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.build.API.props
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.API.props
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.API.props
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets.pack.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets.build.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets.development.json
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\scopedcss\bundle\API.styles.css
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.CopyComplete
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\refint\API.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.pdb
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.genruntimeconfig.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\ref\API.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\App.Config
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\web.config
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\API.dll.config
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\AutoMapper.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Azure.Core.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Azure.Identity.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\EntityFramework.SqlServer.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\EntityFramework.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Owin.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\Owin.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.CodeDom.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Data.SqlClient.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Memory.Data.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\HcsBE.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\HcsBE.pdb
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.pdb
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Text.Json.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
