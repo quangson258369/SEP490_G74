@@ -25,8 +25,8 @@ namespace API.Controllers.MedicalRecord
         {
             var resDao = new MedicalRecordBusinessLogic();
             var medicalRecord = resDao.GetMedicalRecord(id);
-            if (medicalRecord == null) return NotFound();
-            return Ok(medicalRecord);
+            if (medicalRecord.medicalRecordData != null) return Ok(medicalRecord);
+            return NotFound();
         }
 
         [HttpPut("UpdateMedicalRecord")]
