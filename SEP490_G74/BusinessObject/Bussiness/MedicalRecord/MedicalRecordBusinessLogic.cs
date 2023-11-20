@@ -23,7 +23,7 @@ namespace HcsBE.Bussiness.MedicalRecord
             });
             var mapper = config.CreateMapper();
             
-            List<API.Common.Entity.MedicalRecord> list = dao.MedicalRecordList();
+            List<DataAccess.Entity.MedicalRecord> list = dao.MedicalRecordList();
             var output = mapper.Map<List<MedicalRecordDaoOutputDto>>(list);
             if(list == null)
             {
@@ -69,7 +69,7 @@ namespace HcsBE.Bussiness.MedicalRecord
                 cfg.AddProfile(new MedicalRCMapper());
             });
             var mapper = config.CreateMapper();
-            var mr = mapper.Map<API.Common.Entity.MedicalRecord>(mdto);
+            var mr = mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
             var status = dao.UpdateMedicalRecord(mr);
             return status;
         }
@@ -82,7 +82,7 @@ namespace HcsBE.Bussiness.MedicalRecord
                 cfg.AddProfile(new MedicalRCMapper());
             });
             var mapper = config.CreateMapper();
-            var mr = mapper.Map<API.Common.Entity.MedicalRecord>(mdto);
+            var mr = mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
             var status = dao.AddMedicalRecord(mr);
             return status;
         }
@@ -98,7 +98,7 @@ namespace HcsBE.Bussiness.MedicalRecord
             var mdto = dao.GetMedicalRecord(id);
             if(mdto != null)
             {
-                var mr = mapper.Map<API.Common.Entity.MedicalRecord>(mdto);
+                var mr = mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
                 var status = dao.DeleteMedicalRecord(mr.MedicalRecordId);
                 return status;
             }

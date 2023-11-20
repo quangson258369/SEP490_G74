@@ -1,4 +1,4 @@
-﻿using API.Common.Entity;
+﻿using DataAccess.Entity;
 using AutoMapper;
 using HcsBE.Dao.Login;
 

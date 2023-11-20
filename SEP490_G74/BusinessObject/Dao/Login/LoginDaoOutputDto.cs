@@ -1,5 +1,5 @@
 ﻿using API.Common;
-using API.Common.Entity;
+using DataAccess.Entity;
 
 namespace HcsBE.Dao.Login
 {

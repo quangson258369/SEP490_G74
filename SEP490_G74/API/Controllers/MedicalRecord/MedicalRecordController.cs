@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HcsBE.Bussiness.Login;
 using HcsBE.Bussiness.MedicalRecord;
 using HcsBE.Dao.MedicalRecordDAO;
 using Microsoft.AspNetCore.Authorization;

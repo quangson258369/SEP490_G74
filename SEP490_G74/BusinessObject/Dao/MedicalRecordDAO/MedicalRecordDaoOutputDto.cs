@@ -1,5 +1,5 @@
 ﻿using API.Common;
-using API.Common.Entity;
+using DataAccess.Entity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore;
 using System;

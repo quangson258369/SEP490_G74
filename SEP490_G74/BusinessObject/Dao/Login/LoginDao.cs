@@ -1,5 +1,5 @@
 ﻿using API.Common;
-using API.Common.Entity;
+using DataAccess.Entity;
 using System.Security.Claims;
 
 namespace HcsBE.Dao.Login
@@ -10,7 +10,7 @@ namespace HcsBE.Dao.Login
         {
             try
             {
-                var dbContext = new ApplicationDbContext();
+                var dbContext = new HcsContext();
                 var output = new LoginDaoOutputDto();
 
                

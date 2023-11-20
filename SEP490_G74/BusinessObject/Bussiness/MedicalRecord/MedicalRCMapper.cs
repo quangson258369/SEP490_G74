@@ -1,4 +1,4 @@
-﻿using API.Common.Entity;
+﻿using DataAccess.Entity;
 using AutoMapper;
 using HcsBE.Dao.MedicalRecordDAO;
 using System;
@@ -14,8 +14,8 @@ namespace HcsBE.Bussiness.MedicalRecord
     public class MedicalRCMapper:Profile
     {
         public MedicalRCMapper() {
-            CreateMap<MedicalRecordDaoOutputDto, API.Common.Entity.MedicalRecord>();
-            CreateMap<API.Common.Entity.MedicalRecord, MedicalRecordDaoOutputDto>();
+            CreateMap<MedicalRecordDaoOutputDto, DataAccess.Entity.MedicalRecord>();
+            CreateMap<DataAccess.Entity.MedicalRecord, MedicalRecordDaoOutputDto>();
         
         }
     }

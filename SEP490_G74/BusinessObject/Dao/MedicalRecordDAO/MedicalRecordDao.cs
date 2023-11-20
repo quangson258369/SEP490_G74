@@ -1,7 +1,4 @@
-﻿using API.Common;
-using API.Common.Entity;
-using HcsBE.Dao.Login;
-using Microsoft.IdentityModel.Tokens;
+﻿using DataAccess.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +10,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
 {
     public class MedicalRecordDao
     {
-        private ApplicationDbContext context = new ApplicationDbContext();
+        private HcsContext context = new HcsContext();
 
         public List<MedicalRecord> MedicalRecordList()
         {
