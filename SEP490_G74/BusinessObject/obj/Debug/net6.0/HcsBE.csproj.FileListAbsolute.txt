@@ -15,3 +15,37 @@ E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\BusinessObject\obj\Debug\net6.0\refin
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.pdb
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.genruntimeconfig.cache
 E:\LamViec_HocTap\Semester9\SEP\SEP490_G74\BusinessObject\obj\Debug\net6.0\ref\HcsBE.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.deps.json
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.runtimeconfig.json
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.pdb
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\DataAccess.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\DataAccess.pdb
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.csproj.AssemblyReference.cache
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.GeneratedMSBuildEditorConfig.editorconfig
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.AssemblyInfoInputs.cache
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.AssemblyInfo.cs
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.csproj.CoreCompileInputs.cache
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.csproj.CopyComplete
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\refint\HcsBE.dll
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.pdb
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.genruntimeconfig.cache
+D:\Đồ Án\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\ref\HcsBE.dll
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.deps.json
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.runtimeconfig.json
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.dll
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\HcsBE.pdb
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\DataAccess.dll
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\bin\Debug\net6.0\DataAccess.pdb
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.csproj.AssemblyReference.cache
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.GeneratedMSBuildEditorConfig.editorconfig
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.AssemblyInfoInputs.cache
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.AssemblyInfo.cs
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.csproj.CoreCompileInputs.cache
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.csproj.CopyComplete
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.dll
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\refint\HcsBE.dll
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.pdb
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\HcsBE.genruntimeconfig.cache
+D:\DoAnFall\SEP490_G74\SEP490_G74\BusinessObject\obj\Debug\net6.0\ref\HcsBE.dll

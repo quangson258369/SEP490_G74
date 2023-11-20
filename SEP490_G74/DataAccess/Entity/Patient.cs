@@ -1,31 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
-namespace API.Common.Entity;
+namespace DataAccess.Entity;
 
-[Table("Patient")]
 public partial class Patient
 {
-    [Key]
-    [Column("patientId")]
     public int PatientId { get; set; }
 
-    [Column("serviceDetailName")]
-    [StringLength(350)]
     public string ServiceDetailName { get; set; } = null!;
 
-    [Column("examDate", TypeName = "datetime")]
     public DateTime ExamDate { get; set; }
 
-    [InverseProperty("User")]
+    [JsonIgnore]
     public virtual ICollection<Contact> Contacts { get; set; } = new List<Contact>();
-
-    [InverseProperty("Patient")]
+    [JsonIgnore]
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
-
-    [InverseProperty("Patient")]
+    [JsonIgnore]
     public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 }

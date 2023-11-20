@@ -1,5 +1,4 @@
-﻿using API.Common;
-using API.Common.Entity;
+﻿using DataAccess.Entity;
 using AutoMapper;
 using HcsBE.Dao.Login;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using API.Common;
 
 namespace HcsBE.Bussiness.Login
 {
