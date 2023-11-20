@@ -25,7 +25,7 @@ namespace API.Controllers.MedicalRecord
         {
             var resDao = new MedicalRecordBusinessLogic();
             var medicalRecord = resDao.GetMedicalRecord(id);
-            if (medicalRecord.medicalRecordData != null) return Ok(medicalRecord);
+            if (medicalRecord!= null) return Ok(medicalRecord);
             return NotFound();
         }
 
