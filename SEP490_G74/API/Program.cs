@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<HcsContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("MyCnn")
 ));
+builder.Services.AddScoped<HcsContext>();
 startup.ConfigureServices(builder.Services);
 builder.Services.AddSwaggerGen(c =>
 {
