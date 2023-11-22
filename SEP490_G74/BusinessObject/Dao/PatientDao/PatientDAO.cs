@@ -53,14 +53,27 @@ namespace HcsBE.Dao.PatientDao
 
         public bool UpdatePatient(Patient p)
         {
+            var existingPatient = context.Set<Patient>().Find(p.PatientId);
             var patient = GetPatientById(p.PatientId);
             if (patient == null)
             {
                 return false;
             }
-            context.Patients.Update(p);
+
+            if(existingPatient == null)
+            {
+                context.Patients.Update(p);
+            }
+            context.Entry(existingPatient).CurrentValues.SetValues(p);
             context.SaveChanges();
+            UpdateContactForPatient(p.Contacts);
             return true;
+        }
+
+        public void UpdateContactForPatient(ICollection<Contact> contacts)
+        {
+            context.Contacts.UpdateRange(contacts);
+            context.SaveChanges();
         }
 
         public bool AddPatient(Patient p)
@@ -72,19 +85,33 @@ namespace HcsBE.Dao.PatientDao
             }
             context.Patients.Add(p);
             context.SaveChanges();
+            addContactForPatient(p);
             return true;
         }
 
-        public bool DeletePatient(int id)
+        public void addContactForPatient(Patient p)
+        {
+            var contact = context.Contacts.Where(x => x.PatientId == p.PatientId);
+            if (!contact.Any())
+            {
+                context.Contacts.AddRange(p.Contacts);
+                context.SaveChanges();
+            }
+        }
+
+        public string DeletePatient(int id)
         {
             var patient = GetPatientById(id);
             if (patient == null)
             {
-                return false;
+                return "0";
+            }else if (patient.Invoices.Any())
+            {
+                return "-1";
             }
             context.Patients.Remove(patient);
             context.SaveChanges();
-            return true;
+            return "1";
         }
     }
 }

@@ -68,8 +68,8 @@ namespace HcsBE.Bussiness.Patient
                 cfg.AddProfile(new PatientMapper());
             });
             var mapper = config.CreateMapper();
-            var p = mapper.Map<DataAccess.Entity.Patient>(entity);
-            var status = dao.UpdatePatient(p);
+            var p = mapper.Map<PatientDTO>(entity);
+            var status = dao.UpdatePatient(mapper.Map<DataAccess.Entity.Patient>(p));
             return status;
         }
         public bool Add(PatientModify entity)
@@ -80,12 +80,12 @@ namespace HcsBE.Bussiness.Patient
                 cfg.AddProfile(new PatientMapper());
             });
             var mapper = config.CreateMapper();
-            var p = mapper.Map<DataAccess.Entity.Patient>(entity);
-            var status = dao.AddPatient(p);
+            var p = mapper.Map<PatientDTO>(entity);
+            var status = dao.AddPatient(mapper.Map<DataAccess.Entity.Patient>(p));
             return status;
         }
         
-        public bool Delete(int id)
+        public string Delete(int id)
         {
             var status = dao.DeletePatient(id);
             return status;

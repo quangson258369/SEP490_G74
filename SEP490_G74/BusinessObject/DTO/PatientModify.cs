@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace HcsBE.DTO
         public string? ServiceDetailName { get; set; }
 
         public DateTime ExamDate { get; set; }
+
+        public Contact Contact { get; set; }
     }
 }
