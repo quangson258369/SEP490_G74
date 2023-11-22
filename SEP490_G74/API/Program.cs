@@ -1,5 +1,7 @@
 using API;
+using AutoMapper;
 using DataAccess.Entity;
+using HcsBE.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -17,6 +19,18 @@ builder.Services.AddDbContext<HcsContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("MyCnn")
 ));
 builder.Services.AddScoped<HcsContext>();
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new PatientMapper());
+    mc.AddProfile(new DoctorMapper());
+    mc.AddProfile(new ServiceMapper());
+    mc.AddProfile(new MedicalRCMapper());
+    mc.AddProfile(new ExaminationResultMapper());
+    mc.AddProfile(new PrescriptionMapper());
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 startup.ConfigureServices(builder.Services);
 builder.Services.AddSwaggerGen(c =>
 {

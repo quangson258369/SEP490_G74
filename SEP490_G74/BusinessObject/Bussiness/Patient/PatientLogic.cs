@@ -1,8 +1,7 @@
 ﻿using API.Common;
 using AutoMapper;
-using HcsBE.Bussiness.MedicalRecord;
-using HcsBE.Dao.MedicalRecordDAO;
 using HcsBE.Dao.PatientDao;
+using HcsBE.Mapper;
 using HcsBE.DTO;
 using System;
 using System.Collections.Generic;
@@ -15,15 +14,14 @@ namespace HcsBE.Bussiness.Patient
     public class PatientLogic
     {
         private PatientDAO dao = new PatientDAO();
+        private IMapper mapper;
+        public PatientLogic( IMapper mapper)
+        {
+            this.mapper = mapper;
+        }
 
         public List<PatientDTO> ListPatient()
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new PatientMapper());
-            });
-            var mapper = config.CreateMapper();
             List<DataAccess.Entity.Patient> list = dao.ListPatients();
             var output =  mapper.Map<List<PatientDTO>>(list);
             if (list == null)
@@ -42,12 +40,6 @@ namespace HcsBE.Bussiness.Patient
 
         public PatientDTO GetPatientGetId(int id)
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new PatientMapper());
-            });
-            var mapper = config.CreateMapper();
             DataAccess.Entity.Patient patient = dao.GetPatientById(id);
             if (patient == null)
             {
@@ -62,24 +54,12 @@ namespace HcsBE.Bussiness.Patient
 
         public bool Update(PatientModify entity)
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new PatientMapper());
-            });
-            var mapper = config.CreateMapper();
             var p = mapper.Map<PatientDTO>(entity);
             var status = dao.UpdatePatient(mapper.Map<DataAccess.Entity.Patient>(p));
             return status;
         }
         public bool Add(PatientModify entity)
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new PatientMapper());
-            });
-            var mapper = config.CreateMapper();
             var p = mapper.Map<PatientDTO>(entity);
             var status = dao.AddPatient(mapper.Map<DataAccess.Entity.Patient>(p));
             return status;

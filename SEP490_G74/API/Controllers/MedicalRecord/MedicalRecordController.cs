@@ -10,11 +10,16 @@ namespace API.Controllers.MedicalRecord
     [ApiController]
     public class MedicalRecordController : ControllerBase
     {
+        private IMapper _mapper;
+        public MedicalRecordController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         [HttpGet("ListMedicalRecord")]
         public IActionResult MedicalRecordList()
         {
-            var res = new MedicalRecordBusinessLogic();
+            var res = new MedicalRecordBusinessLogic(_mapper);
             var list = res.GetListMedicalRecord();
             if (list == null) return NotFound();
             return Ok(list);
@@ -23,7 +28,7 @@ namespace API.Controllers.MedicalRecord
         [HttpGet("GetMedicalRecord/{id}")]
         public IActionResult GetMedicalRecord(int id) 
         {
-            var resDao = new MedicalRecordBusinessLogic();
+            var resDao = new MedicalRecordBusinessLogic(_mapper);
             var medicalRecord = resDao.GetMedicalRecord(id);
             if (medicalRecord!= null) return Ok(medicalRecord);
             return NotFound();
@@ -32,7 +37,7 @@ namespace API.Controllers.MedicalRecord
         [HttpPut("UpdateMedicalRecord")]
         public IActionResult updateMedicalRecord(MedicalRecordModify mdto)
         {
-            var resDao = new MedicalRecordBusinessLogic();
+            var resDao = new MedicalRecordBusinessLogic(_mapper);
             var status = resDao.Update(mdto);
             if (status == false)
             {
@@ -44,7 +49,7 @@ namespace API.Controllers.MedicalRecord
         [HttpPost("AddMedicalRecord")]
         public IActionResult AddMedicalRecord(MedicalRecordModify m)
         {
-            var resDao = new MedicalRecordBusinessLogic();
+            var resDao = new MedicalRecordBusinessLogic(_mapper);
             var status = resDao.AddMR(m);
             if (status == false)
             {
@@ -56,7 +61,7 @@ namespace API.Controllers.MedicalRecord
         [HttpDelete("DeleteMedicalRecord")]
         public IActionResult DeleteMedicalRecord(int id)
         {
-            var resDao = new MedicalRecordBusinessLogic();
+            var resDao = new MedicalRecordBusinessLogic(_mapper);
             var status = resDao.DeleteMR(id);
 
             if (status == "-1")

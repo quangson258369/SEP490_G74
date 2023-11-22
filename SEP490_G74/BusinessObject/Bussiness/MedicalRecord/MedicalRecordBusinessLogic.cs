@@ -2,6 +2,7 @@
 using AutoMapper;
 using HcsBE.Bussiness.Login;
 using HcsBE.Dao.MedicalRecordDAO;
+using HcsBE.Mapper;
 using HcsBE.DTO;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,17 +16,16 @@ namespace HcsBE.Bussiness.MedicalRecord
     public class MedicalRecordBusinessLogic
     {
         private MedicalRecordDao dao = new MedicalRecordDao();
+        private IMapper _mapper;
+        public MedicalRecordBusinessLogic(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
         public List<MedicalRecordDaoOutputDto> GetListMedicalRecord()
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MedicalRCMapper());
-            });
-            var mapper = config.CreateMapper();
-            
             List<DataAccess.Entity.MedicalRecord> list = dao.MedicalRecordList();
-            var output = mapper.Map<List<MedicalRecordDaoOutputDto>>(list);
+            var output = _mapper.Map<List<MedicalRecordDaoOutputDto>>(list);
             if(list == null)
             {
                 return new List<MedicalRecordDaoOutputDto>()
@@ -41,15 +41,9 @@ namespace HcsBE.Bussiness.MedicalRecord
         }
 
         public MedicalRecordDaoOutputDto GetMedicalRecord(int id) {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MedicalRCMapper());
-            });
-            var mapper = config.CreateMapper();
-
+        
             var mr = dao.GetMedicalRecord(id);
-            var output = mapper.Map<MedicalRecordDaoOutputDto>(mr);
+            var output = _mapper.Map<MedicalRecordDaoOutputDto>(mr);
 
             if (mr == null)
             {
@@ -64,26 +58,14 @@ namespace HcsBE.Bussiness.MedicalRecord
 
         public bool Update( MedicalRecordModify mdto)
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MedicalRCMapper());
-            });
-            var mapper = config.CreateMapper();
-            var mr = mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
+            var mr = _mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
             var status = dao.UpdateMedicalRecord(mr);
             return status;
         }
 
         public bool AddMR(MedicalRecordModify mdto) 
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MedicalRCMapper());
-            });
-            var mapper = config.CreateMapper();
-            var mr = mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
+            var mr = _mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
             var status = dao.AddMedicalRecord(mr);
             return status;
         }
