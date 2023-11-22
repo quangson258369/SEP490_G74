@@ -7,7 +7,7 @@ namespace API.Controllers.Patient
     [ApiController]
     public class PatientController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("ListPatient")]
         public IActionResult ListPatient()
         {
             var res = new PatientLogic();

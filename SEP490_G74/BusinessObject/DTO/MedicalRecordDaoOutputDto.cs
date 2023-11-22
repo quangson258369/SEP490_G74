@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HcsBE.Dao.MedicalRecordDAO
+namespace HcsBE.DTO
 {
-    public class MedicalRecordDaoOutputDto :BaseOutputCommon
+    public class MedicalRecordDaoOutputDto : BaseOutputCommon
     {
         public int MedicalRecordId { get; set; }
 
@@ -23,17 +23,20 @@ namespace HcsBE.Dao.MedicalRecordDAO
         public string? ExamReason { get; set; }
 
         public string ExamCode { get; set; } = null!;
+        public string PatientName { get; set; } = null!;
+
+        public string PatientPhone { get; set; } = null!;
 
         public int DoctorId { get; set; }
 
-        public virtual Doctor Doctor { get; set; } = null!;
+        public Doctor? Doctor { get; set; }
 
-        public virtual ICollection<ExaminationResultId> ExaminationResultIds { get; set; } = new List<ExaminationResultId>();
+        public Patient? Patient { get; set; }
 
-        public virtual Patient Patient { get; set; } = null!;
+        public List<ExaminationResultId>? ExaminationResultIds { get; set; }
 
-        public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+        public List<Prescription>? Prescriptions { get; set; }
 
-        public virtual ICollection<Service> Services { get; set; } = new List<Service>();
+        public List<Service>? Services { get; set; }
     }
 }

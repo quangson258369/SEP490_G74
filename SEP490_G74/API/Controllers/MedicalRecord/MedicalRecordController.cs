@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HcsBE.Bussiness.MedicalRecord;
-using HcsBE.Dao.MedicalRecordDAO;
+using HcsBE.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

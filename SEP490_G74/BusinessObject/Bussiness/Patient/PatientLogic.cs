@@ -2,6 +2,7 @@
 using AutoMapper;
 using HcsBE.Dao.MedicalRecordDAO;
 using HcsBE.Dao.PatientDao;
+using HcsBE.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

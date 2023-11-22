@@ -22,7 +22,7 @@ namespace HcsBE.Dao.PatientDao
             /*var patientIds = db.Patients.Select(patient => patient.PatientId).ToList();
 
             var contacts = (from contact in db.Contacts
-                            where patientIds.Contains(contact.PatientId.Value) // Chỉ sử dụng Contains trực tiếp trên PatientId.Value
+                            where patientIds.Contains(contact.PatientId.Value) 
                             select contact).ToList();
 
             var medicalRecords = (from medical in db.MedicalRecords
@@ -42,7 +42,7 @@ namespace HcsBE.Dao.PatientDao
                              MedicalRecords = medicalRecords.Where(m => m.PatientId == patient.PatientId).ToList(),
                              Invoices = invoices.Where(i => i.PatientId == patient.PatientId).ToList()
                          }).ToList();*/
-            //output = query.Select(rs => rs.Patient).ToList();\
+            //output = query.Select(rs => rs.Patient).ToList();
             output = context.Patients.ToList();
             return output;
         }
