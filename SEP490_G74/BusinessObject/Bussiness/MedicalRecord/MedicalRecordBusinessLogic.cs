@@ -90,18 +90,18 @@ namespace HcsBE.Bussiness.MedicalRecord
         
         public string DeleteMR(int id) 
         {
-            // khoi tao mapper
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MedicalRCMapper());
-            });
-            var mapper = config.CreateMapper();
             var mdto = dao.GetMedicalRecord(id);
             if(mdto != null)
             {
-                var mr = mapper.Map<DataAccess.Entity.MedicalRecord>(mdto);
-                var status = dao.DeleteMedicalRecord(mr.MedicalRecordId);
-                return status;
+                var status = dao.DeleteMedicalRecord(id);
+                if(status == "-1")
+                {
+                    return "-1";
+                }
+                else
+                {
+                    return "1";
+                }
             }
             return "0";
         }

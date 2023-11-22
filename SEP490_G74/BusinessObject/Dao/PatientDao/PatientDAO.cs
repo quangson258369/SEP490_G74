@@ -15,12 +15,11 @@ namespace HcsBE.Dao.PatientDao
         private HcsContext context = new HcsContext();
 
         public List<Patient> ListPatients()
-        {
-            var db = new HcsContext();
+        {   
             var output = new List<Patient>();
-
-            /*var patientIds = db.Patients.Select(patient => patient.PatientId).ToList();
-
+            /*var db = new HcsContext();
+            
+            var patientIds = db.Patients.Select(patient => patient.PatientId).ToList();
             var contacts = (from contact in db.Contacts
                             where patientIds.Contains(contact.PatientId.Value) 
                             select contact).ToList();
@@ -45,6 +44,47 @@ namespace HcsBE.Dao.PatientDao
             //output = query.Select(rs => rs.Patient).ToList();
             output = context.Patients.ToList();
             return output;
+        }
+
+        public Patient GetPatientById(int id)
+        {
+            return context.Patients.FirstOrDefault(x => x.PatientId == id);
+        }
+
+        public bool UpdatePatient(Patient p)
+        {
+            var patient = GetPatientById(p.PatientId);
+            if (patient == null)
+            {
+                return false;
+            }
+            context.Patients.Update(p);
+            context.SaveChanges();
+            return true;
+        }
+
+        public bool AddPatient(Patient p)
+        {
+            var patient = GetPatientById(p.PatientId);
+            if (patient != null)
+            {
+                return false;
+            }
+            context.Patients.Add(p);
+            context.SaveChanges();
+            return true;
+        }
+
+        public bool DeletePatient(int id)
+        {
+            var patient = GetPatientById(id);
+            if (patient == null)
+            {
+                return false;
+            }
+            context.Patients.Remove(patient);
+            context.SaveChanges();
+            return true;
         }
     }
 }

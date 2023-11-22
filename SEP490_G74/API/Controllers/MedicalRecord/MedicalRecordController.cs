@@ -65,7 +65,10 @@ namespace API.Controllers.MedicalRecord
             }else if(status == "0") {
                 return NotFound();
             }
-            return Ok("Delete successfully!");
+            else
+            {
+                return Ok("Delete successfully!");
+            }
         }
     }
 }

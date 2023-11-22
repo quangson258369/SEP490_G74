@@ -78,7 +78,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
              */
             var mr = GetMedicalRecord(id);
             
-            if (mr.ExaminationResultIds != null)
+            if (mr.ExaminationResultIds.Any())
             {
                 return "-1";
             }
