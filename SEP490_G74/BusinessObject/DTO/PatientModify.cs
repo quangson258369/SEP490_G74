@@ -15,6 +15,6 @@ namespace HcsBE.DTO
 
         public DateTime ExamDate { get; set; }
 
-        public Contact Contact { get; set; }
+        public ContactPatientDTO Contact { get; set; }
     }
 }

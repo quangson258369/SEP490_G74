@@ -14,6 +14,7 @@ namespace HcsBE.Bussiness.Patient
         public PatientMapper() {
             
             CreateMap<PatientModify, DataAccess.Entity.Patient>();
+            CreateMap<ContactPatientDTO, DataAccess.Entity.Contact>();
 
             CreateMap<PatientModify, PatientDTO>()
                 .ForMember(x =>x.PatientId, x=>x.MapFrom(x=>x.PatientId))
