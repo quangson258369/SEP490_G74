@@ -30,7 +30,7 @@ namespace API.Controllers.MedicalRecord
         }
 
         [HttpPut("UpdateMedicalRecord")]
-        public IActionResult updateMedicalRecord(MedicalRecordDaoOutputDto mdto)
+        public IActionResult updateMedicalRecord(MedicalRecordModify mdto)
         {
             var resDao = new MedicalRecordBusinessLogic();
             var status = resDao.Update(mdto);
@@ -42,7 +42,7 @@ namespace API.Controllers.MedicalRecord
         }
 
         [HttpPost("AddMedicalRecord")]
-        public IActionResult AddMedicalRecord(MedicalRecordDaoOutputDto m)
+        public IActionResult AddMedicalRecord(MedicalRecordModify m)
         {
             var resDao = new MedicalRecordBusinessLogic();
             var status = resDao.AddMR(m);

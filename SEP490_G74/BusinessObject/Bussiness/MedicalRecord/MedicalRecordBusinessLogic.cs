@@ -62,7 +62,7 @@ namespace HcsBE.Bussiness.MedicalRecord
             return output;
         }
 
-        public bool Update( MedicalRecordDaoOutputDto mdto)
+        public bool Update( MedicalRecordModify mdto)
         {
             // khoi tao mapper
             var config = new MapperConfiguration(cfg =>
@@ -75,7 +75,7 @@ namespace HcsBE.Bussiness.MedicalRecord
             return status;
         }
 
-        public bool AddMR(MedicalRecordDaoOutputDto mdto) 
+        public bool AddMR(MedicalRecordModify mdto) 
         {
             // khoi tao mapper
             var config = new MapperConfiguration(cfg =>

@@ -15,6 +15,8 @@ namespace HcsBE.Bussiness.MedicalRecord
     {
         private HcsContext context = new HcsContext();
         public MedicalRCMapper() {
+            CreateMap<MedicalRecordModify, DataAccess.Entity.MedicalRecord>();
+            CreateMap<DataAccess.Entity.MedicalRecord, MedicalRecordModify>();
             CreateMap<MedicalRecordDaoOutputDto, DataAccess.Entity.MedicalRecord>();
             CreateMap<DataAccess.Entity.MedicalRecord, MedicalRecordDaoOutputDto>()
                 .ForMember(o => o.PatientName, opt => opt.MapFrom(o => getName(o.PatientId)))
