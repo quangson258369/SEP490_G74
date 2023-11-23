@@ -15,8 +15,8 @@ namespace WebCLient.Controllers
             client = new HttpClient();
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
-             
         }
+
         public async Task<IActionResult> Index()
         {
             MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/ListMedicalRecord";
@@ -27,5 +27,7 @@ namespace WebCLient.Controllers
             if (response == null) return View();
             return View(listProducts);
         }
+
+
     }
 }
