@@ -29,14 +29,14 @@ namespace HcsBE.DTO
 
         public int DoctorId { get; set; }
 
-        public DoctorMRDTO? Doctor { get; set; }
+        public Doctor? Doctor { get; set; }
 
-        public PatientModify? Patient { get; set; }
+        public Patient? Patient { get; set; }
 
-        public List<ExaminationResultIdMRDTO>? ExaminationResultIds { get; set; }
+        public List<ExaminationResultId>? ExaminationResultIds { get; set; }
 
-        public List<PrescriptionDTO>? Prescriptions { get; set; }
+        public List<Prescription>? Prescriptions { get; set; }
 
-        public List<ServiceDTO>? Services { get; set; }
+        public List<Service>? Services { get; set; }
     }
 }
