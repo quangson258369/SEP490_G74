@@ -13,7 +13,6 @@ namespace HcsBE.Dao.PatientDao
     public class PatientDAO
     {
         private HcsContext context = new HcsContext();
-
         public List<Patient> ListPatients()
         {   
             var output = new List<Patient>();
@@ -51,12 +50,11 @@ namespace HcsBE.Dao.PatientDao
             return context.Patients.FirstOrDefault(x => x.PatientId == id);
         }
 
-        public List<Patient> SearchPatient(int id, string name, DateTime date)
+        public List<Patient> SearchPatient(string name, DateTime date)
         {
-            return context.Patients.Where(x => x.PatientId == id 
-            ||x.ServiceDetailName.Contains(name)
-            // xong lam them search ten patient trong contact cho chien
-            || x.ExamDate.Equals(date)).ToList();
+            return context.Patients.FromSqlRaw("select * from Patient p " +
+               " join Contact c on p.patientId = c.patientId " +
+               " where c.Name like '%%' OR p.examDate = ''").ToList();
         }
 
         public bool UpdatePatient(Patient p)

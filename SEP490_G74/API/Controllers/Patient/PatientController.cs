@@ -23,6 +23,15 @@ namespace API.Controllers.Patient
             return Ok(list);
         }
 
+        [HttpGet("GetPatient/{id}")]
+        public IActionResult GetPatient(int id)
+        {
+            var res = new PatientLogic(_mapper);
+            var list = res.GetPatientGetId(id);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
+
         [HttpPost("AddPatient")]
         public IActionResult AddPatient(PatientModify p)
         {
@@ -47,6 +56,12 @@ namespace API.Controllers.Patient
             if(status == "0") return NotFound();
             if(status == "-1") return BadRequest();
             return Ok("Delete Successfully!");
+        }
+
+        [HttpGet("SearchPatient")]
+        public IActionResult SearchPatient()
+        {
+
         }
     }
 }

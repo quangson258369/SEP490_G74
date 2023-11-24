@@ -201,12 +201,6 @@ D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.pdb
 D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\System.Text.Json.dll
 D:\Đồ Án\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfo.cs
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
-D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\App.Config
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\web.config
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\appsettings.Development.json
@@ -289,7 +283,13 @@ D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.dll
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\HcsBE.dll
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\HcsBE.pdb
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\bin\Debug\net6.0\DataAccess.pdb
+D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
+D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
+D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
+D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.AssemblyInfo.cs
+D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cs
+D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.build.API.props
 D:\DoAnFall\SEP490_G74\SEP490_G74\API\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.API.props
