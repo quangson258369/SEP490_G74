@@ -1,0 +1,126 @@
+
+body {
+    background-color: #DEDEDE !important;
+}
+#body-content {
+    margin-top: 60px;
+}
+
+.body-content-header {
+    display: block;
+    padding-left: 282px;
+    height: 1px;
+}
+.form-profile {
+    max-width: 918px;
+    max-height: 503px;
+    padding: 40px 35px 503px;
+    margin: 65px auto;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.content-right {
+
+    float: left;
+    width: 20%;
+    border-right: 2px solid #BEACAC;
+    height: 439px;
+}
+
+.content-left {
+    float: right;
+    width: 80%;
+
+}
+
+.content-left .title-fullname {
+    display: block;
+}
+
+#image-container {
+    width: 163px;
+    height: 163px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+}
+
+#image-container img {
+    width: 163px;
+    height: 163px;
+    object-fit: cover;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.fullname.form-control {
+    width: 246px;
+
+}
+
+.dob.form-control {
+    width: 139px;
+
+}
+
+.form-group.gender {
+    padding-left: 1px;
+}
+
+.form-group .gender {
+    display: flex;
+}
+
+.fullname.form-control,
+.dob.form-control,
+.address.form-control,
+.phone.form-control,
+.email.form-control {
+    border-radius: 10px;
+}
+
+.line3.row {
+    padding-left: 1px;
+}
+
+.title-email,
+.email.form-control {
+    margin-left: 13px;
+}
+
+.btn-change-password,
+.btn-change-profile {
+    width: 224px;
+    height: 43px;
+    background: #A2A2A2;
+    border: 1px solid #6E6E6E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+
+}
+
+.line5.row {
+    float: right;
+    margin-top: 90px;
+}
+
+
+.nav-item-user .nav-link {
+    color: #000000;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    border-left: 1px solid #0f0e0e;
+}
+
+.nav-link .img-profile {
+    height: 2rem;
+    width: 2rem;
+}
+

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {}
+    "D:\\0.DO AN\\New folder (2)\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {}
   },
   "projects": {
-    "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {
+    "D:\\0.DO AN\\New folder (2)\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\0.DO AN\\New folder (2)\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\obj\\",
+        "projectPath": "D:\\0.DO AN\\New folder (2)\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\thinh\\.nuget\\packages\\",
+        "outputPath": "D:\\0.DO AN\\New folder (2)\\SEP490_G74\\SEP490_G74\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\thinh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

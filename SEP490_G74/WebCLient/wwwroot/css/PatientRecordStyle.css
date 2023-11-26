@@ -1,0 +1,58 @@
+body {
+    background-color: #DEDEDE !important;
+}
+.body-content-header{
+    color: black;
+    font-size: 24px;
+    font-family: Inter;
+    font-weight: 700;
+    word-wrap: break-word;
+    border-bottom: 1px #A6A5A5 solid;
+}
+.form-profile {
+    max-width: 1060px;
+    max-height: 980px;
+    padding: 40px 35px 503px;
+    margin: 65px auto;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.line4 .col-md-4{
+    height: 250px;
+}
+textarea.form-control.ReasonExamination{   
+    height: 200px;
+}
+.scrollable-tbody {
+    max-height: 200px;
+    overflow-y: auto;
+    display: block;
+}
+
+ .table-body {
+    width: 100%;
+}
+table.table.table-header{
+    width: 95%;
+}
+.table-header th, .table-body td {
+    border: 1px solid #dee2e6;
+    width: 33.33%;
+}
+
+.table-header {
+    margin-bottom: 0; /* Remove bottom margin for alignment */
+}
+
+.table-body {
+    border-top: none; /* Remove top border for alignment */
+}
+.btn-create-record,.btn-edit,.btn-delete {
+    width: 224px;
+    height: 43px;
+    background: #A2A2A2;
+    border: 1px solid #6E6E6E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    margin: 5px;
+}

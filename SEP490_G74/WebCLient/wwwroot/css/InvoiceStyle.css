@@ -1,0 +1,74 @@
+body {
+    background-color: #DEDEDE !important;
+}
+.body-content-header{
+    color: black;
+    font-size: 24px;
+    font-family: Inter;
+    font-weight: 700;
+    word-wrap: break-word;
+    border-bottom: 1px #A6A5A5 solid;
+}
+.form-profile {
+    max-width: 1060px;
+    max-height: 1100px;
+    padding: 40px 35px 503px;
+    margin: 65px auto;
+    background-color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.line3 .col-md-3 {
+    margin-left: -13px;
+}
+
+.line4.col-md-3 {
+    margin-top: -541px;
+}
+
+.line5.col-md-3,
+.line6.col-md-3,
+.line7.col-md-3 {
+    margin-left: 2px;
+}
+
+.print,
+.submit {
+    margin-right: 10px;
+    margin-top: 180px;
+    float: right;
+    background: #A2A2A2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px #6E6E6E solid;
+    padding: 10px 20px 10px 20px;
+    color: black;
+    font-size: 16px;
+    font-family: Inter; 
+    word-wrap: break-word
+}
+
+.scrollable-tbody {
+    max-height: 200px;
+    overflow-y: auto;
+    display: block;
+}
+
+.table-body {
+    width: 100%;
+}
+table.table.table-header{
+    width: 95%;
+}
+
+.table-header th, .table-body td {
+    border: 1px solid #dee2e6;
+    width: 33.33%;
+}
+
+.table-header {
+    margin-bottom: 0; /* Remove bottom margin for alignment */
+}
+
+.table-body {
+    border-top: none; /* Remove top border for alignment */
+}
