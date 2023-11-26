@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\WebCLient.bundle.scp.css",
-      "PackagePath": "staticwebassets\\WebCLient.bundle.scp.css"
-    },
-    {
       "Id": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\Header.html",
       "PackagePath": "staticwebassets\\Header.html"
     },

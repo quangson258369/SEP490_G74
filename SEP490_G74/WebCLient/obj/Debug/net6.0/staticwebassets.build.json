@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ty2odmZT3KPVN0MEgEHJWNJWh5Wkdo5x0Ma/dXWzr/s=",
+  "Hash": "pg7LRv12+1ME+mzwCsS+BbN33Es+wpQDNHGfshLPV8Y=",
   "Source": "WebCLient",
   "BasePath": "_content/WebCLient",
   "Mode": "Default",
@@ -16,40 +16,6 @@
     }
   ],
   "Assets": [
-    {
-      "Identity": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\bundle\\WebCLient.styles.css",
-      "SourceId": "WebCLient",
-      "SourceType": "Computed",
-      "ContentRoot": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
-      "BasePath": "_content/WebCLient",
-      "RelativePath": "WebCLient.styles.css",
-      "AssetKind": "All",
-      "AssetMode": "CurrentProject",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ApplicationBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\bundle\\WebCLient.styles.css"
-    },
-    {
-      "Identity": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\WebCLient.bundle.scp.css",
-      "SourceId": "WebCLient",
-      "SourceType": "Computed",
-      "ContentRoot": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
-      "BasePath": "_content/WebCLient",
-      "RelativePath": "WebCLient.bundle.scp.css",
-      "AssetKind": "All",
-      "AssetMode": "Reference",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "ScopedCss",
-      "AssetTraitValue": "ProjectBundle",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\WebCLient.bundle.scp.css"
-    },
     {
       "Identity": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\calendar-week-solid 1.svg",
       "SourceId": "WebCLient",

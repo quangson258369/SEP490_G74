@@ -70,5 +70,13 @@ namespace HcsBE.Bussiness.Patient
             var status = dao.DeletePatient(id);
             return status;
         }
+
+        public List<PatientDTO> SearchPatient(string name) 
+        {
+            var result = dao.SearchPatient(name);
+            if (result == null) result = new List<DataAccess.Entity.Patient>();
+            var output = mapper.Map<List<PatientDTO>>(result);
+            return output;
+        }
     }
 }

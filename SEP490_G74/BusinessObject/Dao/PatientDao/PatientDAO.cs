@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts;
 using System;
@@ -50,11 +51,11 @@ namespace HcsBE.Dao.PatientDao
             return context.Patients.FirstOrDefault(x => x.PatientId == id);
         }
 
-        public List<Patient> SearchPatient(string name, DateTime date)
+        public List<Patient> SearchPatient(string name)
         {
-            return context.Patients.FromSqlRaw("select * from Patient p " +
+            return context.Patients.FromSqlRaw("select p.* from Patient p " +
                " join Contact c on p.patientId = c.patientId " +
-               " where c.Name like '%%' OR p.examDate = ''").ToList();
+               " where c.Name like '%'+ {0} +'%' OR p.serviceDetailName like '%' + {0} + '%'", name).ToList();
         }
 
         public bool UpdatePatient(Patient p)

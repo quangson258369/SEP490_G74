@@ -19,6 +19,12 @@ namespace HcsBE.Dao.ServiceDao
                 .Include(x=>x.ServiceType)
                 .ThenInclude(x=>x.Doctors).ToList();
         }
+        public List<Service> SearchService(string name, int typeId)
+        {
+            return context.Services.Include(x=>x.ServiceSupplies)
+                .Include(x=>x.ServiceType)
+                .ThenInclude(x=>x.Doctors).Where(x=>x.ServiceName == name && x.ServiceTypeId == typeId).ToList();
+        }
 
         public Service GetService(int serviceId)
         {

@@ -77,5 +77,24 @@ namespace HcsBE.Bussiness.ServiceBusiness
             var output = dao.DeleteService(id);
             return output;
         }
+
+        public List<ServiceDTO> SearchService(string name, int typeId)
+        {
+            List<Service> services = dao.SearchService(name,typeId);
+            var output = mapper.Map<List<ServiceDTO>>(services);
+            if (services == null)
+            {
+                return new List<ServiceDTO>()
+                {
+                    new ServiceDTO()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return output;
+        }
+
     }
 }

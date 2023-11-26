@@ -59,9 +59,12 @@ namespace API.Controllers.Patient
         }
 
         [HttpGet("SearchPatient")]
-        public IActionResult SearchPatient()
+        public IActionResult SearchPatient(string name)
         {
-
+            var process = new PatientLogic(_mapper);
+            var list= process.SearchPatient(name);
+            if (list == null) return NotFound();
+            return Ok(list);
         }
     }
 }
