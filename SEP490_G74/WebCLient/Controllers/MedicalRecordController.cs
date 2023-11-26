@@ -24,10 +24,13 @@ namespace WebCLient.Controllers
             string strData = await response.Content.ReadAsStringAsync();
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             List<HcsBE.DTO.MedicalRecordDaoOutputDto> listProducts = JsonSerializer.Deserialize<List<HcsBE.DTO.MedicalRecordDaoOutputDto>>(strData, option);
-            if (response == null) return View();
             return View(listProducts);
         }
 
+        public async Task<IActionResult> Add()
+        {
 
+            return View();  
+        }
     }
 }
