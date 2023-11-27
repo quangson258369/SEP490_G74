@@ -29,7 +29,7 @@ namespace HcsBE.DTO
 
         public int DoctorId { get; set; }
 
-        public Doctor? Doctor { get; set; }
+        public Employee? Doctor { get; set; }
 
         public Patient? Patient { get; set; }
 

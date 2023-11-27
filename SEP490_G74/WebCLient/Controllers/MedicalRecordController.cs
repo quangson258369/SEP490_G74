@@ -29,8 +29,19 @@ namespace WebCLient.Controllers
 
         public async Task<IActionResult> Add()
         {
-
+            ViewData["Patient"] = await GetPatient();
             return View();  
+        }
+
+        private async Task<Patient?> GetPatient()
+        {
+            HttpResponseMessage response = await client.GetAsync("");
+            string strData = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            return JsonSerializer.Deserialize<Patient>(strData, options);
         }
     }
 }

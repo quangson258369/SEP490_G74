@@ -17,20 +17,20 @@ namespace HcsBE.Dao.ServiceDao
         {
             return context.Services.Include(x=>x.ServiceSupplies)
                 .Include(x=>x.ServiceType)
-                .ThenInclude(x=>x.Doctors).ToList();
+                .ThenInclude(x=>x.Employees).ToList();
         }
         public List<Service> SearchService(string name, int typeId)
         {
             return context.Services.Include(x=>x.ServiceSupplies)
                 .Include(x=>x.ServiceType)
-                .ThenInclude(x=>x.Doctors).Where(x=>x.ServiceName == name && x.ServiceTypeId == typeId).ToList();
+                .ThenInclude(x=>x.Employees).Where(x=>x.ServiceName == name && x.ServiceTypeId == typeId).ToList();
         }
 
         public Service GetService(int serviceId)
         {
             return (Service)context.Services.Include(x => x.ServiceSupplies)
                 .Include(x => x.ServiceType)
-                .ThenInclude(x => x.Doctors).Where(p => p.ServiceId.Equals(serviceId));
+                .ThenInclude(x => x.Employees).Where(p => p.ServiceId.Equals(serviceId));
         }
 
         public bool UpdateService(Service service)

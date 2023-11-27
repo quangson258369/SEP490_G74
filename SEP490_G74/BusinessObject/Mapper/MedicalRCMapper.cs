@@ -54,23 +54,26 @@ namespace HcsBE.Mapper
             Patient d = new Patient()
             {
                 PatientId = doctor.PatientId,
-                ExamDate = doctor.ExamDate,
                 ServiceDetailName = doctor.ServiceDetailName,
+                BloodGroup = doctor.BloodGroup,
+                BloodPressure = doctor.BloodPressure,
+                Height = doctor.Height,
+                Weight = doctor.Weight,
                 Contacts =context.Contacts.Where(x => x.PatientId == doctor.PatientId).ToList()
             };
             return d;
         }
 
-        private Doctor GetDoctor(int? doctorId)
+        private Employee GetDoctor(int? doctorId)
         {
             if (doctorId == null) return null;
-            var doctor = context.Doctors.Where(x=>x.DoctorId == doctorId).FirstOrDefault();
-            Doctor d = new Doctor()
+            var doctor = context.Employees.Where(x=>x.DoctorId == doctorId).FirstOrDefault();
+            Employee d = new Employee()
             {
                 DoctorId = doctor.DoctorId,
-                DoctorSpecialize = doctor.DoctorSpecialize,
                 ServiceTypeId = doctor.ServiceTypeId,
                 UserId = doctor.UserId,
+                
                 Contacts = context.Contacts.Where(x=>x.DoctorId == doctor.DoctorId).ToList()
             };
             return d;

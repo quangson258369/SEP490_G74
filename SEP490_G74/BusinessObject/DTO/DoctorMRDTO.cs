@@ -10,8 +10,6 @@ namespace HcsBE.DTO
     {
         public int DoctorId { get; set; }
 
-        public string DoctorSpecialize { get; set; } = null!;
-
         public int ServiceTypeId { get; set; }
 
         public int UserId { get; set; }

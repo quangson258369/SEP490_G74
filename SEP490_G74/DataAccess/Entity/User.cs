@@ -11,7 +11,9 @@ public partial class User
 
     public string Email { get; set; } = null!;
 
-    public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();
+    public bool? Status { get; set; }
+
+    public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
