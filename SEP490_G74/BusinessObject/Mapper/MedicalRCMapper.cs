@@ -73,8 +73,9 @@ namespace HcsBE.Mapper
                 DoctorId = doctor.DoctorId,
                 ServiceTypeId = doctor.ServiceTypeId,
                 UserId = doctor.UserId,
-                
-                Contacts = context.Contacts.Where(x=>x.DoctorId == doctor.DoctorId).ToList()
+                ServiceType = context.ServiceTypes.SingleOrDefault(x=>x.ServiceTypeId == doctor.ServiceTypeId),
+                Contacts = context.Contacts.Where(x=>x.DoctorId == doctor.DoctorId).ToList(),
+                User = context.Users.SingleOrDefault(x=>x.UserId == doctor.UserId) == null? null : context.Users.SingleOrDefault(x => x.UserId == doctor.UserId)
             };
             return d;
         }

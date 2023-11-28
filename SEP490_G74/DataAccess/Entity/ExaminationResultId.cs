@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entity;
 
@@ -18,6 +19,6 @@ public partial class ExaminationResultId
     public DateTime ExamDate { get; set; }
 
     public int ServiceId { get; set; }
-
+    [JsonIgnore]
     public virtual MedicalRecord MedicalRecord { get; set; } = null!;
 }
