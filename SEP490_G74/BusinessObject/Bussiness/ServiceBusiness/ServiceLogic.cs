@@ -22,6 +22,11 @@ namespace HcsBE.Bussiness.ServiceBusiness
             this.mapper = mapper;
         }
 
+        public List<ServiceType> GetServiceTypes()
+        {
+            return dao.GetListServiceType();
+        }
+
         public List<ServiceDTO> GetAll()
         {
             List<Service> services = dao.ListService();

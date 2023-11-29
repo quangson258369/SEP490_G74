@@ -1,8 +1,9 @@
-﻿
+﻿@model List<DataAccess.Entity.ServiceType>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +36,7 @@
                     <div class="col-sm p-3 min-vh-100">
 
                         <h2 class="body-content-header">Tạo hồ sơ bệnh án</h2>
-                        <form class=" form-profile">
+                        <form class=" form-profile" method="post" action="/MedicalRecord/AddMR">
                             <div class="col-md-12 form-group">
 
 
@@ -128,21 +129,21 @@
                                         <textarea type="text" class="ReasonExamination form-control" name="address"></textarea>
                                     </div>
                                     <div class="col-md-5 form-group">
-                                        <label class="date-create">Dịch vụ đã chọn</label>
+                                        <label class="date-create">Dịch vụ</label>
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row">
-
-                                                    <select class="col-md-4 ml-3">
+                                                    
+                                                    <select oninput="" class="col-md-4 ml-3" name="ServiceType">
                                                         <option value="0">Chọn phòng khám</option>
-                                                        <option value="1">Noi </option>
-                                                        <option value="2">Ngoai</option>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                        }
                                                     </select>
-                                                    <input type="text" class="col-md-5 ml-5 form-control search-input"
+                                                    <input oninput="" type="text" name="searchService" class="col-md-5 ml-5 form-control search-input"
                                                            placeholder="Search anything...">
-
                                                 </div>
-                                                <p>Chọn dịch vụ</p>
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <table class="table table-bordered table-header">
@@ -171,7 +172,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group ">
-                                        <label class="title-email">Chọn dịch vụ khám</label>
+                                        <label class="title-email">Dịch vụ đã chọn</label>
                                         <div class="card">
                                             <div class="card-body">
                                                 <table class="table table-bordered table-header">
@@ -186,11 +187,6 @@
                                                 <div class="scrollable-tbody">
                                                     <table class="table table-bordered table-body selected-service-table">
                                                         <tbody>
-                                                            <tr>
-                                                                <td>siêu âm</td>
-                                                                <td>12k</td>
-                                                                <td><button onclick="RemoveService(name,price)">Xóa</button></td>
-                                                            </tr>
 
                                                             <!-- Add more rows here to see the scrolling effect -->
                                                         </tbody>

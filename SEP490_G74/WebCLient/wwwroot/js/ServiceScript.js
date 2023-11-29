@@ -10,6 +10,11 @@ function addService(name, price) {
   addToTable(service);
 
 }
+
+function sendToControll(name, typeId) {
+
+}
+
 function addToTable(service) {
   let name = service.name;
   let price = service.price;

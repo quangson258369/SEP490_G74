@@ -22,8 +22,16 @@ namespace API.Controllers.ServiceAPI
             var output = logic.GetAll();
             return Ok(output);
         }
-        
-       // [HttpGet("SearchService/{name},{typeId}")]
+
+        [HttpGet("ListServiceType")]
+        public IActionResult GetAllServiceType()
+        {
+            var logic = new ServiceLogic(mapper);
+            var output = logic.GetServiceTypes();
+            return Ok(output);
+        }
+
+        // [HttpGet("SearchService/{name},{typeId}")]
         [HttpGet("SearchService")]
         public IActionResult SearchService(string name, int typeId)
         {
