@@ -145,8 +145,7 @@
                                                             <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
                                                         }
                                                     </select>
-                                                    <input id="searchService" onchange="saveAndSendToControll(getSelectValue(), this.value)" type="text" name="searchService" class="col-md-5 ml-5 form-control search-input"
-                                                           value="@ViewBag.searchName" placeholder="Search anything...">
+                                                    <input type="text" id="searchInput" placeholder="Filter services..." oninput="filterTable()" />
                                                 </div>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -159,14 +158,38 @@
                                                             </thead>
                                                         </table>
                                                         <div class="scrollable-tbody">
-                                                            <table class="table table-bordered table-body">
+                                                            <table id="serviceTable" class="table table-bordered table-body">
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>siêu âm</td>
                                                                         <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-                                                                    </tr>
 
-                                                                    <!-- Add more rows here to see the scrolling effect -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>X quang</td>
+                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>xét nghiệm máu</td>
+                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>xét nghiệm nước tiểu</td>
+                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>siêu âm bụng</td>
+                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>nhổ răng</td>
+                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
+
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -231,11 +254,25 @@
         return encodeURIComponent(inputValue);
     }
 
-    function saveAndSendToControll(serviceType, searchValue) {
-        savedServiceType = serviceType;
-        savedSearchValue = searchValue;
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toLowerCase();
+        table = document.getElementById("serviceTable");
+        tr = table.getElementsByTagName("tr");
 
-        window.location.href = "MedicalRecord/Add?ServiceType=" + savedServiceType + "&searchName=" + savedSearchValue;
+        // Loop through all table rows, and hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
  </script>
 <script type="text/javascript" src="~/js/ServiceScript.js"></script>

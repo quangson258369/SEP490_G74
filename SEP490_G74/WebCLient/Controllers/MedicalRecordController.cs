@@ -38,7 +38,7 @@ namespace WebCLient.Controllers
             ViewBag.ServiceType = ServiceType;
             ViewBag.SearchName = searchName;
 
-            response = await client.GetAsync("");
+         //   response = await client.GetAsync("");
             string strSearch = await response.Content.ReadAsStringAsync();
             List<Service> list = JsonSerializer.Deserialize<List<Service>>(strSearch, options);
 
