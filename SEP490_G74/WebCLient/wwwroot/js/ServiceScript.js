@@ -1,5 +1,6 @@
 let services = [];
 
+
 function addService(name, price) {
   let service = {
     name: name,
@@ -8,10 +9,6 @@ function addService(name, price) {
   console.log(name, price);
   services.push(service);
   addToTable(service);
-
-}
-
-function sendToControll(name, typeId) {
 
 }
 

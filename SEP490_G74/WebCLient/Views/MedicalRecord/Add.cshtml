@@ -134,15 +134,19 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     
-                                                    <select oninput="" class="col-md-4 ml-3" name="ServiceType">
+                                                    <select id="serviceType" onchange="saveAndSendToControll(this.value, getInputValue())" class="col-md-4 ml-3" name="ServiceType">
                                                         <option value="0">Chọn phòng khám</option>
                                                         @foreach (var item in Model)
                                                         {
+                                                            @if (item.ServiceTypeId == ViewBag.ServiceType)
+                                                            {
+                                                                <option value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
+                                                            }
                                                             <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
                                                         }
                                                     </select>
-                                                    <input oninput="" type="text" name="searchService" class="col-md-5 ml-5 form-control search-input"
-                                                           placeholder="Search anything...">
+                                                    <input id="searchService" onchange="saveAndSendToControll(getSelectValue(), this.value)" type="text" name="searchService" class="col-md-5 ml-5 form-control search-input"
+                                                           value="@ViewBag.searchName" placeholder="Search anything...">
                                                 </div>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -202,9 +206,6 @@
                                     <button class="btn-create-record float-right">Tạo hồ sơ</button>
                                 </div>
                             </div>
-
-
-
                         </form>
 
 
@@ -216,6 +217,27 @@
     </div>
 
 </body>
+<script>
+    var savedServiceType = 0;
+    var savedSearchValue = "";
+
+    function getSelectValue() {
+        var selectElement = document.getElementById('serviceType');
+        return selectElement.options[selectElement.selectedIndex].value;
+    }
+
+    function getInputValue() {
+        var inputValue = document.getElementById('searchService').value;
+        return encodeURIComponent(inputValue);
+    }
+
+    function saveAndSendToControll(serviceType, searchValue) {
+        savedServiceType = serviceType;
+        savedSearchValue = searchValue;
+
+        window.location.href = "MedicalRecord/Add?ServiceType=" + savedServiceType + "&searchName=" + savedSearchValue;
+    }
+ </script>
 <script type="text/javascript" src="~/js/ServiceScript.js"></script>
 <script type="text/javascript" src="~/js/Sidebar.js"></script>
 <script type="text/javascript" src="~/js/HeaderScript.js"></script>

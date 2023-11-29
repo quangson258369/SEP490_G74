@@ -27,7 +27,7 @@ namespace WebCLient.Controllers
             return View(listProducts);
         }
 
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(int ServiceType,string searchName)
         {
             HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
             string strData = await response.Content.ReadAsStringAsync();
@@ -35,6 +35,13 @@ namespace WebCLient.Controllers
             {
                 PropertyNameCaseInsensitive = true
             };
+            ViewBag.ServiceType = ServiceType;
+            ViewBag.SearchName = searchName;
+
+            response = await client.GetAsync("");
+            string strSearch = await response.Content.ReadAsStringAsync();
+            List<Service> list = JsonSerializer.Deserialize<List<Service>>(strSearch, options);
+
             List<ServiceType> serviceTypes = JsonSerializer.Deserialize<List<ServiceType>>(strData, options);
             return View(serviceTypes);
         }
