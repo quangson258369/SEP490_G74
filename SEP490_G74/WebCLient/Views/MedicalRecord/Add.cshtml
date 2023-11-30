@@ -1,0 +1,258 @@
+﻿@using HcsBE.DTO;
+@model List<DataAccess.Entity.ServiceType>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hcs-Healcare System</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="~/css/HeaderStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/css/PatientRecordStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Sidebar.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/1d6b4c4b00.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+        </div>
+        <div id="body-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sidebar">
+                    </div>
+                    <div class="col-sm p-3 min-vh-100">
+
+                        <h2 class="body-content-header">Tạo hồ sơ bệnh án</h2>
+                        <form class=" form-profile" method="post" action="MedicalRecord/AddMedicalRecord">
+                            <div class="col-md-12 form-group">
+
+
+                                <div class="line1 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="invoice-code">Mã hồ sơ</label>
+                                        <input type="text" class="invoice-code form-control" name="examcode" value="@ViewBag.ExamCode"
+                                               readonly />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="patient-code">Mã bệnh nhân</label>
+                                        <input type="text" class="patient-code form-control" name="pid" value="@ViewBag.Pid"
+                                               readonly />
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                        <label class="fullname">Họ và tên</label>
+                                        <input type="text" class="fullname form-control" name="fullname" />
+
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="dob">Ngày sinh</label>
+                                        <input type="date" class="dob form-control" name="dob" />
+
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="title-gender">Giới tính</label>
+                                        <div class="gender">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="male"
+                                                       value="male">
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender" id="female"
+                                                       value="female">
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line2 row">
+                                    <div class="col-md-9 form-group">
+                                        <label class="address">Địa chỉ</label>
+                                        <input type="text" class="address form-control" name="address" />
+                                    </div>
+                                    <div class="row-cols-md-3 form-group">
+                                        <label class="phone">Số điện thoại</label>
+                                        <input type="text" class="phone form-control" name="phone" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 line3 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Chiều cao</label>
+                                        <input type="text" class="date-create form-control" name="height" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Cân nặng</label>
+                                        <input type="text" class="date-create form-control" name="weight" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Nhóm máu</label>
+                                        <input type="text" class="date-create form-control" name="bloodgr" />
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Huyết áp</label>
+                                        <input type="text" class="date-create form-control" name="address" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="date-create">Ngày khám</label>
+                                        <input type="text" class="date-create form-control" name="createdate" readonly />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 line5 row">
+                                    <div class="col-md-3 form-group">
+                                        <label class="date-create">Lí do khám</label>
+                                        <textarea type="text" class="ReasonExamination form-control" name="reason"></textarea>
+                                    </div>
+                                    <div class="col-md-5 form-group">
+                                        <label class="date-create">Dịch vụ</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                    <select id="serviceType" onchange="saveAndSendToControll()" class="col-md-4 ml-3" name="ServiceType">
+                                                        <option value="0">Chọn phòng khám</option>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            @if (item.ServiceTypeId == ViewBag.ServiceType)
+                                                            {
+                                                                <option value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                            }
+                                                            
+                                                        }
+                                                    </select>
+                                                    <input type="text" id="searchInput" placeholder="Filter services..." oninput="filterTable()" />
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <table class="table table-bordered table-header">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tên dịch vụ</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                        <div class="scrollable-tbody">
+                                                            <table id="serviceTable" class="table table-bordered table-body">
+                                                                <tbody>
+                                                                    @if (ViewBag.Service != null && ViewBag.Service is List<ServiceDTO>)
+                                                                    {
+                                                                        @foreach (var item in (List<ServiceDTO>)ViewBag.Service)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@item.ServiceName</td>
+                                                                                <td><button type="button" onclick="addService('@item.ServiceName',@item.price)">Thêm</button></td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group ">
+                                        <label class="title-email">Dịch vụ đã chọn</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-bordered table-header">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên dịch vụ</th>
+                                                            <th>Giá</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <div class="scrollable-tbody">
+                                                    <table id="selected-service" class="table table-bordered table-body selected-service-table">
+                                                        <tbody>
+
+
+                                                        </tbody>
+                                                    </table>
+                                                    <input hidden id="jsonData" name="jsonData" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 line6">
+                                    <button type="submit" class="btn-create-record float-right" onclick="populateSelect()">Tạo hồ sơ</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    function getSelectValue() {
+        var selectElement = document.getElementById('serviceType');
+        return selectElement.options[selectElement.selectedIndex].value;
+    }
+
+    function saveAndSendToControll() {
+        var serviceType = getSelectValue();
+
+        var url = "MedicalRecord/Add?ServiceType=" + serviceType;
+        window.location.href = url;
+    }
+
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toLowerCase();
+        table = document.getElementById("serviceTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<script type="text/javascript" src="~/js/ServiceScript.js"></script>
+<script type="text/javascript" src="~/js/Sidebar.js"></script>
+<script type="text/javascript" src="~/js/HeaderScript.js"></script>
+
+</html>

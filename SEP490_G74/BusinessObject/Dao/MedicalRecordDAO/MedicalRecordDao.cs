@@ -18,24 +18,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
                 .Include(x => x.Patient)
                 .Include(x => x.Services)
                 .Include(x => x.ExaminationResultIds)
-                .Include(x => x.Prescriptions)
-                //.Where(x => x.Doctor.Contacts.Contains(x.Doctor))
-                .Where(x => x.Patient.Contacts.All(y => y.PatientId == x.Patient.PatientId))
-                .Select(x => new MedicalRecord
-                {
-                    Doctor = x.Doctor,
-                    DoctorId = x.DoctorId,
-                    ExamCode = x.ExamCode,
-                    ExaminationResultIds = x.ExaminationResultIds,
-                    ExamReason = x.ExamReason,
-                    MedicalRecordDate = x.MedicalRecordDate,
-                    MedicalRecordId = x.MedicalRecordId,
-                    Patient = x.Patient,
-                    PatientId = x.PatientId,
-                    Prescriptions = x.Prescriptions,
-                    Services = x.Services,
-                    
-                }).ToList();
+                .Include(x => x.Prescriptions).ToList();
             return query;
         }
 
@@ -95,7 +78,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
              */
             var mr = GetMedicalRecord(id);
             
-            if (mr.ExaminationResultIds != null)
+            if (mr.ExaminationResultIds.Any())
             {
                 return "-1";
             }

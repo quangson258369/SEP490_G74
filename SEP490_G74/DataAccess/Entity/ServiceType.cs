@@ -9,7 +9,7 @@ public partial class ServiceType
 
     public string ServiceTypeName { get; set; } = null!;
 
-    public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();
+    public virtual ICollection<Employee> Employees { get; set; } = new List<Employee>();
 
     public virtual ICollection<Service> Services { get; set; } = new List<Service>();
 }

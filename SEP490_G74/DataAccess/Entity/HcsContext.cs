@@ -18,7 +18,7 @@ public partial class HcsContext : DbContext
 
     public virtual DbSet<Contact> Contacts { get; set; }
 
-    public virtual DbSet<Doctor> Doctors { get; set; }
+    public virtual DbSet<Employee> Employees { get; set; }
 
     public virtual DbSet<ExaminationResultId> ExaminationResultIds { get; set; }
 
@@ -51,7 +51,6 @@ public partial class HcsContext : DbContext
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
     }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -87,25 +86,23 @@ public partial class HcsContext : DbContext
                 .HasConstraintName("FK_Contact_Patient");
         });
 
-        modelBuilder.Entity<Doctor>(entity =>
+        modelBuilder.Entity<Employee>(entity =>
         {
-            entity.ToTable("Doctor");
+            entity.HasKey(e => e.DoctorId).HasName("PK_Doctor");
+
+            entity.ToTable("Employee");
 
             entity.Property(e => e.DoctorId)
                 .ValueGeneratedNever()
                 .HasColumnName("doctorId");
-            entity.Property(e => e.DoctorSpecialize)
-                .HasMaxLength(250)
-                .HasColumnName("doctorSpecialize");
             entity.Property(e => e.ServiceTypeId).HasColumnName("serviceTypeId");
             entity.Property(e => e.UserId).HasColumnName("userId");
 
-            entity.HasOne(d => d.ServiceType).WithMany(p => p.Doctors)
+            entity.HasOne(d => d.ServiceType).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.ServiceTypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Doctor_ServiceType");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Doctors)
+            entity.HasOne(d => d.User).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Doctor_User");
@@ -222,12 +219,15 @@ public partial class HcsContext : DbContext
             entity.Property(e => e.PatientId)
                 .ValueGeneratedNever()
                 .HasColumnName("patientId");
-            entity.Property(e => e.ExamDate)
-                .HasColumnType("datetime")
-                .HasColumnName("examDate");
+            entity.Property(e => e.BloodGroup)
+                .HasMaxLength(10)
+                .HasColumnName("blood group");
+            entity.Property(e => e.BloodPressure).HasColumnName("blood pressure");
+            entity.Property(e => e.Height).HasColumnName("height");
             entity.Property(e => e.ServiceDetailName)
                 .HasMaxLength(350)
                 .HasColumnName("serviceDetailName");
+            entity.Property(e => e.Weight).HasColumnName("weight");
         });
 
         modelBuilder.Entity<Prescription>(entity =>
@@ -269,6 +269,9 @@ public partial class HcsContext : DbContext
             entity.Property(e => e.ServiceId)
                 .ValueGeneratedNever()
                 .HasColumnName("serviceId");
+            entity.Property(e => e.Price)
+                .HasColumnType("money")
+                .HasColumnName("price");
             entity.Property(e => e.ServiceName)
                 .HasMaxLength(150)
                 .HasColumnName("serviceName");
@@ -406,6 +409,7 @@ public partial class HcsContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("password");
+            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasMany(d => d.Roles).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(

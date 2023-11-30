@@ -18,13 +18,13 @@ public partial class MedicalRecord
 
     public int DoctorId { get; set; }
     [JsonIgnore]
-    public virtual Doctor Doctor { get; set; } = null!;
-
+    public virtual Employee Doctor { get; set; } = null!;
+    [JsonIgnore]
     public virtual ICollection<ExaminationResultId> ExaminationResultIds { get; set; } = new List<ExaminationResultId>();
     [JsonIgnore]
     public virtual Patient Patient { get; set; } = null!;
-
+    [JsonIgnore]
     public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
-
+    [JsonIgnore]
     public virtual ICollection<Service> Services { get; set; } = new List<Service>();
 }

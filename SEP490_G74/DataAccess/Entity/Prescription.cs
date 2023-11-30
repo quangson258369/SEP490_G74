@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entity;
 
@@ -14,7 +15,7 @@ public partial class Prescription
     public byte Quantity { get; set; }
 
     public int MedicalRecordId { get; set; }
-
+    [JsonIgnore]
     public virtual MedicalRecord MedicalRecord { get; set; } = null!;
 
     public virtual ICollection<Supply> SIds { get; set; } = new List<Supply>();
