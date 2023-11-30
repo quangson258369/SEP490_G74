@@ -16,7 +16,6 @@ function addService(name, price) {
         services.push(service);
     }
     
-
 }
 function addToTable(service) {
     let name = service.name;
@@ -64,6 +63,12 @@ function RemoveService(name, price) {
     }
 
 }
+
+function populateSelect() {
+    document.getElementById("jsonData").value = JSON.stringify(services);
+}
+
+
 $('#submitBtn').on('click', () => {
 
     // Add array as hidden input

@@ -37,7 +37,7 @@
                     <div class="col-sm p-3 min-vh-100">
 
                         <h2 class="body-content-header">Tạo hồ sơ bệnh án</h2>
-                        <form class=" form-profile" method="post" action="/MedicalRecord/AddMedicalRecord">
+                        <form class=" form-profile" method="post" action="MedicalRecord/AddMedicalRecord">
                             <div class="col-md-12 form-group">
 
 
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="dob">Ngày sinh</label>
-                                        <input type="text" class="dob form-control" name="dob" />
+                                        <input type="date" class="dob form-control" name="dob" />
 
                                     </div>
                                     <div class="col-md-3 form-group">
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="date-create">Ngày khám</label>
-                                        <input type="text" class="date-create form-control" name="createdate" />
+                                        <input type="text" class="date-create form-control" name="createdate" readonly />
                                     </div>
 
                                 </div>
@@ -194,6 +194,7 @@
 
                                                         </tbody>
                                                     </table>
+                                                    <input hidden id="jsonData" name="jsonData" />
                                                 </div>
                                             </div>
                                         </div>
@@ -202,7 +203,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 line6">
-                                    <button class="btn-create-record float-right">Tạo hồ sơ</button>
+                                    <button type="submit" class="btn-create-record float-right" onclick="populateSelect()">Tạo hồ sơ</button>
                                 </div>
                             </div>
                         </form>

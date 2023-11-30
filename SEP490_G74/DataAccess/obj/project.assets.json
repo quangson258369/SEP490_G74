@@ -3621,11 +3621,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+      "projectPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\obj\\",
+      "outputPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

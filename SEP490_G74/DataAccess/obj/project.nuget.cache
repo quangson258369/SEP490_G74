@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RnuaxsNm3sOtu5UFpzMMNgOfUnD6QY/P5onSbJcqltZX9qm5YBFFJ+zvZDg244YJaoFHoJIo4ZQALOru0QrvyA==",
+  "dgSpecHash": "Q3feulC953rJurQ0TCUN33YW6GMNUftJwW2HfshmfoLd5RTXo4otSQ6mEdNFw7/JRNkeGxBRfugeIWrSc2a1sA==",
   "success": true,
-  "projectFilePath": "D:\\DoAnFall\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+  "projectFilePath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
