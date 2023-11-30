@@ -17,6 +17,6 @@ public partial class Prescription
     public int MedicalRecordId { get; set; }
     [JsonIgnore]
     public virtual MedicalRecord MedicalRecord { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual ICollection<Supply> SIds { get; set; } = new List<Supply>();
 }

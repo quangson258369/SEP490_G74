@@ -19,12 +19,10 @@ namespace HcsBE.Mapper
 
             CreateMap<PatientModify, PatientDTO>()
                 .ForMember(x => x.PatientId, x => x.MapFrom(x => x.PatientId))
-                .ForMember(x => x.ExamDate, x => x.MapFrom(x => x.ExamDate))
                 .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName))
                 .ForMember(x => x.Contacts, x => x.MapFrom(x => x.Contact));
             CreateMap<PatientDTO, PatientModify>()
                 .ForMember(x => x.PatientId, x => x.MapFrom(x => x.PatientId))
-                .ForMember(x => x.ExamDate, x => x.MapFrom(x => x.ExamDate))
                 .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName))
                 .ForMember(x => x.Contact, x => x.MapFrom(x => x.Contacts));
 

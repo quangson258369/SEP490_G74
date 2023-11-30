@@ -33,10 +33,10 @@ namespace API.Controllers.ServiceAPI
 
         // [HttpGet("SearchService/{name},{typeId}")]
         [HttpGet("SearchService")]
-        public IActionResult SearchService(string name, int typeId)
+        public IActionResult SearchService(int typeId)
         {
             var logic = new ServiceLogic(mapper);
-            var output = logic.SearchService(name, typeId);
+            var output = logic.SearchService("", typeId);
             return Ok(output);
         }
 

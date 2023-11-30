@@ -14,5 +14,7 @@ namespace HcsBE.DTO
         public int ServiceTypeId { get; set; }
 
         public string ServiceName { get; set; } = null!;
+
+        public decimal? price { get; set; }
     }
 }

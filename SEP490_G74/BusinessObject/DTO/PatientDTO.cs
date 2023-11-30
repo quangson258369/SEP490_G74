@@ -14,8 +14,6 @@ namespace HcsBE.DTO
 
         public string? ServiceDetailName { get; set; }
 
-        public DateTime ExamDate { get; set; }
-
         public Contact? Contacts { get; set; }
 
         public List<Invoice>? Invoices { get; set; }

@@ -39,7 +39,7 @@ namespace HcsBE.Mapper
         private List<Service> ListService(int? medicalRecordId)
         {
             if (medicalRecordId == null) return null;
-            var rs = context.Services.FromSqlRaw("select s.serviceId,s.serviceName,s.serviceTypeId from [Service] s " +
+            var rs = context.Services.FromSqlRaw("select s.serviceId,s.serviceName,s.serviceTypeId, s.price from [Service] s " +
                 "join ServiceMedicalRecord sm on s.serviceId = sm.serviceId " +
                 "join MedicalRecord mr on sm.medicalRecordId = mr.medicalRecordID " +
                 "where mr.medicalRecordID = @paramName",

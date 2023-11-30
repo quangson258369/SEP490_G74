@@ -269,6 +269,9 @@ public partial class HcsContext : DbContext
             entity.Property(e => e.ServiceId)
                 .ValueGeneratedNever()
                 .HasColumnName("serviceId");
+            entity.Property(e => e.Price)
+                .HasColumnType("money")
+                .HasColumnName("price");
             entity.Property(e => e.ServiceName)
                 .HasMaxLength(150)
                 .HasColumnName("serviceName");

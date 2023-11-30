@@ -1,9 +1,10 @@
-﻿@model List<DataAccess.Entity.ServiceType>
+﻿@using HcsBE.DTO;
+@model List<DataAccess.Entity.ServiceType>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -36,19 +37,19 @@
                     <div class="col-sm p-3 min-vh-100">
 
                         <h2 class="body-content-header">Tạo hồ sơ bệnh án</h2>
-                        <form class=" form-profile" method="post" action="/MedicalRecord/AddMR">
+                        <form class=" form-profile" method="post" action="/MedicalRecord/AddMedicalRecord">
                             <div class="col-md-12 form-group">
 
 
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
-                                        <input type="text" class="invoice-code form-control" name="invoice-code"
+                                        <input type="text" class="invoice-code form-control" name="examcode" value="@ViewBag.ExamCode"
                                                readonly />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="patient-code">Mã bệnh nhân</label>
-                                        <input type="text" class="patient-code form-control" name="patient-code"
+                                        <input type="text" class="patient-code form-control" name="pid" value="@ViewBag.Pid"
                                                readonly />
                                     </div>
 
@@ -59,7 +60,7 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="dob">Ngày sinh</label>
-                                        <input type="text" class="dob form-control" name="fullname" />
+                                        <input type="text" class="dob form-control" name="dob" />
 
                                     </div>
                                     <div class="col-md-3 form-group">
@@ -93,15 +94,15 @@
                                 <div class="col-md-12 line3 row">
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Chiều cao</label>
-                                        <input type="text" class="date-create form-control" name="address" />
+                                        <input type="text" class="date-create form-control" name="height" />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Cân nặng</label>
-                                        <input type="text" class="date-create form-control" name="address" />
+                                        <input type="text" class="date-create form-control" name="weight" />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Nhóm máu</label>
-                                        <input type="text" class="date-create form-control" name="address" />
+                                        <input type="text" class="date-create form-control" name="bloodgr" />
                                     </div>
 
                                     <div class="col-md-2 form-group">
@@ -109,32 +110,23 @@
                                         <input type="text" class="date-create form-control" name="address" />
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label class="date-create">Ghi chú</label>
-                                        <input type="text" class="date-create form-control" name="address" />
-                                    </div>
-
-                                </div>
-                                <div class="col-md-12 line4 row">
-                                    <div class="col-md-3 form-group">
                                         <label class="date-create">Ngày khám</label>
-                                        <input type="text" class="date-create form-control" name="address" />
+                                        <input type="text" class="date-create form-control" name="createdate" />
                                     </div>
-
-
 
                                 </div>
                                 <div class="col-md-12 line5 row">
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Lí do khám</label>
-                                        <textarea type="text" class="ReasonExamination form-control" name="address"></textarea>
+                                        <textarea type="text" class="ReasonExamination form-control" name="reason"></textarea>
                                     </div>
                                     <div class="col-md-5 form-group">
                                         <label class="date-create">Dịch vụ</label>
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    
-                                                    <select id="serviceType" onchange="saveAndSendToControll(this.value, getInputValue())" class="col-md-4 ml-3" name="ServiceType">
+
+                                                    <select id="serviceType" onchange="saveAndSendToControll()" class="col-md-4 ml-3" name="ServiceType">
                                                         <option value="0">Chọn phòng khám</option>
                                                         @foreach (var item in Model)
                                                         {
@@ -142,7 +134,11 @@
                                                             {
                                                                 <option value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
                                                             }
-                                                            <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                            else
+                                                            {
+                                                                <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                            }
+                                                            
                                                         }
                                                     </select>
                                                     <input type="text" id="searchInput" placeholder="Filter services..." oninput="filterTable()" />
@@ -160,36 +156,16 @@
                                                         <div class="scrollable-tbody">
                                                             <table id="serviceTable" class="table table-bordered table-body">
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>siêu âm</td>
-                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>X quang</td>
-                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>xét nghiệm máu</td>
-                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>xét nghiệm nước tiểu</td>
-                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>siêu âm bụng</td>
-                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>nhổ răng</td>
-                                                                        <td><button type="button" onclick="addService('sieu am',12)">Thêm</button></td>
-
-                                                                    </tr>
+                                                                    @if (ViewBag.Service != null && ViewBag.Service is List<ServiceDTO>)
+                                                                    {
+                                                                        @foreach (var item in (List<ServiceDTO>)ViewBag.Service)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@item.ServiceName</td>
+                                                                                <td><button type="button" onclick="addService('@item.ServiceName',@item.price)">Thêm</button></td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -212,10 +188,10 @@
                                                     </thead>
                                                 </table>
                                                 <div class="scrollable-tbody">
-                                                    <table class="table table-bordered table-body selected-service-table">
+                                                    <table id="selected-service" class="table table-bordered table-body selected-service-table">
                                                         <tbody>
 
-                                                            <!-- Add more rows here to see the scrolling effect -->
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -241,17 +217,16 @@
 
 </body>
 <script>
-    var savedServiceType = 0;
-    var savedSearchValue = "";
-
     function getSelectValue() {
         var selectElement = document.getElementById('serviceType');
         return selectElement.options[selectElement.selectedIndex].value;
     }
 
-    function getInputValue() {
-        var inputValue = document.getElementById('searchService').value;
-        return encodeURIComponent(inputValue);
+    function saveAndSendToControll() {
+        var serviceType = getSelectValue();
+
+        var url = "MedicalRecord/Add?ServiceType=" + serviceType;
+        window.location.href = url;
     }
 
     function filterTable() {
@@ -274,7 +249,7 @@
             }
         }
     }
- </script>
+</script>
 <script type="text/javascript" src="~/js/ServiceScript.js"></script>
 <script type="text/javascript" src="~/js/Sidebar.js"></script>
 <script type="text/javascript" src="~/js/HeaderScript.js"></script>
