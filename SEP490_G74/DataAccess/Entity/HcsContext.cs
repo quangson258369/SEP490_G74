@@ -36,6 +36,8 @@ public partial class HcsContext : DbContext
 
     public virtual DbSet<Service> Services { get; set; }
 
+    public virtual DbSet<ServiceMedicalRecord> ServiceMedicalRecords { get; set; }
+
     public virtual DbSet<ServiceSupply> ServiceSupplies { get; set; }
 
     public virtual DbSet<ServiceType> ServiceTypes { get; set; }
@@ -281,25 +283,31 @@ public partial class HcsContext : DbContext
                 .HasForeignKey(d => d.ServiceTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Service_ServiceType");
+        });
 
-            entity.HasMany(d => d.MedicalRecords).WithMany(p => p.Services)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ServiceMedicalRecord",
-                    r => r.HasOne<MedicalRecord>().WithMany()
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_ServiceMedicalRecord_MedicalRecord"),
-                    l => l.HasOne<Service>().WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_ServiceMedicalRecord_Service"),
-                    j =>
-                    {
-                        j.HasKey("ServiceId", "MedicalRecordId");
-                        j.ToTable("ServiceMedicalRecord");
-                        j.IndexerProperty<int>("ServiceId").HasColumnName("serviceId");
-                        j.IndexerProperty<int>("MedicalRecordId").HasColumnName("medicalRecordId");
-                    });
+        modelBuilder.Entity<ServiceMedicalRecord>(entity =>
+        {
+            entity.HasKey(e => new { e.ServiceId, e.MedicalRecordId });
+
+            entity.ToTable("ServiceMedicalRecord");
+
+            entity.Property(e => e.ServiceId).HasColumnName("serviceId");
+            entity.Property(e => e.MedicalRecordId).HasColumnName("medicalRecordId");
+            entity.Property(e => e.DoctorId).HasColumnName("doctorId");
+
+            entity.HasOne(d => d.Doctor).WithMany(p => p.ServiceMedicalRecords)
+                .HasForeignKey(d => d.DoctorId)
+                .HasConstraintName("FK_ServiceMedicalRecord_Employee");
+
+            entity.HasOne(d => d.MedicalRecord).WithMany(p => p.ServiceMedicalRecords)
+                .HasForeignKey(d => d.MedicalRecordId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ServiceMedicalRecord_MedicalRecord");
+
+            entity.HasOne(d => d.Service).WithMany(p => p.ServiceMedicalRecords)
+                .HasForeignKey(d => d.ServiceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ServiceMedicalRecord_Service");
         });
 
         modelBuilder.Entity<ServiceSupply>(entity =>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "L8St3tzLNIsr8eSzQBvkNDYvkwxZ59r7xpXktZcmXWQ=",
+  "Hash": "8hywa8JY47/NtMdBsb19vWvIESEVp3shG2hGolWy5fs=",
   "Source": "WebCLient",
   "BasePath": "_content/WebCLient",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "WebCLient\\wwwroot",
       "Source": "WebCLient",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\calendar-week-solid 1.svg",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\calendar-week-solid 1.svg",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/calendar-week-solid 1.svg",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\calendar-week-solid 1.svg"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\clipboard-solid 1.svg",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\clipboard-solid 1.svg",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/clipboard-solid 1.svg",
       "AssetKind": "All",
@@ -51,10 +51,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\clipboard-solid 1.svg"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\default.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\default.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/default.png",
       "AssetKind": "All",
@@ -68,10 +68,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\default.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\icons8-print-30 1.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\icons8-print-30 1.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/icons8-print-30 1.png",
       "AssetKind": "All",
@@ -85,10 +85,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\icons8-print-30 1.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\supplies.svg",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\supplies.svg",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/supplies.svg",
       "AssetKind": "All",
@@ -102,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\supplies.svg"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\undraw_profile.svg",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\undraw_profile.svg",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/undraw_profile.svg",
       "AssetKind": "All",
@@ -119,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\undraw_profile.svg"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\users-solid.svg",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\users-solid.svg",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/users-solid.svg",
       "AssetKind": "All",
@@ -136,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\users-solid.svg"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\Vector.svg",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\img\\Vector.svg",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/img/Vector.svg",
       "AssetKind": "All",
@@ -153,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\img\\Vector.svg"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Member1.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Member1.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Member1.png",
       "AssetKind": "All",
@@ -170,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Member1.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-06-19 101247.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-06-19 101247.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-06-19 101247.png",
       "AssetKind": "All",
@@ -187,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-06-19 101247.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-06-21 120510.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-06-21 120510.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-06-21 120510.png",
       "AssetKind": "All",
@@ -204,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-06-21 120510.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-07-03 161900.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-07-03 161900.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-07-03 161900.png",
       "AssetKind": "All",
@@ -221,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-07-03 161900.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-07-13 025418.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-07-13 025418.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-07-13 025418.png",
       "AssetKind": "All",
@@ -238,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-07-13 025418.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-07-14 144841.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-07-14 144841.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-07-14 144841.png",
       "AssetKind": "All",
@@ -255,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-07-14 144841.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-09-04 030910.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-09-04 030910.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-09-04 030910.png",
       "AssetKind": "All",
@@ -272,10 +272,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-09-04 030910.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-09-18 031652.png",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\asset\\imgMember\\Screenshot 2023-09-18 031652.png",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "asset/imgMember/Screenshot 2023-09-18 031652.png",
       "AssetKind": "All",
@@ -289,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\asset\\imgMember\\Screenshot 2023-09-18 031652.png"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\AddSuppplies.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\AddSuppplies.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/AddSuppplies.css",
       "AssetKind": "All",
@@ -306,10 +306,10 @@
       "OriginalItemSpec": "wwwroot\\css\\AddSuppplies.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\HeaderStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\HeaderStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/HeaderStyle.css",
       "AssetKind": "All",
@@ -323,10 +323,10 @@
       "OriginalItemSpec": "wwwroot\\css\\HeaderStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\HomeStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\HomeStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/HomeStyle.css",
       "AssetKind": "All",
@@ -340,10 +340,10 @@
       "OriginalItemSpec": "wwwroot\\css\\HomeStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\InvoiceStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\InvoiceStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/InvoiceStyle.css",
       "AssetKind": "All",
@@ -357,10 +357,10 @@
       "OriginalItemSpec": "wwwroot\\css\\InvoiceStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\navbar.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\navbar.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/navbar.css",
       "AssetKind": "All",
@@ -374,10 +374,10 @@
       "OriginalItemSpec": "wwwroot\\css\\navbar.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\PatientRecordStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\PatientRecordStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/PatientRecordStyle.css",
       "AssetKind": "All",
@@ -391,10 +391,10 @@
       "OriginalItemSpec": "wwwroot\\css\\PatientRecordStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\PopupStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\PopupStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/PopupStyle.css",
       "AssetKind": "All",
@@ -408,10 +408,10 @@
       "OriginalItemSpec": "wwwroot\\css\\PopupStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\PrecriptionStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\PrecriptionStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/PrecriptionStyle.css",
       "AssetKind": "All",
@@ -425,10 +425,10 @@
       "OriginalItemSpec": "wwwroot\\css\\PrecriptionStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\ProfileStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\ProfileStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/ProfileStyle.css",
       "AssetKind": "All",
@@ -442,10 +442,10 @@
       "OriginalItemSpec": "wwwroot\\css\\ProfileStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\Sidebar.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\Sidebar.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/Sidebar.css",
       "AssetKind": "All",
@@ -459,10 +459,10 @@
       "OriginalItemSpec": "wwwroot\\css\\Sidebar.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\site.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\site.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -476,10 +476,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\style.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\style.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/style.css",
       "AssetKind": "All",
@@ -493,10 +493,10 @@
       "OriginalItemSpec": "wwwroot\\css\\style.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\StyleInsidePagee.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\StyleInsidePagee.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/StyleInsidePagee.css",
       "AssetKind": "All",
@@ -510,10 +510,10 @@
       "OriginalItemSpec": "wwwroot\\css\\StyleInsidePagee.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\UserManagerStyle.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\css\\UserManagerStyle.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "css/UserManagerStyle.css",
       "AssetKind": "All",
@@ -527,10 +527,10 @@
       "OriginalItemSpec": "wwwroot\\css\\UserManagerStyle.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\favicon.ico",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\favicon.ico",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -544,10 +544,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\Header.html",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\Header.html",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "Header.html",
       "AssetKind": "All",
@@ -561,10 +561,10 @@
       "OriginalItemSpec": "wwwroot\\Header.html"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\HeaderScript.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\HeaderScript.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "js/HeaderScript.js",
       "AssetKind": "All",
@@ -578,10 +578,10 @@
       "OriginalItemSpec": "wwwroot\\js\\HeaderScript.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\script.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\script.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "js/script.js",
       "AssetKind": "All",
@@ -595,10 +595,10 @@
       "OriginalItemSpec": "wwwroot\\js\\script.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\ServiceScript.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\ServiceScript.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "js/ServiceScript.js",
       "AssetKind": "All",
@@ -612,10 +612,10 @@
       "OriginalItemSpec": "wwwroot\\js\\ServiceScript.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\Sidebar.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\Sidebar.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "js/Sidebar.js",
       "AssetKind": "All",
@@ -629,10 +629,10 @@
       "OriginalItemSpec": "wwwroot\\js\\Sidebar.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\site.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\js\\site.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -646,10 +646,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css",
       "AssetKind": "All",
@@ -663,10 +663,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css.map",
       "AssetKind": "All",
@@ -680,10 +680,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css",
       "AssetKind": "All",
@@ -697,10 +697,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -714,10 +714,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css",
       "AssetKind": "All",
@@ -731,10 +731,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css.map",
       "AssetKind": "All",
@@ -748,10 +748,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css",
       "AssetKind": "All",
@@ -765,10 +765,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
       "AssetKind": "All",
@@ -782,10 +782,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -799,10 +799,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -816,10 +816,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -833,10 +833,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -850,10 +850,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
       "AssetKind": "All",
@@ -867,10 +867,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
       "AssetKind": "All",
@@ -884,10 +884,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
       "AssetKind": "All",
@@ -901,10 +901,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
       "AssetKind": "All",
@@ -918,10 +918,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -935,10 +935,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -952,10 +952,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -969,10 +969,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -986,10 +986,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
       "AssetKind": "All",
@@ -1003,10 +1003,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
       "AssetKind": "All",
@@ -1020,10 +1020,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
       "AssetKind": "All",
@@ -1037,10 +1037,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
       "AssetKind": "All",
@@ -1054,10 +1054,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css",
       "AssetKind": "All",
@@ -1071,10 +1071,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css.map",
       "AssetKind": "All",
@@ -1088,10 +1088,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css",
       "AssetKind": "All",
@@ -1105,10 +1105,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
       "AssetKind": "All",
@@ -1122,10 +1122,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
       "AssetKind": "All",
@@ -1139,10 +1139,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
       "AssetKind": "All",
@@ -1156,10 +1156,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
       "AssetKind": "All",
@@ -1173,10 +1173,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
       "AssetKind": "All",
@@ -1190,10 +1190,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -1207,10 +1207,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -1224,10 +1224,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -1241,10 +1241,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -1258,10 +1258,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js",
       "AssetKind": "All",
@@ -1275,10 +1275,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js.map",
       "AssetKind": "All",
@@ -1292,10 +1292,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js",
       "AssetKind": "All",
@@ -1309,10 +1309,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
       "AssetKind": "All",
@@ -1326,10 +1326,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js",
       "AssetKind": "All",
@@ -1343,10 +1343,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js.map",
       "AssetKind": "All",
@@ -1360,10 +1360,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js",
       "AssetKind": "All",
@@ -1377,10 +1377,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -1394,10 +1394,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\bootstrap\\LICENSE",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/bootstrap/LICENSE",
       "AssetKind": "All",
@@ -1411,10 +1411,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -1428,10 +1428,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -1445,10 +1445,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -1462,10 +1462,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
@@ -1479,10 +1479,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -1496,10 +1496,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -1513,10 +1513,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -1530,10 +1530,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -1547,10 +1547,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -1564,10 +1564,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -1581,10 +1581,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -1598,10 +1598,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -1615,10 +1615,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\Sidebar.html",
+      "Identity": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\Sidebar.html",
       "SourceId": "WebCLient",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
+      "ContentRoot": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\wwwroot\\",
       "BasePath": "_content/WebCLient",
       "RelativePath": "Sidebar.html",
       "AssetKind": "All",

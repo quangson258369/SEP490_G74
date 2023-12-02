@@ -9,69 +9,81 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebCLient
 build_property.RootNamespace = WebCLient
-build_property.ProjectDir = D:\DoAnFall\merge\SEP490_G74\SEP490_G74\WebCLient\
+build_property.ProjectDir = D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\DoAnFall\merge\SEP490_G74\SEP490_G74\WebCLient
+build_property.MSBuildProjectDirectory = D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Home/Index.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Home/Privacy.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Add.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Add.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Index.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Member/AddMember.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/MedicalRecordDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxNZWRpY2FsUmVjb3JkRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Member/AddMember.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyXEFkZE1lbWJlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Member/EditMember.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Member/EditMember.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyXEVkaXRNZW1iZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Member/Index.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Member/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Member/ViewDetailMember.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Member/ViewDetailMember.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyXFZpZXdEZXRhaWxNZW1iZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/Error.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/AddSupplies.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/AddSupplies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXNcQWRkU3VwcGxpZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/EditSupplies.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/EditSupplies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXNcRWRpdFN1cHBsaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/Index.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/SuppliesDetail.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Supplies/SuppliesDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcGxpZXNcU3VwcGxpZXNEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/DoAnFall/merge/SEP490_G74/SEP490_G74/WebCLient/Views/_ViewImports.cshtml]
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

@@ -126,7 +126,7 @@
                                             <div class="card-body">
                                                 <div class="row">
 
-                                                    <select id="serviceType" onchange="saveAndSendToControll()" class="col-md-4 ml-3" name="ServiceType">
+                                                    <select id="servicetype" onchange="SendToControll()" class="col-md-4 ml-3" name="ServiceType">
                                                         <option value="0">Chọn phòng khám</option>
                                                         @foreach (var item in Model)
                                                         {
@@ -138,7 +138,7 @@
                                                             {
                                                                 <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
                                                             }
-                                                            
+
                                                         }
                                                     </select>
                                                     <input type="text" id="searchInput" placeholder="Filter services..." oninput="filterTable()" />
@@ -190,11 +190,9 @@
                                                 <div class="scrollable-tbody">
                                                     <table id="selected-service" class="table table-bordered table-body selected-service-table">
                                                         <tbody>
-
-
                                                         </tbody>
                                                     </table>
-                                                    <input hidden id="jsonData" name="jsonData" />
+                                                    <input hidden id="jsond" name="jsonData" />
                                                 </div>
                                             </div>
                                         </div>
@@ -219,14 +217,14 @@
 </body>
 <script>
     function getSelectValue() {
-        var selectElement = document.getElementById('serviceType');
+        var selectElement = document.getElementById('servicetype');
         return selectElement.options[selectElement.selectedIndex].value;
     }
 
-    function saveAndSendToControll() {
+    function SendToControll() {
         var serviceType = getSelectValue();
 
-        var url = "MedicalRecord/Add?ServiceType=" + serviceType;
+        var url = "MedicalRecord/Edit?ServiceType=" + serviceType;
         window.location.href = url;
     }
 

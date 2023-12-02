@@ -1,4 +1,6 @@
 ﻿using DataAccess.Entity;
+using HcsBE.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,21 +16,13 @@ namespace HcsBE.Dao.MedicalRecordDAO
 
         public List<MedicalRecord> MedicalRecordList()
         {
-            var query = context.MedicalRecords.Include(x => x.Doctor)
-                .Include(x => x.Patient)
-                .Include(x => x.Services)
-                .Include(x => x.ExaminationResultIds)
-                .Include(x => x.Prescriptions).ToList();
+            var query = context.MedicalRecords.ToList();
             return query;
         }
 
         public MedicalRecord GetMedicalRecord(int id)
         {
-            var query = context.MedicalRecords.Include(x => x.Doctor)
-                .Include(y => y.Patient)
-                .Include(x => x.Services)
-                .Include(x => x.ExaminationResultIds)
-                .Include(x => x.Prescriptions)
+            var query = context.MedicalRecords
                 .Select(x => new MedicalRecord
                 {
                     Doctor = x.Doctor,
@@ -70,6 +64,21 @@ namespace HcsBE.Dao.MedicalRecordDAO
             return true;
         }
 
+        /*public void AddServiceMR(ServiceMedicalRecord sm)
+        {
+            context.Database.ExecuteSqlRaw("INSERT INTO [ServiceMedicalRecord]" +
+                "          ([serviceId]" +`
+                "           ,[medicalRecordId])" +
+                "     VALUES" +
+                "          (" + sm.Sid + " ," + sm.Mid + ")");
+            context.SaveChanges();
+        }
+
+        public List<ServiceMedicalRecord> GetServiceUses()
+        {
+            return null;
+        }*/
+
         public string DeleteMedicalRecord(int id)
         {
             /* 0 - medical record does not exist
@@ -77,7 +86,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
               -1 - can't delete cause patient is already treatment
              */
             var mr = GetMedicalRecord(id);
-            
+
             if (mr.ExaminationResultIds.Any())
             {
                 return "-1";

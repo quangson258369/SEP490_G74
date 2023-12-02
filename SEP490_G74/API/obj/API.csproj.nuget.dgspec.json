@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\API\\API.csproj": {}
+    "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\API\\API.csproj": {}
   },
   "projects": {
-    "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\API\\API.csproj": {
+    "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\API\\API.csproj",
+        "projectUniqueName": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\API\\API.csproj",
+        "projectPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\API\\obj\\",
+        "outputPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj": {
-                "projectPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj"
+              "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj": {
+                "projectPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj"
               }
             }
           }
@@ -93,14 +93,14 @@
         }
       }
     },
-    "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj": {
+    "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
+        "projectUniqueName": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
         "projectName": "HcsBE",
-        "projectPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
+        "projectPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\BusinessObject\\HcsBE.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\BusinessObject\\obj\\",
+        "outputPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\BusinessObject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -117,8 +117,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj"
+              "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -170,14 +170,14 @@
         }
       }
     },
-    "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {
+    "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
+        "projectPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\DataAccess\\obj\\",
+        "outputPath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",

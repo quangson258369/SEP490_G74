@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XUh+kummt2Vfx6Ou4bzGC889bWQIPmFvWblG63nArTKbc6oPtT5f7l+hnlVQmIXXO55V3oZHxqqknFkbS7gbBA==",
+  "dgSpecHash": "z6Vg+0JqhDvWse6uTfDO5PAVJ+mAgR5RTL9+BOKbGv9cjtBs7DAO04HYLiwahc+FsIs6IdduN6ULpJQ/FmEmxA==",
   "success": true,
-  "projectFilePath": "D:\\DoAnFall\\merge\\SEP490_G74\\SEP490_G74\\API\\API.csproj",
+  "projectFilePath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",

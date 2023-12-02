@@ -68,6 +68,9 @@ function populateSelect() {
     document.getElementById("jsonData").value = JSON.stringify(services);
 }
 
+function sendService() {
+    document.getElementById("jsond").value = JSON.stringify(services);
+}
 
 $('#submitBtn').on('click', () => {
 

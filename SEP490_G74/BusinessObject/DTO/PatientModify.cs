@@ -13,7 +13,13 @@ namespace HcsBE.DTO
 
         public string? ServiceDetailName { get; set; }
 
-        public DateTime ExamDate { get; set; }
+        public byte? Height { get; set; }
+
+        public byte? Weight { get; set; }
+
+        public string? BloodGroup { get; set; }
+
+        public byte? BloodPressure { get; set; }
 
         public ContactPatientDTO? Contact { get; set; }
     }

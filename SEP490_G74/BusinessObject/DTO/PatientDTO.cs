@@ -14,6 +14,14 @@ namespace HcsBE.DTO
 
         public string? ServiceDetailName { get; set; }
 
+        public byte? Height { get; set; }
+
+        public byte? Weight { get; set; }
+
+        public string? BloodGroup { get; set; }
+
+        public byte? BloodPressure { get; set; }
+
         public Contact? Contacts { get; set; }
 
         public List<Invoice>? Invoices { get; set; }
