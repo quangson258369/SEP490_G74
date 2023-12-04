@@ -24,4 +24,8 @@
     <ProjectReference Include="..\BusinessObject\HcsBE.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\ExamResult\" />
+  </ItemGroup>
+
 </Project>

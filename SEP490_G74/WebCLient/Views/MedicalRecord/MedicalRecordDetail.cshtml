@@ -168,8 +168,9 @@
 
                                 </div>
                                 <div class="col-md-12 line5">
-                                    <button class="btn-edit float-right" onclick="goToEdit(@Model.MedicalRecordId)" >Chỉnh sửa</button>
-                                    <button class="btn-delete float-right" onclick="goToDelete(@Model.MedicalRecordId)">Xóa hồ sơ</button>
+                                    <button class="btn-edit float-right" type="button" onclick="goToEdit(@Model.MedicalRecordId)">Chỉnh sửa</button>
+                                    <button class="btn-delete float-right" type="button" onclick="goToDelete(@Model.MedicalRecordId)">Xóa hồ sơ</button>
+
                                 </div>
                             </div>
 
@@ -189,7 +190,7 @@
 <script>
     function goToEdit(id) {
 
-        var url = "../Edit?id=" + id;
+        var url = "MedicalRecord/Edit?id=" + id+"&ServiceType=";
         window.location.href = url;
     }
     function goToDelete(mrid) {

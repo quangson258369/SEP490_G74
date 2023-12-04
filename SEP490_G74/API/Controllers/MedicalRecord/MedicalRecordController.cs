@@ -24,6 +24,15 @@ namespace API.Controllers.MedicalRecord
             if (list == null) return NotFound();
             return Ok(list);
         }
+        
+        [HttpGet("ListDoctorByServiceType")]
+        public IActionResult ListDoctorByServiceType(int serviceTypeId)
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var list = res.GetDoctorByServiceType(serviceTypeId);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
 
         [HttpGet("GetMedicalRecord/{id}")]
         public IActionResult GetMedicalRecord(int id) 
@@ -75,5 +84,7 @@ namespace API.Controllers.MedicalRecord
                 return Ok("Delete successfully!");
             }
         }
+
+
     }
 }

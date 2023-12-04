@@ -1,15 +1,18 @@
 let services = [];
-
-function addService(name, price) {
+var selectedDoctorId = document.getElementById("selected-doctor").value;
+function addService(id, name, price) {
+     
     let service = {
+        sid: id,
         name: name,
-        price: price
+        price: price,
+        doctorid: selectedDoctorId
     };
 
-    console.log(name, price);
+    console.log(id, name, price, selectedDoctorId);
     
     const index = services.findIndex(service => {
-        return service.name === name && service.price === price;
+        return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
     });
     if (index <= -1) {
         addToTable(service);
@@ -34,11 +37,11 @@ function addToTable(service) {
     $('.selected-service-table tbody').append(row);
 }
 
-function RemoveService(name, price) {
+function RemoveService(id, name, price) {
 
     // Find index of object in services array
     const index = services.findIndex(service => {
-        return service.name === name && service.price === price;
+        return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
     });
 
     if (index > -1) {
@@ -52,7 +55,7 @@ function RemoveService(name, price) {
             const rows = table.querySelectorAll('tr');
 
             rows.forEach(row => {
-                if (row.textContent.includes(name)) {
+                if (row.textContent.includes(id)) {
                     row.remove();
                     console.log(services);
                 }

@@ -1,4 +1,5 @@
-﻿@using HcsBE.DTO;
+﻿@using DataAccess.Entity;
+@using HcsBE.DTO;
 @model List<DataAccess.Entity.ServiceType>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -149,6 +150,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Tên dịch vụ</th>
+                                                                    <th>Bác Sĩ Khám</th>
                                                                     <th></th>
                                                                 </tr>
                                                             </thead>
@@ -162,7 +164,25 @@
                                                                         {
                                                                             <tr>
                                                                                 <td>@item.ServiceName</td>
-                                                                                <td><button type="button" onclick="addService('@item.ServiceName',@item.price)">Thêm</button></td>
+                                                                                <td>
+                                                                                    <select id="selected-doctor" class="col-md-4 ml-3" name="doctor">
+                                                                                        @if (ViewBag.doctors != null && ViewBag.doctors is List<DoctorMRDTO>) {
+                                                                                            @foreach (var d in (List<DoctorMRDTO>)ViewBag.doctors)
+                                                                                            {
+                                                                                                @if (d.DoctorId == ViewBag.Doctor)
+                                                                                                {
+                                                                                                    <option value="@d.DoctorId" selected>@d.Contact?.Name</option>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <option value="@d.DoctorId">@d.Contact?.Name</option>
+                                                                                                }
+
+                                                                                            }
+                                                                                        }
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td><button type="button" onclick="addService(@item.ServiceId,'@item.ServiceName',@item.price)">Thêm</button></td>
                                                                             </tr>
                                                                         }
                                                                     }
@@ -218,6 +238,8 @@
 
 </body>
 <script>
+    
+
     function getSelectValue() {
         var selectElement = document.getElementById('serviceType');
         return selectElement.options[selectElement.selectedIndex].value;

@@ -33,6 +33,7 @@ namespace WebCLient.Controllers
 
         public async Task<IActionResult> Add(int ServiceType)
         {
+            MedicalRecordDao dao = new MedicalRecordDao();
             // call list service type
             HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
             string strData = await response.Content.ReadAsStringAsync();
@@ -48,16 +49,19 @@ namespace WebCLient.Controllers
             List<PatientDTO> patients = System.Text.Json.JsonSerializer.Deserialize<List<PatientDTO>>(strPatient, options);
 
             // call list medical record
-            MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/ListMedicalRecord";
-            response = await client.GetAsync(MedicalRecordAPI);
+            response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListMedicalRecord");
             string strMR = await response.Content.ReadAsStringAsync();
-            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            List<MedicalRecordDaoOutputDto> listMRs = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordDaoOutputDto>>(strMR, option);
+            List<MedicalRecordDaoOutputDto> listMRs = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordDaoOutputDto>>(strMR, options);
 
             // call list search service by service type
             response = await client.GetAsync("https://localhost:7249/api/Service/SearchService?typeId=" + ServiceType);
             string strSearch = await response.Content.ReadAsStringAsync();
             List<ServiceDTO> list = System.Text.Json.JsonSerializer.Deserialize<List<ServiceDTO>>(strSearch, options);
+
+            // get list doctor treatment for this specialize
+            response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + ServiceType);
+            string strdoctor = await response.Content.ReadAsStringAsync();
+            List<DoctorMRDTO> doctor = System.Text.Json.JsonSerializer.Deserialize<List<DoctorMRDTO>>(strdoctor, options);
             //----------------------------------------------------------------------------------------------------------------------
 
             // get last patient
@@ -72,6 +76,8 @@ namespace WebCLient.Controllers
             if (mr != null && listMRs.Count > 0) examCode = mr.MedicalRecordId + 1;
             if (listMRs.Count == 0) examCode = 1;
 
+
+            ViewBag.doctors = doctor;
             ViewBag.Now = DateTime.Now;
             ViewBag.MrId = examCode;
             ViewBag.Pid = pid;
@@ -96,6 +102,7 @@ namespace WebCLient.Controllers
             else
             {
                 HcsContext context = new HcsContext();
+                MedicalRecordDao dao = new MedicalRecordDao();
                 var contacts = context.Contacts.ToList();
                 // call list medical record
                 MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/ListMedicalRecord";
@@ -110,16 +117,12 @@ namespace WebCLient.Controllers
 
                 // lay list service da chon
                 var model = JsonConvert.DeserializeObject<List<MyViewModel>>(Request.Form["jsonData"]);
-                //List<ServiceMedicalRecord> list = new List<ServiceMedicalRecord>();
+                List<ServiceMedicalRecord> list = new List<ServiceMedicalRecord>();
                 string servicechoose = "";
                 foreach (var item in model)
                 {
                     servicechoose += item.Name + ",";
-                    /*Service s = context.Services.SingleOrDefault(x=>x.ServiceName == item.Name);
-                    if (s != null)
-                    {
-                        //list.Add(new ServiceMedicalRecord() { Mid = mrid, Sid = s.ServiceId });
-                    }*/
+                    list.Add(new ServiceMedicalRecord() { ServiceId = item.Sid,MedicalRecordId = mrid});
                 }
                 
 
@@ -166,11 +169,11 @@ namespace WebCLient.Controllers
                 string row = System.Text.Json.JsonSerializer.Deserialize<string>(strData, options);
 
                 // them dich vu su dung vao db
-                /*MedicalRecordDao dao = new MedicalRecordDao();
-                foreach(var sm in list)
+                
+                foreach (var sm in list)
                 {
                     dao.AddServiceMR(sm);
-                }*/
+                }
                 return RedirectToAction("Index", "MedicalRecord");
             }
         }
@@ -194,12 +197,46 @@ namespace WebCLient.Controllers
             return View(medicalRecordDetail);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id,int ServiceType)
+        {
+            // call list service type
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
+            string strData = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            List<ServiceType> serviceTypes = System.Text.Json.JsonSerializer.Deserialize<List<ServiceType>>(strData, options);
+
+            // call list medical record
+            MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/GetMedicalRecord/"+id;
+            response = await client.GetAsync(MedicalRecordAPI);
+            string strMR = await response.Content.ReadAsStringAsync();
+            MedicalRecordDaoOutputDto mredit = System.Text.Json.JsonSerializer.Deserialize<MedicalRecordDaoOutputDto>(strMR, options);
+
+            response = await client.GetAsync("https://localhost:7249/api/Patient/GetPatient/" + mredit.PatientId);
+            string str = await response.Content.ReadAsStringAsync();
+            PatientDTO p = System.Text.Json.JsonSerializer.Deserialize<PatientDTO>(str, options);
+
+            // call list search service by service type
+            response = await client.GetAsync("https://localhost:7249/api/Service/SearchService?typeId=" + ServiceType);
+            string strSearch = await response.Content.ReadAsStringAsync();
+            List<ServiceDTO> list = System.Text.Json.JsonSerializer.Deserialize<List<ServiceDTO>>(strSearch, options);
+            //----------------------------------------------------------------------------------------------------------------------
+
+            ViewBag.MR = mredit;
+            ViewBag.Patient = p;
+            ViewBag.Service = list;
+            ViewBag.ServiceType = ServiceType;
+            return View(serviceTypes);
+        }
+
+        public async Task<IActionResult> Edit()
         {
 
             return View();
         }
-        
+
         public async Task<IActionResult> Delete(int id)
         {
 
@@ -211,6 +248,7 @@ namespace WebCLient.Controllers
 
     internal class MyViewModel
     {
+        public int Sid { get; set; }
         public string Name { get; set; }
         public decimal price { get; set; }
     }

@@ -35,7 +35,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
                     Patient = x.Patient,
                     PatientId = x.PatientId,
                     Prescriptions = x.Prescriptions,
-                    Services = x.Services
+                    ServiceMedicalRecords = x.ServiceMedicalRecords
                 }).SingleOrDefault(x => x.MedicalRecordId == id);
             return query;
         }
@@ -64,20 +64,53 @@ namespace HcsBE.Dao.MedicalRecordDAO
             return true;
         }
 
-        /*public void AddServiceMR(ServiceMedicalRecord sm)
+        public List<Employee> GetDoctorByServiceType(int type)
         {
-            context.Database.ExecuteSqlRaw("INSERT INTO [ServiceMedicalRecord]" +
-                "          ([serviceId]" +`
-                "           ,[medicalRecordId])" +
-                "     VALUES" +
-                "          (" + sm.Sid + " ," + sm.Mid + ")");
-            context.SaveChanges();
+            if( type!= null || type == 0)
+            {
+                return context.Employees.Where(x=>x.ServiceTypeId == type).ToList();
+            }
+            return new List<Employee>();
         }
 
-        public List<ServiceMedicalRecord> GetServiceUses()
+        public void AddServiceMR(ServiceMedicalRecord sm)
         {
-            return null;
-        }*/
+            if (sm != null)
+            {
+                context.ServiceMedicalRecords.Add(sm);
+                context.SaveChanges();
+            }
+        }
+
+        public bool EditServiceMR (ServiceMedicalRecord sm)
+        {
+            if (sm != null && GetServiceUses(sm.ServiceId) != null)
+            {
+                context.ServiceMedicalRecords.Update(sm);
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteServiceMR(int sid,int mrid)
+        {
+            var sm = GetServiceUses(mrid);
+            if (sm != null && sm != null)
+            {
+                foreach(var s in sm)
+                {
+                    if(s.ServiceId == sid) context.ServiceMedicalRecords.Remove(s);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public List<ServiceMedicalRecord> GetServiceUses(int id)
+        {
+            var list = context.ServiceMedicalRecords.Where(x=>x.MedicalRecordId == id).ToList();
+            return list;
+        }
 
         public string DeleteMedicalRecord(int id)
         {
