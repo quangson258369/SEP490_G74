@@ -20,8 +20,8 @@
     <link rel="stylesheet" type="text/css" href="~/css/PatientRecordStyle.css">
     <link rel="stylesheet" type="text/css" href="~/css/Sidebar.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/1d6b4c4b00.js" crossorigin="anonymous"></script>
 </head>
@@ -127,17 +127,17 @@
                                             <div class="card-body">
                                                 <div class="row">
 
-                                                    <select id="serviceType" onchange="saveAndSendToControll()" class="col-md-4 ml-3" name="ServiceType">
+                                                    <select id="serviceType" class="col-md-4 ml-3" name="ServiceType" onchange="LoadData()">
                                                         <option value="0">Chọn phòng khám</option>
                                                         @foreach (var item in Model)
                                                         {
                                                             @if (item.ServiceTypeId == ViewBag.ServiceType)
                                                             {
-                                                                <option value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
+                                                                <option  value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
                                                             }
                                                             else
                                                             {
-                                                                <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                                <option  value="@item.ServiceTypeId">@item.ServiceTypeName</option>
                                                             }
                                                             
                                                         }
@@ -158,7 +158,7 @@
                                                         <div class="scrollable-tbody">
                                                             <table id="serviceTable" class="table table-bordered table-body">
                                                                 <tbody>
-                                                                    @if (ViewBag.Service != null && ViewBag.Service is List<ServiceDTO>)
+                                                                   @*  @if (ViewBag.Service != null && ViewBag.Service is List<ServiceDTO>)
                                                                     {
                                                                         @foreach (var item in (List<ServiceDTO>)ViewBag.Service)
                                                                         {
@@ -185,7 +185,7 @@
                                                                                 <td><button type="button" onclick="addService(@item.ServiceId,'@item.ServiceName',@item.price)">Thêm</button></td>
                                                                             </tr>
                                                                         }
-                                                                    }
+                                                                    } *@
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -272,6 +272,64 @@
             }
         }
     }
+
+
+   function LoadData() {
+    var serviceTypeId = $("#serviceType").val();
+    console.log(serviceTypeId);
+
+    $.ajax({
+        url: "https://localhost:7249/api/Service/SearchService?typeId=" + serviceTypeId,
+        type: "get",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result, status, xhr) {
+            console.log(result);
+            var tbody = $("#serviceTable tbody");
+            tbody.empty(); // Clear existing rows before appending new ones
+
+            $.each(result, function (index, value) {
+                var newRow = $("<tr>");
+                newRow.append($("<td>").html(value["serviceName"]));
+                var selectElement = $("<select class=\"doctor\">"); // Use class instead of id
+                newRow.append($("<td>").append(selectElement));
+                var doctorId = LoadDoctor(selectElement, serviceTypeId); // Get doctorId directly
+                newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}','${doctorId}')">Thêm</button>`)));
+                tbody.append(newRow);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+        }
+    });
+}
+
+function LoadDoctor(selectElement, serviceTypeId) {
+    var doctorId; // Variable to store the selected doctorId
+
+    $.ajax({
+        url: "https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + serviceTypeId,
+        type: "get",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false, // Synchronous request to wait for the options to be loaded
+        success: function (result, status, xhr) {
+            console.log(result);
+            selectElement.empty(); // Clear existing options before appending new ones
+            $.each(result, function (index, value) {
+                selectElement.append($('<option value=' + value["doctorId"] + '>' + value["contact"]["name"] + '</option>'));
+            });
+            doctorId = selectElement.val(); // Get the selected doctorId
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr);
+        }
+    });
+
+    return doctorId; // Return the selected doctorId
+}
+
+
 </script>
 <script type="text/javascript" src="~/js/ServiceScript.js"></script>
 <script type="text/javascript" src="~/js/Sidebar.js"></script>

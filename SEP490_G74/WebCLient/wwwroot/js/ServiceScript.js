@@ -1,7 +1,7 @@
 let services = [];
-var selectedDoctorId = document.getElementById("selected-doctor").value;
 
-function addService(id, name, price) {
+
+function addService(id, name, price, selectedDoctorId) {
      
     let service = {
         sid: id,
@@ -24,6 +24,7 @@ function addToTable(service) {
     let id = service.sid;
     let name = service.name;
     let price = service.price;
+    let selectedDoctorId = service.doctorid;
     console.log(id);
     console.log(name
     );
@@ -33,7 +34,7 @@ function addToTable(service) {
     <tr>
       <td>${name}</td>
       <td>${price}</td> 
-      <td><button type="button" onclick="RemoveService(${id},'${name}',${price})">Xóa</button></td>
+      <td><button type="button" onclick="RemoveService('${id}','${name}','${price}','${selectedDoctorId}')">Xóa</button></td>
     </tr>
   `;
 
@@ -41,13 +42,14 @@ function addToTable(service) {
     $('.selected-service-table tbody').append(row);
 }
 
-function RemoveService(id, name, price) {
-
+function RemoveService(id, name, price, selectedDoctorId) {
+    
     // Find index of object in services array
     const index = services.findIndex(service => {
         return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
 
     });
+   
     if (index > -1) {
 
         // Remove from services array
@@ -93,4 +95,5 @@ $('#submitBtn').on('click', () => {
     document.getElementById('serviceForm').submit();
 
 });
+
 
