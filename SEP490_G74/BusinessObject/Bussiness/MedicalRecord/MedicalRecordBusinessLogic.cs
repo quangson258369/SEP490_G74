@@ -93,5 +93,11 @@ namespace HcsBE.Bussiness.MedicalRecord
             var list = dao.GetDoctorByServiceType(type);
             return _mapper.Map<List<DoctorMRDTO>>(list);
         }
+
+        public List<ServiceMRDTO> GetListServiceUses(int id)
+        {
+            var list = dao.GetServiceUses(id);
+            return _mapper.Map<List<ServiceMRDTO>>(list);
+        }
     }
 }

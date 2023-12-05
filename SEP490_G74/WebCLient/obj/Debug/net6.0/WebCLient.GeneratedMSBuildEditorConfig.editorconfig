@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/ExamResult/ListTreatment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhhbVJlc3VsdFxMaXN0VHJlYXRtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/DoAnFall/sonnk/SEP490_G74/SEP490_G74/WebCLient/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

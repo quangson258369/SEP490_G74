@@ -154,8 +154,14 @@
                                                 <div class="scrollable-tbody">
                                                     <table class="table table-bordered table-body">
                                                         <tbody>
-                                                            <tr>
-                                                            </tr>
+                                                            @if (ViewBag.Service != null && ViewBag.Service is List<ServiceMRDTO>)
+                                                                @foreach (var s in (List<ServiceMRDTO>)ViewBag.Service)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@s.Service?.ServiceName</td>
+                                                                        <td>@s.DoctorContact?.Name</td>
+                                                                    </tr>
+                                                                }
 
                                                             <!-- Add more rows here to see the scrolling effect -->
                                                         </tbody>
@@ -185,17 +191,17 @@
         </div>
 
     </div>
-    
+
 </body>
 <script>
     function goToEdit(id) {
 
-        var url = "MedicalRecord/Edit?id=" + id+"&ServiceType=";
+        var url = "MedicalRecord/Edit?id=" + id + "&ServiceType=";
         window.location.href = url;
     }
     function goToDelete(mrid) {
 
-        var url = "../Delete?id=" + mrid;
+        var url = "MedicalRecord/Delete?id=" + mrid;
         window.location.href = url;
     }
 </script>

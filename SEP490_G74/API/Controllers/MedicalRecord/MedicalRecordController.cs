@@ -24,7 +24,16 @@ namespace API.Controllers.MedicalRecord
             if (list == null) return NotFound();
             return Ok(list);
         }
-        
+
+        [HttpGet("ListServiceUses/{id}")]
+        public IActionResult ListServiceUses(int id)
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var list = res.GetListServiceUses(id);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
+
         [HttpGet("ListDoctorByServiceType")]
         public IActionResult ListDoctorByServiceType(int serviceTypeId)
         {

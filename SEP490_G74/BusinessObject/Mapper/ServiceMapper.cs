@@ -14,12 +14,21 @@ namespace HcsBE.Mapper
 {
     public class ServiceMapper:Profile
     {
-        private ServiceDAO dao = new ServiceDAO();
+        private HcsContext context = new HcsContext();
+        private ServiceDAO serviceDAO = new ServiceDAO();
         public ServiceMapper() {
             CreateMap<Service, ServiceDTO>()
                 .ForMember(x=>x.price ,x=> x.MapFrom(y => y.Price));
             CreateMap<ServiceDTO, Service>();
+            CreateMap<ServiceMedicalRecord, ServiceMRDTO>()
+                .ForMember(x=>x.DoctorContact,x=>x.MapFrom(x=> GetDoctorContact(x.DoctorId)))
+                .ForMember(x=>x.Service, x=>x.MapFrom(x=> serviceDAO.GetService(x.ServiceId)));
+            CreateMap<ServiceMRDTO, ServiceMedicalRecord>();
         }
 
+        private Contact GetDoctorContact(int? doctorId)
+        {
+            return context.Contacts.SingleOrDefault(s => s.DoctorId == doctorId);
+        }
     }
 }

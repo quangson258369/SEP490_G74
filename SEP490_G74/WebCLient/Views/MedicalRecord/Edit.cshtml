@@ -37,7 +37,7 @@
                     <div class="col-sm p-3 min-vh-100">
 
                         <h2 class="body-content-header">Chỉnh sửa hồ sơ bệnh án</h2>
-                        <form class=" form-profile" method="post" action="MedicalRecord/Edit">
+                        <form class=" form-profile" method="post" action="MedicalRecord/EditMedicalRecord">
                             <div class="col-md-12 form-group">
 
 
@@ -178,7 +178,7 @@
                                                                         {
                                                                             <tr>
                                                                                 <td>@item.ServiceName</td>
-                                                                                <td><button type="button" onclick="addService('@item.ServiceName',@item.price)">Thêm</button></td>
+                                                                                <td><button type="button" onclick="addService(@item.ServiceId,'@item.ServiceName',@item.price)">Thêm</button></td>
                                                                             </tr>
                                                                         }
                                                                     }
@@ -217,7 +217,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 line6">
-                                    <button type="submit" class="btn-create-record float-right" onclick="populateSelect()">Lưu Chỉnh Sửa</button>
+                                    <button type="submit" class="btn-create-record float-right" onclick="sendService()">Lưu Chỉnh Sửa</button>
                                 </div>
                             </div>
                         </form>
@@ -232,6 +232,10 @@
 
 </body>
 <script>
+
+    var myObjectsFromController = = @Html.Raw(ViewBag.selectedService);
+
+
     function getSelectValue() {
         var selectElement = document.getElementById('servicetype');
         return selectElement.options[selectElement.selectedIndex].value;
@@ -240,7 +244,7 @@
     function SendToControll(id) {
         var serviceType = getSelectValue();
 
-        var url = "MedicalRecord/Edit?id="+id+"&ServiceType=" + serviceType;
+        var url = "MedicalRecord/Edit?id=" + id + "&ServiceType=" + serviceType + "&json=" + myObjectsFromController;
         window.location.href = url;
     }
 

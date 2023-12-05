@@ -15,6 +15,6 @@ public partial class ServiceMedicalRecord
     public virtual Employee? Doctor { get; set; }
     [JsonIgnore]
     public virtual MedicalRecord MedicalRecord { get; set; } = null!;
-
+    [JsonIgnore]
     public virtual Service Service { get; set; } = null!;
 }

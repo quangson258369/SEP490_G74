@@ -1,5 +1,6 @@
 let services = [];
 var selectedDoctorId = document.getElementById("selected-doctor").value;
+
 function addService(id, name, price) {
      
     let service = {
@@ -9,7 +10,6 @@ function addService(id, name, price) {
         doctorid: selectedDoctorId
     };
 
-    console.log(id, name, price, selectedDoctorId);
     
     const index = services.findIndex(service => {
         return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
@@ -21,15 +21,19 @@ function addService(id, name, price) {
     
 }
 function addToTable(service) {
+    let id = service.sid;
     let name = service.name;
     let price = service.price;
-
+    console.log(id);
+    console.log(name
+    );
+    console.log(price);
     // Create table row html
     let row = `
     <tr>
       <td>${name}</td>
       <td>${price}</td> 
-      <td><button type="button" onclick="RemoveService('${name}',${price})">Xóa</button></td>
+      <td><button type="button" onclick="RemoveService(${id},'${name}',${price})">Xóa</button></td>
     </tr>
   `;
 
@@ -42,8 +46,8 @@ function RemoveService(id, name, price) {
     // Find index of object in services array
     const index = services.findIndex(service => {
         return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
-    });
 
+    });
     if (index > -1) {
 
         // Remove from services array
@@ -55,7 +59,7 @@ function RemoveService(id, name, price) {
             const rows = table.querySelectorAll('tr');
 
             rows.forEach(row => {
-                if (row.textContent.includes(id)) {
+                if (row.textContent.includes(name)) {
                     row.remove();
                     console.log(services);
                 }
@@ -89,3 +93,4 @@ $('#submitBtn').on('click', () => {
     document.getElementById('serviceForm').submit();
 
 });
+

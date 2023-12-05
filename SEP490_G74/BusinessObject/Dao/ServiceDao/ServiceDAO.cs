@@ -33,9 +33,9 @@ namespace HcsBE.Dao.ServiceDao
 
         public Service GetService(int serviceId)
         {
-            return (Service)context.Services.Include(x => x.ServiceSupplies)
+            return context.Services.Include(x => x.ServiceSupplies)
                 .Include(x => x.ServiceType)
-                .ThenInclude(x => x.Employees).Where(p => p.ServiceId.Equals(serviceId));
+                .ThenInclude(x => x.Employees).SingleOrDefault(p => p.ServiceId.Equals(serviceId));
         }
 
         public bool UpdateService(Service service)
