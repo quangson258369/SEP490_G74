@@ -54,20 +54,6 @@ D:\DoAnFall\merge\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\DataA
 D:\DoAnFall\merge\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\DoAnFall\merge\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 D:\DoAnFall\merge\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.dll
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.pdb
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.dll
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
-D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
 D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
 D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
 D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.dll
@@ -82,3 +68,17 @@ D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\Data
 D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 D:\Đồ Án\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.dll
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.dll
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

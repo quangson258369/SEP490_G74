@@ -35,7 +35,6 @@ namespace WebCLient.Controllers
 
         public async Task<IActionResult> Add(int ServiceType)
         {
-            MedicalRecordDao dao = new MedicalRecordDao();
             // call list service type
             HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
             string strData = await response.Content.ReadAsStringAsync();
@@ -55,17 +54,8 @@ namespace WebCLient.Controllers
             string strMR = await response.Content.ReadAsStringAsync();
             List<MedicalRecordDaoOutputDto> listMRs = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordDaoOutputDto>>(strMR, options);
 
-            // call list search service by service type
-            response = await client.GetAsync("https://localhost:7249/api/Service/SearchService?typeId=" + ServiceType);
-            string strSearch = await response.Content.ReadAsStringAsync();
-            List<ServiceDTO> list = System.Text.Json.JsonSerializer.Deserialize<List<ServiceDTO>>(strSearch, options);
 
-            // get list doctor treatment for this specialize
-            response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + ServiceType);
-            string strdoctor = await response.Content.ReadAsStringAsync();
-            List<DoctorMRDTO> doctor = System.Text.Json.JsonSerializer.Deserialize<List<DoctorMRDTO>>(strdoctor, options);
-            //----------------------------------------------------------------------------------------------------------------------
-
+            
             // get last patient
             PatientDTO patient = patients.Last();
             // set id for new patient
@@ -79,11 +69,9 @@ namespace WebCLient.Controllers
             if (listMRs.Count == 0) examCode = 1;
 
 
-            ViewBag.doctors = doctor;
             ViewBag.Now = DateTime.Now;
             ViewBag.MrId = examCode;
             ViewBag.Pid = pid;
-            ViewBag.Service = list;
             ViewBag.ServiceType = ServiceType;
             return View(serviceTypes);
         }
@@ -208,7 +196,7 @@ namespace WebCLient.Controllers
 
         // copy to add and fix
         
-        public async Task<IActionResult> Edit(int id,int ServiceType)
+        public async Task<IActionResult> Edit(int id, int ServiceType)
         {
             // call list service type
             HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
@@ -235,18 +223,14 @@ namespace WebCLient.Controllers
             string str = await response.Content.ReadAsStringAsync();
             PatientDTO p = System.Text.Json.JsonSerializer.Deserialize<PatientDTO>(str, options);
 
-            // call list search service by service type
-            response = await client.GetAsync("https://localhost:7249/api/Service/SearchService?typeId=" + ServiceType);
-            string strSearch = await response.Content.ReadAsStringAsync();
-            List<ServiceDTO> list = System.Text.Json.JsonSerializer.Deserialize<List<ServiceDTO>>(strSearch, options);
             //----------------------------------------------------------------------------------------------------------------------
             // lay list service da chon
             //var model = JsonConvert.DeserializeObject<List<MyViewModel>>(Request.Form["jsond"]);
 
+            //ViewBag.selectedService = service;
             ViewBag.selectedService = JsonConvert.SerializeObject(service);
             ViewBag.MR = mredit;
             ViewBag.Patient = p;
-            ViewBag.Service = list;
             ViewBag.ServiceType = ServiceType;
             return View(serviceTypes);
         }
