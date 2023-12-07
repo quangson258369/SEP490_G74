@@ -75,7 +75,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
 
         public void AddServiceMR(ServiceMedicalRecord sm)
         {
-            if (sm != null)
+            if (sm != null && !context.ServiceMedicalRecords.Any(x=>x.MedicalRecordId == sm.MedicalRecordId && x.ServiceId == sm.ServiceId))
             {
                 context.ServiceMedicalRecords.Add(sm);
                 context.SaveChanges();

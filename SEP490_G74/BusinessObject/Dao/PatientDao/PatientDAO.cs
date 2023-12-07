@@ -72,13 +72,16 @@ namespace HcsBE.Dao.PatientDao
                 context.Patients.Update(p);
             }
             context.Entry(existingPatient).CurrentValues.SetValues(p);
+            
             context.SaveChanges();
-            UpdateContactForPatient(p.Contacts);
+            context.Contacts.UpdateRange(p.Contacts);
+            context.SaveChanges();
             return true;
         }
 
         public void UpdateContactForPatient(ICollection<Contact> contacts)
         {
+
             context.Contacts.UpdateRange(contacts);
             context.SaveChanges();
         }

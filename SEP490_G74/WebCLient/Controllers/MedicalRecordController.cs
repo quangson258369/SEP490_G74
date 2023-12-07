@@ -3,6 +3,7 @@ using DataAccess.Entity;
 using HcsBE.Dao.MedicalRecordDAO;
 using HcsBE.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
@@ -69,7 +70,7 @@ namespace WebCLient.Controllers
             if (listMRs.Count == 0) examCode = 1;
 
 
-            ViewBag.Now = DateTime.Now;
+            ViewBag.Today = DateTime.Now.ToShortDateString();
             ViewBag.MrId = examCode;
             ViewBag.Pid = pid;
             ViewBag.ServiceType = ServiceType;
@@ -95,16 +96,8 @@ namespace WebCLient.Controllers
                 HcsContext context = new HcsContext();
                 MedicalRecordDao dao = new MedicalRecordDao();
                 var contacts = context.Contacts.ToList();
-                // call list medical record
-                MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/ListMedicalRecord";
-                response = await client.GetAsync(MedicalRecordAPI);
-                string strMR = await response.Content.ReadAsStringAsync();
-                List<MedicalRecordDaoOutputDto> listMRs = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordDaoOutputDto>>(strMR, options);
 
-                MedicalRecordDaoOutputDto mr = listMRs.Last();
-                int mrid = 1;
-                if (mr != null && listMRs.Count > 0) mrid = mr.MedicalRecordId + 1;
-                if (listMRs.Count == 0) mrid = 1;
+                int mrid = int.Parse(Request.Form["examcode"]);
 
                 // lay list service da chon
                 var model = JsonConvert.DeserializeObject<List<MyViewModel>>(Request.Form["jsonData"]);
@@ -113,7 +106,7 @@ namespace WebCLient.Controllers
                 foreach (var item in model)
                 {
                     servicechoose += item.Name + ",";
-                    list.Add(new ServiceMedicalRecord() { ServiceId = item.Sid,MedicalRecordId = mrid});
+                    list.Add(new ServiceMedicalRecord() { ServiceId = item.Sid,MedicalRecordId = mrid, DoctorId = int.Parse(item.doctorId)});
                 }
                 
 
@@ -148,7 +141,7 @@ namespace WebCLient.Controllers
                 string AddAPI = "https://localhost:7249/api/MedicalRecord/AddMedicalRecord";
                 var addMR = new MedicalRecordModify()
                 {
-                    ExamCode = Request.Form["examcode"].ToString(),
+                    ExamCode = "1",
                     PatientId = int.Parse(Request.Form["pid"].ToString()),
                     MedicalRecordDate = DateTime.Now,
                     ExamReason = Request.Form["reason"],
@@ -196,7 +189,7 @@ namespace WebCLient.Controllers
 
         // copy to add and fix
         
-        public async Task<IActionResult> Edit(int id, int ServiceType)
+        public async Task<IActionResult> Edit(int id)
         {
             // call list service type
             HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
@@ -231,33 +224,97 @@ namespace WebCLient.Controllers
             ViewBag.selectedService = JsonConvert.SerializeObject(service);
             ViewBag.MR = mredit;
             ViewBag.Patient = p;
-            ViewBag.ServiceType = ServiceType;
             return View(serviceTypes);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditHaa([FromBody] JObject jsonData)
+        public async Task<IActionResult> EditMedicalRecord()
         {
-            foreach (var property in jsonData.Properties())
+            HcsContext context = new HcsContext();
+            MedicalRecordDao dao = new MedicalRecordDao();
+
+            int mrid = int.Parse(Request.Form["mrid"]);
+
+            // lay list service da chon
+            var model = JsonConvert.DeserializeObject<List<MyViewModel>>(Request.Form["jsonD"]);
+            List<ServiceMedicalRecord> list = new List<ServiceMedicalRecord>();
+            string servicechoose = "";
+            foreach (var item in model)
             {
-                var key = property.Name;
-                var value = property.Value;
-                // Process key-value pair as needed
-                await Console.Out.WriteLineAsync(key+"-"+value);
+                servicechoose += item.Name + ",";
+                list.Add(new ServiceMedicalRecord() { ServiceId = item.Sid, MedicalRecordId = mrid, DoctorId = int.Parse(item.doctorId) });
             }
 
-            return View();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            // call get patiet information
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Patient/GetPatient/" + int.Parse(Request.Form["pid"]));
+            string str = await response.Content.ReadAsStringAsync();
+            PatientDTO p = System.Text.Json.JsonSerializer.Deserialize<PatientDTO>(str, options);
+
+            if (p != null)
+            {
+                // edit benh nhan truoc
+                PatientModify patient = new PatientModify()
+                {
+                    PatientId = int.Parse(Request.Form["pid"].ToString()),
+                    ServiceDetailName = servicechoose.Substring(0, servicechoose == null ? 0 : servicechoose.Length - 1),
+                    Contact = new ContactPatientDTO
+                    {
+                        CId = p.Contacts.CId,
+                        Address = Request.Form["address"].ToString(),
+                        Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
+                        Gender = Request.Form["gender"] == "male" ? true : false,
+                        Name = Request.Form["fullname"].ToString(),
+                        PatientId = int.Parse(Request.Form["pid"].ToString()),
+                        Phone = Request.Form["phone"].ToString()
+                    }
+                };
+
+
+                // edit patient
+                response = await client.PutAsJsonAsync("https://localhost:7249/api/Patient/UpdatePatient", patient);
+                string strPatient = await response.Content.ReadAsStringAsync();
+                string rowEffected = System.Text.Json.JsonSerializer.Deserialize<string>(strPatient, options);
+            }
+
+            // edit medical record
+            string AddAPI = "https://localhost:7249/api/MedicalRecord/UpdateMedicalRecord";
+            var addMR = new MedicalRecordModify()
+            {
+                ExamCode = "1",
+                PatientId = int.Parse(Request.Form["pid"].ToString()),
+                MedicalRecordDate = DateTime.Now,
+                ExamReason = Request.Form["reason"],
+                MedicalRecordId = mrid,
+                DoctorId = 1
+            };
+            response = await client.PutAsJsonAsync(AddAPI, addMR);
+            string strData = await response.Content.ReadAsStringAsync();
+            string row = System.Text.Json.JsonSerializer.Deserialize<string>(strData, options);
+
+            // them dich vu su dung vao db
+
+            foreach (var sm in list)
+            {
+                dao.AddServiceMR(sm);
+            }
+
+            return RedirectToAction("Index", "MedicalRecord");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             // call list service type
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Service/ListServiceType");
+            HttpResponseMessage response = await client.DeleteAsync("https://localhost:7249/api/MedicalRecord/DeleteMedicalRecord?id="+id);
             string strData = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
+            string row = System.Text.Json.JsonSerializer.Deserialize<string>(strData, options);
             return RedirectToAction("Index", "MedicalRecord");
         }
 

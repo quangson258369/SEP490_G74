@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="date-create">Ngày khám</label>
-                                        <input type="text" class="date-create form-control" name="createdate" value="@ViewBag.Now" readonly />
+                                        <input type="text" class="date-create form-control" name="createdate" value="@ViewBag.Today" readonly />
                                     </div>
 
                                 </div>
@@ -291,10 +291,12 @@
             $.each(result, function (index, value) {
                 var newRow = $("<tr>");
                 newRow.append($("<td>").html(value["serviceName"]));
-                var selectElement = $("<select class=\"doctor\">"); // Use class instead of id
+                    var selectElement = $("<select id=\"doctor\" onchange=\"GetData()\">"); // Use class instead of id
                 newRow.append($("<td>").append(selectElement));
                 var doctorId = LoadDoctor(selectElement, serviceTypeId); // Get doctorId directly
-                newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}','${doctorId}')">Thêm</button>`)));
+                var did = GetData();
+                console.log(did);
+                newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}','${did}')">Thêm</button>`)));
                 tbody.append(newRow);
             });
         },
@@ -302,6 +304,12 @@
             console.log(xhr);
         }
     });
+}
+
+function GetData(){
+        var doctorId = $("#doctor").val();
+        console.log("data get:"+ doctorId);
+        return doctorId;
 }
 
 function LoadDoctor(selectElement, serviceTypeId) {

@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="dob">Ngày sinh</label>
-                                        <input type="datetime" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob)" />
+                                        <input type="date" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob)" />
 
                                     </div>
                                     <div class="col-md-3 form-group">
@@ -146,14 +146,7 @@
                                                         <option value="0">Chọn phòng khám</option>
                                                         @foreach (var item in Model)
                                                         {
-                                                            @if (item.ServiceTypeId == ViewBag.ServiceType)
-                                                            {
-                                                                <option value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
-                                                            }
-                                                            else
-                                                            {
                                                                 <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
-                                                            }
 
                                                         }
                                                     </select>
@@ -212,7 +205,7 @@
                                                             }else{}*@
                                                         </tbody>
                                                     </table>
-                                                    <input hidden id="jsond" name="jsonData" />
+                                                    <input hidden id="jsond" name="jsonD" />
                                                 </div>
                                             </div>
                                         </div>
@@ -335,6 +328,11 @@ let servicess = [];
         }
     }
 
+    function sendService() {
+        document.getElementById("jsond").value = JSON.stringify(servicess);
+        console.log(servicess);
+    }
+
     $('#submitBtn').on('click', () => {
 
         // Add array as hidden input
@@ -366,7 +364,7 @@ let servicess = [];
                 $.each(result, function (index, value) {
                     var newRow = $("<tr>");
                     newRow.append($("<td>").html(value["serviceName"]));
-                    var selectElement = $("<select class=\"doctor\">"); // Use class instead of id
+                    var selectElement = $("<select id=\"doctor\">"); // Use class instead of id
                     newRow.append($("<td>").append(selectElement));
                     var doctorId = LoadDoctor(selectElement, serviceTypeId); // Get doctorId directly
                     newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}','${doctorId}')">Thêm</button>`)));
