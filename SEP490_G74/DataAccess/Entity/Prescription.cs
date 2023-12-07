@@ -11,11 +11,7 @@ public partial class Prescription
 
     public string Diagnose { get; set; } = null!;
 
-    public byte Quantity { get; set; }
+    public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 
-    public int MedicalRecordId { get; set; }
-
-    public virtual MedicalRecord MedicalRecord { get; set; } = null!;
-
-    public virtual ICollection<Supply> SIds { get; set; } = new List<Supply>();
+    public virtual ICollection<SuppliesPrescription> SuppliesPrescriptions { get; set; } = new List<SuppliesPrescription>();
 }

@@ -25,7 +25,7 @@ public partial class Supply
 
     public virtual ICollection<ServiceSupply> ServiceSupplies { get; set; } = new List<ServiceSupply>();
 
-    public virtual SuppliesType SuppliesType { get; set; } = null!;
+    public virtual ICollection<SuppliesPrescription> SuppliesPrescriptions { get; set; } = new List<SuppliesPrescription>();
 
-    public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+    public virtual SuppliesType SuppliesType { get; set; } = null!;
 }

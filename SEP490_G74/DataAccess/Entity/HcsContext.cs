@@ -42,6 +42,8 @@ public partial class HcsContext : DbContext
 
     public virtual DbSet<ServiceType> ServiceTypes { get; set; }
 
+    public virtual DbSet<SuppliesPrescription> SuppliesPrescriptions { get; set; }
+
     public virtual DbSet<SuppliesType> SuppliesTypes { get; set; }
 
     public virtual DbSet<Supply> Supplies { get; set; }
@@ -53,7 +55,6 @@ public partial class HcsContext : DbContext
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Contact>(entity =>
@@ -181,6 +182,11 @@ public partial class HcsContext : DbContext
                 .HasForeignKey(d => d.InvoiceId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_InvoiceDetail_Invoice");
+
+            entity.HasOne(d => d.MedicalRecord).WithMany(p => p.InvoiceDetails)
+                .HasForeignKey(d => d.MedicalRecordId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_InvoiceDetail_MedicalRecord");
         });
 
         modelBuilder.Entity<MedicalRecord>(entity =>
@@ -212,6 +218,10 @@ public partial class HcsContext : DbContext
                 .HasForeignKey(d => d.PatientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MedicalRecord_Patient");
+
+            entity.HasOne(d => d.Prescription).WithMany(p => p.MedicalRecords)
+                .HasForeignKey(d => d.PrescriptionId)
+                .HasConstraintName("FK_MedicalRecord_Prescription");
         });
 
         modelBuilder.Entity<Patient>(entity =>
@@ -242,13 +252,6 @@ public partial class HcsContext : DbContext
             entity.Property(e => e.Diagnose)
                 .HasMaxLength(550)
                 .HasColumnName("diagnose");
-            entity.Property(e => e.MedicalRecordId).HasColumnName("medicalRecordId");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-            entity.HasOne(d => d.MedicalRecord).WithMany(p => p.Prescriptions)
-                .HasForeignKey(d => d.MedicalRecordId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Prescription_MedicalRecord");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -294,6 +297,7 @@ public partial class HcsContext : DbContext
             entity.Property(e => e.ServiceId).HasColumnName("serviceId");
             entity.Property(e => e.MedicalRecordId).HasColumnName("medicalRecordId");
             entity.Property(e => e.DoctorId).HasColumnName("doctorId");
+            entity.Property(e => e.Status).HasColumnName("status");
 
             entity.HasOne(d => d.Doctor).WithMany(p => p.ServiceMedicalRecords)
                 .HasForeignKey(d => d.DoctorId)
@@ -341,6 +345,27 @@ public partial class HcsContext : DbContext
                 .HasColumnName("serviceTypeName");
         });
 
+        modelBuilder.Entity<SuppliesPrescription>(entity =>
+        {
+            entity.HasKey(e => new { e.SId, e.PrescriptionId });
+
+            entity.ToTable("SuppliesPrescription");
+
+            entity.Property(e => e.SId).HasColumnName("sId");
+            entity.Property(e => e.PrescriptionId).HasColumnName("prescriptionId");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+            entity.HasOne(d => d.Prescription).WithMany(p => p.SuppliesPrescriptions)
+                .HasForeignKey(d => d.PrescriptionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SuppliesPrescription_Prescription");
+
+            entity.HasOne(d => d.SIdNavigation).WithMany(p => p.SuppliesPrescriptions)
+                .HasForeignKey(d => d.SId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SuppliesPrescription_Supplies");
+        });
+
         modelBuilder.Entity<SuppliesType>(entity =>
         {
             entity.ToTable("SuppliesType");
@@ -383,25 +408,6 @@ public partial class HcsContext : DbContext
                 .HasForeignKey(d => d.SuppliesTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Supplies_SuppliesType");
-
-            entity.HasMany(d => d.Prescriptions).WithMany(p => p.SIds)
-                .UsingEntity<Dictionary<string, object>>(
-                    "SuppliesPrescription",
-                    r => r.HasOne<Prescription>().WithMany()
-                        .HasForeignKey("PrescriptionId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_SuppliesPrescription_Prescription"),
-                    l => l.HasOne<Supply>().WithMany()
-                        .HasForeignKey("SId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK_SuppliesPrescription_Supplies"),
-                    j =>
-                    {
-                        j.HasKey("SId", "PrescriptionId");
-                        j.ToTable("SuppliesPrescription");
-                        j.IndexerProperty<int>("SId").HasColumnName("sId");
-                        j.IndexerProperty<int>("PrescriptionId").HasColumnName("prescriptionId");
-                    });
         });
 
         modelBuilder.Entity<User>(entity =>

@@ -58,12 +58,13 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
-                                        <th>Mã bệnh nhân</th>
+                                        <th>Mã Hồ Sơ</th>
                                         <th>Họ và tên</th>
-                                        <th>Lí do khám</th>
-                                        <th>Dịch vụ khám</th>
+                                        <th>Số Điện Thoại</th>
+                                        <th>Ngày Khám</th>
                                         <th>Trạng thái</th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -72,12 +73,13 @@
                                     {
                                         <tr>
                                             <td>@item.MedicalRecordId</td>
-                                            <td>@item.PatientId</td>
                                             <td>@item.PatientName</td>
-                                            <td>@item.ExamReason</td>
-                                            <td>@item.Patient.ServiceDetailName</td>
+                                            <td>@item.PatientPhone</td>
+                                            <td>@item.MedicalRecordDate</td>
                                             <td>Chưa khám</td>
 
+                                            <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Hồ sơ</a></button></td>
+                                            <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Hồ sơ</a></button></td>
                                             <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Hồ sơ</a></button></td>
                                         </tr>
                                     }

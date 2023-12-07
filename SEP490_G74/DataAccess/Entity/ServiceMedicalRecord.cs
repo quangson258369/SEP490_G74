@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace DataAccess.Entity;
 
@@ -11,10 +10,12 @@ public partial class ServiceMedicalRecord
     public int MedicalRecordId { get; set; }
 
     public int? DoctorId { get; set; }
-    [JsonIgnore]
+
+    public bool? Status { get; set; }
+
     public virtual Employee? Doctor { get; set; }
-    [JsonIgnore]
+
     public virtual MedicalRecord MedicalRecord { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual Service Service { get; set; } = null!;
 }

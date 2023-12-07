@@ -12,4 +12,6 @@ public partial class InvoiceDetail
     public int MedicalRecordId { get; set; }
 
     public virtual Invoice Invoice { get; set; } = null!;
+
+    public virtual MedicalRecord MedicalRecord { get; set; } = null!;
 }
