@@ -31,7 +31,7 @@ namespace WebCLient.Controllers
             LoginInputDto input = new LoginInputDto();
             input.Email = Request.Form["username"];
             input.Password = Request.Form["password"];
-            HttpResponseMessage response = await client.PostAsync("https://localhost:7249/api/login",input);
+            HttpResponseMessage response = await client.PostAsJsonAsync("https://localhost:7249/api/login", input);
             string strData = await response.Content.ReadAsStringAsync();
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             LoginOutputDto output = JsonSerializer.Deserialize<LoginOutputDto>(strData, option);
@@ -39,6 +39,10 @@ namespace WebCLient.Controllers
             {
                 HttpContext.Session.SetString("USERID",output.UserInfoDto.UserId);
                 HttpContext.Session.SetString("Token", output.KeyDto.Key);
+                string hi = HttpContext.Session.GetString("Token");
+                string id = HttpContext.Session.GetString("USERID");
+                await Console.Out.WriteLineAsync("Token"+hi);
+                await Console.Out.WriteLineAsync("UserId"+id);
                 return RedirectToAction("Index","Patient");
             }
             else
