@@ -19,6 +19,16 @@ namespace HcsBE.Dao.MedicalRecordDAO
             var query = context.MedicalRecords.ToList();
             return query;
         }
+        
+        public List<ServiceMedicalRecord> MedicalRecordListByServiceType(int type)
+        {
+            var query = context.ServiceMedicalRecords.FromSqlRaw("select smr.* from MedicalRecord mr " +
+                "join ServiceMedicalRecord smr on mr.medicalRecordID = smr.medicalRecordId " +
+                "join [Service] s on smr.serviceId = s.serviceId " +
+                "where s.serviceTypeId = "+type+" and smr.status = 0").ToList();
+            return query;
+        }
+
         public List<MedicalRecord> MedicalRecordListPaging( int page = 1)
         {
             int pageSize = 3;

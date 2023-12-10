@@ -17,7 +17,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddSingleton<IConfiguration>(Configuration);
 
             var jwtToken = Configuration["Jwt:Key"];

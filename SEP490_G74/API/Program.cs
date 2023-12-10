@@ -30,6 +30,7 @@ var mapperConfig = new MapperConfiguration(mc =>
 });
 
 IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSession();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddCors(options =>
 {
@@ -85,7 +86,7 @@ app.UseCors("AllowLocalhost7115");
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 
 app.UseAuthorization();
