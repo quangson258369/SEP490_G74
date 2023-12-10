@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entity;
 
@@ -22,8 +23,8 @@ public partial class Contact
     public int? DoctorId { get; set; }
 
     public int? PatientId { get; set; }
-
+    [JsonIgnore]
     public virtual Employee? Doctor { get; set; }
-
+    [JsonIgnore]
     public virtual Patient? Patient { get; set; }
 }

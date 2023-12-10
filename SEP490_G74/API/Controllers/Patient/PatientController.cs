@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HcsBE.Bussiness.MedicalRecord;
 using HcsBE.Bussiness.Patient;
 using HcsBE.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,23 @@ namespace API.Controllers.Patient
             var list = res.ListPatient();
             if (list == null) return NotFound();
             return Ok(list);
+        }
+
+        [HttpGet("ListPatientPaging")]
+        public IActionResult ListPatient(int page)
+        {
+            var res = new PatientLogic(_mapper);
+            var list = res.ListPatientPaging(page);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
+
+        [HttpGet("GetCountOfListPatient")]
+        public IActionResult GetCountOfListPatient()
+        {
+            var res = new PatientLogic(_mapper);
+            var output = res.GetCountOfListPatient();
+            return Ok(output);
         }
 
         [HttpGet("GetPatient/{id}")]

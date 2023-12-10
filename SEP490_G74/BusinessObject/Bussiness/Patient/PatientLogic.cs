@@ -37,6 +37,28 @@ namespace HcsBE.Bussiness.Patient
             }
             return output;
         }
+        public List<PatientDTO> ListPatientPaging(int page)
+        {
+            List<DataAccess.Entity.Patient> list = dao.ListPatientPaging(page);
+            var output =  mapper.Map<List<PatientDTO>>(list);
+            if (list == null)
+            {
+                return new List<PatientDTO>()
+                {
+                    new PatientDTO()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return output;
+        }
+
+        public int GetCountOfListPatient()
+        {
+            return dao.GetCountOfListPatient();
+        }
 
         public PatientDTO GetPatientGetId(int id)
         {

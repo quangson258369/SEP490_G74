@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="dob">Ngày sinh</label>
-                                        <input type="date" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob)" />
+                                        <input type="date" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob.ToString("yyyy-MM-dd"))" />
 
                                     </div>
                                     <div class="col-md-3 form-group">
@@ -191,7 +191,7 @@
                                                 <div class="scrollable-tbody">
                                                     <table id="Selected-service" class="table table-bordered table-body selected-service-table">
                                                         <tbody>
-                                                            @*@if (ViewBag.selectedService != null && ViewBag.selectedService is List<ServiceMRDTO>)
+                                                            @if (ViewBag.selectedService != null && ViewBag.selectedService is List<ServiceMRDTO>)
                                                             {
                                                                 foreach (var s in (List<ServiceMRDTO>)ViewBag.selectedService)
                                                                 {
@@ -202,7 +202,8 @@
                                                                         <td><button type="button" onclick="RemoveService('@s.Service?.ServiceId','@s.Service?.ServiceName','@s.Service?.Price','@s.DoctorId')">Xóa</button></td>
                                                                     </tr>
                                                                 }
-                                                            }else{}*@
+                                                            }
+                                                            else { }
                                                         </tbody>
                                                     </table>
                                                     <input hidden id="jsond" name="jsonD" />
@@ -229,18 +230,26 @@
 
 </body>
 <script>
-let servicess = [];
+    let services = [];
+
+    var selectedDoctorId = 0;
     var myObjectsFromController = @Html.Raw(ViewBag.selectedService);
     //services = myObjectsFromController;
     myObjectsFromController.forEach(function (obj) {
 
         addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price, '' + obj.DoctorId);
-
+        console.log("List luc load"+services);
     });
     myObjectsFromController = [];
-    
-    
-    function addService(id, name, price, selectedDoctorId) {
+
+    function HandleSelectChange(selectElement) {
+        var doctorId = $(selectElement).val();
+        selectedDoctorId = doctorId !== undefined ? doctorId : '';
+        console.log("data get in GetData:" + selectedDoctorId);
+        return selectedDoctorId;
+    }
+
+    function addService(id, name, price) {
 
         let service = {
             sid: id,
@@ -248,47 +257,48 @@ let servicess = [];
             price: price,
             doctorid: selectedDoctorId
         };
-        const index = servicess.findIndex(service => {
-            return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
+
+
+        const index = services.findIndex(service => {
+            return service.sid === id && service.name === name && service.price === price;
         });
         if (index <= -1) {
             addToTable(service);
-            servicess.push(service);
-            console.log(servicess);
+            services.push(service);
+            console.log("List sau add"+services);
         }
-        
-    }
 
+    }
     function addToTable(service) {
         let id = service.sid;
         let name = service.name;
         let price = service.price;
-        let selectedDoctorId = service.doctorid;
         // Create table row html
         let row = `
-        <tr>
-          <td>${name}</td>
-          <td>${price}</td>
-          <td><button type="button" onclick="RemoveServicee('${id}','${name}','${price}','${selectedDoctorId}')">Xóa</button></td>
-        </tr>
-      `;
+            <tr>
+              <td>${name}</td>
+              <td>${price}</td>
+              <td><button type="button" onclick="RemoveService('${id}','${name}','${price}')">Xóa</button></td>
+            </tr>
+          `;
 
         // Add row to table
         $('.selected-service-table tbody').append(row);
     }
 
-    function RemoveServicee(id, name, price, selectedDoctorId) {
-        
+    function RemoveService(id, name, price) {
+
         // Find index of object in services array
-        const index = servicess.findIndex(service => {
-            return service.sid === '' + id && service.name === name && service.price === '' + price && service.doctorid === '' + selectedDoctorId;
+        const index = services.findIndex(service => {
+            return service.sid === id && service.name === name && service.price === price;
 
         });
+
         if (index > -1) {
 
             // Remove from services array
-            servicess.splice(index, 1);
-            
+            services.splice(index, 1);
+
             const table = document.getElementById("Selected-service");
             // Find and remove table row
             if (table) {
@@ -297,7 +307,7 @@ let servicess = [];
                 rows.forEach(row => {
                     if (row.textContent.includes(name)) {
                         row.remove();
-                        console.log(servicess);
+                        console.log(services);
                     }
                 })
             }
@@ -305,6 +315,10 @@ let servicess = [];
 
         }
 
+    }
+
+    function sendService() {
+        document.getElementById("jsond").value = JSON.stringify(services);
     }
 
     function filterTable() {
@@ -328,11 +342,63 @@ let servicess = [];
         }
     }
 
-    function sendService() {
-        document.getElementById("jsond").value = JSON.stringify(servicess);
-        console.log(servicess);
+    function LoadDat() {
+        var serviceTypeId = $("#serviceType").val();
+        console.log(serviceTypeId);
+
+        $.ajax({
+            url: "https://localhost:7249/api/Service/SearchService?typeId=" + serviceTypeId,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result, status, xhr) {
+                console.log(result);
+                var tbody = $("#serviceTable tbody");
+                tbody.empty(); // Clear existing rows before appending new ones
+
+                $.each(result, function (index, value) {
+                    var newRow = $("<tr>");
+                    newRow.append($("<td>").html(value["serviceName"]));
+                    var selectElement = $("<select class=\"doctor\" onchange=\"HandleSelectChange(this)\" > "); // Use class instead of id
+                    newRow.append($("<td>").append(selectElement));
+                    LoadDoctor(selectElement, serviceTypeId);
+
+                    newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}')">Thêm</button>`)));
+                    tbody.append(newRow);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
     }
 
+
+
+    function LoadDoctor(selectElement, serviceTypeId) {
+        var doctorId; // Variable to store the selected doctorId
+
+        $.ajax({
+            url: "https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + serviceTypeId,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false, // Synchronous request to wait for the options to be loaded
+            success: function (result, status, xhr) {
+                console.log(result);
+                selectElement.empty(); // Clear existing options before appending new ones
+                $.each(result, function (index, value) {
+                    selectElement.append($('<option value=' + value["doctorId"] + '>' + value["contact"]["name"] + '</option>'));
+                });
+                doctorId = selectElement.val(); // Get the selected doctorId
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+
+        return doctorId; // Return the selected doctorId
+    }
     $('#submitBtn').on('click', () => {
 
         // Add array as hidden input
@@ -347,59 +413,6 @@ let servicess = [];
         document.getElementById('serviceForm').submit();
 
     });
-
-    function LoadDat() {
-        var serviceTypeId = $("#serviceType").val();
-        console.log(serviceTypeId);
-
-        $.ajax({
-            url: "https://localhost:7249/api/Service/SearchService?typeId=" + serviceTypeId,
-            type: "get",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result, status, xhr) {
-                var tbody = $("#serviceTable tbody");
-                tbody.empty(); // Clear existing rows before appending new ones
-
-                $.each(result, function (index, value) {
-                    var newRow = $("<tr>");
-                    newRow.append($("<td>").html(value["serviceName"]));
-                    var selectElement = $("<select id=\"doctor\">"); // Use class instead of id
-                    newRow.append($("<td>").append(selectElement));
-                    var doctorId = LoadDoctor(selectElement, serviceTypeId); // Get doctorId directly
-                    newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}','${doctorId}')">Thêm</button>`)));
-                    tbody.append(newRow);
-                });
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr);
-            }
-        });
-    }
-
-    function LoadDoctor(selectElement, serviceTypeId) {
-        var doctorId; // Variable to store the selected doctorId
-
-        $.ajax({
-            url: "https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + serviceTypeId,
-            type: "get",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false, // Synchronous request to wait for the options to be loaded
-            success: function (result, status, xhr) {
-                selectElement.empty(); // Clear existing options before appending new ones
-                $.each(result, function (index, value) {
-                    selectElement.append($('<option value=' + value["doctorId"] + '>' + value["contact"]["name"] + '</option>'));
-                });
-                doctorId = selectElement.val(); // Get the selected doctorId
-            },
-            error: function (xhr, status, error) {
-                console.log(xhr);
-            }
-        });
-        return doctorId; // Return the selected doctorId
-    }
-
 </script>
 <script type="text/javascript" src="~/js/Sidebar.js"></script>
 <script type="text/javascript" src="~/js/HeaderScript.js"></script>

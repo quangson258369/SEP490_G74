@@ -15,13 +15,13 @@ namespace HcsBE.Dao.ServiceDao
 
         public List<Service> ListService()
         {
-            return context.Services.Include(x=>x.ServiceSupplies)
+            return context.Services
                 .Include(x=>x.ServiceType)
                 .ThenInclude(x=>x.Employees).ToList();
         }
         public List<Service> SearchService(string name, int typeId)
         {
-            return context.Services.Include(x=>x.ServiceSupplies)
+            return context.Services
                 .Include(x=>x.ServiceType)
                 .ThenInclude(x=>x.Employees).Where(x=>x.ServiceName == name || x.ServiceTypeId == typeId).ToList();
         }
@@ -33,7 +33,7 @@ namespace HcsBE.Dao.ServiceDao
 
         public Service GetService(int serviceId)
         {
-            return context.Services.Include(x => x.ServiceSupplies)
+            return context.Services
                 .Include(x => x.ServiceType)
                 .ThenInclude(x => x.Employees).SingleOrDefault(p => p.ServiceId.Equals(serviceId));
         }

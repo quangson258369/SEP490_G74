@@ -14,6 +14,11 @@ namespace HcsBE.DTO
 {
     public class MedicalRecordDaoOutputDto : BaseOutputCommon
     {
+        
+        public string PatientName { get; set; } = null!;
+
+        public string PatientPhone { get; set; } = null!;
+
         public int MedicalRecordId { get; set; }
 
         public int PatientId { get; set; }
@@ -23,11 +28,10 @@ namespace HcsBE.DTO
         public string? ExamReason { get; set; }
 
         public string ExamCode { get; set; } = null!;
-        public string PatientName { get; set; } = null!;
-
-        public string PatientPhone { get; set; } = null!;
 
         public int DoctorId { get; set; }
+
+        public int? PrescriptionId { get; set; }
 
         public Employee? Doctor { get; set; }
 
@@ -35,8 +39,12 @@ namespace HcsBE.DTO
 
         public List<ExaminationResultId>? ExaminationResultIds { get; set; }
 
-        public List<Prescription>? Prescriptions { get; set; }
+        public Prescription? Prescriptions { get; set; }
 
         public List<Service>? Services { get; set; }
+
+        public List<InvoiceDetail>? InvoiceDetails { get; set; }
+
+        public List<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; } 
     }
 }

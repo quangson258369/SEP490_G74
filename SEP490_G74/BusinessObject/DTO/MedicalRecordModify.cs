@@ -18,6 +18,8 @@ namespace HcsBE.DTO
 
         public string ExamCode { get; set; } = null!;
 
+        public int? PrescriptionId { get; set; }
+
         public int DoctorId { get; set; }
     }
 }

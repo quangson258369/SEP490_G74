@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entity;
 
@@ -12,10 +13,8 @@ public partial class Service
     public string ServiceName { get; set; } = null!;
 
     public decimal? Price { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<ServiceMedicalRecord> ServiceMedicalRecords { get; set; } = new List<ServiceMedicalRecord>();
-
-    public virtual ICollection<ServiceSupply> ServiceSupplies { get; set; } = new List<ServiceSupply>();
-
+    [JsonIgnore]
     public virtual ServiceType ServiceType { get; set; } = null!;
 }

@@ -45,37 +45,53 @@
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
-                                        <input type="text" class="invoice-code form-control" name="examcode" value="@ViewBag.MrId"
+                                        <input type="text" class="invoice-code form-control" name="mrid" value="@ViewBag.MrId"
                                                readonly />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="patient-code">Mã bệnh nhân</label>
-                                        <input type="text" class="patient-code form-control" name="pid" value="@ViewBag.Pid"
+                                        <input type="text" class="patient-code form-control" name="pid" value="@((ViewBag.Patient as PatientDTO)?.PatientId)"
                                                readonly />
                                     </div>
 
                                     <div class="col-md-3 form-group">
                                         <label class="fullname">Họ và tên</label>
-                                        <input type="text" class="fullname form-control" name="fullname" />
+                                        <input type="text" class="fullname form-control" name="fullname" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Name)" />
 
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="dob">Ngày sinh</label>
-                                        <input type="date" class="dob form-control" name="dob" />
+                                        <input type="date" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob.ToString("yyyy-MM-dd"))" />
 
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label class="title-gender">Giới tính</label>
                                         <div class="gender">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="male"
-                                                       value="male">
+                                                @if (ViewBag.Patient is PatientDTO patient && patient.Contacts != null && patient.Contacts.Gender == true)
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="male"
+                                                           value="male" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="male"
+                                                           value="male">
+                                                }
                                                 <label class="form-check-label" for="male">Male</label>
                                             </div>
 
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="female"
-                                                       value="female">
+                                                @if (ViewBag.Patient is PatientDTO patientt && patientt.Contacts != null && patientt.Contacts.Gender != true)
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="female"
+                                                           value="female" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="female"
+                                                           value="female">
+                                                }
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                         </div>
@@ -84,31 +100,31 @@
                                 <div class="line2 row">
                                     <div class="col-md-9 form-group">
                                         <label class="address">Địa chỉ</label>
-                                        <input type="text" class="address form-control" name="address" />
+                                        <input type="text" class="address form-control" name="address" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Address)" />
                                     </div>
                                     <div class="row-cols-md-3 form-group">
                                         <label class="phone">Số điện thoại</label>
-                                        <input type="text" class="phone form-control" name="phone" />
+                                        <input type="text" class="phone form-control" name="phone" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Phone)" />
                                     </div>
 
                                 </div>
                                 <div class="col-md-12 line3 row">
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Chiều cao</label>
-                                        <input type="text" class="date-create form-control" name="height" />
+                                        <input type="text" class="date-create form-control" name="height" value="@((ViewBag.Patient as PatientDTO)?.Height)" />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Cân nặng</label>
-                                        <input type="text" class="date-create form-control" name="weight" />
+                                        <input type="text" class="date-create form-control" name="weight" value="@((ViewBag.Patient as PatientDTO)?.Weight)" />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Nhóm máu</label>
-                                        <input type="text" class="date-create form-control" name="bloodgr" />
+                                        <input type="text" class="date-create form-control" name="bloodgr" value="@((ViewBag.Patient as PatientDTO)?.BloodGroup)" />
                                     </div>
 
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Huyết áp</label>
-                                        <input type="text" class="date-create form-control" name="address" />
+                                        <input type="text" class="date-create form-control" name="bloodpress" value="@((ViewBag.Patient as PatientDTO)?.BloodPressure)" />
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="date-create">Ngày khám</label>
@@ -126,7 +142,6 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row">
-
                                                     <select id="serviceType" class="col-md-4 ml-3" name="ServiceType" onchange="LoadData()">
                                                         <option value="0">Chọn phòng khám</option>
                                                         @foreach (var item in Model)
@@ -158,34 +173,6 @@
                                                         <div class="scrollable-tbody">
                                                             <table id="serviceTable" class="table table-bordered table-body">
                                                                 <tbody>
-                                                                   @*  @if (ViewBag.Service != null && ViewBag.Service is List<ServiceDTO>)
-                                                                    {
-                                                                        @foreach (var item in (List<ServiceDTO>)ViewBag.Service)
-                                                                        {
-                                                                            <tr>
-                                                                                <td>@item.ServiceName</td>
-                                                                                <td>
-                                                                                    <select id="selected-doctor" class="col-md-4 ml-3" name="doctor">
-                                                                                        @if (ViewBag.doctors != null && ViewBag.doctors is List<DoctorMRDTO>) {
-                                                                                            @foreach (var d in (List<DoctorMRDTO>)ViewBag.doctors)
-                                                                                            {
-                                                                                                @if (d.DoctorId == ViewBag.Doctor)
-                                                                                                {
-                                                                                                    <option value="@d.DoctorId" selected>@d.Contact?.Name</option>
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    <option value="@d.DoctorId">@d.Contact?.Name</option>
-                                                                                                }
-
-                                                                                            }
-                                                                                        }
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td><button type="button" onclick="addService(@item.ServiceId,'@item.ServiceName',@item.price)">Thêm</button></td>
-                                                                            </tr>
-                                                                        }
-                                                                    } *@
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -238,18 +225,86 @@
 
 </body>
 <script>
-    
+    let services = [];
 
-    function getSelectValue() {
-        var selectElement = document.getElementById('serviceType');
-        return selectElement.options[selectElement.selectedIndex].value;
+    var selectedDoctorId = 0;
+
+    function HandleSelectChange(selectElement) {
+        var doctorId = $(selectElement).val();
+        selectedDoctorId = doctorId !== undefined ? doctorId : '';
+        console.log("data get in GetData:" + selectedDoctorId);
+        return selectedDoctorId;
     }
 
-    function saveAndSendToControll() {
-        var serviceType = getSelectValue();
+    function addService(id, name, price) {
 
-        var url = "MedicalRecord/Add?ServiceType=" + serviceType;
-        window.location.href = url;
+        let service = {
+            sid: id,
+            name: name,
+            price: price,
+            doctorid: selectedDoctorId
+        };
+
+
+        const index = services.findIndex(service => {
+            return service.sid === id && service.name === name && service.price === price;
+        });
+        if (index <= -1) {
+            addToTable(service);
+            services.push(service);
+            console.log(services);
+        }
+
+    }
+    function addToTable(service) {
+        let id = service.sid;
+        let name = service.name;
+        let price = service.price;
+        // Create table row html
+        let row = `
+        <tr>
+          <td>${name}</td>
+          <td>${price}</td>
+          <td><button type="button" onclick="RemoveService('${id}','${name}','${price}')">Xóa</button></td>
+        </tr>
+      `;
+
+        // Add row to table
+        $('.selected-service-table tbody').append(row);
+    }
+
+    function RemoveService(id, name, price) {
+
+        // Find index of object in services array
+        const index = services.findIndex(service => {
+            return service.sid === id && service.name === name && service.price === price;
+
+        });
+
+        if (index > -1) {
+
+            // Remove from services array
+            services.splice(index, 1);
+
+            const table = document.getElementById("selected-service");
+            // Find and remove table row
+            if (table) {
+                const rows = table.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    if (row.textContent.includes(name)) {
+                        row.remove();
+                    }
+                })
+            }
+
+
+        }
+
+    }
+
+    function populateSelect() {
+        document.getElementById("jsonData").value = JSON.stringify(services);
     }
 
     function filterTable() {
@@ -273,7 +328,6 @@
         }
     }
 
-
    function LoadData() {
     var serviceTypeId = $("#serviceType").val();
     console.log(serviceTypeId);
@@ -291,12 +345,11 @@
             $.each(result, function (index, value) {
                 var newRow = $("<tr>");
                 newRow.append($("<td>").html(value["serviceName"]));
-                    var selectElement = $("<select id=\"doctor\" onchange=\"GetData()\">"); // Use class instead of id
+                    var selectElement = $("<select class=\"doctor\" onchange=\"HandleSelectChange(this)\" > "); // Use class instead of id
                 newRow.append($("<td>").append(selectElement));
-                var doctorId = LoadDoctor(selectElement, serviceTypeId); // Get doctorId directly
-                var did = GetData();
-                console.log(did);
-                newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}','${did}')">Thêm</button>`)));
+                LoadDoctor(selectElement, serviceTypeId);
+                    
+                    newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}')">Thêm</button>`)));
                 tbody.append(newRow);
             });
         },
@@ -304,13 +357,9 @@
             console.log(xhr);
         }
     });
-}
+    } 
 
-function GetData(){
-        var doctorId = $("#doctor").val();
-        console.log("data get:"+ doctorId);
-        return doctorId;
-}
+
 
 function LoadDoctor(selectElement, serviceTypeId) {
     var doctorId; // Variable to store the selected doctorId
@@ -336,10 +385,21 @@ function LoadDoctor(selectElement, serviceTypeId) {
 
     return doctorId; // Return the selected doctorId
 }
+    $('#submitBtn').on('click', () => {
 
+        // Add array as hidden input
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selectedServices';
+        input.value = JSON.stringify(services);
 
+        document.getElementById('serviceForm').appendChild(input);
+
+        // Submit form
+        document.getElementById('serviceForm').submit();
+
+    });
 </script>
-<script type="text/javascript" src="~/js/ServiceScript.js"></script>
 <script type="text/javascript" src="~/js/Sidebar.js"></script>
 <script type="text/javascript" src="~/js/HeaderScript.js"></script>
 

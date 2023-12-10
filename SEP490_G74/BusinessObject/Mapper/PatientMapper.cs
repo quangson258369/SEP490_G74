@@ -34,9 +34,11 @@ namespace HcsBE.Mapper
                 .ForMember(x => x.Invoices, x => x.MapFrom(x => getListInvoice(x.PatientId)));
         }
 
-        private object blinkData(Contact? contacts)
+        private List<Contact> blinkData(Contact? contacts)
         {
             var blink = new List<Contact>();
+            context.Contacts.Where(x=>x.PatientId == contacts.PatientId);
+            
             blink.Add(contacts);
             return blink;
         }

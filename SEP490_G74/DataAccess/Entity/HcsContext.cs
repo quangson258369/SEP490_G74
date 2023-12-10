@@ -38,8 +38,6 @@ public partial class HcsContext : DbContext
 
     public virtual DbSet<ServiceMedicalRecord> ServiceMedicalRecords { get; set; }
 
-    public virtual DbSet<ServiceSupply> ServiceSupplies { get; set; }
-
     public virtual DbSet<ServiceType> ServiceTypes { get; set; }
 
     public virtual DbSet<SuppliesPrescription> SuppliesPrescriptions { get; set; }
@@ -55,6 +53,7 @@ public partial class HcsContext : DbContext
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         optionsBuilder.UseSqlServer(config.GetConnectionString("MyCnn"));
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Contact>(entity =>
@@ -231,6 +230,9 @@ public partial class HcsContext : DbContext
             entity.Property(e => e.PatientId)
                 .ValueGeneratedNever()
                 .HasColumnName("patientId");
+            entity.Property(e => e.Allergieshistory)
+                .HasMaxLength(350)
+                .HasColumnName("allergieshistory");
             entity.Property(e => e.BloodGroup)
                 .HasMaxLength(10)
                 .HasColumnName("blood group");
@@ -312,25 +314,6 @@ public partial class HcsContext : DbContext
                 .HasForeignKey(d => d.ServiceId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ServiceMedicalRecord_Service");
-        });
-
-        modelBuilder.Entity<ServiceSupply>(entity =>
-        {
-            entity.HasKey(e => new { e.Sid, e.ServiceId });
-
-            entity.Property(e => e.Sid).HasColumnName("sid");
-            entity.Property(e => e.ServiceId).HasColumnName("serviceId");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-            entity.HasOne(d => d.Service).WithMany(p => p.ServiceSupplies)
-                .HasForeignKey(d => d.ServiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ServiceSupplies_Service");
-
-            entity.HasOne(d => d.SidNavigation).WithMany(p => p.ServiceSupplies)
-                .HasForeignKey(d => d.Sid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ServiceSupplies_Supplies");
         });
 
         modelBuilder.Entity<ServiceType>(entity =>

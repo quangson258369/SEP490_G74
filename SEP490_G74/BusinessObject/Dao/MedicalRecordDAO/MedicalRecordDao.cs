@@ -19,6 +19,18 @@ namespace HcsBE.Dao.MedicalRecordDAO
             var query = context.MedicalRecords.ToList();
             return query;
         }
+        public List<MedicalRecord> MedicalRecordListPaging( int page = 1)
+        {
+            int pageSize = 3;
+            var query = context.MedicalRecords.ToList();
+            var pagedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return pagedData;
+        }
+
+        public int GetCountOfListMR()
+        {
+            return context.MedicalRecords.Count();
+        }
 
         public MedicalRecord GetMedicalRecord(int id)
         {
@@ -34,7 +46,6 @@ namespace HcsBE.Dao.MedicalRecordDAO
                     MedicalRecordId = x.MedicalRecordId,
                     Patient = x.Patient,
                     PatientId = x.PatientId,
-                    Prescriptions = x.Prescriptions,
                     ServiceMedicalRecords = x.ServiceMedicalRecords
                 }).SingleOrDefault(x => x.MedicalRecordId == id);
             return query;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HcsBE.Bussiness.MedicalRecord;
+using HcsBE.Bussiness.ServiceBusiness;
 using HcsBE.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,22 @@ namespace API.Controllers.MedicalRecord
             var list = res.GetListMedicalRecord();
             if (list == null) return NotFound();
             return Ok(list);
+        }
+        [HttpGet("ListMedicalRecordPaging")]
+        public IActionResult MedicalRecordList(int page)
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var list = res.GetListMedicalRecordPaging(page);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
+
+        [HttpGet("GetCountOfListMR")]
+        public IActionResult GetCountOfListMR()
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var output = res.GetCountOfListMR();
+            return Ok(output);
         }
 
         [HttpGet("ListServiceUses/{id}")]

@@ -39,6 +39,28 @@ namespace HcsBE.Bussiness.MedicalRecord
             }
             return output;
         }
+        public List<MedicalRecordDaoOutputDto> GetListMedicalRecordPaging(int page)
+        {
+            List<DataAccess.Entity.MedicalRecord> list = dao.MedicalRecordListPaging(page);
+            var output = _mapper.Map<List<MedicalRecordDaoOutputDto>>(list);
+            if(list == null)
+            {
+                return new List<MedicalRecordDaoOutputDto>()
+                {
+                    new MedicalRecordDaoOutputDto()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return output;
+        }
+
+        public int GetCountOfListMR()
+        {
+            return dao.GetCountOfListMR();
+        }
 
         public MedicalRecordDaoOutputDto GetMedicalRecord(int id) {
         
