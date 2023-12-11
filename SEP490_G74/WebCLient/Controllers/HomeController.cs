@@ -39,10 +39,10 @@ namespace WebCLient.Controllers
             {
                 HttpContext.Session.SetString("USERID",output.UserInfoDto.UserId);
                 HttpContext.Session.SetString("Token", output.KeyDto.Key);
-                string hi = HttpContext.Session.GetString("Token");
+                /*string hi = HttpContext.Session.GetString("Token");
                 string id = HttpContext.Session.GetString("USERID");
                 await Console.Out.WriteLineAsync("Token"+hi);
-                await Console.Out.WriteLineAsync("UserId"+id);
+                await Console.Out.WriteLineAsync("UserId"+id);*/
                 return RedirectToAction("Index","Patient");
             }
             else

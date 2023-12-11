@@ -16,6 +16,14 @@ namespace API.Controllers.MedicalRecord
             mapper = _mapper;
         }
 
+        [HttpGet("GetServiceMRByServiceType")]
+        public IActionResult GetServiceMRByServiceType(int type)
+        {
+            var res = new ExamResultLogic(mapper);
+            var list = res.GetServiceMRByServiceType(type);
+            return Ok(list);
+        }
+
         [HttpGet("ListExamResult")]
         public IActionResult ExamResultList()
         {

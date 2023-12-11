@@ -16,6 +16,15 @@ namespace HcsBE.Dao.ExaminationResultDAO
             return context.ExaminationResultIds.Include(x=>x.MedicalRecord).ToList();
         }
 
+        public List<ServiceMedicalRecord> ListServiceMRByServiceType(int type)
+        {
+            var query = context.ServiceMedicalRecords.FromSqlRaw("select smr.* from MedicalRecord mr " +
+                "join ServiceMedicalRecord smr on mr.medicalRecordID = smr.medicalRecordId " +
+                "join [Service] s on smr.serviceId = s.serviceId " +
+                "where s.serviceTypeId = " + type + " and smr.status = 0").ToList();
+            return query;
+        }
+
         public ExaminationResultId GetExamResult(int id)
         {
             return context.ExaminationResultIds.Include(x => x.MedicalRecord).SingleOrDefault(x => x.ExamResultId == id);

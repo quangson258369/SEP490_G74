@@ -16,9 +16,13 @@ namespace HcsBE.DTO
 
         public int? DoctorId { get; set; }
 
+        public bool? Status { get; set; }
+
         public Service? Service { get; set; }
 
         public Contact? DoctorContact { get; set; }
+
+        public MedicalRecord? MedicalRecord { get; set; }
 
     }
 }

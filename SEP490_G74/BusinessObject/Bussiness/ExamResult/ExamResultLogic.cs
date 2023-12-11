@@ -39,6 +39,23 @@ namespace HcsBE.Bussiness.ExamResult
             return output;
         }
 
+        public List<ServiceMRDTO> GetServiceMRByServiceType(int type)
+        {
+            var list = dao.ListServiceMRByServiceType(type);
+            if (list == null)
+            {
+                return new List<ServiceMRDTO>()
+                {
+                    new ServiceMRDTO()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return mapper.Map<List<ServiceMRDTO>>(list);
+        }
+
         public ExaminationResultIdMRDTO GetExamination(int id)
         {
             ExaminationResultId er = dao.GetExamResult(id);
