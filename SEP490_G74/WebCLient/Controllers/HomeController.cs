@@ -51,5 +51,11 @@ namespace WebCLient.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

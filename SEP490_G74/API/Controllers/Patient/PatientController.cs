@@ -15,6 +15,16 @@ namespace API.Controllers.Patient
         {
             _mapper = mapper;
         }
+
+        [HttpGet("ListMRByPatient/{pid}")]
+        public IActionResult ListMRByPatient(int pid)
+        {
+            var res = new PatientLogic(_mapper);
+            var list = res.ListMedicalRecordByPatient(pid);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
+
         [HttpGet("ListPatient")]
         public IActionResult ListPatient()
         {
@@ -57,6 +67,14 @@ namespace API.Controllers.Patient
             var status = process.Add(p);
             return Ok(status == true ? "Add Successfully!":"Add Failed!");
         }
+        
+        [HttpPost("AddContactPatient")]
+        public IActionResult AddContactPatient(ContactPatientDTO p)
+        {
+            var process = new PatientLogic(_mapper);
+            var status = process.AddContactForPatient(p);
+            return Ok(status);
+        }
 
         [HttpPut("UpdatePatient")]
         public IActionResult UpdatePatient(PatientModify p)
@@ -64,6 +82,14 @@ namespace API.Controllers.Patient
             var process = new PatientLogic(_mapper);
             var status = process.Update(p);
             return Ok(status == true ? "Update Successfully!" : "Update Failed!");
+        }
+
+        [HttpPut("UpdateContactPatient")]
+        public IActionResult UpdateContactPatient(ContactPatientDTO c)
+        {
+            var process = new PatientLogic(_mapper);
+            var status = process.UpdateContactForPatient(c);
+            return Ok(status == true ? "Update Contact Patient Successfully!" : "Update Contact Patient Failed!");
         }
 
         [HttpDelete("DeletePatient")]

@@ -19,6 +19,13 @@ namespace HcsBE.Dao.PatientDao
             var output = context.Patients.ToList();
             return output;
         }
+
+        public List<MedicalRecord> ListMRByPatient(int pid)
+        {
+            var output = context.MedicalRecords.Where(x=>x.PatientId == pid).ToList();
+            return output;
+        }
+
         public List<Patient> ListPatientPaging(int page = 1)
         {
             int pageSize = 3;
@@ -46,30 +53,26 @@ namespace HcsBE.Dao.PatientDao
 
         public bool UpdatePatient(Patient p)
         {
-            UpdateContactForPatient(p.Contacts);
-            var existingPatient = context.Set<Patient>().Find(p.PatientId);
             var patient = GetPatientById(p.PatientId);
             if (patient == null)
             {
                 return false;
             }
-
-            if(existingPatient == null)
-            {
-                context.Patients.Update(p);
-            }
-            context.Entry(existingPatient).CurrentValues.SetValues(p);
-            
+            context.Entry(patient).CurrentValues.SetValues(p);
             context.SaveChanges();
-            
             return true;
         }
 
-        public void UpdateContactForPatient(ICollection<Contact> contacts)
+        public bool UpdateContactForThisP(Contact c)
         {
-
-            context.Contacts.UpdateRange(contacts);
-            context.SaveChanges();
+            var contact = context.Contacts.Where(x => x.CId == c.CId);
+            if (contact.Any())
+            {
+                context.Contacts.UpdateRange(c);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool AddPatient(Patient p)
@@ -81,18 +84,19 @@ namespace HcsBE.Dao.PatientDao
             }
             context.Patients.Add(p);
             context.SaveChanges();
-            addContactForPatient(p);
             return true;
         }
 
-        public void addContactForPatient(Patient p)
+        public bool addContactForPatient(Contact p)
         {
-            var contact = context.Contacts.Where(x => x.PatientId == p.PatientId);
+            var contact = context.Contacts.Where(x => x.CId == p.CId);
             if (!contact.Any())
             {
-                context.Contacts.AddRange(p.Contacts);
+                context.Contacts.Add(p);
                 context.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public string DeletePatient(int id)

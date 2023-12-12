@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\MedicalRecord\List.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.20">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +26,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessObject\HcsBE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\MedicalRecord\List.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\MedicalRecord\List.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Patient\List.cshtml" />
   </ItemGroup>
 
 </Project>

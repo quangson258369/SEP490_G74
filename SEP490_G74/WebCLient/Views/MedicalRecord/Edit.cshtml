@@ -44,12 +44,12 @@
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
-                                        <input type="text" class="invoice-code form-control" name="mrid" value="@((ViewBag.MR as MedicalRecordDaoOutputDto)?.MedicalRecordId)"
+                                        <input type="text" class="invoice-code form-control" name="mrid" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordId)"
                                                readonly />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="patient-code">Mã bệnh nhân</label>
-                                        <input type="text" class="patient-code form-control" name="pid" value="@((ViewBag.MR as MedicalRecordDaoOutputDto)?.PatientId)"
+                                        <input type="text" class="patient-code form-control" name="pid" value="@((ViewBag.MR as MedicalRecordOutputDto)?.PatientId)"
                                                readonly />
                                     </div>
 
@@ -127,14 +127,14 @@
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="date-create">Ngày khám</label>
-                                        <input type="text" class="date-create form-control" name="createdate" value="@((ViewBag.MR as MedicalRecordDaoOutputDto)?.MedicalRecordDate)" readonly />
+                                        <input type="text" class="date-create form-control" name="createdate" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordDate)" readonly />
                                     </div>
 
                                 </div>
                                 <div class="col-md-12 line5 row">
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Lí do khám</label>
-                                        <textarea type="text" class="ReasonExamination form-control" name="reason">@((ViewBag.MR as MedicalRecordDaoOutputDto)?.ExamReason)</textarea>
+                                        <textarea type="text" class="ReasonExamination form-control" name="reason">@((ViewBag.MR as MedicalRecordOutputDto)?.ExamReason)</textarea>
                                     </div>
                                     <div class="col-md-5 form-group">
                                         <label class="date-create">Dịch vụ</label>

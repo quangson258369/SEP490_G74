@@ -66,16 +66,18 @@ namespace WebCLient.Controllers
                 Weight = byte.Parse((Request.Form["weight"].ToString() == null || Request.Form["weight"].ToString().Length == 0) ? "0" : Request.Form["weight"].ToString()),
                 BloodPressure = byte.Parse((Request.Form["bloodpress"].ToString() == null || Request.Form["bloodpress"].ToString().Length == 0) ? "0" : Request.Form["bloodpress"].ToString()),
                 BloodGroup = Request.Form["bloodgr"],
-                Contact = new ContactPatientDTO
-                {
-                    CId = contacts.Count + 1,
-                    Address = Request.Form["address"].ToString(),
-                    Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
-                    Gender = Request.Form["gender"] == "male" ? true : false,
-                    Name = Request.Form["fullname"].ToString(),
-                    PatientId = int.Parse(Request.Form["pid"].ToString()),
-                    Phone = Request.Form["phone"].ToString()
-                }
+                
+            };
+
+            ContactPatientDTO Contact = new ContactPatientDTO
+            {
+                CId = contacts.Count + 1,
+                Address = Request.Form["address"].ToString(),
+                Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
+                Gender = Request.Form["gender"] == "male" ? true : false,
+                Name = Request.Form["fullname"].ToString(),
+                PatientId = int.Parse(Request.Form["pid"].ToString()),
+                Phone = Request.Form["phone"].ToString()
             };
 
             var options = new JsonSerializerOptions
@@ -86,7 +88,21 @@ namespace WebCLient.Controllers
             HttpResponseMessage response = await client.PostAsJsonAsync("https://localhost:7249/api/Patient/AddPatient", patient);
             string strPatient = await response.Content.ReadAsStringAsync();
             string rowEffected = JsonSerializer.Deserialize<string>(strPatient, options);
+            // add contact patient
+            response = await client.PostAsJsonAsync("https://localhost:7249/api/Patient/AddContactPatient", Contact);
+            string strcPatient = await response.Content.ReadAsStringAsync();
+            bool rowEffect = JsonSerializer.Deserialize<bool>(strcPatient, options);
             return RedirectToAction("Index","Patient");
+        }
+
+        public async Task<IActionResult> List(int pid)
+        {
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Patient/ListMRByPatient/" + pid);
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            List<MedicalRecordOutputDto> listProducts = JsonSerializer.Deserialize<List<MedicalRecordOutputDto>>(strData, option);
+
+            return View(listProducts);
         }
     }
 }

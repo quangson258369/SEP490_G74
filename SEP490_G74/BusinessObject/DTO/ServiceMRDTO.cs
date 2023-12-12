@@ -22,6 +22,8 @@ namespace HcsBE.DTO
 
         public Contact? DoctorContact { get; set; }
 
+        public Contact? PatientContact { get; set; }
+
         public MedicalRecord? MedicalRecord { get; set; }
 
     }

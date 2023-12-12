@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Entity;
 
 namespace HcsBE.Bussiness.Patient
 {
@@ -37,6 +38,25 @@ namespace HcsBE.Bussiness.Patient
             }
             return output;
         }
+
+        public List<MedicalRecordOutputDto> ListMedicalRecordByPatient(int pid)
+        {
+            List<DataAccess.Entity.MedicalRecord> list = dao.ListMRByPatient(pid);
+            var listConvert = mapper.Map<List<MedicalRecordOutputDto>> (list);
+            if(listConvert == null)
+            {
+                return new List<MedicalRecordOutputDto>()
+                {
+                    new MedicalRecordOutputDto()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return listConvert;
+        }
+
         public List<PatientDTO> ListPatientPaging(int page)
         {
             List<DataAccess.Entity.Patient> list = dao.ListPatientPaging(page);
@@ -77,9 +97,24 @@ namespace HcsBE.Bussiness.Patient
         public bool Update(PatientModify entity)
         {
             var p = mapper.Map<PatientDTO>(entity);
-            var status = dao.UpdatePatient(mapper.Map<DataAccess.Entity.Patient>(p));
+            var pUpdate = mapper.Map<DataAccess.Entity.Patient>(p);
+            var status = dao.UpdatePatient(pUpdate);
             return status;
         }
+
+        public bool UpdateContactForPatient(ContactPatientDTO c)
+        {
+            var contact = mapper.Map<Contact>(c);
+            var status = dao.UpdateContactForThisP(contact);
+            return status;
+        }
+        public bool AddContactForPatient(ContactPatientDTO c)
+        {
+            var contact = mapper.Map<Contact>(c);
+            var status = dao.addContactForPatient(contact);
+            return status;
+        }
+
         public bool Add(PatientModify entity)
         {
             var p = mapper.Map<PatientDTO>(entity);

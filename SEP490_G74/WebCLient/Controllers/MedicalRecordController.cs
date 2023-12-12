@@ -31,7 +31,7 @@ namespace WebCLient.Controllers
             HttpResponseMessage response = await client.GetAsync(MedicalRecordAPI);
             string strData = await response.Content.ReadAsStringAsync();
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            List<MedicalRecordDaoOutputDto> listProducts = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordDaoOutputDto>>(strData, option);
+            List<MedicalRecordOutputDto> listProducts = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordOutputDto>>(strData, option);
 
             response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/GetCountOfListMR");
             strData = await response.Content.ReadAsStringAsync();
@@ -53,20 +53,20 @@ namespace WebCLient.Controllers
             // call list medical record
             response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListMedicalRecord");
             string strMR = await response.Content.ReadAsStringAsync();
-            List<MedicalRecordDaoOutputDto> listMRs = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordDaoOutputDto>>(strMR, options);
+            List<MedicalRecordOutputDto> listMRs = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordOutputDto>>(strMR, options);
 
             // call get patiet information
             response = await client.GetAsync("https://localhost:7249/api/Patient/GetPatient/" + pid);
             string str = await response.Content.ReadAsStringAsync();
             PatientDTO p = System.Text.Json.JsonSerializer.Deserialize<PatientDTO>(str, options);
 
-            MedicalRecordDaoOutputDto mr = listMRs.Last();
+            MedicalRecordOutputDto mr = listMRs.Last();
             int examCode = 1;
             if (mr != null && listMRs.Count > 0) examCode = mr.MedicalRecordId + 1;
             if (listMRs.Count == 0) examCode = 1;
 
 
-            ViewBag.Today = DateTime.Now.ToShortDateString();
+            ViewBag.Today = DateTime.Now;
             ViewBag.MrId = examCode;
             ViewBag.Patient = p;
             return View(serviceTypes);
@@ -84,7 +84,7 @@ namespace WebCLient.Controllers
             PatientDTO p = System.Text.Json.JsonSerializer.Deserialize<PatientDTO>(str, options);
             if (p.ResultCd == 0)
             {
-                return RedirectToAction("MedicalRecord/Add?ServiceType=");
+                return RedirectToAction("Add","Patient");
             }
             else
             {
@@ -105,29 +105,34 @@ namespace WebCLient.Controllers
                 PatientModify patient = new PatientModify()
                 {
                     PatientId = int.Parse(Request.Form["pid"].ToString()),
-                    ServiceDetailName = servicechoose.Substring(0, servicechoose == null ? 0 : servicechoose.Length - 1),
+                    ServiceDetailName = (servicechoose == null || servicechoose.Length == 0)?"Chưa Chọn Dịch Vụ Khám": servicechoose.Substring(0, servicechoose == null ? 0 : servicechoose.Length - 1),
                     Height = byte.Parse((Request.Form["height"].ToString() == null || Request.Form["height"].ToString().Length == 0) ? "0" : Request.Form["height"].ToString()),
                     Weight = byte.Parse((Request.Form["weight"].ToString() == null || Request.Form["weight"].ToString().Length == 0) ? "0" : Request.Form["weight"].ToString()),
                     BloodPressure = byte.Parse((Request.Form["bloodpress"].ToString() == null || Request.Form["bloodpress"].ToString().Length == 0) ? "0" : Request.Form["bloodpress"].ToString()),
                     BloodGroup = Request.Form["bloodgr"],
-                    Contact = new ContactPatientDTO
-                    {
-                        CId = p.Contacts.CId,
-                        Address = Request.Form["address"].ToString(),
-                        Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
-                        Gender = Request.Form["gender"] == "male" ? true : false,
-                        Name = Request.Form["fullname"].ToString(),
-                        PatientId = int.Parse(Request.Form["pid"].ToString()),
-                        Phone = Request.Form["phone"].ToString()
-                    }
+                    
                 };
-
+                ContactPatientDTO Contact = new ContactPatientDTO
+                {
+                    CId = p.Contacts.CId,
+                    Address = Request.Form["address"].ToString(),
+                    Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
+                    Gender = Request.Form["gender"] == "male" ? true : false,
+                    Name = Request.Form["fullname"].ToString(),
+                    PatientId = int.Parse(Request.Form["pid"].ToString()),
+                    Phone = Request.Form["phone"].ToString()
+                };
 
                 // edit patient
                 response = await client.PutAsJsonAsync("https://localhost:7249/api/Patient/UpdatePatient", patient);
                 string strPatient = await response.Content.ReadAsStringAsync();
                 string rowEffected = System.Text.Json.JsonSerializer.Deserialize<string>(strPatient, options);
 
+                // edit contact patient
+                response = await client.PutAsJsonAsync("https://localhost:7249/api/Patient/UpdateContactPatient", Contact);
+                string strContactPatient = await response.Content.ReadAsStringAsync();
+                string rowEffectip = System.Text.Json.JsonSerializer.Deserialize<string>(strContactPatient, options);
+                await Console.Out.WriteLineAsync(rowEffectip);
 
                 // them medical record
                 string AddAPI = "https://localhost:7249/api/MedicalRecord/AddMedicalRecord";
@@ -161,7 +166,7 @@ namespace WebCLient.Controllers
             HttpResponseMessage response = await client.GetAsync(MedicalRecordAPI);
             string strData = await response.Content.ReadAsStringAsync();
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            MedicalRecordDaoOutputDto medicalRecordDetail = System.Text.Json.JsonSerializer.Deserialize<MedicalRecordDaoOutputDto>(strData, option);
+            MedicalRecordOutputDto medicalRecordDetail = System.Text.Json.JsonSerializer.Deserialize<MedicalRecordOutputDto>(strData, option);
 
             // thieu get list danh sach dich vu kham
             response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListServiceUses/" + medicalRecordDetail.MedicalRecordId);
@@ -196,7 +201,7 @@ namespace WebCLient.Controllers
             MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/GetMedicalRecord/" + id;
             response = await client.GetAsync(MedicalRecordAPI);
             string strMR = await response.Content.ReadAsStringAsync();
-            MedicalRecordDaoOutputDto mredit = System.Text.Json.JsonSerializer.Deserialize<MedicalRecordDaoOutputDto>(strMR, options);
+            MedicalRecordOutputDto mredit = System.Text.Json.JsonSerializer.Deserialize<MedicalRecordOutputDto>(strMR, options);
 
             // thieu get list danh sach dich vu kham
             response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListServiceUses/" + id);
@@ -251,27 +256,34 @@ namespace WebCLient.Controllers
                 PatientModify patient = new PatientModify()
                 {
                     PatientId = int.Parse(Request.Form["pid"].ToString()),
-                    ServiceDetailName = "chuan bi bo",
+                    ServiceDetailName = (servicechoose == null || servicechoose.Length == 0) ? "Chưa Chọn Dịch Vụ Khám" : servicechoose.Substring(0, servicechoose == null ? 0 : servicechoose.Length - 1),
                     Height = byte.Parse((Request.Form["height"].ToString() == null || Request.Form["height"].ToString().Length == 0) ? "0": Request.Form["height"].ToString()),
                     Weight = byte.Parse((Request.Form["weight"].ToString() == null || Request.Form["weight"].ToString().Length == 0) ? "0" : Request.Form["weight"].ToString()),
                     BloodPressure = byte.Parse((Request.Form["bloodpressure"].ToString() == null || Request.Form["bloodpressure"].ToString().Length == 0) ? "0" : Request.Form["bloodpressure"].ToString()),
-                    BloodGroup = Request.Form["bloodgr"],
-                    Contact = new ContactPatientDTO
-                    {
-                        CId = p.Contacts.CId,
-                        Address = Request.Form["address"].ToString(),
-                        Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
-                        Gender = Request.Form["gender"] == "male" ? true : false,
-                        Name = Request.Form["fullname"].ToString(),
-                        PatientId = int.Parse(Request.Form["pid"].ToString()),
-                        Phone = Request.Form["phone"].ToString()
-                    }
+                    BloodGroup = Request.Form["bloodgr"]
+                };
+
+                ContactPatientDTO Contact = new ContactPatientDTO
+                {
+                    CId = p.Contacts.CId,
+                    Address = Request.Form["address"].ToString(),
+                    Dob = DateTime.ParseExact(Request.Form["dob"].ToString(), "yyyy-MM-dd", null),
+                    Gender = Request.Form["gender"] == "male" ? true : false,
+                    Name = Request.Form["fullname"].ToString(),
+                    PatientId = int.Parse(Request.Form["pid"].ToString()),
+                    Phone = Request.Form["phone"].ToString()
                 };
 
                 // edit patient
                 response = await client.PutAsJsonAsync("https://localhost:7249/api/Patient/UpdatePatient", patient);
                 string strPatient = await response.Content.ReadAsStringAsync();
                 string rowEffected = System.Text.Json.JsonSerializer.Deserialize<string>(strPatient, options);
+                await Console.Out.WriteLineAsync(rowEffected);
+                // edit contact patient
+                response = await client.PutAsJsonAsync("https://localhost:7249/api/Patient/UpdateContactPatient", Contact);
+                string strContactPatient = await response.Content.ReadAsStringAsync();
+                string rowEffectip = System.Text.Json.JsonSerializer.Deserialize<string>(strContactPatient, options);
+                await Console.Out.WriteLineAsync(rowEffectip);
             }
 
             // edit medical record

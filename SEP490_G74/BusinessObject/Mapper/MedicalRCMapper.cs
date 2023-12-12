@@ -23,11 +23,12 @@ namespace HcsBE.Mapper
             CreateMap<MedicalRecordModify, MedicalRecord>();
             CreateMap<MedicalRecord, MedicalRecordModify>()
                 .ForMember(x=>x.PrescriptionId,x=>x.MapFrom(x=>x.PrescriptionId));
+
             CreateMap<ExaminationResultId, ExaminationResultIdMRDTO>();
             CreateMap<Contact,ContactDoctorDTO>();
             CreateMap<Contact,ContactPatientDTO>();
-            CreateMap<MedicalRecordDaoOutputDto, MedicalRecord>();
-            CreateMap<MedicalRecord, MedicalRecordDaoOutputDto>()
+            CreateMap<MedicalRecordOutputDto, MedicalRecord>();
+            CreateMap<MedicalRecord, MedicalRecordOutputDto>()
                 .ForMember(o => o.PatientName, opt => opt.MapFrom(o => getName(o.PatientId)))
                 .ForMember(o => o.PatientPhone, opt => opt.MapFrom(o => getPhones(o.PatientId)))
                 .ForMember(o => o.ExaminationResultIds, o => o.MapFrom(a => ListExamRS(a.MedicalRecordId)))

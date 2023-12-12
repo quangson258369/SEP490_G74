@@ -21,6 +21,6 @@ namespace HcsBE.DTO
 
         public byte? BloodPressure { get; set; }
 
-        public ContactPatientDTO? Contact { get; set; }
+        public string? Allergieshistory { get; set; }
     }
 }
