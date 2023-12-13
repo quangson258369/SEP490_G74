@@ -75,6 +75,8 @@ namespace WebCLient.Controllers
         // depend on authentication
         public async Task<IActionResult> AddMedicalRecord()
         {
+            string uid = HttpContext.Session.GetString("USERID");
+            uid = (uid == null || uid.Length == 0) ? "1" : uid;
             HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Patient/GetPatient/" + Request.Form["pid"]);
             string str = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
@@ -143,7 +145,7 @@ namespace WebCLient.Controllers
                     MedicalRecordDate = DateTime.Now,
                     ExamReason = Request.Form["reason"],
                     MedicalRecordId = mrid,
-                    DoctorId = 1
+                    DoctorId = int.Parse(uid)
                 };
                 response = await client.PostAsJsonAsync(AddAPI, addMR);
                 string strData = await response.Content.ReadAsStringAsync();
@@ -228,7 +230,8 @@ namespace WebCLient.Controllers
         public async Task<IActionResult> EditMedicalRecord()
         {
             MedicalRecordDao dao = new MedicalRecordDao();
-
+            string uid = HttpContext.Session.GetString("USERID");
+            uid = (uid == null || uid.Length == 0) ? "1" : uid;
             int mrid = int.Parse(Request.Form["mrid"]);
 
             // lay list service da chon
@@ -295,17 +298,14 @@ namespace WebCLient.Controllers
                 MedicalRecordDate = DateTime.Now,
                 ExamReason = Request.Form["reason"],
                 MedicalRecordId = mrid,
-                DoctorId = 1
+                DoctorId = int.Parse(uid)
             };
             response = await client.PutAsJsonAsync(AddAPI, addMR);
             string strData = await response.Content.ReadAsStringAsync();
             string row = System.Text.Json.JsonSerializer.Deserialize<string>(strData, options);
             // them dich vu su dung vao db
 
-            foreach (var sm in list)
-            {
-                dao.AddServiceMR(sm);
-            }
+            dao.EditServiceMR(list,mrid);
 
             return RedirectToAction("Index", "MedicalRecord");
         }

@@ -91,33 +91,31 @@ namespace HcsBE.Dao.MedicalRecordDAO
         {
             if (sm != null && !context.ServiceMedicalRecords.Any(x=>x.MedicalRecordId == sm.MedicalRecordId && x.ServiceId == sm.ServiceId))
             {
+                sm.Status = false;
                 context.ServiceMedicalRecords.Add(sm);
                 context.SaveChanges();
             }
         }
 
-        public bool EditServiceMR (ServiceMedicalRecord sm)
+        public void EditServiceMR (List<ServiceMedicalRecord> list,int mrid)
         {
-            if (sm != null && GetServiceUses(sm.ServiceId) != null)
+            List<ServiceMedicalRecord> listuse = GetServiceUses(mrid);
+            if (listuse.Any())
             {
-                context.ServiceMedicalRecords.Update(sm);
-                return true;
+                context.ServiceMedicalRecords.RemoveRange(listuse);
+                context.SaveChanges();
             }
-            return false;
-        }
 
-        public bool DeleteServiceMR(int sid,int mrid)
-        {
-            var sm = GetServiceUses(mrid);
-            if (sm != null && sm != null)
+            if(list != null && list.Count > 0)
             {
-                foreach(var s in sm)
+                foreach (var item in list)
                 {
-                    if(s.ServiceId == sid) context.ServiceMedicalRecords.Remove(s);
+                    item.Status = false;
                 }
-                return true;
+                context.ServiceMedicalRecords.AddRange(list);
+                context.SaveChanges();
             }
-            return false;
+                
         }
 
         public List<ServiceMedicalRecord> GetServiceUses(int id)

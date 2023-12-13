@@ -108,7 +108,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12 line3 row">
+                                <div class=" line3 row">
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Chiều cao</label>
                                         <input type="text" class="date-create form-control" name="height" value="@((ViewBag.Patient as PatientDTO)?.Height)" />
@@ -132,7 +132,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12 line5 row">
+                                <div class=" line5 row">
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Lí do khám</label>
                                         <textarea type="text" class="ReasonExamination form-control" name="reason"></textarea>
@@ -227,7 +227,7 @@
 <script>
     let services = [];
 
-    var selectedDoctorId = 0;
+    var selectedDoctorId = 1;
 
     function HandleSelectChange(selectElement) {
         var doctorId = $(selectElement).val();
@@ -252,7 +252,7 @@
         if (index <= -1) {
             addToTable(service);
             services.push(service);
-            console.log(services);
+            console.log(services.doctorid);
         }
 
     }
@@ -297,7 +297,6 @@
                     }
                 })
             }
-
 
         }
 

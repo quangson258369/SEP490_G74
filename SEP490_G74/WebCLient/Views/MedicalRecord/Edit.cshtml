@@ -107,7 +107,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12 line3 row">
+                                <div class=" line3 row">
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Chiều cao</label>
                                         <input type="text" class="date-create form-control" name="height" value="@((ViewBag.Patient as PatientDTO)?.Height)" />
@@ -131,7 +131,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12 line5 row">
+                                <div class=" line5 row">
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Lí do khám</label>
                                         <textarea type="text" class="ReasonExamination form-control" name="reason">@((ViewBag.MR as MedicalRecordOutputDto)?.ExamReason)</textarea>
@@ -232,20 +232,18 @@
 <script>
     let services = [];
 
-    var selectedDoctorId = 0;
+    var selectedDoctorId = 1;
     var myObjectsFromController = @Html.Raw(ViewBag.selectedService);
     //services = myObjectsFromController;
     myObjectsFromController.forEach(function (obj) {
 
         addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price, '' + obj.DoctorId);
-        console.log("List luc load"+services);
     });
     myObjectsFromController = [];
 
     function HandleSelectChange(selectElement) {
         var doctorId = $(selectElement).val();
         selectedDoctorId = doctorId !== undefined ? doctorId : '';
-        console.log("data get in GetData:" + selectedDoctorId);
         return selectedDoctorId;
     }
 
@@ -265,7 +263,6 @@
         if (index <= -1) {
             addToTable(service);
             services.push(service);
-            console.log("List sau add"+services);
         }
 
     }

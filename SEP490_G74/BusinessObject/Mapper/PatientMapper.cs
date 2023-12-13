@@ -38,9 +38,6 @@ namespace HcsBE.Mapper
                 .ForMember(x => x.PatientId, x => x.MapFrom(x => x.PatientId))
                 .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName));
             // sửa thành pid
-            CreateMap<PatientDTO, Patient>()
-                .ForMember(x => x.Contacts, x => x.MapFrom(x => blinkData(x.PatientId)))
-                .ForMember(x=>x.Invoices,x=>x.MapFrom(x=> getListInvoice(x.PatientId)));
             CreateMap<Patient, PatientDTO>()
                 .ForMember(x => x.Contacts, x => x.MapFrom(x => getContact(x.PatientId)))
                 .ForMember(x => x.MedicalRecords, x => x.MapFrom(x => getMedicalRecords(x.PatientId)))
@@ -56,32 +53,20 @@ namespace HcsBE.Mapper
         private HcsContext context = new HcsContext();
         private List<Invoice> getListInvoice(int? patientId)
         {
-            if (patientId == null)
-            {
-                return null;
-            }
             var list = context.Invoices.Where(o => o.PatientId == patientId).ToList();
             return list;
         }
 
         private List<MedicalRecord> getMedicalRecords(int? patientId)
         {
-            if (patientId == null)
-            {
-                return null;
-            }
             var list = context.MedicalRecords.Where(o => o.PatientId == patientId).ToList();
             return list;
         }
 
         private Contact getContact(int? patientId)
         {
-            if (patientId == null)
-            {
-                return null;
-            }
-            var list = context.Contacts.SingleOrDefault(o => o.PatientId == patientId);
-            return list;
+            var list = context.Contacts.Where(o => o.PatientId == patientId).OrderBy(s=>s.PatientId);
+            return list.Last();
         }
     }
 }
