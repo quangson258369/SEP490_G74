@@ -16,7 +16,8 @@
             initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="~/css/HeaderStyle.css">
-    <link rel="stylesheet" type="text/css" href="~/css/UserManagerStyle.css">
+  
+    <link rel="stylesheet" type="text/css" href="~/css/ProfileStyle.css">
     <link rel="stylesheet" type="text/css" href="~/css/Sidebar.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -146,37 +147,42 @@
                                     </div>
                                     <div class="col-md-12 line3
                                             row">
-                                        <div class=" col-md-6
-                                                form-group-phone">
-                                            <label class="title-role">Vị Trí Công Việc</label>
-                                  
-                                            <select class="role
-                                                    form-control" name="RoleName">
+                                        
+                                        <div class="col-md-12  line4 row">
+                                            <div class="col-md-6 form-group">
+                                                <label class="title-role d-block">Vai trò</label>
+                                                <select class="role
+                                                    form-control" name="RoleName" id="roleSelection">
                                                 @foreach (var item in Model)
                                                {
                                                 <option value="@item.RoleId">@item.RoleName</option>                                              
                                                }
                                             </select>
-                                        </div>
-                                        <div class="col-md-6
-                                                form-group-phone">
-                                            <label class="title-role">Chuyên môn</label>
-                                            <input type="text"
-                                                   class="role
-                                                    form-control"
-                                                   name="DoctorSpecialize" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="line5 row">
-                                    <div>
-                                        <button class="btn-change-profile">
-                                            Thêm
-                                            Nhân Viên
-                                        </button>
-                                    </div>
+                                            </div>
 
+                                        </div>
+                                        <div class="line5 row " id="doctorOptions">
+                                            <div class="col-md-15 form-group">
+                                                <label class="title-role d-block">Chuyên khoa</label>
+                                                <select class="doctor-selection" name="ServiceType">
+                                                    @foreach (var item in ViewBag.ListServiceType)
+                                                    {
+                                                        <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 line4 mt-5 row">
+                                        <div>
+                                            <button class="btn-change-profile">
+                                                Thêm
+                                                Nhân Viên
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </form>
 
@@ -187,9 +193,10 @@
 
         </div>
     </div>
+    <script type="text/javascript" src="~/js/HeaderScript.js"></script>
+    <script type="text/javascript" async src="~/js/Sidebar.js?v=1.0" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/script.js" asp-append-version="true"></script>
 </body>
-<script type="text/javascript" src="~/js/HeaderScript.js"></script>
-<script type="text/javascript" src="~/js/Sidebar.js"></script>
-<script type="text/javascript" src="~/js/script.js"></script>
+
 </html>
 

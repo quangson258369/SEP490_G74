@@ -13,9 +13,5 @@ namespace HcsBE.DTO
         public DateTime CreateDate { get; set; }
 
         public string Diagnose { get; set; } = null!;
-
-        public byte Quantity { get; set; }
-
-        public int MedicalRecordId { get; set; }
     }
 }

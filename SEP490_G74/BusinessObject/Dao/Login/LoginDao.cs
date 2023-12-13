@@ -1,5 +1,6 @@
 ﻿using API.Common;
 using DataAccess.Entity;
+using HcsBE.Dao.GenPassword;
 using System.Security.Claims;
 
 namespace HcsBE.Dao.Login
@@ -44,6 +45,37 @@ namespace HcsBE.Dao.Login
                     ExceptionMessage = ex.Message,
                     ResultCd = ConstantHcs.ExceptionStatus
                 };
+            }
+        }
+        public bool CheckUserName(string username)
+        {
+            var context = new HcsContext();
+            var output = context.Users.FirstOrDefault(user => user.Email == username);
+            if (output != null)
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+        public bool UpdatePassword(string username,string newPass)
+        {
+            var context = new HcsContext();
+            PasswordGenerator passwordMD5= new PasswordGenerator();
+            string newPassMD5 = passwordMD5.GetMD5Hash(newPass);
+            var userToChangePass = context.Users.FirstOrDefault(user => user.Email == username);
+            if (userToChangePass != null)
+            {
+                userToChangePass.Password = newPassMD5;
+                //context.Users.Update(userToChangePass); 
+                context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

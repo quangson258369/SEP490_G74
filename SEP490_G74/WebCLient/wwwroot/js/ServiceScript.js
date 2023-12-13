@@ -1,99 +1,67 @@
 let services = [];
 
+function addService(name, price) {
+  let service = {
+    name: name,
+    price: price
+  };
+  console.log(name, price);
+  services.push(service);
+  addToTable(service);
 
-function addService(id, name, price, selectedDoctorId) {
-     
-    let service = {
-        sid: id,
-        name: name,
-        price: price,
-        doctorid: selectedDoctorId
-    };
-
-    
-    const index = services.findIndex(service => {
-        return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
-    });
-    if (index <= -1) {
-        addToTable(service);
-        services.push(service);
-    }
-    
 }
 function addToTable(service) {
-    let id = service.sid;
-    let name = service.name;
-    let price = service.price;
-    let selectedDoctorId = service.doctorid;
-    console.log(id);
-    console.log(name
-    );
-    console.log(price);
-    // Create table row html
-    let row = `
+  let name = service.name;
+  let price = service.price;
+
+  // Create table row html
+  let row = `
     <tr>
       <td>${name}</td>
       <td>${price}</td> 
-      <td><button type="button" onclick="RemoveService('${id}','${name}','${price}','${selectedDoctorId}')">Xóa</button></td>
+      <td><button type="button" onclick="RemoveService('${name}',${price})">Xóa</button></td>
     </tr>
   `;
 
-    // Add row to table 
-    $('.selected-service-table tbody').append(row);
+  // Add row to table 
+  $('.selected-service-table tbody').append(row);
 }
 
-function RemoveService(id, name, price, selectedDoctorId) {
-    
-    // Find index of object in services array
-    const index = services.findIndex(service => {
-        return service.sid === id && service.name === name && service.price === price && service.doctorid === selectedDoctorId;
+function RemoveService(name, price) {
 
-    });
-   
-    if (index > -1) {
+  // Find index of object in services array
+  const index = services.findIndex(service => {
+    return service.name === name && service.price === price;
+  });
 
-        // Remove from services array
-        services.splice(index, 1);
+  if (index > -1) {
 
-        const table = document.getElementById("selected-service");
-        // Find and remove table row
-        if (table) {
-            const rows = table.querySelectorAll('tr');
+    // Remove from services array
+    services.splice(index, 1);
 
-            rows.forEach(row => {
-                if (row.textContent.includes(name)) {
-                    row.remove();
-                    console.log(services);
-                }
-            })
-        }
+    // Find and remove table row
+    const rows = document.querySelectorAll('tr');
 
+    rows.forEach(row => {
+      if (row.textContent.includes(name)) {
+        row.remove();
+      }
+    })
 
-    }
+  }
 
 }
-
-function populateSelect() {
-    document.getElementById("jsonData").value = JSON.stringify(services);
-}
-
-function sendService() {
-    document.getElementById("jsond").value = JSON.stringify(services);
-}
-
 $('#submitBtn').on('click', () => {
 
-    // Add array as hidden input
-    let input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'selectedServices';
-    input.value = JSON.stringify(services);
+  // Add array as hidden input
+  let input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'selectedServices';
+  input.value = JSON.stringify(services);
 
-    document.getElementById('serviceForm').appendChild(input);
+  document.getElementById('serviceForm').appendChild(input);
 
-    // Submit form
-    document.getElementById('serviceForm').submit();
+  // Submit form
+  document.getElementById('serviceForm').submit();
 
 });
-
-

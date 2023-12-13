@@ -23,7 +23,6 @@ namespace HcsBE.Mapper
             CreateMap<MedicalRecordModify, MedicalRecord>();
             CreateMap<MedicalRecord, MedicalRecordModify>()
                 .ForMember(x=>x.PrescriptionId,x=>x.MapFrom(x=>x.PrescriptionId));
-
             CreateMap<ExaminationResultId, ExaminationResultIdMRDTO>();
             CreateMap<Contact,ContactDoctorDTO>();
             CreateMap<Contact,ContactPatientDTO>();
@@ -75,7 +74,7 @@ namespace HcsBE.Mapper
                 BloodPressure = doctor.BloodPressure,
                 Height = doctor.Height,
                 Weight = doctor.Weight,
-                Allergieshistory = doctor.Allergieshistory,
+                //Allergieshistory = doctor.Allergieshistory,
                 Invoices = context.Invoices.Where(x => x.PatientId == patientId).ToList(),
                 Contacts =context.Contacts.Where(x => x.PatientId == doctor.PatientId).ToList()
             };

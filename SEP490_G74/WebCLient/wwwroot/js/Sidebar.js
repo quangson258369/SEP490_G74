@@ -40,22 +40,23 @@ function setActiveLink() {
   console.log("Setting active link based on URL");
 
   // Function to check and set the active link based on the current URL
-  let currentPath = window.location.pathname;
-  let activeItem;
+    let currentPath = window.location.href;
+    console.log(currentPath);
+    let activeItem;
 
   switch(currentPath) {
-      case "/Home.html":
+      case "/Home":
           console.log(currentPath);
           activeItem = document.querySelector('.nav-item-sidebar[data-section="home"]');
           console.log("Trying to select home:", activeItem);
           break;
 
-      case "/UserManage.html":
+      case "/Member":
           console.log(currentPath);
           activeItem = document.querySelector('.nav-item-sidebar[data-section="UserManage"]');
           console.log("Trying to select UserManage:", activeItem);
           break;
-          case "/ManageInvoice.html":
+          case "/Invoice":
             console.log(currentPath);
             activeItem = document.querySelector('.nav-item-sidebar[data-section="Invoice"]');
             console.log("Trying to select Invoice:", activeItem);
@@ -65,7 +66,7 @@ function setActiveLink() {
                 activeItem = document.querySelector('.nav-item-sidebar[data-section="Invoice"]');
                 console.log("Trying to select Invoice:", activeItem);
                 break;
-                case "/ManageSupplies.html":
+                case "/Supplies":
                 console.log(currentPath);
                 activeItem = document.querySelector('.nav-item-sidebar[data-section="ManageSupplies"]');
                 console.log("Trying to select Invoice:", activeItem);

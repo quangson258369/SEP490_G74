@@ -48,5 +48,13 @@ namespace API.Controllers.Supplies
             if (list == null) return NotFound();
             return Ok(list);
         }
+        [HttpGet("ListSuppliesByType")]
+        public IActionResult ListSuppliesByType(int typeId)
+        {
+            var res = new SuppliesLogic();
+            var list = res.GetSuppliesListByType(typeId);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
     }
 }

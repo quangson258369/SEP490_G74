@@ -17,13 +17,13 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddSingleton<IConfiguration>(Configuration);
 
             var jwtToken = Configuration["Jwt:Key"];
             var jwtTokenBytes = Encoding.UTF8.GetBytes(jwtToken);
 
-            
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -39,16 +39,16 @@ namespace API
 
                     };
                 });
-            
+
             services.AddRazorPages();
         }
 
 
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-            if(env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

@@ -14,8 +14,8 @@ namespace HcsBE.Bussiness.Login
         public string? UserId { get; set; }
         public string? Email { get; set; }
         public bool? Status { get; set; }
-        public List<Role>? Roles { get; set; }
-       
+        public List<Role> Roles { get; set; }
+
     }
 
     public class JwtTokenOutput

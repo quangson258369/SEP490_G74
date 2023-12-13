@@ -14,7 +14,7 @@ namespace HcsBE.Bussiness.Login
 {
     public class LoginBussinessLogic
     {
-          
+
         public LoginOutputDto Login(LoginInputDto inputDto)
         {
             try
@@ -33,7 +33,7 @@ namespace HcsBE.Bussiness.Login
                 var loginDaoOutput = loginDao.GetUser(loginDaoInput);
 
                 // Validate user not found
-                if(loginDaoOutput.UserInfoDto == null)
+                if (loginDaoOutput.UserInfoDto == null)
                 {
                     return new LoginOutputDto
                     {
@@ -42,13 +42,14 @@ namespace HcsBE.Bussiness.Login
                     };
                 }
 
-                
 
-                output.UserInfoDto = mapper.Map<User, UserInfo> (loginDaoOutput.UserInfoDto);
-                
+
+                output.UserInfoDto = mapper.Map<User, UserInfo>(loginDaoOutput.UserInfoDto);
+
 
                 return output;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new LoginOutputDto
                 {
@@ -57,7 +58,16 @@ namespace HcsBE.Bussiness.Login
                 };
             }
         }
-
-       
+        public bool CheckUserName(string username)
+        {
+            var output = new LoginDao();
+            return output.CheckUserName(username);
+        }
+        //UpdatePassword
+        public bool UpdatePassword(string username,string newPass)
+        {
+            var output = new LoginDao();
+            return output.UpdatePassword(username,newPass);
+        }
     }
 }

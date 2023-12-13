@@ -28,12 +28,14 @@ namespace HcsBE.Mapper
                 ;
             CreateMap<ServiceMRDTO, ServiceMedicalRecord>();
         }
+
         private Contact GetPatientContact(int medicalRecordId)
         {
             MedicalRecord record = dao.GetMedicalRecord(medicalRecordId);
             int pid = record.PatientId;
             return context.Contacts.SingleOrDefault(s => s.PatientId == pid);
         }
+
         private Contact GetDoctorContact(int? doctorId)
         {
             return context.Contacts.SingleOrDefault(s => s.DoctorId == doctorId);

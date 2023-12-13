@@ -1,0 +1,117 @@
+﻿@model IEnumerable<HcsBE.DTO.PrescriptionInforDTO>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hcs-Healcare System</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width,
+            initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="~/css/HeaderStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/css/UserManagerStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Sidebar.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body style="background-color: #DEDEDE;">
+    <div id="main">
+        <div id="header">
+        </div>
+        <div id="body-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sidebar"></div>
+                    <div class="content-right col-sm p-3 min-vh-100">
+                        <div class="header-container">
+                            <h2 class="header-text">Quản lí đơn thuốc</h2>
+                        </div>
+                        <div class="addNewUser">
+                            <a href="/Precription/AddPrescription" class="custom-button">
+                                <span class="plus">+</span>
+                                Thêm đơn thuốc
+                            </a>
+
+                        </div>
+                        <div class="body-container">
+
+                            <div class="search-container">
+                                <input type="text" class="form-control
+                                        search-input" placeholder="Search
+                                        anything...">
+                                <span class="search-icon">
+                                    <i class="fas fa-search"></i>
+                                </span>
+
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Mã đơn thuốc</th>
+                                        <th>Tên bệnh nhân</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Chẩn đoán</th>
+                                        <th>Ngày tạo đơn</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model)
+                                    {
+                                    <tr>
+                                        <td>@item.PrescriptionId</td>
+                                        <td>@item.NamePatient</td>
+                                        <td>@item.PhonePatient</td>
+                                        <td>@item.Diagnose</td>
+                                        <td>@item.CreateDate.ToString("yyyy/MM/dd")</td>
+                                        <td>
+                                            <button>
+                                                <a class="btn text-dark"
+                                                   href="/Precription/ViewDetailPrescription?id=@item.PrescriptionId">chi tiết</a>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    }
+                                   
+                                    <!-- Add other rows similarly -->
+                                </tbody>
+                            </table>
+                            @if (ViewBag.CurrentPage == 0)
+                            {
+                                ViewBag.CurrentPage = 1;
+                            }
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item"><a class="page-link" href="/Precription/Index?page=@(ViewBag.CurrentPage >1 ? (ViewBag.CurrentPage-1) : ViewBag.CurrentPage)">Previous</a></li>
+                                    @for (int i = 0; i < (ViewBag.TotalItemCount + 3 - 1) / 3; i++)
+                                    {
+                                        int pageNumber = i + 1;
+                                        <li class="page-item @(ViewBag.CurrentPage == (i+1) ? "active" : "")"><a class="page-link" href="/Precription/Index?page=@pageNumber">@pageNumber</a></li>
+                                    }
+                                    <li class="page-item"><a class="page-link" href="/Precription/Index?page=@(ViewBag.CurrentPage <((ViewBag.TotalItemCount + 3 - 1) / 3) ? (ViewBag.CurrentPage+1) : ViewBag.CurrentPage)">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="~/js/HeaderScript.js"></script>
+<script type="text/javascript" async src="~/js/Sidebar.js?v=1.0" asp-append-version="true"></script>
+<script type="text/javascript" src="~/js/script.js"></script>
+</html>

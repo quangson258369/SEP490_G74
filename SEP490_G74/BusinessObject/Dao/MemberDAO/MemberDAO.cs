@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entity;
+using HcsBE.Dao.GenPassword;
 using HcsBE.DTO;
 using Microsoft.Owin.BuilderProperties;
 using System;
@@ -57,8 +58,11 @@ namespace HcsBE.Dao.MemberDAO
             RoleName = r.RoleName,
             Address = udc.Contact.Address,
             Dob = udc.Contact.Dob, 
+            Status= (bool)udc.User.Status,
             ImageLink = udc.Contact.Img,
-            UserId =udc.User.UserId
+            UserId =udc.User.UserId,
+            ServiceType=udc.User.Employees.FirstOrDefault().ServiceType.ServiceTypeName,
+            
         })
         .FirstOrDefault();
             return result?? new MemberDetailDTO();
@@ -72,50 +76,78 @@ namespace HcsBE.Dao.MemberDAO
             }).ToList();
             return result;
         }
-        public bool AddMember(MemberDetailDTO member)
+        public string AddMember(MemberDetailDTO member)
         {
-            var newUser = new User
+            var checkUserName = context.Users.Where(user => user.Email == member.Gmail);
+            if (!checkUserName.Any())
             {
-                Email = member.Gmail,
-                Password = "123456"
-            };
-            var maxUserId = context.Users.Max(u => u.UserId);
-            var maxDoctorId = context.Employees.Max(u => u.DoctorId);
-            var newDoctor = new Employee
-            {
-                DoctorId= maxDoctorId + 1,
-                ServiceTypeId = 1,
-                UserId = maxUserId
-            };
-            var maxContactId = context.Contacts.Max(u => u.CId);
-            var newContact = new Contact
-            {
-                CId = maxContactId + 1,
-                Name = member.Name,
-                Gender = (bool)member.Gender,
-                Phone=member.Phone,
-                Dob= (DateTime)member.Dob,
-                Address=member.Address,
-                Img=member.ImageLink,
-                PatientId=null,
-                DoctorId= maxDoctorId+1
-            };
-            var newRole = context.Roles.SingleOrDefault(r => r.RoleId == int.Parse(member.RoleName));
-            newUser.Roles.Add(newRole);
-            context.Users.Add(newUser);
-            context.Employees.Add(newDoctor);
-            context.Contacts.Add(newContact);
+                PasswordGenerator passwordGenerator = new PasswordGenerator();
+                string password = passwordGenerator.GenerateRandomPassword();
+                var newUser = new User
+                {
+                    Email = member.Gmail,
+                    Password = passwordGenerator.GetMD5Hash(password),
+                    Status = true,
+                };
+                var newRole = context.Roles.SingleOrDefault(r => r.RoleId == int.Parse(member.RoleName));
+                newUser.Roles.Add(newRole);
+                context.Users.Add(newUser);
+                context.SaveChanges();
+                var maxUserId = context.Users.Max(u => u.UserId);
+                var maxDoctorId = context.Employees.Max(u => u.DoctorId);
 
-            context.SaveChanges();
-            return true;
+                var newDoctor = new Employee();
+                if (int.Parse(member.RoleName) != 2)
+                {
+                    newDoctor = new Employee
+                    {
+                        DoctorId = maxDoctorId + 1,
+                        UserId = maxUserId
+                    };
+                }
+                else
+                {
+                    newDoctor = new Employee
+                    {
+                        DoctorId = maxDoctorId + 1,
+                        ServiceTypeId = int.Parse(member.ServiceType),
+                        UserId = maxUserId
+                    };
+                }
+
+
+                var maxContactId = context.Contacts.Max(u => u.CId);
+                var newContact = new Contact
+                {
+                    CId = maxContactId + 1,
+                    Name = member.Name,
+                    Gender = (bool)member.Gender,
+                    Phone = member.Phone,
+                    Dob = (DateTime)member.Dob,
+                    Address = member.Address,
+                    Img = member.ImageLink,
+                    PatientId = null,
+                    DoctorId = maxDoctorId + 1
+                };
+
+
+                context.Employees.Add(newDoctor);
+                context.Contacts.Add(newContact);
+                context.SaveChanges();
+                return password;
+            }
+            else
+            {
+                return "exist";
+            }
+            
         }
         public bool EditMember(MemberDetailDTO member)
         {
             var memberToUpdate = context.Employees.SingleOrDefault(u => u.DoctorId == member.MemberId);
             if (memberToUpdate != null)
             {
-                // da xoa doctor specialize nen chinh lai cho nay
-
+                //memberToUpdate.DoctorSpecialize = member.DoctorSpecialize;
             }
             var userIdToUpadte = memberToUpdate.UserId;
             var userToUpadte= context.Users.Include(u => u.Roles).SingleOrDefault(u => u.UserId == userIdToUpadte); ;
@@ -124,6 +156,7 @@ namespace HcsBE.Dao.MemberDAO
                 userToUpadte.Email = member.Gmail;
                 //
                 //var newRole = context.Roles.SingleOrDefault(r => r.RoleId == int.Parse(member.RoleName));
+                
                 //userToUpadte.Roles.Add(newRole);
             }
             var contactToUpdate = context.Contacts.FirstOrDefault(u => u.DoctorId == member.MemberId);
@@ -142,8 +175,8 @@ namespace HcsBE.Dao.MemberDAO
         public List<Role> rolebyid(int id)
         {
             var user = context.Users
-    .Include(u => u.Roles)
-    .SingleOrDefault(u => u.UserId == id);
+            .Include(u => u.Roles)
+            .SingleOrDefault(u => u.UserId == id);
             var list= user.Roles.ToList();
             return list;
         }

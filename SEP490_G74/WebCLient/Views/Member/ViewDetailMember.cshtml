@@ -154,34 +154,56 @@
                                         </div>
                                         <div class="col-md-6
                                                 form-group-phone">
-                                            <label class="title-role">Chuyên môn</label>
+                                            <label class="title-role">Trạng thái người dùng</label>
                                             <input type="text"
                                                    class="role
                                                     form-control"
-                                                   name="DoctorSpecialize" value="@Model.DoctorSpecialize" readonly />
+                                                   name="Status" value=@(Model.Status == true ? "Hợp lệ" : "Không hợp lệ"); readonly />
                                         </div>
                                          <input type="hidden"
                                                    class="role
                                                     form-control"
                                                name="UserId" value="@Model.UserId" readonly />
                                     </div>
-                                </div>
-                                <div class="line5 row">
-                                    <div class="col-md-6">
-                                        <button class="btn-change-password">
-                                            <a class="btn text-dark" href="/Member/EditMember?id=@Model.MemberId">Sửa Thông Tin</a>
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button class="btn-change-profile">Xoá Nhân Viên</button>
-                                    </div>
+                                    <div class="col-md-12 line3
+                                            row">
 
+                                        <div class="col-md-12  line4 row">
+                                            <div class="col-md-6 form-group">
+                                                <label class="title-role d-block">Vai trò</label>
+                                                <select class="role
+                                                    form-control" name="RoleName" id="roleSelection">
+                                                    <option value="@Model.ServiceType">@Model.ServiceType</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="line5 row " id="doctorOptions">
+                                            <div class="col-md-15 form-group">
+                                                <label class="title-role d-block">Chuyên khoa</label>
+                                                <select class="role
+                                                    form-control" name="RoleName" id="roleSelection">
+                                                    <option value="@Model.ServiceType">@Model.ServiceType</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 line4 mt-5 row">
+                                        <div class="col-md-6">
+                                            <button class="btn-change-password">
+                                                <a class="btn text-dark" href="/Member/EditMember?id=@Model.MemberId">Sửa Thông Tin</a>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn-change-profile">Xoá Nhân Viên</button>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                             </div>
 
 
                         </form>
-
 
                     </div>
                 </div>
@@ -191,7 +213,7 @@
     </div>
 </body>
 <script type="text/javascript" src="~/js/HeaderScript.js"></script>
-<script type="text/javascript" src="~/js/script.js"></script>
-<script type="text/javascript" src="~/js/Sidebar.js"></script>
+<script type="text/javascript" src="~/js/script.js" asp-append-version="true"></script>
+<script type="text/javascript" async src="~/js/Sidebar.js?v=1.0" asp-append-version="true"></script>
 </html>
 

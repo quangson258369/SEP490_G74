@@ -37,5 +37,10 @@ namespace HcsBE.Bussiness.Supplies
             List<SuppliesTypeDTO> listSuppliesType = supliesDAO.GetListSuppliesType();
             return listSuppliesType;
         }
+        public List<SuppliesDTO> GetSuppliesListByType(int typeId)
+        {
+            List<SuppliesDTO> listSuppliesListByType = supliesDAO.GetSuppliesListByType(typeId);
+            return listSuppliesListByType;
+        }
     }
 }

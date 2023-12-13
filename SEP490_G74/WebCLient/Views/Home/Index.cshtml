@@ -43,7 +43,7 @@
         </div>
         <div id="body-content">
 
-            <form class="form-signin" method="post" action="Home/Login">
+            <form class="form-signin" method="post" action="/Home/Login">
                 <h2 class="form-signin-heading">Đăng nhập tài khoản</h2>
                 <label class="email">Email</label><label class="special-mark">(*)</label>
                 <input type="text" class="form-control" name="username" placeholder="Tên đăng nhập hoặc email" required=""
@@ -56,7 +56,7 @@
                         <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Duy trì đăng nhập
                     </label>
 
-                    <a class="forgot-password">Quên mật khẩu?</a>
+                    <a class="forgot-password" href="/Home/ForgotPassword">Quên mật khẩu?</a>
                 </div>
                 @if (!string.IsNullOrEmpty(loginFailedMessage))
                 {
