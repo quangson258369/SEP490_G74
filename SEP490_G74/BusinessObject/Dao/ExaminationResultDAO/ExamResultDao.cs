@@ -25,6 +25,19 @@ namespace HcsBE.Dao.ExaminationResultDAO
             return query;
         }
 
+        public bool UpdateStatusOfServiceMedicalRecord(int sid,int mrid)
+        {
+            var status = context.ServiceMedicalRecords.FromSqlRaw("UPDATE [ServiceMedicalRecord] " +
+                "   SET [status] = 1 " +
+                " WHERE serviceId = "+sid+" AND medicalRecordId = "+mrid+"\n");
+            context.SaveChanges();
+            if(status != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public ExaminationResultId GetExamResult(int id)
         {
             return context.ExaminationResultIds.Include(x => x.MedicalRecord).SingleOrDefault(x => x.ExamResultId == id);

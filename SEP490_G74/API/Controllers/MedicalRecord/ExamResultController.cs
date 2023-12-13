@@ -53,6 +53,18 @@ namespace API.Controllers.MedicalRecord
             }
             return Ok("Update successfully!");
         }
+        
+        [HttpPut("updateStatusServiceMR")]
+        public IActionResult updateStatusServiceMR(int sid,int mrid)
+        {
+            var res = new ExamResultLogic(mapper);
+            var status = res.UpdateStatusOfServiceMedicalRecord(sid, mrid);
+            if (status == false)
+            {
+                return NotFound();
+            }
+            return Ok("Update successfully!");
+        }
 
         [HttpPost("AddExamResult")]
         public IActionResult AddExamResult(ExaminationResultIdMRDTO m)
