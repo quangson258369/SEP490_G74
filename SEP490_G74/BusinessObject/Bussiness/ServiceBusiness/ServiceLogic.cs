@@ -52,10 +52,10 @@ namespace HcsBE.Bussiness.ServiceBusiness
             if (service == null)
             {
                 return new ServiceDTO()
-                    {
-                        ExceptionMessage = ConstantHcs.NotFound,
-                        ResultCd = ConstantHcs.BussinessError
-                    };
+                {
+                    ExceptionMessage = ConstantHcs.NotFound,
+                    ResultCd = ConstantHcs.BussinessError
+                };
             }
             return output;
         }
@@ -66,7 +66,7 @@ namespace HcsBE.Bussiness.ServiceBusiness
             var status = dao.UpdateService(s);
             return status;
         }
-        
+
         public bool Add(ServiceDTO service)
         {
             var s = mapper.Map<Service>(service);
@@ -76,16 +76,16 @@ namespace HcsBE.Bussiness.ServiceBusiness
 
         public bool Delete(int id)
         {
-            if(id == 0 || id == null) return false;
+            if (id == 0 || id == null) return false;
             var service = dao.GetService(id);
-            if(service == null) return false;
+            if (service == null) return false;
             var output = dao.DeleteService(id);
             return output;
         }
 
         public List<ServiceDTO> SearchService(string name, int typeId)
         {
-            List<Service> services = dao.SearchService(name,typeId);
+            List<Service> services = dao.SearchService(name, typeId);
             var output = mapper.Map<List<ServiceDTO>>(services);
             if (services == null)
             {

@@ -32,7 +32,7 @@ namespace API.Controllers.Login
             }
 
             return result;
-        }
+        }       
         private string GenerateToken(UserInfo inputDto)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
@@ -49,12 +49,27 @@ namespace API.Controllers.Login
                     new Claim(ClaimTypes.NameIdentifier, inputDto.UserId ?? "GUEST"),
                     new Claim("TokenId", Guid.NewGuid().ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(jwtKeyBytes), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = jwtTokenHandler.CreateToken(tokenDesc);
 
             return jwtTokenHandler.WriteToken(token);
+        }
+        [HttpPost("CheckUserName")]
+        public bool CheckUserName(string username)
+        {
+            var bussinessLogic = new LoginBussinessLogic();
+            var result = bussinessLogic.CheckUserName(username);
+            return result;
+        }
+        //UpdatePassword
+        [HttpPost("UpdatePassword")]
+        public bool UpdatePassword(string username,string newPass)
+        {
+            var bussinessLogic = new LoginBussinessLogic();
+            var result = bussinessLogic.UpdatePassword(username,newPass);
+            return result;
         }
     }
 }

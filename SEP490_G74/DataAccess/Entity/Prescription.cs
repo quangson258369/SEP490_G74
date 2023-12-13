@@ -11,12 +11,8 @@ public partial class Prescription
     public DateTime CreateDate { get; set; }
 
     public string Diagnose { get; set; } = null!;
-
-    public byte Quantity { get; set; }
-
-    public int MedicalRecordId { get; set; }
     [JsonIgnore]
-    public virtual MedicalRecord MedicalRecord { get; set; } = null!;
-
-    public virtual ICollection<Supply> SIds { get; set; } = new List<Supply>();
+    public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+    [JsonIgnore]
+    public virtual ICollection<SuppliesPrescription> SuppliesPrescriptions { get; set; } = new List<SuppliesPrescription>();
 }

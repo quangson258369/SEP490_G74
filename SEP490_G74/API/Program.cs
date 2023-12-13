@@ -30,7 +30,17 @@ var mapperConfig = new MapperConfiguration(mc =>
 });
 
 IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSession();
 builder.Services.AddSingleton(mapper);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost7115", builder =>
+    {
+        builder.WithOrigins("https://localhost:7115")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 startup.ConfigureServices(builder.Services);
 builder.Services.AddSwaggerGen(c =>
 {
@@ -72,11 +82,11 @@ if (app.Environment.IsDevelopment())
 }
 
 
-
+app.UseCors("AllowLocalhost7115");
 app.UseHttpsRedirection();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication();
 
 app.UseAuthorization();

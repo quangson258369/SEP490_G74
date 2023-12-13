@@ -16,34 +16,27 @@ namespace HcsBE.Dao.PatientDao
         private HcsContext context = new HcsContext();
         public List<Patient> ListPatients()
         {   
-            var output = new List<Patient>();
-            /*var db = new HcsContext();
-            
-            var patientIds = db.Patients.Select(patient => patient.PatientId).ToList();
-            var contacts = (from contact in db.Contacts
-                            where patientIds.Contains(contact.PatientId.Value) 
-                            select contact).ToList();
-
-            var medicalRecords = (from medical in db.MedicalRecords
-                                  where patientIds.Contains(medical.PatientId)
-                                  select medical).ToList();
-
-            var invoices = (from invoice in db.Invoices
-                            where patientIds.Contains(invoice.PatientId)
-                            select invoice).ToList();
-
-            var query = (from patient in db.Patients
-                         where patientIds.Contains(patient.PatientId)
-                         select new
-                         {
-                             Patient = patient,
-                             Contacts = contacts.Where(c => c.PatientId == patient.PatientId).ToList(),
-                             MedicalRecords = medicalRecords.Where(m => m.PatientId == patient.PatientId).ToList(),
-                             Invoices = invoices.Where(i => i.PatientId == patient.PatientId).ToList()
-                         }).ToList();*/
-            //output = query.Select(rs => rs.Patient).ToList();
-            output = context.Patients.ToList();
+            var output = context.Patients.ToList();
             return output;
+        }
+
+        public List<MedicalRecord> ListMRByPatient(int pid)
+        {
+            var output = context.MedicalRecords.Where(x=>x.PatientId == pid).ToList();
+            return output;
+        }
+
+        public List<Patient> ListPatientPaging(int page = 1)
+        {
+            int pageSize = 3;
+            var output = context.Patients.ToList();
+            var pagedData = output.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return pagedData;
+        }
+
+        public int GetCountOfListPatient()
+        {
+            return context.Patients.Count();
         }
 
         public Patient GetPatientById(int id)
@@ -60,27 +53,26 @@ namespace HcsBE.Dao.PatientDao
 
         public bool UpdatePatient(Patient p)
         {
-            var existingPatient = context.Set<Patient>().Find(p.PatientId);
             var patient = GetPatientById(p.PatientId);
             if (patient == null)
             {
                 return false;
             }
-
-            if(existingPatient == null)
-            {
-                context.Patients.Update(p);
-            }
-            context.Entry(existingPatient).CurrentValues.SetValues(p);
+            context.Entry(patient).CurrentValues.SetValues(p);
             context.SaveChanges();
-            UpdateContactForPatient(p.Contacts);
             return true;
         }
 
-        public void UpdateContactForPatient(ICollection<Contact> contacts)
+        public bool UpdateContactForThisP(Contact c)
         {
-            context.Contacts.UpdateRange(contacts);
-            context.SaveChanges();
+            var contact = context.Contacts.Where(x => x.CId == c.CId);
+            if (contact.Any())
+            {
+                context.Contacts.UpdateRange(c);
+                context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
         public bool AddPatient(Patient p)
@@ -92,18 +84,19 @@ namespace HcsBE.Dao.PatientDao
             }
             context.Patients.Add(p);
             context.SaveChanges();
-            addContactForPatient(p);
             return true;
         }
 
-        public void addContactForPatient(Patient p)
+        public bool addContactForPatient(Contact p)
         {
-            var contact = context.Contacts.Where(x => x.PatientId == p.PatientId);
+            var contact = context.Contacts.Where(x => x.CId == p.CId);
             if (!contact.Any())
             {
-                context.Contacts.AddRange(p.Contacts);
+                context.Contacts.Add(p);
                 context.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public string DeletePatient(int id)

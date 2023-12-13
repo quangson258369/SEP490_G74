@@ -106,5 +106,22 @@ namespace HcsBE.Dao.SuppliesDAO
             }).ToList();
             return result;
         }
+        public List<SuppliesDTO> GetSuppliesListByType(int typeId)
+        {
+            var result = context.Supplies
+                .Join(
+                    context.SuppliesTypes,
+                    supplies => supplies.SuppliesTypeId,
+                    suppliesType => suppliesType.SuppliesTypeId,
+                    (supplies, suppliesType) => new SuppliesDTO
+                    {
+                        SId = supplies.SId,
+                        SName = supplies.SName,
+                        UnitInStock = supplies.UnitInStock,
+                        suppliesType = suppliesType
+                    })
+                .Where(sptype=>sptype.suppliesType.SuppliesTypeId==typeId).ToList();
+            return result;
+        }
     }
 }

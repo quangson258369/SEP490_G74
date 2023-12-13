@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HcsBE.DTO.MedicalRecordDaoOutputDto>
+﻿@model IEnumerable<HcsBE.DTO.MedicalRecordOutputDto>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -38,32 +38,29 @@
                         </div> 
                         
                         <div class="addNewUser">
-                            <a href="/MedicalRecord/Add?ServiceType=" class="custom-button">
-                                <span class="plus">+</span>
-                                Thêm Hồ Sơ Bệnh Án
-                            </a>
                         </div>
 
                         <div class="body-container">
 
                             <div class="search-container">
                                 <input type="text" class="form-control
-                                        search-input" placeholder="Search
-                                        anything...">
+                                        search-input" id="searchInput" placeholder="Search
+                                        anything..." oninput="filterTable()">
                                 <span class="search-icon">
                                     <i class="fas fa-search"></i>
                                 </span>
 
                             </div>
-                            <table class="table table-bordered">
+                            <table id="MRTable" class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
-                                        <th>Mã bệnh nhân</th>
+                                        <th>Mã Hồ Sơ</th>
                                         <th>Họ và tên</th>
-                                        <th>Lí do khám</th>
-                                        <th>Dịch vụ khám</th>
+                                        <th>Số Điện Thoại</th>
+                                        <th>Ngày Khám</th>
                                         <th>Trạng thái</th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -72,19 +69,36 @@
                                     {
                                         <tr>
                                             <td>@item.MedicalRecordId</td>
-                                            <td>@item.PatientId</td>
                                             <td>@item.PatientName</td>
-                                            <td>@item.ExamReason</td>
-                                            <td>@item.Patient.ServiceDetailName</td>
+                                            <td>@item.PatientPhone</td>
+                                            <td>@item.MedicalRecordDate</td>
                                             <td>Chưa khám</td>
 
-                                            <td><button><a class="btn text-dark" href="#">Hồ sơ</a></button></td>
+                                            <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Danh Sách Kết Quả</a></button></td>
+                                            <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Tái Khám</a></button></td>
+                                            <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Chi Tiết</a></button></td>
                                         </tr>
                                     }
                                     
                                     <!-- Add other rows similarly -->
                                 </tbody>
                             </table>
+                            @if (ViewBag.CurrentPage == 0)
+                            {
+                                ViewBag.CurrentPage = 1;
+                            }
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item"><a class="page-link" href="/MedicalRecord/Index?page=@(ViewBag.CurrentPage >1 ? (ViewBag.CurrentPage-1) : ViewBag.CurrentPage)">Previous</a></li>
+                                    @for (int i = 0; i < (ViewBag.TotalItemCount + 3 - 1) / 3; i++)
+                                    {
+
+                                        int pageNumber = i + 1;
+                                        <li class="page-item @(ViewBag.CurrentPage == (i+1) ? "active" : "")"><a class="page-link" href="/MedicalRecord/Index?page=@pageNumber">@pageNumber</a></li>
+                                    }
+                                    <li class="page-item"><a class="page-link" href="/MedicalRecord/Index?page=@(ViewBag.CurrentPage <((ViewBag.TotalItemCount + 3 - 1) / 3) ? (ViewBag.CurrentPage+1) : ViewBag.CurrentPage)">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -94,7 +108,28 @@
     </div>
     <script src="../../js/HeaderScript.js"></script>
     <script src="../../js/Sidebar.js"></script>
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toLowerCase();
+            table = document.getElementById("MRTable");
+            tr = table.getElementsByTagName("tr");
 
+            // Loop through all table rows, and hide those that don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

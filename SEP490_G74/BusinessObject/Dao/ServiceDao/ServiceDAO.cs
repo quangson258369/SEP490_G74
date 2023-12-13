@@ -15,15 +15,15 @@ namespace HcsBE.Dao.ServiceDao
 
         public List<Service> ListService()
         {
-            return context.Services.Include(x=>x.ServiceSupplies)
-                .Include(x=>x.ServiceType)
-                .ThenInclude(x=>x.Employees).ToList();
+            return context.Services
+                .Include(x => x.ServiceType)
+                .ThenInclude(x => x.Employees).ToList();
         }
         public List<Service> SearchService(string name, int typeId)
         {
-            return context.Services.Include(x=>x.ServiceSupplies)
-                .Include(x=>x.ServiceType)
-                .ThenInclude(x=>x.Employees).Where(x=>x.ServiceName == name || x.ServiceTypeId == typeId).ToList();
+            return context.Services
+                .Include(x => x.ServiceType)
+                .ThenInclude(x => x.Employees).Where(x => x.ServiceName == name || x.ServiceTypeId == typeId).ToList();
         }
 
         public List<ServiceType> GetListServiceType()
@@ -33,16 +33,16 @@ namespace HcsBE.Dao.ServiceDao
 
         public Service GetService(int serviceId)
         {
-            return (Service)context.Services.Include(x => x.ServiceSupplies)
+            return context.Services
                 .Include(x => x.ServiceType)
-                .ThenInclude(x => x.Employees).Where(p => p.ServiceId.Equals(serviceId));
+                .ThenInclude(x => x.Employees).SingleOrDefault(p => p.ServiceId.Equals(serviceId));
         }
 
         public bool UpdateService(Service service)
         {
             var existingPatient = context.Set<Service>().Find(service.ServiceId);
             var services = GetService(service.ServiceId);
-            if(services == null) return false;
+            if (services == null) return false;
             if (existingPatient == null)
             {
                 context.Services.Update(service);
@@ -70,9 +70,10 @@ namespace HcsBE.Dao.ServiceDao
                 context.Services.Remove(services);
                 context.SaveChanges();
                 return true;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine("Delete Service fail cause: \n"+ex);
+                Console.WriteLine("Delete Service fail cause: \n" + ex);
                 return false;
             }
         }

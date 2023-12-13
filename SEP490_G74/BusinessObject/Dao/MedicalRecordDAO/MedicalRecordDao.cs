@@ -1,4 +1,6 @@
 ﻿using DataAccess.Entity;
+using HcsBE.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,21 +16,28 @@ namespace HcsBE.Dao.MedicalRecordDAO
 
         public List<MedicalRecord> MedicalRecordList()
         {
-            var query = context.MedicalRecords.Include(x => x.Doctor)
-                .Include(x => x.Patient)
-                .Include(x => x.Services)
-                .Include(x => x.ExaminationResultIds)
-                .Include(x => x.Prescriptions).ToList();
+            var query = context.MedicalRecords.ToList();
             return query;
+        }
+        
+        
+
+        public List<MedicalRecord> MedicalRecordListPaging( int page = 1)
+        {
+            int pageSize = 3;
+            var query = context.MedicalRecords.ToList();
+            var pagedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return pagedData;
+        }
+
+        public int GetCountOfListMR()
+        {
+            return context.MedicalRecords.Count();
         }
 
         public MedicalRecord GetMedicalRecord(int id)
         {
-            var query = context.MedicalRecords.Include(x => x.Doctor)
-                .Include(y => y.Patient)
-                .Include(x => x.Services)
-                .Include(x => x.ExaminationResultIds)
-                .Include(x => x.Prescriptions)
+            var query = context.MedicalRecords
                 .Select(x => new MedicalRecord
                 {
                     Doctor = x.Doctor,
@@ -40,8 +49,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
                     MedicalRecordId = x.MedicalRecordId,
                     Patient = x.Patient,
                     PatientId = x.PatientId,
-                    Prescriptions = x.Prescriptions,
-                    Services = x.Services
+                    ServiceMedicalRecords = x.ServiceMedicalRecords
                 }).SingleOrDefault(x => x.MedicalRecordId == id);
             return query;
         }
@@ -70,6 +78,54 @@ namespace HcsBE.Dao.MedicalRecordDAO
             return true;
         }
 
+        public List<Employee> GetDoctorByServiceType(int type)
+        {
+            if( type!= null || type == 0)
+            {
+                return context.Employees.Where(x=>x.ServiceTypeId == type).ToList();
+            }
+            return new List<Employee>();
+        }
+
+        public void AddServiceMR(ServiceMedicalRecord sm)
+        {
+            if (sm != null && !context.ServiceMedicalRecords.Any(x=>x.MedicalRecordId == sm.MedicalRecordId && x.ServiceId == sm.ServiceId))
+            {
+                context.ServiceMedicalRecords.Add(sm);
+                context.SaveChanges();
+            }
+        }
+
+        public bool EditServiceMR (ServiceMedicalRecord sm)
+        {
+            if (sm != null && GetServiceUses(sm.ServiceId) != null)
+            {
+                context.ServiceMedicalRecords.Update(sm);
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteServiceMR(int sid,int mrid)
+        {
+            var sm = GetServiceUses(mrid);
+            if (sm != null && sm != null)
+            {
+                foreach(var s in sm)
+                {
+                    if(s.ServiceId == sid) context.ServiceMedicalRecords.Remove(s);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public List<ServiceMedicalRecord> GetServiceUses(int id)
+        {
+            var list = context.ServiceMedicalRecords.Where(x=>x.MedicalRecordId == id).ToList();
+            return list;
+        }
+
         public string DeleteMedicalRecord(int id)
         {
             /* 0 - medical record does not exist
@@ -77,7 +133,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
               -1 - can't delete cause patient is already treatment
              */
             var mr = GetMedicalRecord(id);
-            
+
             if (mr.ExaminationResultIds.Any())
             {
                 return "-1";

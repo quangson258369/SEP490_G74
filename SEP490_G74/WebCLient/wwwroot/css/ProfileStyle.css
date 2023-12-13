@@ -2,6 +2,7 @@
 body {
     background-color: #DEDEDE !important;
 }
+
 #body-content {
     margin-top: 60px;
 }
@@ -11,9 +12,10 @@ body {
     padding-left: 282px;
     height: 1px;
 }
+
 .form-profile {
     max-width: 918px;
-    max-height: 503px;
+    max-height: 603px;
     padding: 40px 35px 503px;
     margin: 65px auto;
     background-color: #fff;
@@ -21,7 +23,6 @@ body {
 }
 
 .content-right {
-
     float: left;
     width: 20%;
     border-right: 2px solid #BEACAC;
@@ -31,12 +32,11 @@ body {
 .content-left {
     float: right;
     width: 80%;
-
 }
 
-.content-left .title-fullname {
-    display: block;
-}
+    .content-left .title-fullname {
+        display: block;
+    }
 
 #image-container {
     width: 163px;
@@ -49,11 +49,11 @@ body {
     object-fit: cover;
 }
 
-#image-container img {
-    width: 163px;
-    height: 163px;
-    object-fit: cover;
-}
+    #image-container img {
+        width: 163px;
+        height: 163px;
+        object-fit: cover;
+    }
 
 input[type="file"] {
     display: none;
@@ -61,12 +61,10 @@ input[type="file"] {
 
 .fullname.form-control {
     width: 246px;
-
 }
 
 .dob.form-control {
     width: 139px;
-
 }
 
 .form-group.gender {
@@ -81,7 +79,8 @@ input[type="file"] {
 .dob.form-control,
 .address.form-control,
 .phone.form-control,
-.email.form-control {
+.email.form-control,
+.role.form-control {
     border-radius: 10px;
 }
 
@@ -102,12 +101,11 @@ input[type="file"] {
     border: 1px solid #6E6E6E;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
-
 }
 
-.line5.row {
+.line6.row {
     float: right;
-    margin-top: 90px;
+    margin-top: 18px;
 }
 
 
@@ -124,3 +122,9 @@ input[type="file"] {
     width: 2rem;
 }
 
+.role-selection, .doctor-selection {
+    width: 97%;
+    height: 40px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+}

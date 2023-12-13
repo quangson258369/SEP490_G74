@@ -17,6 +17,8 @@ public partial class Patient
     public string? BloodGroup { get; set; }
 
     public byte? BloodPressure { get; set; }
+
+    public string? Allergieshistory { get; set; }
     [JsonIgnore]
     public virtual ICollection<Contact> Contacts { get; set; } = new List<Contact>();
     [JsonIgnore]

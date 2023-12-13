@@ -14,9 +14,7 @@ public partial class Service
 
     public decimal? Price { get; set; }
     [JsonIgnore]
-    public virtual ICollection<ServiceSupply> ServiceSupplies { get; set; } = new List<ServiceSupply>();
+    public virtual ICollection<ServiceMedicalRecord> ServiceMedicalRecords { get; set; } = new List<ServiceMedicalRecord>();
     [JsonIgnore]
     public virtual ServiceType ServiceType { get; set; } = null!;
-    [JsonIgnore]
-    public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
 }

@@ -15,10 +15,11 @@ namespace HcsBE.DTO
         public string? Phone { get; set; }
         public string? RoleName { get; set; }
         public string? Address { get; set; }
-        public string? DoctorSpecialize { get; set; }
         public DateTime? Dob { get; set; }
+        public bool Status { get; set; }
         public string? ImageLink { get; set; }
         public int UserId { get; set; }
+        public string? ServiceType { get; set; }
 
     }
 }

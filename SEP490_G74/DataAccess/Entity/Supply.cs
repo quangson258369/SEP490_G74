@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DataAccess.Entity;
 
@@ -22,10 +23,8 @@ public partial class Supply
     public int SuppliesTypeId { get; set; }
 
     public DateTime? Inputday { get; set; }
-
-    public virtual ICollection<ServiceSupply> ServiceSupplies { get; set; } = new List<ServiceSupply>();
-
+    [JsonIgnore]
+    public virtual ICollection<SuppliesPrescription> SuppliesPrescriptions { get; set; } = new List<SuppliesPrescription>();
+    [JsonIgnore]
     public virtual SuppliesType SuppliesType { get; set; } = null!;
-
-    public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
 }

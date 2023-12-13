@@ -16,6 +16,8 @@ public partial class Employee
     [JsonIgnore]
     public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
     [JsonIgnore]
+    public virtual ICollection<ServiceMedicalRecord> ServiceMedicalRecords { get; set; } = new List<ServiceMedicalRecord>();
+    [JsonIgnore]
     public virtual ServiceType? ServiceType { get; set; }
     [JsonIgnore]
     public virtual User User { get; set; } = null!;

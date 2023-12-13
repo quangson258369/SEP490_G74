@@ -22,15 +22,32 @@ namespace HcsBE.Bussiness.MedicalRecord
             _mapper = mapper;
         }
 
-        public List<MedicalRecordDaoOutputDto> GetListMedicalRecord()
+        public List<MedicalRecordOutputDto> GetListMedicalRecord()
         {
             List<DataAccess.Entity.MedicalRecord> list = dao.MedicalRecordList();
-            var output = _mapper.Map<List<MedicalRecordDaoOutputDto>>(list);
+            var output = _mapper.Map<List<MedicalRecordOutputDto>>(list);
             if(list == null)
             {
-                return new List<MedicalRecordDaoOutputDto>()
+                return new List<MedicalRecordOutputDto>()
                 {
-                    new MedicalRecordDaoOutputDto()
+                    new MedicalRecordOutputDto()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return output;
+        }
+        public List<MedicalRecordOutputDto> GetListMedicalRecordPaging(int page)
+        {
+            List<DataAccess.Entity.MedicalRecord> list = dao.MedicalRecordListPaging(page);
+            var output = _mapper.Map<List<MedicalRecordOutputDto>>(list);
+            if(list == null)
+            {
+                return new List<MedicalRecordOutputDto>()
+                {
+                    new MedicalRecordOutputDto()
                     {
                         ExceptionMessage = ConstantHcs.NotFound,
                         ResultCd = ConstantHcs.BussinessError
@@ -40,14 +57,19 @@ namespace HcsBE.Bussiness.MedicalRecord
             return output;
         }
 
-        public MedicalRecordDaoOutputDto GetMedicalRecord(int id) {
+        public int GetCountOfListMR()
+        {
+            return dao.GetCountOfListMR();
+        }
+
+        public MedicalRecordOutputDto GetMedicalRecord(int id) {
         
             var mr = dao.GetMedicalRecord(id);
-            var output = _mapper.Map<MedicalRecordDaoOutputDto>(mr);
+            var output = _mapper.Map<MedicalRecordOutputDto>(mr);
 
             if (mr == null)
             {
-                return new MedicalRecordDaoOutputDto()
+                return new MedicalRecordOutputDto()
                 {
                     ExceptionMessage = ConstantHcs.NotFound,
                     ResultCd = ConstantHcs.BussinessError
@@ -88,6 +110,16 @@ namespace HcsBE.Bussiness.MedicalRecord
             return "0";
         }
 
+        public List<DoctorMRDTO> GetDoctorByServiceType(int type)
+        {
+            var list = dao.GetDoctorByServiceType(type);
+            return _mapper.Map<List<DoctorMRDTO>>(list);
+        }
 
+        public List<ServiceMRDTO> GetListServiceUses(int id)
+        {
+            var list = dao.GetServiceUses(id);
+            return _mapper.Map<List<ServiceMRDTO>>(list);
+        }
     }
 }

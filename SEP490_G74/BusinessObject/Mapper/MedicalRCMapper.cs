@@ -21,19 +21,34 @@ namespace HcsBE.Mapper
         public MedicalRCMapper()
         {
             CreateMap<MedicalRecordModify, MedicalRecord>();
-            CreateMap<MedicalRecord, MedicalRecordModify>();
+            CreateMap<MedicalRecord, MedicalRecordModify>()
+                .ForMember(x=>x.PrescriptionId,x=>x.MapFrom(x=>x.PrescriptionId));
             CreateMap<ExaminationResultId, ExaminationResultIdMRDTO>();
             CreateMap<Contact,ContactDoctorDTO>();
             CreateMap<Contact,ContactPatientDTO>();
-            CreateMap<MedicalRecordDaoOutputDto, MedicalRecord>();
-            CreateMap<MedicalRecord, MedicalRecordDaoOutputDto>()
+            CreateMap<MedicalRecordOutputDto, MedicalRecord>();
+            CreateMap<MedicalRecord, MedicalRecordOutputDto>()
                 .ForMember(o => o.PatientName, opt => opt.MapFrom(o => getName(o.PatientId)))
                 .ForMember(o => o.PatientPhone, opt => opt.MapFrom(o => getPhones(o.PatientId)))
                 .ForMember(o => o.ExaminationResultIds, o => o.MapFrom(a => ListExamRS(a.MedicalRecordId)))
                 .ForMember(o =>o.Doctor, o => o.MapFrom(x=> GetDoctor(x.DoctorId)))
                 .ForMember(o =>o.Patient, o => o.MapFrom(x=> GetPatient(x.PatientId)))
                 .ForMember(o =>o.Services, o => o.MapFrom(x=> ListService(x.MedicalRecordId)))
+                .ForMember(o=>o.InvoiceDetails, o => o.MapFrom(x=> ListInvoiceDetail(x.MedicalRecordId)))
+                .ForMember(o => o.ServiceMedicalRecords, o => o.MapFrom(x=> ListServiceMedicalRecord(x.MedicalRecordId)))
                 ;
+        }
+
+        private List<ServiceMedicalRecord> ListServiceMedicalRecord(int medicalRecordId)
+        {
+            var rs = context.ServiceMedicalRecords.Where(x => x.MedicalRecordId == medicalRecordId).ToList();
+            return rs;
+        }
+
+        private List<InvoiceDetail> ListInvoiceDetail(int medicalRecordId)
+        {
+            var rs = context.InvoiceDetails.Where(x => x.MedicalRecordId == medicalRecordId).ToList();
+            return rs;
         }
 
         private List<Service> ListService(int? medicalRecordId)
@@ -59,6 +74,8 @@ namespace HcsBE.Mapper
                 BloodPressure = doctor.BloodPressure,
                 Height = doctor.Height,
                 Weight = doctor.Weight,
+                //Allergieshistory = doctor.Allergieshistory,
+                Invoices = context.Invoices.Where(x => x.PatientId == patientId).ToList(),
                 Contacts =context.Contacts.Where(x => x.PatientId == doctor.PatientId).ToList()
             };
             return d;
@@ -73,6 +90,7 @@ namespace HcsBE.Mapper
                 DoctorId = doctor.DoctorId,
                 ServiceTypeId = doctor.ServiceTypeId,
                 UserId = doctor.UserId,
+                ServiceMedicalRecords = context.ServiceMedicalRecords.Where(x=>x.DoctorId==doctorId).ToList(),
                 ServiceType = context.ServiceTypes.SingleOrDefault(x=>x.ServiceTypeId == doctor.ServiceTypeId),
                 Contacts = context.Contacts.Where(x=>x.DoctorId == doctor.DoctorId).ToList(),
                 User = context.Users.SingleOrDefault(x=>x.UserId == doctor.UserId) == null? null : context.Users.SingleOrDefault(x => x.UserId == doctor.UserId)

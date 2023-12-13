@@ -1,0 +1,210 @@
+﻿@using HcsBE.DTO;
+@model HcsBE.DTO.MedicalRecordOutputDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hcs-Healcare System</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../css/HeaderStyle.css">
+    <link rel="stylesheet" type="text/css" href="../../css/Sidebar.css">
+    <link rel="stylesheet" type="text/css" href="~/css/PatientRecordStyle.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+        </div>
+        <div id="body-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sidebar">
+                    </div>
+                    <div class="col-sm p-3 min-vh-100">
+
+                        <h2 class="body-content-header">Hồ sơ bệnh nhân</h2>
+                        <form class=" form-profile">
+                            <div class="col-md-12 form-group">
+
+
+                                <div class="line1 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="invoice-code">Mã hồ sơ</label>
+                                        <input type="text" class="invoice-code form-control" name="invoice-code" value="@Model.MedicalRecordId"
+                                               readonly />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="patient-code">Mã bệnh nhân</label>
+                                        <input type="text" class="patient-code form-control" name="patient-code" value="@Model.PatientId"
+                                               readonly />
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                        <label class="fullname">Họ và tên</label>
+                                        <input type="text" class="fullname form-control" name="fullname" value="@Model.PatientName" />
+
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="dob">Ngày sinh</label>
+                                        <input type="date" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd"))" />
+
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="title-gender">Giới tính</label>
+                                        <div class="gender">
+                                            <div class="form-check form-check-inline">
+                                                @if (ViewBag.Patient is PatientDTO patient && patient.Contacts != null && patient.Contacts.Gender == true)
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="male"
+                                                           value="male" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="male"
+                                                           value="male">
+                                                }
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                @if (ViewBag.Patient is PatientDTO patientt && patientt.Contacts != null && patientt.Contacts.Gender != true)
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="female"
+                                                           value="female" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="female"
+                                                           value="female">
+                                                }
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line2 row">
+                                    <div class="col-md-9 form-group">
+                                        <label class="address">Địa chỉ</label>
+                                        <input type="text" class="address form-control" name="address" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Address ?? "")" />
+
+                                    </div>
+                                    <div class="row-cols-md-3 form-group">
+                                        <label class="phone">Số điện thoại</label>
+                                        <input type="text" class="phone form-control" name="phone" value="@Model.PatientPhone" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 line3 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Chiều cao</label>
+                                        <input type="text" class="date-create form-control" name="address" value="@((ViewBag.Patient as PatientDTO).Height)" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Cân nặng</label>
+                                        <input type="text" class="date-create form-control" name="address" value="@((ViewBag.Patient as PatientDTO).Weight)" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Nhóm máu</label>
+                                        <input type="text" class="date-create form-control" name="address" value="@((ViewBag.Patient as PatientDTO).BloodGroup)" />
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                        <label class="date-create">Huyết áp</label>
+                                        <input type="text" class="date-create form-control" name="address" value="@((ViewBag.Patient as PatientDTO).BloodPressure)" />
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 line4 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Ngày khám</label>
+                                        <input type="datetime" class="date-create form-control" name="address" value="@(Model.MedicalRecordDate.ToString("dd/MM/yyyy") == null?DateTime.Now:Model.MedicalRecordDate.ToString("dd/MM/yyyy"))" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="date-create">Lí do khám</label>
+                                        <textarea type="text" class="ReasonExamination form-control" name="examReason">@Model.ExamReason</textarea>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label class="date-create">Dịch vụ đã chọn</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-bordered table-header">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên dịch vụ</th>
+                                                            <th>Bác sĩ phụ trách</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <div class="scrollable-tbody">
+                                                    <table class="table table-bordered table-body">
+                                                        <tbody>
+                                                            @if (ViewBag.Service != null && ViewBag.Service is List<ServiceMRDTO>)
+                                                                @foreach (var s in (List<ServiceMRDTO>)ViewBag.Service)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@s.Service?.ServiceName</td>
+                                                                        <td>@s.DoctorContact?.Name</td>
+                                                                    </tr>
+                                                                }
+
+                                                            <!-- Add more rows here to see the scrolling effect -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-12 line5">
+                                    <button class="btn-edit float-right" type="button" onclick="goToEdit(@Model.MedicalRecordId)">Chỉnh sửa</button>
+                                    <button class="btn-delete float-right" type="button" onclick="goToDelete(@Model.MedicalRecordId)">Xóa hồ sơ</button>
+
+                                </div>
+                            </div>
+
+
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    function goToEdit(id) {
+
+        var url = "MedicalRecord/Edit?id=" + id;
+        window.location.href = url;
+    }
+    function goToDelete(mrid) {
+
+        var url = "MedicalRecord/Delete?id=" + mrid;
+        window.location.href = url;
+    }
+</script>
+<script src="~/js/HeaderScript.js"></script>
+<script src="~/js/Sidebar.js"></script>
+</html>

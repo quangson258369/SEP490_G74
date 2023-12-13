@@ -15,30 +15,42 @@ namespace HcsBE.Mapper
         {
 
             CreateMap<PatientModify, Patient>();
-            CreateMap<ContactPatientDTO, Contact>();
+            CreateMap<ContactPatientDTO, Contact>()
+                .ForMember(x=>x.CId, x=>x.MapFrom(x=>x.CId))
+                .ForMember(x=>x.PatientId, x=>x.MapFrom(x=>x.PatientId))
+                .ForMember(x=>x.Address, x=>x.MapFrom(x=>x.Address))
+                .ForMember(x=>x.Dob, x=>x.MapFrom(x=>x.Dob))
+                .ForMember(x=>x.Gender, x=>x.MapFrom(x=>x.Gender))
+                .ForMember(x=>x.Name, x=>x.MapFrom(x=>x.Name))
+                .ForMember(x=>x.Img, x=>x.MapFrom(x=>x.Img))
+                .ForMember(x=>x.Phone, x=>x.MapFrom(x=>x.Phone));
+            CreateMap<Contact, ContactPatientDTO>()
+                .ForMember(x => x.CId, x => x.MapFrom(x => x.CId))
+                .ForMember(x => x.PatientId, x => x.MapFrom(x => x.PatientId))
+                .ForMember(x => x.Address, x => x.MapFrom(x => x.Address))
+                .ForMember(x => x.Dob, x => x.MapFrom(x => x.Dob))
+                .ForMember(x => x.Gender, x => x.MapFrom(x => x.Gender))
+                .ForMember(x => x.Name, x => x.MapFrom(x => x.Name))
+                .ForMember(x => x.Img, x => x.MapFrom(x => x.Img))
+                .ForMember(x => x.Phone, x => x.MapFrom(x => x.Phone));
 
             CreateMap<PatientModify, PatientDTO>()
                 .ForMember(x => x.PatientId, x => x.MapFrom(x => x.PatientId))
-                .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName))
-                .ForMember(x => x.Contacts, x => x.MapFrom(x => x.Contact));
-            CreateMap<PatientDTO, PatientModify>()
-                .ForMember(x => x.PatientId, x => x.MapFrom(x => x.PatientId))
-                .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName))
-                .ForMember(x => x.Contact, x => x.MapFrom(x => x.Contacts));
-
+                .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName));
+            // sửa thành pid
             CreateMap<PatientDTO, Patient>()
-                .ForMember(x => x.Contacts, x => x.MapFrom(x => blinkData(x.Contacts)));
+                .ForMember(x => x.Contacts, x => x.MapFrom(x => blinkData(x.PatientId)))
+                .ForMember(x=>x.Invoices,x=>x.MapFrom(x=> getListInvoice(x.PatientId)));
             CreateMap<Patient, PatientDTO>()
                 .ForMember(x => x.Contacts, x => x.MapFrom(x => getContact(x.PatientId)))
                 .ForMember(x => x.MedicalRecords, x => x.MapFrom(x => getMedicalRecords(x.PatientId)))
                 .ForMember(x => x.Invoices, x => x.MapFrom(x => getListInvoice(x.PatientId)));
         }
 
-        private object blinkData(Contact? contacts)
+        private List<Contact> blinkData(int? pid)
         {
-            var blink = new List<Contact>();
-            blink.Add(contacts);
-            return blink;
+            var contacts = context.Contacts.Where(x => x.PatientId == pid).ToList();
+            return contacts;
         }
 
         private HcsContext context = new HcsContext();

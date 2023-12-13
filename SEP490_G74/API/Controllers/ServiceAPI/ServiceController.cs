@@ -47,12 +47,12 @@ namespace API.Controllers.ServiceAPI
             var output = logic.GetAll();
             return Ok(output);
         }
-        
+
         [HttpPost("AddService")]
         public IActionResult AddService(ServiceDTO service)
         {
             var login = new ServiceLogic(mapper);
-            if(service == null)
+            if (service == null)
             {
                 return BadRequest();
             }
@@ -78,7 +78,7 @@ namespace API.Controllers.ServiceAPI
         public IActionResult DeleteService(int id)
         {
             var logic = new ServiceLogic(mapper);
-            if(id == 0 || id == null)
+            if (id == 0 || id == null)
             {
                 return BadRequest();
             }

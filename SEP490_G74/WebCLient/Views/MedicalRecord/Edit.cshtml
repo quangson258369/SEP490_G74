@@ -1,0 +1,420 @@
+﻿@using HcsBE.DTO;
+@model List<DataAccess.Entity.ServiceType>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hcs-Healcare System</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="~/css/HeaderStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/css/PatientRecordStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Sidebar.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/1d6b4c4b00.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+        </div>
+        <div id="body-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sidebar">
+                    </div>
+                    <div class="col-sm p-3 min-vh-100">
+
+                        <h2 class="body-content-header">Chỉnh sửa hồ sơ bệnh án</h2>
+                        <form class=" form-profile" method="post" action="MedicalRecord/EditMedicalRecord">
+                            <div class="col-md-12 form-group">
+
+
+                                <div class="line1 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="invoice-code">Mã hồ sơ</label>
+                                        <input type="text" class="invoice-code form-control" name="mrid" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordId)"
+                                               readonly />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="patient-code">Mã bệnh nhân</label>
+                                        <input type="text" class="patient-code form-control" name="pid" value="@((ViewBag.MR as MedicalRecordOutputDto)?.PatientId)"
+                                               readonly />
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                        <label class="fullname">Họ và tên</label>
+                                        <input type="text" class="fullname form-control" name="fullname" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Name)" />
+
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="dob">Ngày sinh</label>
+                                        <input type="date" class="dob form-control" name="dob" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Dob.ToString("yyyy-MM-dd"))" />
+
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="title-gender">Giới tính</label>
+                                        <div class="gender">
+                                            <div class="form-check form-check-inline">
+                                                @if (ViewBag.Patient is PatientDTO patient && patient.Contacts != null && patient.Contacts.Gender == true)
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="male"
+                                                           value="male" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="male"
+                                                           value="male">
+                                                }
+                                                <label class="form-check-label" for="male">Male</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                @if (ViewBag.Patient is PatientDTO patientt && patientt.Contacts != null && patientt.Contacts.Gender != true)
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="female"
+                                                           value="female" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input class="form-check-input" type="radio" name="gender" id="female"
+                                                           value="female">
+                                                }
+                                                <label class="form-check-label" for="female">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="line2 row">
+                                    <div class="col-md-9 form-group">
+                                        <label class="address">Địa chỉ</label>
+                                        <input type="text" class="address form-control" name="address" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Address)" />
+                                    </div>
+                                    <div class="row-cols-md-3 form-group">
+                                        <label class="phone">Số điện thoại</label>
+                                        <input type="text" class="phone form-control" name="phone" value="@((ViewBag.Patient as PatientDTO)?.Contacts?.Phone)" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 line3 row">
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Chiều cao</label>
+                                        <input type="text" class="date-create form-control" name="height" value="@((ViewBag.Patient as PatientDTO)?.Height)" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Cân nặng</label>
+                                        <input type="text" class="date-create form-control" name="weight" value="@((ViewBag.Patient as PatientDTO)?.Weight)" />
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Nhóm máu</label>
+                                        <input type="text" class="date-create form-control" name="bloodgr" value="@((ViewBag.Patient as PatientDTO)?.BloodGroup)" />
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                        <label class="date-create">Huyết áp</label>
+                                        <input type="text" class="date-create form-control" name="bloodpressure" value="@((ViewBag.Patient as PatientDTO)?.BloodPressure)" />
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="date-create">Ngày khám</label>
+                                        <input type="text" class="date-create form-control" name="createdate" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordDate)" readonly />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 line5 row">
+                                    <div class="col-md-3 form-group">
+                                        <label class="date-create">Lí do khám</label>
+                                        <textarea type="text" class="ReasonExamination form-control" name="reason">@((ViewBag.MR as MedicalRecordOutputDto)?.ExamReason)</textarea>
+                                    </div>
+                                    <div class="col-md-5 form-group">
+                                        <label class="date-create">Dịch vụ</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                    <select id="serviceType" class="col-md-4 ml-3" name="ServiceType" onchange="LoadDat()">
+                                                        <option value="0">Chọn phòng khám</option>
+                                                        @foreach (var item in Model)
+                                                        {
+                                                                <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+
+                                                        }
+                                                    </select>
+                                                    <input type="text" id="searchInput" placeholder="Filter services..." oninput="filterTable()" />
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <table class="table table-bordered table-header">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tên dịch vụ</th>
+                                                                    <th>Bác Sĩ Khám</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                        <div class="scrollable-tbody">
+                                                            <table id="serviceTable" class="table table-bordered table-body">
+                                                                <tbody>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group ">
+                                        <label class="title-email">Dịch vụ đã chọn</label>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-bordered table-header">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên dịch vụ</th>
+                                                            <th>Giá</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                <div class="scrollable-tbody">
+                                                    <table id="Selected-service" class="table table-bordered table-body selected-service-table">
+                                                        <tbody>
+                                                            @if (ViewBag.selectedService != null && ViewBag.selectedService is List<ServiceMRDTO>)
+                                                            {
+                                                                foreach (var s in (List<ServiceMRDTO>)ViewBag.selectedService)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@s.Service?.ServiceName</td>
+                                                                        <td>@s.Service?.Price</td>
+
+                                                                        <td><button type="button" onclick="RemoveService('@s.Service?.ServiceId','@s.Service?.ServiceName','@s.Service?.Price','@s.DoctorId')">Xóa</button></td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                            else { }
+                                                        </tbody>
+                                                    </table>
+                                                    <input hidden id="jsond" name="jsonD" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 line6">
+                                    <button type="submit" class="btn-create-record float-right" onclick="sendService()">Lưu Chỉnh Sửa</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    let services = [];
+
+    var selectedDoctorId = 0;
+    var myObjectsFromController = @Html.Raw(ViewBag.selectedService);
+    //services = myObjectsFromController;
+    myObjectsFromController.forEach(function (obj) {
+
+        addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price, '' + obj.DoctorId);
+        console.log("List luc load"+services);
+    });
+    myObjectsFromController = [];
+
+    function HandleSelectChange(selectElement) {
+        var doctorId = $(selectElement).val();
+        selectedDoctorId = doctorId !== undefined ? doctorId : '';
+        console.log("data get in GetData:" + selectedDoctorId);
+        return selectedDoctorId;
+    }
+
+    function addService(id, name, price) {
+
+        let service = {
+            sid: id,
+            name: name,
+            price: price,
+            doctorid: selectedDoctorId
+        };
+
+
+        const index = services.findIndex(service => {
+            return service.sid === id && service.name === name && service.price === price;
+        });
+        if (index <= -1) {
+            addToTable(service);
+            services.push(service);
+            console.log("List sau add"+services);
+        }
+
+    }
+    function addToTable(service) {
+        let id = service.sid;
+        let name = service.name;
+        let price = service.price;
+        // Create table row html
+        let row = `
+            <tr>
+              <td>${name}</td>
+              <td>${price}</td>
+              <td><button type="button" onclick="RemoveService('${id}','${name}','${price}')">Xóa</button></td>
+            </tr>
+          `;
+
+        // Add row to table
+        $('.selected-service-table tbody').append(row);
+    }
+
+    function RemoveService(id, name, price) {
+
+        // Find index of object in services array
+        const index = services.findIndex(service => {
+            return service.sid === id && service.name === name && service.price === price;
+
+        });
+
+        if (index > -1) {
+
+            // Remove from services array
+            services.splice(index, 1);
+
+            const table = document.getElementById("Selected-service");
+            // Find and remove table row
+            if (table) {
+                const rows = table.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    if (row.textContent.includes(name)) {
+                        row.remove();
+                        console.log(services);
+                    }
+                })
+            }
+
+
+        }
+
+    }
+
+    function sendService() {
+        document.getElementById("jsond").value = JSON.stringify(services);
+    }
+
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toLowerCase();
+        table = document.getElementById("serviceTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function LoadDat() {
+        var serviceTypeId = $("#serviceType").val();
+        console.log(serviceTypeId);
+
+        $.ajax({
+            url: "https://localhost:7249/api/Service/SearchService?typeId=" + serviceTypeId,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result, status, xhr) {
+                console.log(result);
+                var tbody = $("#serviceTable tbody");
+                tbody.empty(); // Clear existing rows before appending new ones
+
+                $.each(result, function (index, value) {
+                    var newRow = $("<tr>");
+                    newRow.append($("<td>").html(value["serviceName"]));
+                    var selectElement = $("<select class=\"doctor\" onchange=\"HandleSelectChange(this)\" > "); // Use class instead of id
+                    newRow.append($("<td>").append(selectElement));
+                    LoadDoctor(selectElement, serviceTypeId);
+
+                    newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}')">Thêm</button>`)));
+                    tbody.append(newRow);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+    }
+
+
+
+    function LoadDoctor(selectElement, serviceTypeId) {
+        var doctorId; // Variable to store the selected doctorId
+
+        $.ajax({
+            url: "https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + serviceTypeId,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false, // Synchronous request to wait for the options to be loaded
+            success: function (result, status, xhr) {
+                console.log(result);
+                selectElement.empty(); // Clear existing options before appending new ones
+                $.each(result, function (index, value) {
+                    selectElement.append($('<option value=' + value["doctorId"] + '>' + value["contact"]["name"] + '</option>'));
+                });
+                doctorId = selectElement.val(); // Get the selected doctorId
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+
+        return doctorId; // Return the selected doctorId
+    }
+    $('#submitBtn').on('click', () => {
+
+        // Add array as hidden input
+        let input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selectedServices';
+        input.value = JSON.stringify(services);
+
+        document.getElementById('serviceForm').appendChild(input);
+
+        // Submit form
+        document.getElementById('serviceForm').submit();
+
+    });
+</script>
+<script type="text/javascript" src="~/js/Sidebar.js"></script>
+<script type="text/javascript" src="~/js/HeaderScript.js"></script>
+
+</html>
