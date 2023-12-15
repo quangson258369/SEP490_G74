@@ -19,8 +19,6 @@ namespace HcsBE.Dao.MedicalRecordDAO
             var query = context.MedicalRecords.ToList();
             return query;
         }
-        
-        
 
         public List<MedicalRecord> MedicalRecordListPaging( int page = 1)
         {
@@ -80,7 +78,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
 
         public List<Employee> GetDoctorByServiceType(int type)
         {
-            if( type!= null || type == 0)
+            if( type != 0)
             {
                 return context.Employees.Where(x=>x.ServiceTypeId == type).ToList();
             }

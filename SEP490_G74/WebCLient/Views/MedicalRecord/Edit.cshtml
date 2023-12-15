@@ -44,6 +44,7 @@
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
+                                        <input hidden type="text" name="examcode" value="@((ViewBag.MR as MedicalRecordOutputDto)?.ExamCode)" />
                                         <input type="text" class="invoice-code form-control" name="mrid" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordId)"
                                                readonly />
                                     </div>
@@ -126,7 +127,7 @@
                                         <input type="text" class="date-create form-control" name="bloodpressure" value="@((ViewBag.Patient as PatientDTO)?.BloodPressure)" />
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label class="date-create">Ngày khám</label>
+                                        <label class="date-create">Ngày Chỉnh Sửa</label>
                                         <input type="text" class="date-create form-control" name="createdate" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordDate)" readonly />
                                     </div>
 
@@ -236,8 +237,8 @@
     var myObjectsFromController = @Html.Raw(ViewBag.selectedService);
     //services = myObjectsFromController;
     myObjectsFromController.forEach(function (obj) {
-
-        addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price, '' + obj.DoctorId);
+        selectedDoctorId = obj.DoctorId;
+        addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price);
     });
     myObjectsFromController = [];
 

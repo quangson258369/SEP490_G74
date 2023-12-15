@@ -71,6 +71,7 @@ namespace WebCLient.Controllers
                 ServicedAPI = "https://localhost:7249/api/Service/UpdateService?id=" + id;
                 var newService = new Service
                 {
+                    ServiceId= id,
                     ServiceTypeId = int.TryParse(Request.Form["ServiceTypeId"], out int memberIdValue) ? memberIdValue : 0,
                     ServiceName = Request.Form["ServiceName"],
                     Price = decimal.TryParse(Request.Form["Price"], out decimal price) ? price : 0,

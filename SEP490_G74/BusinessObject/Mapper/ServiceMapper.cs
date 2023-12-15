@@ -18,7 +18,8 @@ namespace HcsBE.Mapper
         private ServiceDAO serviceDAO = new ServiceDAO();
         public ServiceMapper() {
             CreateMap<Service, ServiceDTO>()
-                .ForMember(x=>x.price ,x=> x.MapFrom(y => y.Price));
+                .ForMember(x=>x.price ,x=> x.MapFrom(y => y.Price))
+                .ForMember(x=>x.ServiceTypeName,x=>x.MapFrom(y=>getTypeName(y.ServiceTypeId)));
             CreateMap<ServiceDTO, Service>();
             CreateMap<ServiceMedicalRecord, ServiceMRDTO>()
                 .ForMember(x=>x.DoctorContact,x=>x.MapFrom(x=> GetDoctorContact(x.DoctorId)))
@@ -29,6 +30,10 @@ namespace HcsBE.Mapper
         private Contact GetDoctorContact(int? doctorId)
         {
             return context.Contacts.SingleOrDefault(s => s.DoctorId == doctorId);
+        }
+        private string getTypeName(int id)
+        {
+            return context.ServiceTypes.Where(x=>x.ServiceTypeId==id).Select(x=>x.ServiceTypeName).FirstOrDefault();
         }
     }
 }

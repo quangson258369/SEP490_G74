@@ -41,6 +41,13 @@ namespace API
                 });
 
             services.AddRazorPages();
+            services.AddSession(options =>
+            {
+                // Set session timeout to 5 minutes
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
 
@@ -51,6 +58,7 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSession();
             }
             else
             {

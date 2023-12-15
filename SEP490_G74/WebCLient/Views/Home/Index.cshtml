@@ -28,19 +28,7 @@
 
 <body style="background-color: #DEDEDE;">
     <div id="main">
-        <div id="header">
-            <div class="col-md-12 container">
-                <div class="row">
-                    <div class="stanfor">
-                        <p class="text-stanfor-header">HCS</p>
-                    </div>
-                    <div class="fullname">
-                        <p class="text-header-fullname">Healcare System</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        @await Component.InvokeAsync("Header")
         <div id="body-content">
 
             <form class="form-signin" method="post" action="/Home/Login">

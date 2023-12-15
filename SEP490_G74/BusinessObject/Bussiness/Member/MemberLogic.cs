@@ -42,5 +42,10 @@ namespace HcsBE.Bussiness.Member
             List<Role> list = memberDAO.rolebyid(id); 
             return list;
         }
+        public int GetDoctorId(int idUser)
+        {
+            int doctorId = memberDAO.GetDoctorId(idUser);
+            return doctorId;
+        }
     }
 }

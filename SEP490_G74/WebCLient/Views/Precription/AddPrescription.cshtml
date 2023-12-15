@@ -1,6 +1,6 @@
 ﻿@using DataAccess.Entity;
 @using HcsBE.DTO;
-@model IEnumerable<List<HcsBE.DTO.SuppliesDTO>>
+@model HcsBE.DTO.ContactPatientInPrescriptionDTO
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -24,7 +24,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/1d6b4c4b00.js" crossorigin="anonymous"></script>
@@ -32,38 +32,40 @@
 
 <body>
     <div id="main">
-        <div id="header">
+        @await Component.InvokeAsync("Header")
         </div>
         <div id="body-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="sidebar">
+                @await Component.InvokeAsync("Sidebar")
                     </div>
                     <div class="col-sm p-3 min-vh-100">
 
                         <h2 class="body-content-header">Hồ sơ bệnh nhân</h2>
-                        <form class=" form-profile" method="post" action="/precription/AddInformationSuppliesToPrecription">
+                        <form class=" form-profile" method="post" action="/precription/AddInformationSuppliesToPrecription?medicalRCid=@ViewBag.MedicalRCid">
                             <div class="col-md-12 form-group">
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
-                                        <label class="invoice-code">Mã hồ sơ</label>
-                                        <input type="text" class="invoice-code form-control" name="invoice-code"
+                                        <label class="invoice-code">Mã đơn thuốc</label>
+                                        <input type="text" class="invoice-code form-control" name="invoice-code" value="@Model.PrescriptionId"
                                                readonly />
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="patient-code">Mã bệnh nhân</label>
-                                        <input type="text" class="patient-code form-control" name="patient-code"
+                                        <input type="text" class="patient-code form-control" name="patient-code" value="@Model.PatientId"
                                                readonly />
                                     </div>
 
                                     <div class="col-md-3 form-group">
                                         <label class="fullname">Họ và tên</label>
-                                        <input type="text" class="fullname form-control" name="fullname" />
+                                        <input type="text" class="fullname form-control" name="fullname" value="@Model.Name"
+                                               readonly />
 
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label class="dob">Ngày sinh</label>
-                                        <input type="text" class="dob form-control" name="fullname" />
+                                        <input type="text" class="dob form-control" name="fullname" value="@Model.Dob.ToString("yyyy/MM/dd")"
+                                        readonly/>
 
                                     </div>
                                     <div class="col-md-3 form-group">
@@ -71,13 +73,15 @@
                                         <div class="gender">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender" id="male"
-                                                       value="male">
+                                                       @(Model.Gender==true ? "checked" : null)
+                                                       value="true">
                                                 <label class="form-check-label" for="male">Male</label>
                                             </div>
 
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender" id="female"
-                                                       value="female">
+                                                       @(Model.Gender==false ? "checked" : null)
+                                                       value="false">
                                                 <label class="form-check-label" for="female">Female</label>
                                             </div>
                                         </div>
@@ -86,11 +90,11 @@
                                 <div class="line2 row">
                                     <div class="col-md-9 form-group">
                                         <label class="address">Địa chỉ</label>
-                                        <input type="text" class="address form-control" name="address" />
+                                        <input type="text" class="address form-control" name="address" value="@Model.Address" readonly/>
                                     </div>
                                     <div class="row-cols-md-3 form-group">
                                         <label class="phone">Số điện thoại</label>
-                                        <input type="text" class="phone form-control" name="phone" />
+                                        <input type="text" class="phone form-control" name="phone" value="@Model.Phone" readonly/>
                                     </div>
 
                                 </div>
@@ -105,10 +109,10 @@
                                                         <option value="0">Chọn loại vật tư</option>
                                                         @foreach (var item in ViewBag.ListTypeSupplies)
                                                         {
-                                                            <option value="@item.suppliesTypeId">@item.suppliesTypeName</option>                
+                                                            <option value="@item.suppliesTypeId">@item.suppliesTypeName</option>
                                                         }
                                                     </select>
-                           
+
                                                 </div>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -169,7 +173,7 @@
 
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12 line4 row">
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Ghi chú</label>
@@ -177,11 +181,12 @@
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label class="doctor-create">Bác sĩ kê đơn</label>
-                                        <input type="text" class="doctor-create form-control" name="address" />
+                                        <input type="text" class="doctor-create form-control" name="address" value="@ViewBag.DoctorName" 
+                                                    readonly/>
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Ngày kê đơn</label>
-                                        <input type="date" class="date-create form-control" name="creatDate"" />
+                                        <input type="date" class="date-create form-control" name="creatDate" "  />
                                     </div>
                                     <div class="col-md-3 form-group">
 

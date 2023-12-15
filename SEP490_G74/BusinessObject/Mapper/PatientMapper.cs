@@ -39,7 +39,9 @@ namespace HcsBE.Mapper
                 .ForMember(x => x.ServiceDetailName, x => x.MapFrom(x => x.ServiceDetailName));
             // sửa thành pid
             CreateMap<Patient, PatientDTO>()
+
                 .ForMember(x => x.Contacts, x => x.MapFrom(x => getContact(x.PatientId)))
+                .ForMember(x => x.Allergieshistory, x => x.MapFrom(x => x.Allergieshistory))
                 .ForMember(x => x.MedicalRecords, x => x.MapFrom(x => getMedicalRecords(x.PatientId)))
                 .ForMember(x => x.Invoices, x => x.MapFrom(x => getListInvoice(x.PatientId)));
         }

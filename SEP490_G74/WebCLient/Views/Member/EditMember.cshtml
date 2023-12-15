@@ -27,12 +27,11 @@
 
 <body style="background-color: #DEDEDE;">
     <div id="main">
-        <div id="header">
-        </div>
+        @await Component.InvokeAsync("Header")
         <div>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="sidebar"></div>
+                    @await Component.InvokeAsync("Sidebar")
                     <div class="content-right col-sm p-3
                             min-vh-100">
                         <div class="header-container">
@@ -145,7 +144,7 @@
                                     </div>
                                     <div class="col-md-12 line3
                                             row">
-                                        <div class=" col-md-6
+                                        @*<div class=" col-md-6
                                                 form-group-phone">
                                             <label class="title-role">
                                                 Vai
@@ -164,14 +163,38 @@
                                                     }
                                                 }
                                             </select>
+                                        </div>*@
+                                        <div class="col-md-12  line4 row">
+                                            <div class="col-md-6 form-group">
+                                                <label class="title-role d-block">Vai trò</label>
+                                                <select class="role
+                                                    form-control" name="RoleName" id="roleSelection">
+                                                    @foreach (var item in ViewBag.ListRole)
+                                                    {
+                                                        @*@if (item.RoleName == Model.RoleName)
+                                                        {
+                                                            <option value="@item.RoleId" selected>@item.RoleName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.RoleId">@item.RoleName</option>
+                                                        }*@
+                                                        <option value="@item.RoleId">@item.RoleName</option>
+                                                    }
+                                                </select>
+                                            </div>
+
                                         </div>
-                                        <div class="col-md-6
-                                                form-group-phone">
-                                            <label class="title-role">Chuyên môn</label>
-                                            <input type="text"
-                                                   class="role
-                                                    form-control"
-                                                   name="DoctorSpecialize" value="" />
+                                        <div class="line5 row " id="doctorOptions">
+                                            <div class="col-md-15 form-group">
+                                                <label class="title-role d-block">Chuyên khoa</label>
+                                                <select class="doctor-selection" name="ServiceType">
+                                                    @foreach (var item in ViewBag.ListServiceType)
+                                                    {
+                                                        <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                    }
+                                                </select>
+                                            </div>
                                         </div>
                                         <input type="hidden"
                                                class="role
@@ -195,6 +218,6 @@
     </div>
 </body>
 <script type="text/javascript" src="~/js/HeaderScript.js"></script>
-<script type="text/javascript" src="~/js/script.js" ></script>
+<script type="text/javascript" src="~/js/script.js" asp-append-version="true"></script>
 <script type="text/javascript" async src="~/js/Sidebar.js?v=1.0" asp-append-version="true"></script>
 </html>

@@ -30,13 +30,11 @@
 
 <body>
     <div id="main">
-        <div id="header">
-        </div>
+        @await Component.InvokeAsync("Header")
         <div id="body-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="sidebar">
-                    </div>
+                    @await Component.InvokeAsync("Sidebar")
                     <div class="col-sm p-3 min-vh-100">
 
                         <h2 class="body-content-header">Hồ sơ bệnh nhân</h2>
@@ -138,12 +136,12 @@
                                 </div>
                                 <div class="col-md-12 line4 row"> 
                                     <div class="col-md-6 form-group">
-                                            <label class="date-create">Ghi chú</label>
-                                            <textarea type="text" class="note form-control" name="diagnose" readonly>@Model.FirstOrDefault().Diagnose</textarea>
-                                        </div>
+                                        <label class="date-create">Ghi chú</label>
+                                        <textarea type="text" class="note form-control" name="diagnose" readonly>@Model.FirstOrDefault().Diagnose</textarea>
+                                    </div>
                                     <div class="col-md-6 form-group">
                                         <label class="date-create">Ngày kê đơn</label>
-                                        <input type="date" class="date-create form-control" name="creatDate" value="@Model.FirstOrDefault().CreateDate.ToString("yyyy-MM-dd")" readonly/>
+                                        <input type="date" class="date-create form-control" name="creatDate" value="@Model.FirstOrDefault().CreateDate.ToString("yyyy-MM-dd")" readonly />
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,8 @@
-﻿using DataAccess.Entity;
+﻿ using Azure;
+using DataAccess.Entity;
 using HcsBE.Dao.ServiceDao;
 using HcsBE.DTO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -25,7 +27,7 @@ namespace WebCLient.Controllers
             //https://localhost:7249/api/Prescription/CountListPresciptionInfor
             if (HttpContext.Session.GetInt32("RoleId") == 2)
             {
-                PrecriptionAPI = "https://localhost:7249/api/Prescription/ListPresciptionInfor?page=" + page + "&idDoctor=" + HttpContext.Session.GetString("USERID");
+                PrecriptionAPI = "https://localhost:7249/api/Prescription/ListPresciptionInfor?page=" + page + "&idUser=" + HttpContext.Session.GetString("USERID");
                 HttpResponseMessage response = await client.GetAsync(PrecriptionAPI);
                 string strData = await response.Content.ReadAsStringAsync();
                 var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -46,17 +48,31 @@ namespace WebCLient.Controllers
             }
         }
         //AddPrescription
-        public async Task<IActionResult> AddPrescription()
+        public async Task<IActionResult> AddPrescription(int medicalRecordId)
         {
             if (HttpContext.Session.GetInt32("RoleId") == 2)
             {
+                ViewBag.MedicalRCid = medicalRecordId;
                 PrecriptionAPI = "https://localhost:7249/api/Supplies/ListSuppliesType";
                 HttpResponseMessage response = await client.GetAsync(PrecriptionAPI);
                 string strData = await response.Content.ReadAsStringAsync();
                 var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 List<HcsBE.DTO.SuppliesTypeDTO> listTypeSupplies = System.Text.Json.JsonSerializer.Deserialize<List<HcsBE.DTO.SuppliesTypeDTO>>(strData, option);
                 ViewBag.ListTypeSupplies = listTypeSupplies;
-                return View();
+                //https://localhost:7249/api/Prescription/GetDoctorName?idDoctor=1
+                PrecriptionAPI = "https://localhost:7249/api/Prescription/GetDoctorName?idUser=" + HttpContext.Session.GetString("USERID");
+                response = await client.GetAsync(PrecriptionAPI);
+                strData = await response.Content.ReadAsStringAsync();
+                option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                string doctorName = System.Text.Json.JsonSerializer.Deserialize<string>(strData, option);
+                ViewBag.DoctorName = doctorName;
+                //https://localhost:7249/api/Prescription/GetPatientContactByMedicalRCId?medicalRCId=2
+                PrecriptionAPI = "https://localhost:7249/api/Prescription/GetPatientContactByMedicalRCId?medicalRCId="+ medicalRecordId;
+                response = await client.GetAsync(PrecriptionAPI);
+                strData = await response.Content.ReadAsStringAsync();
+                option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                HcsBE.DTO.ContactPatientInPrescriptionDTO contactPatient = System.Text.Json.JsonSerializer.Deserialize<HcsBE.DTO.ContactPatientInPrescriptionDTO>(strData, option);
+                return View(contactPatient);
             }
             else
             {
@@ -66,80 +82,88 @@ namespace WebCLient.Controllers
         [HttpPost]
         public async Task<IActionResult> AddInformationPrecription([FromBody] List<Dictionary<string, string>> data)
         {
-            if (HttpContext.Session.GetInt32("RoleId") == 2)
-            {
-                //https://localhost:7249/api/Prescription/AddSuppliesInPrescription
-                //foreach (var row in data)
-                //{
-                //    string idOfSupplies = row["idOfSupplies"];
-                //    string unitInStock = row["unitInStock"];
-                //    Console.WriteLine($"Hidden Input Value: {idOfSupplies}");
-                //    Console.WriteLine($"Number Input Value: {unitInStock}");
-                //    PrecriptionAPI = "https://localhost:7249/api/Prescription/AddSuppliesInPrescription";
-                //    String createDate = Request.Form["creatDate"];
-                //    var newSuppliesToPrescription = new SuppliesPrescription
-                //    {
-                //        SId = int.TryParse(idOfSupplies, out int SId) ? SId : 0,
-                //        Quantity = int.TryParse(unitInStock, out int Quantity) ? Quantity : 0,
-                //    };
-                //    HttpResponseMessage response = await client.PostAsJsonAsync(PrecriptionAPI, newSuppliesToPrescription);
-                //    string strData = await response.Content.ReadAsStringAsync();
-                //    var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                //    bool rowEffected = JsonSerializer.Deserialize<bool>(strData, option);
-                //}
-                HttpContext.Session.Set("PrescriptionData", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data)));
+            //https://localhost:7249/api/Prescription/AddSuppliesInPrescription
+            //foreach (var row in data)
+            //{
+            //    string idOfSupplies = row["idOfSupplies"];
+            //    string unitInStock = row["unitInStock"];
+            //    Console.WriteLine($"Hidden Input Value: {idOfSupplies}");
+            //    Console.WriteLine($"Number Input Value: {unitInStock}");
+            //    //PrecriptionAPI = "https://localhost:7249/api/Prescription/AddSuppliesInPrescription";
+            //    //String createDate = Request.Form["creatDate"];
+            //    //var newSuppliesToPrescription = new SuppliesPrescription
+            //    //{
+            //    //    SId = int.TryParse(idOfSupplies, out int SId) ? SId : 0,
+            //    //    Quantity = int.TryParse(unitInStock, out int Quantity) ? Quantity : 0,
+            //    //};
+            //    //HttpResponseMessage response = await client.PostAsJsonAsync(PrecriptionAPI, newSuppliesToPrescription);
+            //    //string strData = await response.Content.ReadAsStringAsync();
+            //    //var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            //    //bool rowEffected = JsonSerializer.Deserialize<bool>(strData, option);
+            //}
+            HttpContext.Session.Set("PrescriptionData", Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data)));
+            //var jsonDataBytes = HttpContext.Session.Get("PrescriptionData");
+            //if (jsonDataBytes != null)
+            //{
+            //    var jsonData = Encoding.UTF8.GetString(jsonDataBytes);
+            //    var dataa = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(jsonData);
+            //    foreach (var row in dataa)
+            //    {
+            //        string idOfSupplies = row["idOfSupplies"];
+            //        string unitInStock = row["unitInStock"];
+            //        Console.WriteLine($"Hidden Input Value: {idOfSupplies}");
+            //        Console.WriteLine($"Number Input Value: {unitInStock}");
+            //    }
+            //}
+            var responseCheck = new { Message = "Data received successfully" };
+            return Json(responseCheck);
 
-                var responseCheck = new { Message = "Data received successfully" };
-                return Json(responseCheck);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+
         }
-        public async Task<IActionResult> AddInformationSuppliesToPrecription()
+        public async Task<IActionResult> AddInformationSuppliesToPrecription(int medicalRCid)
         {
-            if (HttpContext.Session.GetInt32("RoleId") == 2)
+
+            PrecriptionAPI = "https://localhost:7249/api/Prescription/AddPrescription";
+            String createDate = Request.Form["creatDate"];
+            var newPrescription = new Prescription
             {
-                PrecriptionAPI = "https://localhost:7249/api/Prescription/AddPrescription";
-                String createDate = Request.Form["creatDate"];
-                var newPrescription = new Prescription
+                CreateDate = DateTime.ParseExact(createDate, "yyyy-MM-dd", null),
+                Diagnose = Request.Form["diagnose"],
+            };
+            HttpResponseMessage response = await client.PostAsJsonAsync(PrecriptionAPI, newPrescription);
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            int idInserted = System.Text.Json.JsonSerializer.Deserialize<int>(strData, option);
+            var jsonDataBytes = HttpContext.Session.Get("PrescriptionData");
+            if (jsonDataBytes != null)
+            {
+                var jsonData = Encoding.UTF8.GetString(jsonDataBytes);
+                var data = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(jsonData);
+                foreach (var row in data)
                 {
-                    CreateDate = DateTime.ParseExact(createDate, "yyyy-MM-dd", null),
-                    Diagnose = Request.Form["diagnose"],
-                };
-                HttpResponseMessage response = await client.PostAsJsonAsync(PrecriptionAPI, newPrescription);
-                string strData = await response.Content.ReadAsStringAsync();
-                var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                int idInserted = System.Text.Json.JsonSerializer.Deserialize<int>(strData, option);
-                var jsonDataBytes = HttpContext.Session.Get("PrescriptionData");
-                if (jsonDataBytes != null)
-                {
-                    var jsonData = Encoding.UTF8.GetString(jsonDataBytes);
-                    var data = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(jsonData);
-                    foreach (var row in data)
+                    string idOfSupplies = row["idOfSupplies"];
+                    string unitInStock = row["unitInStock"];
+                    PrecriptionAPI = "https://localhost:7249/api/Prescription/AddSuppliesInPrescription";
+                    var newSuppliesToPrescription = new SuppliesPrescription
                     {
-                        string idOfSupplies = row["idOfSupplies"];
-                        string unitInStock = row["unitInStock"];
-                        PrecriptionAPI = "https://localhost:7249/api/Prescription/AddSuppliesInPrescription";
-                        var newSuppliesToPrescription = new SuppliesPrescription
-                        {
-                            SId = int.TryParse(idOfSupplies, out int result) ? result : 0,
-                            Quantity = int.TryParse(unitInStock, out int Quantity) ? Quantity : 0,
-                            PrescriptionId = idInserted,
-                        };
-                        response = await client.PostAsJsonAsync(PrecriptionAPI, newSuppliesToPrescription);
-                        strData = await response.Content.ReadAsStringAsync();
-                        option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                        bool rowEffected = System.Text.Json.JsonSerializer.Deserialize<bool>(strData, option);
-                    }
+                        SId = int.TryParse(idOfSupplies, out int result) ? result : 0,
+                        Quantity = int.TryParse(unitInStock, out int Quantity) ? Quantity : 0,
+                        PrescriptionId = idInserted,
+                    };
+                    response = await client.PostAsJsonAsync(PrecriptionAPI, newSuppliesToPrescription);
+                    strData = await response.Content.ReadAsStringAsync();
+                    option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    bool rowEffectedSuccess = System.Text.Json.JsonSerializer.Deserialize<bool>(strData, option);
                 }
-                return RedirectToAction("Index", "Precription");
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //https://localhost:7249/api/Prescription/AddPrescriptionInMedicalRC?medicalRCid=1&prescriptionId=1
+            PrecriptionAPI = "https://localhost:7249/api/Prescription/AddPrescriptionInMedicalRC?medicalRCid=" + medicalRCid + "&prescriptionId=" + idInserted;
+            response = await client.PostAsJsonAsync(PrecriptionAPI, "oke");
+            strData = await response.Content.ReadAsStringAsync();
+            option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            bool rowEffected = System.Text.Json.JsonSerializer.Deserialize<bool>(strData, option);
+            return RedirectToAction("Index", "Precription");
+
         }
         //ViewDetailPrescription
         public async Task<IActionResult> ViewDetailPrescription(int id)

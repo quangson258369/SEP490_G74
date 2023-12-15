@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Org.BouncyCastle.Crypto.Macs;
 using HcsBE.Dao.ServiceDao;
+using Azure;
 
 namespace WebCLient.Controllers
 {
@@ -63,12 +64,17 @@ namespace WebCLient.Controllers
         }
         public async Task<IActionResult> ViewDetailMember(int id)
         {
-            if (HttpContext.Session.GetInt32("RoleId") == 1)
+            MemberRecordAPI = "https://localhost:7249/api/Member/GetDoctorId?idUser=" + HttpContext.Session.GetString("USERID");
+            HttpResponseMessage response = await client.GetAsync(MemberRecordAPI);
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            int doctorId = System.Text.Json.JsonSerializer.Deserialize<int>(strData, option);
+            if (HttpContext.Session.GetInt32("RoleId") == 1 || doctorId == id)
             {
                 MemberRecordAPI = "https://localhost:7249/api/Member/MemberDetail?id=" + id;
-                HttpResponseMessage response = await client.GetAsync(MemberRecordAPI);
-                string strData = await response.Content.ReadAsStringAsync();
-                var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                response = await client.GetAsync(MemberRecordAPI);
+                strData = await response.Content.ReadAsStringAsync();
+                option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 HcsBE.DTO.MemberDetailDTO memberDetail = JsonSerializer.Deserialize<HcsBE.DTO.MemberDetailDTO>(strData, option);
                 return View(memberDetail);
             }
@@ -150,6 +156,13 @@ namespace WebCLient.Controllers
                 option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 List<HcsBE.DTO.RoleDTO> listRole = JsonSerializer.Deserialize<List<HcsBE.DTO.RoleDTO>>(strData, option);
                 ViewBag.ListRole = listRole;
+                //list role serviceType
+                MemberRecordAPI = "https://localhost:7249/api/Service/ListServiceType";
+                response = await client.GetAsync(MemberRecordAPI);
+                strData = await response.Content.ReadAsStringAsync();
+                option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                List<DataAccess.Entity.ServiceType> listServiceType = JsonSerializer.Deserialize<List<DataAccess.Entity.ServiceType>>(strData, option);
+                ViewBag.ListServiceType = listServiceType;
                 return View(memberDetail);
             }
             else

@@ -26,12 +26,11 @@
 </head>
     <body style="background-color: #DEDEDE;">
         <div id="main">
-            <div id="header">
-            </div>
+            @await Component.InvokeAsync("Header")
             <div>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="sidebar"></div>
+                        @await Component.InvokeAsync("Sidebar")
                         <div class="content-right col-sm p-3
                             min-vh-100">
                             <div class="header-container">
@@ -90,15 +89,22 @@
                                                    name="Exp" />
                                             </div>
                                             <div class="col-md-3">
+                                                <label class="title-address">Giá tiền</label>
+                                                <input type="number" min="0"
+                                                       class="
+                                                form-control"
+                                                   name="Price" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 line3
+                                            row">
+                                            <div class="col-md-3">
                                                 <label class="title-address">Số Lượng</label>
                                                 <input type="number" min="0"
                                                        class="
                                                 form-control"
                                                    name="UnitInStock" />
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 line3
-                                            row">
                                             <div class="col-md-6
                                                 form-group-phone">
                                                 <label class="title-phone">Nhà Phân Phối</label>

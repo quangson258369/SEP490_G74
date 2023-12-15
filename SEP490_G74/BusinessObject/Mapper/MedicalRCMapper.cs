@@ -74,7 +74,7 @@ namespace HcsBE.Mapper
                 BloodPressure = doctor.BloodPressure,
                 Height = doctor.Height,
                 Weight = doctor.Weight,
-                //Allergieshistory = doctor.Allergieshistory,
+                Allergieshistory = doctor.Allergieshistory,
                 Invoices = context.Invoices.Where(x => x.PatientId == patientId).ToList(),
                 Contacts =context.Contacts.Where(x => x.PatientId == doctor.PatientId).ToList()
             };

@@ -1,11 +1,11 @@
-﻿const headerDiv = document.querySelector('#header');
+﻿//const headerDiv = document.querySelector('#header');
 
-async function includeHTML() {
-    const response = await fetch('Header.html');
-    const headerHTML = await response.text();
+//async function includeHTML() {
+//    const response = await fetch('Header.html');
+//    const headerHTML = await response.text();
 
 
-    headerDiv.innerHTML = headerHTML;
-}
+//    headerDiv.innerHTML = headerHTML;
+//}
 
-includeHTML();
+//includeHTML();

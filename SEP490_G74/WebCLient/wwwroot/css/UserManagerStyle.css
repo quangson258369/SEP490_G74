@@ -24,7 +24,7 @@ body {
 
 .body-container {
     max-width: 1093x;
-    max-height: 422px;
+    max-height: max-content;
     padding: 15px 35px 45px;
     margin: 65px auto;
     background-color: #fff;

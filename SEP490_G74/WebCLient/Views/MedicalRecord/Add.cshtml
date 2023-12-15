@@ -45,6 +45,7 @@
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
+                                        <input hidden type="text" class="invoice-code form-control" name="examcode" value="@ViewBag.ExamCode" />
                                         <input type="text" class="invoice-code form-control" name="mrid" value="@ViewBag.MrId"
                                                readonly />
                                     </div>
@@ -127,7 +128,7 @@
                                         <input type="text" class="date-create form-control" name="bloodpress" value="@((ViewBag.Patient as PatientDTO)?.BloodPressure)" />
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label class="date-create">Ngày khám</label>
+                                        <label class="date-create">Ngày Chỉnh Sửa</label>
                                         <input type="date" class="date-create form-control" name="createdate" value="@((ViewBag.Today).ToString("yyyy-MM-dd"))" readonly />
                                     </div>
 
