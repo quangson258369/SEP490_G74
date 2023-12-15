@@ -70,6 +70,11 @@ namespace HcsBE.Bussiness.ExamResult
             return mapper.Map<ExaminationResultIdMRDTO>(er);
         }
 
+        public bool UpdateStatusOfServiceMedicalRecord(int sid,int mrid)
+        {
+            return dao.UpdateStatusOfServiceMedicalRecord(sid, mrid);
+        }
+
         public bool Update(ExaminationResultIdMRDTO exam)
         {
             var e = mapper.Map<ExaminationResultId>(exam);

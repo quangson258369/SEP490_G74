@@ -44,6 +44,7 @@
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
+                                        <input hidden type="text" name="examcode" value="@((ViewBag.MR as MedicalRecordOutputDto)?.ExamCode)" />
                                         <input type="text" class="invoice-code form-control" name="mrid" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordId)"
                                                readonly />
                                     </div>
@@ -107,7 +108,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12 line3 row">
+                                <div class=" line3 row">
                                     <div class="col-md-2 form-group">
                                         <label class="date-create">Chiều cao</label>
                                         <input type="text" class="date-create form-control" name="height" value="@((ViewBag.Patient as PatientDTO)?.Height)" />
@@ -126,12 +127,12 @@
                                         <input type="text" class="date-create form-control" name="bloodpressure" value="@((ViewBag.Patient as PatientDTO)?.BloodPressure)" />
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label class="date-create">Ngày khám</label>
+                                        <label class="date-create">Ngày Chỉnh Sửa</label>
                                         <input type="text" class="date-create form-control" name="createdate" value="@((ViewBag.MR as MedicalRecordOutputDto)?.MedicalRecordDate)" readonly />
                                     </div>
 
                                 </div>
-                                <div class="col-md-12 line5 row">
+                                <div class=" line5 row">
                                     <div class="col-md-3 form-group">
                                         <label class="date-create">Lí do khám</label>
                                         <textarea type="text" class="ReasonExamination form-control" name="reason">@((ViewBag.MR as MedicalRecordOutputDto)?.ExamReason)</textarea>
@@ -232,20 +233,18 @@
 <script>
     let services = [];
 
-    var selectedDoctorId = 0;
+    var selectedDoctorId = 1;
     var myObjectsFromController = @Html.Raw(ViewBag.selectedService);
     //services = myObjectsFromController;
     myObjectsFromController.forEach(function (obj) {
-
-        addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price, '' + obj.DoctorId);
-        console.log("List luc load"+services);
+        selectedDoctorId = obj.DoctorId;
+        addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price);
     });
     myObjectsFromController = [];
 
     function HandleSelectChange(selectElement) {
         var doctorId = $(selectElement).val();
         selectedDoctorId = doctorId !== undefined ? doctorId : '';
-        console.log("data get in GetData:" + selectedDoctorId);
         return selectedDoctorId;
     }
 
@@ -265,7 +264,6 @@
         if (index <= -1) {
             addToTable(service);
             services.push(service);
-            console.log("List sau add"+services);
         }
 
     }

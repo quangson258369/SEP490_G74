@@ -13,11 +13,21 @@ namespace HcsBE.Dao.ServiceDao
     {
         private HcsContext context = new HcsContext();
 
-        public List<Service> ListService()
+        public List<Service> ListService(int page)
         {
-            return context.Services
+            int pageSize = 3;
+            var result = context.Services
                 .Include(x => x.ServiceType)
                 .ThenInclude(x => x.Employees).ToList();
+            var pagedData = result.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return pagedData;
+        }
+        public int GetCountOfListService()
+        {
+            var count = context.Services
+                .Include(x => x.ServiceType)
+                .ThenInclude(x => x.Employees).Count();
+            return count;
         }
         public List<Service> SearchService(string name, int typeId)
         {
@@ -40,22 +50,28 @@ namespace HcsBE.Dao.ServiceDao
 
         public bool UpdateService(Service service)
         {
-            var existingPatient = context.Set<Service>().Find(service.ServiceId);
-            var services = GetService(service.ServiceId);
+            //var existingPatient = context.Set<Service>().Find(service.ServiceId);
+            //var services = GetService(service.ServiceId);
+            var services = context.Services.SingleOrDefault(x => x.ServiceId == service.ServiceId);
+            services.ServiceName = service.ServiceName;
+            services.Price = service.Price;
+            services.ServiceTypeId= service.ServiceTypeId;
             if (services == null) return false;
-            if (existingPatient == null)
-            {
-                context.Services.Update(service);
-            }
-            context.Entry(existingPatient).CurrentValues.SetValues(service);
+            //if (existingPatient == null)
+            //{
+            //    context.Services.Update(service);
+            //}
+            //context.Services.Update(services);
+            //context.Entry(existingPatient).CurrentValues.SetValues(service);
             context.SaveChanges();
             return true;
         }
 
         public bool AddService(Service service)
         {
-            var services = GetService(service.ServiceId);
-            if (services != null) return false;
+            //var services = GetService(service.ServiceId);
+            //if (services != null) return false;
+            service.ServiceId = context.Services.Max(x => x.ServiceId) + 1;
             context.Services.Add(service);
             context.SaveChanges();
             return true;

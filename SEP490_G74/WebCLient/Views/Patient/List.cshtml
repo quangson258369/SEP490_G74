@@ -57,7 +57,7 @@
                                         <th>Mã Hồ Sơ</th>
                                         <th>Họ và tên</th>
                                         <th>Số Điện Thoại</th>
-                                        <th>Ngày Khám</th>
+                                        <th>Ngày Tạo Hồ Sơ</th>
                                         <th>Dịch Vụ Khám</th>
                                         <th></th>
                                         <th></th>
@@ -75,7 +75,7 @@
                                             <td>@item.Patient.ServiceDetailName</td>
 
                                             <td><button><a class="btn text-dark" href="/ExamResult/ListResultByPid?id=@item.PatientId">Danh Sách Kết Quả</a></button></td>
-                                            <td><button><a class="btn text-dark" href="/MedicalRecord/Add?examid=@item.ExamCode">Tái Khám</a></button></td>
+                                            <td><button><a class="btn text-dark" href="/MedicalRecord/AddReExam?examid=@item.ExamCode">Tái Khám</a></button></td>
                                         </tr>
                                     }
 

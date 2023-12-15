@@ -96,8 +96,7 @@ namespace HcsBE.Bussiness.Patient
 
         public bool Update(PatientModify entity)
         {
-            var p = mapper.Map<PatientDTO>(entity);
-            var pUpdate = mapper.Map<DataAccess.Entity.Patient>(p);
+            var pUpdate = mapper.Map<DataAccess.Entity.Patient>(entity);
             var status = dao.UpdatePatient(pUpdate);
             return status;
         }
@@ -117,8 +116,7 @@ namespace HcsBE.Bussiness.Patient
 
         public bool Add(PatientModify entity)
         {
-            var p = mapper.Map<PatientDTO>(entity);
-            var status = dao.AddPatient(mapper.Map<DataAccess.Entity.Patient>(p));
+            var status = dao.AddPatient(mapper.Map<DataAccess.Entity.Patient>(entity));
             return status;
         }
         

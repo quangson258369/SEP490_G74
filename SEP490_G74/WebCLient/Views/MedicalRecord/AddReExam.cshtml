@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-sm p-3 min-vh-100">
 
-                        <h2 class="body-content-header">Tạo hồ sơ bệnh án</h2>
+                        <h2 class="body-content-header">Tạo hồ sơ tái khám</h2>
                         <form class=" form-profile" method="post" action="MedicalRecord/AddMedicalRecord">
                             <div class="col-md-12 form-group">
 
@@ -45,7 +45,7 @@
                                 <div class="line1 row">
                                     <div class="col-md-2 form-group">
                                         <label class="invoice-code">Mã hồ sơ</label>
-                                        <input hidden type="text" class="invoice-code form-control" name="examcode" value="@ViewBag.ExamCode" />
+                                        <input hidden type="text" class="invoice-code form-control" name="examcode" value="@ViewBag.ExamID" />
                                         <input type="text" class="invoice-code form-control" name="mrid" value="@ViewBag.MrId"
                                                readonly />
                                     </div>
@@ -149,13 +149,13 @@
                                                         {
                                                             @if (item.ServiceTypeId == ViewBag.ServiceType)
                                                             {
-                                                                <option  value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
+                                                                <option value="@item.ServiceTypeId" selected>@item.ServiceTypeName</option>
                                                             }
                                                             else
                                                             {
-                                                                <option  value="@item.ServiceTypeId">@item.ServiceTypeName</option>
+                                                                <option value="@item.ServiceTypeId">@item.ServiceTypeName</option>
                                                             }
-                                                            
+
                                                         }
                                                     </select>
                                                     <input type="text" id="searchInput" placeholder="Filter services..." oninput="filterTable()" />
@@ -198,8 +198,6 @@
                                                 <div class="scrollable-tbody">
                                                     <table id="selected-service" class="table table-bordered table-body selected-service-table">
                                                         <tbody>
-
-
                                                         </tbody>
                                                     </table>
                                                     <input hidden id="jsonData" name="jsonData" />
@@ -229,11 +227,16 @@
     let services = [];
 
     var selectedDoctorId = 1;
-
+    var myObjectsFromController = @Html.Raw(ViewBag.selectedService);
+    //services = myObjectsFromController;
+    myObjectsFromController.forEach(function (obj) {
+        selectedDoctorId = obj.DoctorId;
+        addService('' + obj.ServiceId, obj.Service.ServiceName, '' + obj.Service.Price);
+    });
+    myObjectsFromController = [];
     function HandleSelectChange(selectElement) {
         var doctorId = $(selectElement).val();
         selectedDoctorId = doctorId !== undefined ? doctorId : '';
-        console.log("data get in GetData:" + selectedDoctorId);
         return selectedDoctorId;
     }
 
@@ -263,12 +266,12 @@
         let price = service.price;
         // Create table row html
         let row = `
-        <tr>
-          <td>${name}</td>
-          <td>${price}</td>
-          <td><button type="button" onclick="RemoveService('${id}','${name}','${price}')">Xóa</button></td>
-        </tr>
-      `;
+            <tr>
+              <td>${name}</td>
+              <td>${price}</td>
+              <td><button type="button" onclick="RemoveService('${id}','${name}','${price}')">Xóa</button></td>
+            </tr>
+          `;
 
         // Add row to table
         $('.selected-service-table tbody').append(row);
@@ -328,63 +331,63 @@
         }
     }
 
-   function LoadData() {
-    var serviceTypeId = $("#serviceType").val();
-    console.log(serviceTypeId);
+    function LoadData() {
+        var serviceTypeId = $("#serviceType").val();
+        console.log(serviceTypeId);
 
-    $.ajax({
-        url: "https://localhost:7249/api/Service/SearchService?typeId=" + serviceTypeId,
-        type: "get",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (result, status, xhr) {
-            console.log(result);
-            var tbody = $("#serviceTable tbody");
-            tbody.empty(); // Clear existing rows before appending new ones
+        $.ajax({
+            url: "https://localhost:7249/api/Service/SearchService?typeId=" + serviceTypeId,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result, status, xhr) {
+                console.log(result);
+                var tbody = $("#serviceTable tbody");
+                tbody.empty(); // Clear existing rows before appending new ones
 
-            $.each(result, function (index, value) {
-                var newRow = $("<tr>");
-                newRow.append($("<td>").html(value["serviceName"]));
+                $.each(result, function (index, value) {
+                    var newRow = $("<tr>");
+                    newRow.append($("<td>").html(value["serviceName"]));
                     var selectElement = $("<select class=\"doctor\" onchange=\"HandleSelectChange(this)\" > "); // Use class instead of id
-                newRow.append($("<td>").append(selectElement));
-                LoadDoctor(selectElement, serviceTypeId);
-                    
+                    newRow.append($("<td>").append(selectElement));
+                    LoadDoctor(selectElement, serviceTypeId);
+
                     newRow.append($("<td>").html($(`<button type="button" onclick="addService('${value["serviceId"]}', '${value["serviceName"]}', '${value["price"]}')">Thêm</button>`)));
-                tbody.append(newRow);
-            });
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-        }
-    });
-    } 
+                    tbody.append(newRow);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
+    }
 
 
 
-function LoadDoctor(selectElement, serviceTypeId) {
-    var doctorId; // Variable to store the selected doctorId
+    function LoadDoctor(selectElement, serviceTypeId) {
+        var doctorId; // Variable to store the selected doctorId
 
-    $.ajax({
-        url: "https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + serviceTypeId,
-        type: "get",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: false, // Synchronous request to wait for the options to be loaded
-        success: function (result, status, xhr) {
-            console.log(result);
-            selectElement.empty(); // Clear existing options before appending new ones
-            $.each(result, function (index, value) {
-                selectElement.append($('<option value=' + value["doctorId"] + '>' + value["contact"]["name"] + '</option>'));
-            });
-            doctorId = selectElement.val(); // Get the selected doctorId
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr);
-        }
-    });
+        $.ajax({
+            url: "https://localhost:7249/api/MedicalRecord/ListDoctorByServiceType?serviceTypeId=" + serviceTypeId,
+            type: "get",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false, // Synchronous request to wait for the options to be loaded
+            success: function (result, status, xhr) {
+                console.log(result);
+                selectElement.empty(); // Clear existing options before appending new ones
+                $.each(result, function (index, value) {
+                    selectElement.append($('<option value=' + value["doctorId"] + '>' + value["contact"]["name"] + '</option>'));
+                });
+                doctorId = selectElement.val(); // Get the selected doctorId
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr);
+            }
+        });
 
-    return doctorId; // Return the selected doctorId
-}
+        return doctorId; // Return the selected doctorId
+    }
     $('#submitBtn').on('click', () => {
 
         // Add array as hidden input

@@ -56,5 +56,13 @@ namespace API.Controllers.Member
             if (list == null) return NotFound();
             return Ok(list);
         }
+        [HttpGet("GetDoctorId")]
+        public IActionResult GetDoctorName(int idUser)
+        {
+            var res = new MemberLogic();
+            var list = res.GetDoctorId(idUser);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
     }
 }

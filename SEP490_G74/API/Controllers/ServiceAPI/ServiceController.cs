@@ -16,10 +16,17 @@ namespace API.Controllers.ServiceAPI
         }
 
         [HttpGet("ListService")]
-        public IActionResult GetAllService()
+        public IActionResult GetAllService(int page)
         {
             var logic = new ServiceLogic(mapper);
-            var output = logic.GetAll();
+            var output = logic.GetAll(page);
+            return Ok(output);
+        }
+        [HttpGet("GetCountOfListService")]
+        public IActionResult GetCountOfListService()
+        {
+            var logic = new ServiceLogic(mapper);
+            var output = logic.GetCountOfListService();
             return Ok(output);
         }
 
@@ -44,7 +51,7 @@ namespace API.Controllers.ServiceAPI
         public IActionResult GetService(int id)
         {
             var logic = new ServiceLogic(mapper);
-            var output = logic.GetAll();
+            var output = logic.GetService(id);
             return Ok(output);
         }
 
@@ -61,7 +68,7 @@ namespace API.Controllers.ServiceAPI
             return Ok("Add successful");
         }
 
-        [HttpPut("UpdateService")]
+        [HttpPost("UpdateService")]
         public IActionResult UpdateServcie(ServiceDTO service)
         {
             var logic = new ServiceLogic(mapper);

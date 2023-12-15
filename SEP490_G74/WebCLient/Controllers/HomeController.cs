@@ -45,8 +45,6 @@ namespace WebCLient.Controllers
                 HttpContext.Session.SetString("USERID", output.UserInfoDto.UserId);
                 HttpContext.Session.SetInt32("RoleId", output.UserInfoDto.Roles.FirstOrDefault().RoleId);
                 HttpContext.Session.SetString("Token", output.KeyDto.Key);
-                Console.WriteLine(HttpContext.Session.GetInt32("RoleId").ToString());
-
                 return RedirectToAction("Index", "Patient");
             }
             else
@@ -151,6 +149,11 @@ namespace WebCLient.Controllers
             }
 
             return RedirectToAction("VerifyOTP", "Home");
+        }
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

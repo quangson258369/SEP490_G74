@@ -44,6 +44,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/DoAnFall/thinh/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/AddReExam.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxBZGRSZUV4YW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/DoAnFall/thinh/SEP490_G74/SEP490_G74/WebCLient/Views/MedicalRecord/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNhbFJlY29yZFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -106,6 +110,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/DoAnFall/thinh/SEP490_G74/SEP490_G74/WebCLient/Views/Service/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DoAnFall/thinh/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/Components/Header/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcSGVhZGVyXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DoAnFall/thinh/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/Components/Sidebar/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcU2lkZWJhclxEZWZhdWx0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/DoAnFall/thinh/SEP490_G74/SEP490_G74/WebCLient/Views/Shared/Error.cshtml]

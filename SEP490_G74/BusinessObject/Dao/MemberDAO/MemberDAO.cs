@@ -147,17 +147,17 @@ namespace HcsBE.Dao.MemberDAO
             var memberToUpdate = context.Employees.SingleOrDefault(u => u.DoctorId == member.MemberId);
             if (memberToUpdate != null)
             {
-                //memberToUpdate.DoctorSpecialize = member.DoctorSpecialize;
+                if (member.ServiceType!=null)
+                {
+                    memberToUpdate.ServiceTypeId = Int32.Parse(member.ServiceType);
+                }               
             }
             var userIdToUpadte = memberToUpdate.UserId;
             var userToUpadte= context.Users.Include(u => u.Roles).SingleOrDefault(u => u.UserId == userIdToUpadte); ;
             if (userToUpadte != null)
             {
-                userToUpadte.Email = member.Gmail;
-                //
-                //var newRole = context.Roles.SingleOrDefault(r => r.RoleId == int.Parse(member.RoleName));
-                
-                //userToUpadte.Roles.Add(newRole);
+                //userToUpadte.Email = member.Gmail;
+                //userToUpadte.Roles.FirstOrDefault().RoleId = Int32.Parse(member.RoleName);
             }
             var contactToUpdate = context.Contacts.FirstOrDefault(u => u.DoctorId == member.MemberId);
             if (contactToUpdate != null)
@@ -179,6 +179,18 @@ namespace HcsBE.Dao.MemberDAO
             .SingleOrDefault(u => u.UserId == id);
             var list= user.Roles.ToList();
             return list;
+        }
+        public int GetDoctorId(int userId)
+        {
+            var doctorId = context.Employees
+                .Join(context.Users,
+                employee => employee.UserId,
+                user => user.UserId,
+                (employee, user) => new { Employee = employee, User = user })
+                .Where(e => e.User.UserId == userId)
+                .Select(e => e.Employee.DoctorId)
+                .FirstOrDefault();
+            return doctorId;
         }
     }
 }

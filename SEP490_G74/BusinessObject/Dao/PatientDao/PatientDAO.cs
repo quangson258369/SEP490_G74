@@ -68,8 +68,9 @@ namespace HcsBE.Dao.PatientDao
             var contact = context.Contacts.Where(x => x.CId == c.CId);
             if (contact.Any())
             {
-                context.Contacts.UpdateRange(c);
+                context.Contacts.RemoveRange(contact);
                 context.SaveChanges();
+                addContactForPatient(c);
                 return true;
             }
             return false;

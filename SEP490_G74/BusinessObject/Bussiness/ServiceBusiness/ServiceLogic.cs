@@ -27,9 +27,9 @@ namespace HcsBE.Bussiness.ServiceBusiness
             return dao.GetListServiceType();
         }
 
-        public List<ServiceDTO> GetAll()
+        public List<ServiceDTO> GetAll(int page)
         {
-            List<Service> services = dao.ListService();
+            List<Service> services = dao.ListService(page);
             var output = mapper.Map<List<ServiceDTO>>(services);
             if (services == null)
             {
@@ -43,6 +43,12 @@ namespace HcsBE.Bussiness.ServiceBusiness
                 };
             }
             return output;
+        }
+        public int GetCountOfListService()
+        {
+            int count = dao.GetCountOfListService();
+            
+            return count;
         }
 
         public ServiceDTO GetService(int id)

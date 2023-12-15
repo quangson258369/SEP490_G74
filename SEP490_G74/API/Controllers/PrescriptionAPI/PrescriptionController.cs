@@ -9,14 +9,20 @@ namespace API.Controllers.PrescriptionAPI
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PrescriptionController:ControllerBase
+    public class PrescriptionController : ControllerBase
     {
         private IMapper mapper;
         public PrescriptionController(IMapper _mapper)
         {
             mapper = _mapper;
         }
-
+        [HttpPost("AddPrescriptionInMedicalRC")]
+        public IActionResult AddPrescriptionInMedicalRC(int medicalRCid, int prescriptionId)
+        {
+            var res = new PrescriptionLogic();
+            var rowAffected = res.AddPrescriptionInMedicalRC(medicalRCid, prescriptionId);
+            return Ok(rowAffected);
+        }
         [HttpPost("AddPrescription")]
         public IActionResult AddPrescription(PrescriptionDTO prescription)
         {
@@ -32,10 +38,10 @@ namespace API.Controllers.PrescriptionAPI
             return Ok(rowAffected);
         }
         [HttpGet("ListPresciptionInfor")]
-        public IActionResult GetListPresciptionInfors(int page,int idDoctor)
+        public IActionResult GetListPresciptionInfors(int page, int idUser)
         {
             var logic = new PrescriptionLogic();
-            var output = logic.GetListPresciptionInfors(page, idDoctor);
+            var output = logic.GetListPresciptionInfors(page,idUser);
             return Ok(output);
         }
         [HttpGet("CountListPresciptionInfor")]
@@ -46,14 +52,28 @@ namespace API.Controllers.PrescriptionAPI
             return Ok(output);
         }
         [HttpGet("ListPresciptionInforsByIdPatient")]
-        public IActionResult GetListPresciptionInforsByIdPatient(int page,int idPatient)
+        public IActionResult GetListPresciptionInforsByIdPatient(int idUser, int idPatient)
         {
             var logic = new PrescriptionLogic();
-            var output = logic.GetListPresciptionInforsByIdPatient(page,idPatient);
+            var output = logic.GetListPresciptionInforsByIdPatient(idUser, idPatient);
+            return Ok(output);
+        }
+        [HttpGet("GetPresciptionInforsByMedicalRC")]
+        public IActionResult GetPresciptionInforsByMedicalRC(int idUser, int medicalRCid)
+        {
+            var logic = new PrescriptionLogic();
+            var output = logic.GetPresciptionInforsByMedicalRC(idUser, medicalRCid);
+            return Ok(output);
+        }
+        [HttpGet("GetPatientContactByMedicalRCId")]
+        public IActionResult GetPatientContactByMedicalRCId(int medicalRCId)
+        {
+            var logic = new PrescriptionLogic();
+            var output = logic.GetPatientContactByMedicalRCId(medicalRCId);
             return Ok(output);
         }
         [HttpGet("GetPatientContactByPrescriptionId")]
-        public IActionResult GetPatientContactByPrescriptionId(int idPrescription)
+        public IActionResult GetPatientContactByPrescriptionId( int idPrescription)
         {
             var logic = new PrescriptionLogic();
             var output = logic.GetPatientContactByPrescriptionId(idPrescription);
@@ -64,6 +84,13 @@ namespace API.Controllers.PrescriptionAPI
         {
             var logic = new PrescriptionLogic();
             var output = logic.GetSuppliesByPrescriptionId(idPrescription);
+            return Ok(output);
+        }
+        [HttpGet("GetDoctorName")]
+        public IActionResult GetDoctorName(int idUser)
+        {
+            var logic = new PrescriptionLogic();
+            var output = logic.GetDoctorName(idUser);
             return Ok(output);
         }
     }
