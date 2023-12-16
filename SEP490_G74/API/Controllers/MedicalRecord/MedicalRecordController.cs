@@ -25,6 +25,16 @@ namespace API.Controllers.MedicalRecord
             if (list == null) return NotFound();
             return Ok(list);
         }
+
+        [HttpGet("SearchMedicalRecord")]
+        public IActionResult SearchMedicalRecord(string str,int page)
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var list = res.SearchMedicalRecord(str, page);
+            if (list == null) return NotFound();
+            return Ok(list);
+        }
+
         [HttpGet("ListMedicalRecordPaging")]
         public IActionResult MedicalRecordList(int page)
         {

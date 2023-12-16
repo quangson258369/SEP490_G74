@@ -20,9 +20,29 @@ namespace HcsBE.Dao.MedicalRecordDAO
             return query;
         }
 
-        public List<MedicalRecord> MedicalRecordListPaging( int page = 1)
+        public List<MedicalRecord> searchMR(string str, int page)
         {
-            int pageSize = 3;
+            int pageSize = 4;
+            if (str == null)
+            {
+                var query = context.MedicalRecords.ToList();
+                var pagedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return pagedData;
+            }
+            else
+            {
+                var output = context.MedicalRecords.FromSqlRaw("select mr.* from MedicalRecord mr " +
+                                "join Patient p on p.patientId = mr.patientId " +
+                                "join Contact c on p.patientId = c.patientId " +
+                                "where c.Name like '%'+ {0} +'%' or c.Phone like '%'+ {0} +'%'", str).ToList();
+                var pagedData = output.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return pagedData;
+            }
+        }
+
+        public List<MedicalRecord> MedicalRecordListPaging(int page = 1)
+        {
+            int pageSize = 4;
             var query = context.MedicalRecords.ToList();
             var pagedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return pagedData;
@@ -78,16 +98,16 @@ namespace HcsBE.Dao.MedicalRecordDAO
 
         public List<Employee> GetDoctorByServiceType(int type)
         {
-            if( type != 0)
+            if (type != 0)
             {
-                return context.Employees.Where(x=>x.ServiceTypeId == type).ToList();
+                return context.Employees.Where(x => x.ServiceTypeId == type).ToList();
             }
             return new List<Employee>();
         }
 
         public void AddServiceMR(ServiceMedicalRecord sm)
         {
-            if (sm != null && !context.ServiceMedicalRecords.Any(x=>x.MedicalRecordId == sm.MedicalRecordId && x.ServiceId == sm.ServiceId))
+            if (sm != null && !context.ServiceMedicalRecords.Any(x => x.MedicalRecordId == sm.MedicalRecordId && x.ServiceId == sm.ServiceId))
             {
                 sm.Status = false;
                 context.ServiceMedicalRecords.Add(sm);
@@ -95,7 +115,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
             }
         }
 
-        public void EditServiceMR (List<ServiceMedicalRecord> list,int mrid)
+        public void EditServiceMR(List<ServiceMedicalRecord> list, int mrid)
         {
             List<ServiceMedicalRecord> listuse = GetServiceUses(mrid);
             if (listuse.Any())
@@ -104,7 +124,7 @@ namespace HcsBE.Dao.MedicalRecordDAO
                 context.SaveChanges();
             }
 
-            if(list != null && list.Count > 0)
+            if (list != null && list.Count > 0)
             {
                 foreach (var item in list)
                 {
@@ -113,12 +133,12 @@ namespace HcsBE.Dao.MedicalRecordDAO
                 context.ServiceMedicalRecords.AddRange(list);
                 context.SaveChanges();
             }
-                
+
         }
 
         public List<ServiceMedicalRecord> GetServiceUses(int id)
         {
-            var list = context.ServiceMedicalRecords.Where(x=>x.MedicalRecordId == id).ToList();
+            var list = context.ServiceMedicalRecords.Where(x => x.MedicalRecordId == id).ToList();
             return list;
         }
 

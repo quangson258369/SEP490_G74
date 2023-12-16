@@ -103,10 +103,10 @@ namespace API.Controllers.Patient
         }
 
         [HttpGet("SearchPatient")]
-        public IActionResult SearchPatient(string name)
+        public IActionResult SearchPatient(string term, int page)
         {
             var process = new PatientLogic(_mapper);
-            var list= process.SearchPatient(name);
+            var list= process.SearchPatient(term, page);
             if (list == null) return NotFound();
             return Ok(list);
         }

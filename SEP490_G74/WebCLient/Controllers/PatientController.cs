@@ -20,21 +20,47 @@ namespace WebCLient.Controllers
             client.DefaultRequestHeaders.Accept.Add(contentType);
         }
 
-        public async Task<IActionResult> Index(int page)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Patient/ListPatientPaging?page="+page);
-            string strData = await response.Content.ReadAsStringAsync();
-            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            List<PatientDTO> result = JsonSerializer.Deserialize<List<PatientDTO>>(strData,option);
-
-            response = await client.GetAsync("https://localhost:7249/api/Patient/GetCountOfListPatient");
-            strData = await response.Content.ReadAsStringAsync();
-            int countListService = JsonSerializer.Deserialize<int>(strData, option);
+            var result = await GetPatientsAsync(page);
             ViewBag.CurrentPage = page;
-            ViewBag.TotalItemCount = countListService;
+            ViewBag.TotalItemCount = await GetTotalPatientCountAsync();
+
             return View(result);
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string term, int page = 1)
+        {
+            var result = await SearchAndPagingAsync(term, page);
+            return PartialView("_PatientTablePartial", result);
+        }
+
+        private async Task<List<PatientDTO>> GetPatientsAsync(int page)
+        {
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7249/api/Patient/ListPatientPaging?page={page}");
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            return JsonSerializer.Deserialize<List<PatientDTO>>(strData, option);
+        }
+
+        private async Task<int> GetTotalPatientCountAsync()
+        {
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/Patient/GetCountOfListPatient");
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            return JsonSerializer.Deserialize<int>(strData, option);
+        }
+
+        private async Task<List<PatientDTO>> SearchAndPagingAsync(string term, int page)
+        {
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7249/api/Patient/SearchPatient?term={term}&page={page}");
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            return JsonSerializer.Deserialize<List<PatientDTO>>(strData, option);
+        }
+
+
         public async Task<IActionResult> Add()
         {
             // call get patiet information

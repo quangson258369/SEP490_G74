@@ -1,4 +1,5 @@
-﻿using DataAccess.Entity;
+﻿using Azure;
+using DataAccess.Entity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts;
@@ -15,20 +16,20 @@ namespace HcsBE.Dao.PatientDao
     {
         private HcsContext context = new HcsContext();
         public List<Patient> ListPatients()
-        {   
+        {
             var output = context.Patients.ToList();
             return output;
         }
 
         public List<MedicalRecord> ListMRByPatient(int pid)
         {
-            var output = context.MedicalRecords.Where(x=>x.PatientId == pid).ToList();
+            var output = context.MedicalRecords.Where(x => x.PatientId == pid).ToList();
             return output;
         }
 
         public List<Patient> ListPatientPaging(int page = 1)
         {
-            int pageSize = 3;
+            int pageSize = 5;
             var output = context.Patients.ToList();
             var pagedData = output.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return pagedData;
@@ -44,11 +45,23 @@ namespace HcsBE.Dao.PatientDao
             return context.Patients.FirstOrDefault(x => x.PatientId == id);
         }
 
-        public List<Patient> SearchPatient(string name)
+        public List<Patient> SearchPatient(string name, int page = 1)
         {
-            return context.Patients.FromSqlRaw("select p.* from Patient p " +
-               " join Contact c on p.patientId = c.patientId " +
-               " where c.Name like '%'+ {0} +'%' OR p.serviceDetailName like '%' + {0} + '%'", name).ToList();
+            int pageSize = 5;
+            if (name == null)
+            {
+                var output = context.Patients.ToList();
+                var pagedData = output.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return pagedData;
+            }
+            else
+            {
+                var output = context.Patients.FromSqlRaw("select p.* from Patient p " +
+                               " join Contact c on p.patientId = c.patientId " +
+                               " where c.Name like '%'+ {0} +'%' OR c.Phone like '%' + {0} + '%'", name).ToList();
+                var pagedData = output.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return pagedData;
+            }
         }
 
         public bool UpdatePatient(Patient p)
@@ -106,7 +119,8 @@ namespace HcsBE.Dao.PatientDao
             if (patient == null)
             {
                 return "0";
-            }else if (patient.Invoices.Any())
+            }
+            else if (patient.Invoices.Any())
             {
                 return "-1";
             }

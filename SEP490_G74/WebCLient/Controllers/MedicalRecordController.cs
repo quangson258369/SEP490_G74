@@ -25,21 +25,44 @@ namespace WebCLient.Controllers
         }
 
         // really done
-        public async Task<IActionResult> Index(int page)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/ListMedicalRecordPaging?page="+page;
+            var data = await GetMedicalRecordsAsync(page);
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalItemCount = await GetTotalMedicalRecordCountAsync();
+            return View(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string term, int page = 1)
+        {
+            var result = await SearchAndPagingAsync(term, page);
+            return PartialView("_MedicalRecordTablePartial", result);
+        }
+
+        private async Task<List<MedicalRecordOutputDto>> SearchAndPagingAsync(string term, int page)
+        {
+            HttpResponseMessage response = await client.GetAsync($"https://localhost:7249/api/MedicalRecord/SearchMedicalRecord?str={term}&page={page}");
+            string strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            return System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordOutputDto>>(strData, option);
+        }
+
+        private async Task<int> GetTotalMedicalRecordCountAsync()
+        {
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/GetCountOfListMR");
+            var strData = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            return System.Text.Json.JsonSerializer.Deserialize<int>(strData, option);
+        }
+
+        private async Task<List<MedicalRecordOutputDto>> GetMedicalRecordsAsync(int page)
+        {
+            MedicalRecordAPI = "https://localhost:7249/api/MedicalRecord/ListMedicalRecordPaging?page=" + page;
             HttpResponseMessage response = await client.GetAsync(MedicalRecordAPI);
             string strData = await response.Content.ReadAsStringAsync();
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            List<MedicalRecordOutputDto> listProducts = System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordOutputDto>>(strData, option);
-
-            response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/GetCountOfListMR");
-            strData = await response.Content.ReadAsStringAsync();
-            int countListService = System.Text.Json.JsonSerializer.Deserialize<int>(strData, option);
-
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalItemCount = countListService;
-            return View(listProducts);
+            return System.Text.Json.JsonSerializer.Deserialize<List<MedicalRecordOutputDto>>(strData, option);
         }
 
         public async Task<IActionResult> Add(int pid)
@@ -201,7 +224,6 @@ namespace WebCLient.Controllers
                 string row = System.Text.Json.JsonSerializer.Deserialize<string>(strData, options);
 
                 // them dich vu su dung vao db
-
                 foreach (var sm in list)
                 {
                     dao.AddServiceMR(sm);

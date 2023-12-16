@@ -126,9 +126,9 @@ namespace HcsBE.Bussiness.Patient
             return status;
         }
 
-        public List<PatientDTO> SearchPatient(string name) 
+        public List<PatientDTO> SearchPatient(string name,int page) 
         {
-            var result = dao.SearchPatient(name);
+            var result = dao.SearchPatient(name,page);
             if (result == null) result = new List<DataAccess.Entity.Patient>();
             var output = mapper.Map<List<PatientDTO>>(result);
             return output;

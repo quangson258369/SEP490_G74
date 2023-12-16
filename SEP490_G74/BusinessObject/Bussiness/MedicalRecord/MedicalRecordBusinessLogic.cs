@@ -22,6 +22,24 @@ namespace HcsBE.Bussiness.MedicalRecord
             _mapper = mapper;
         }
 
+        public List<MedicalRecordOutputDto> SearchMedicalRecord(string str, int page)
+        {
+            List<DataAccess.Entity.MedicalRecord> list = dao.searchMR(str, page);
+            var output = _mapper.Map<List<MedicalRecordOutputDto>>(list);
+            if (list == null)
+            {
+                return new List<MedicalRecordOutputDto>()
+                {
+                    new MedicalRecordOutputDto()
+                    {
+                        ExceptionMessage = ConstantHcs.NotFound,
+                        ResultCd = ConstantHcs.BussinessError
+                    }
+                };
+            }
+            return output;
+        }
+
         public List<MedicalRecordOutputDto> GetListMedicalRecord()
         {
             List<DataAccess.Entity.MedicalRecord> list = dao.MedicalRecordList();
