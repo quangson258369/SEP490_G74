@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,11 +20,67 @@ namespace HcsBE.Dao.MedicalRecordDAO
             var query = context.MedicalRecords.ToList();
             return query;
         }
+        public List<Invoice> GetInvoiceList()
+        {
+            var list = context.Invoices.ToList();
+            return list;
+        }
+
+        public bool AddToInvoice(Invoice invoice)
+        {
+            if (invoice == null)
+            {
+                return false;
+            }
+            context.Invoices.Add(invoice);
+            context.SaveChanges();
+            return true;
+        }
+
+        public bool AddToInvoiceDetail(InvoiceDetail invoice)
+        {
+            if (invoice == null)
+            {
+                return false;
+            }
+            else
+            {
+                var invoicee = context.Invoices.ToList();
+                if (invoicee == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    int invoiceId = invoicee.Last().InvoiceId;
+                    var invd = context.InvoiceDetails.ToList();
+                    int detailid = ((invd == null || invd.Count == 0) ? 1 : invd.Max(s => s.InvoiceDetailId) + 1);
+                    InvoiceDetail detail = new InvoiceDetail()
+                    {
+                        InvoiceDetailId = detailid,
+                        InvoiceId = invoiceId,
+                        MedicalRecordId = invoice.MedicalRecordId,
+                        IsPrescription = false
+                    };
+                    context.InvoiceDetails.Add(detail);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+        }
+
+        public List<User> GetListCashier()
+        {
+            var query = context.Users.FromSqlRaw("select u.* from [User] u " +
+                "join UserRole ur on ur.userId = u.userId " +
+                "where ur.roleId = 3").ToList();
+            return query;
+        }
 
         public List<MedicalRecord> searchMR(string str, int page)
         {
             int pageSize = 4;
-            if (str == null)
+            if (str == null || str.Length == 0)
             {
                 var query = context.MedicalRecords.ToList();
                 var pagedData = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();

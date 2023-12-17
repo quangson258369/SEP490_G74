@@ -54,10 +54,52 @@ namespace HcsBE.Dao.InvoicePrescriptionDAO
             int count = result.Count();
             return count;
         }
-        public bool addInvoicePrescription(List<PrescriptionDetailSuppliesDTO> listSuppliesInPrescription)
+        public string AddInvoicePrescriptionAsync(List<PrescriptionDetailSuppliesDTO> listSuppliesInPrescription, int invoiceIdToAdd, int invoidetailId)
         {
+            decimal total = 0;
+            foreach (var item in listSuppliesInPrescription)
+            {
+                total += (item?.Price ?? 0) * (item?.Quantity ?? 0);
+            }
 
-            return true;
+            //var query = @"SELECT TOP 1 U.UserId AS CashierId FROM [User] U
+            //    JOIN Invoice I ON U.UserId = I.CashierId
+            //    JOIN UserRole UR ON U.UserId = UR.UserId
+            //    WHERE I.Status = 0 AND UR.RoleId = 3
+            //    GROUP BY U.UserId
+            //    HAVING COUNT(I.InvoiceId) = (
+            //    SELECT MIN(InvoiceCount)
+            //    FROM (
+            //    SELECT COUNT(InvoiceId) AS InvoiceCount
+            //    FROM Invoice
+            //    WHERE Status = 0
+            //    GROUP BY CashierId
+            //    ) AS InvoiceCounts
+            //    )";
+            //var result = context.Users.FromSql(query);
+            //int count = Convert.ToInt32(result);
+
+            var newInvoice = new Invoice
+            {
+                PatientId = invoiceIdToAdd,
+                CashierId = 7,
+                PaymentDate = new DateTime(2023, 12, 12),
+                Status = false,
+                PaymentMethod = "Chưa mua",
+                Total = total
+            };
+            var rowInvoice = context.Invoices.Add(newInvoice);
+            context.SaveChanges();
+            var newInvoiceDetail = new InvoiceDetail
+            {
+                InvoiceDetailId = context.InvoiceDetails.Max(x => x.InvoiceDetailId) + 1,
+                InvoiceId = context.Invoices.Max(x => x.InvoiceId),
+                IsPrescription = true,
+                MedicalRecordId = invoidetailId
+            };
+            var rowInvoiceDetail = context.InvoiceDetails.Add(newInvoiceDetail);
+            context.SaveChanges();
+            return "Oke";
         }
     }
 }

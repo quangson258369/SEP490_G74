@@ -11,6 +11,8 @@ public partial class InvoiceDetail
     public int InvoiceId { get; set; }
 
     public int MedicalRecordId { get; set; }
+
+    public bool IsPrescription { get; set; }
     [JsonIgnore]
     public virtual Invoice Invoice { get; set; } = null!;
     [JsonIgnore]

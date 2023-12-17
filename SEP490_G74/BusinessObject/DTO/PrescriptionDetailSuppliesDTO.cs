@@ -17,7 +17,7 @@ namespace HcsBE.DTO
         public int SId { get; set; }
         public string SuppliesName { get; set; } = null!;
         public int? Quantity { get; set; }
-
+        public decimal Price { get; set; }
         public string SuppliesTypeName { get; set; } = null!;
     }
 }

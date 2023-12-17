@@ -27,6 +27,7 @@ var mapperConfig = new MapperConfiguration(mc =>
     mc.AddProfile(new MedicalRCMapper());
     mc.AddProfile(new ExaminationResultMapper());
     mc.AddProfile(new PrescriptionMapper());
+    mc.AddProfile(new InvoiceMapper());
 });
 
 IMapper mapper = mapperConfig.CreateMapper();

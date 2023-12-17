@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Entity;
 
 namespace HcsBE.Bussiness.MedicalRecord
 {
@@ -38,6 +39,44 @@ namespace HcsBE.Bussiness.MedicalRecord
                 };
             }
             return output;
+        }
+
+        public bool AddMedicalRecordToInvoice(InvoiceAdd invoice)
+        {
+            // get list cashier
+            List<User> listCashier = dao.GetListCashier();
+            // get list uid in invoice
+            List<Invoice> listInvoice = dao.GetInvoiceList();
+            // lay gia tri convert
+            var invoiceConvert = _mapper.Map<Invoice>(invoice);
+            // check if have any cashier didn't appear in other Invoice -> add this cashier
+            foreach (var ca in listCashier)
+            {
+                // neu chua co ban ghi thi add vao invoice
+                if (!listInvoice.Any(s => s.CashierId == ca.UserId))
+                {
+                    invoiceConvert.CashierId = ca.UserId;
+                    return dao.AddToInvoice(invoiceConvert);
+                }
+            }
+
+            //get min uid appear in invoice
+            var idAppearMin = listInvoice
+            .GroupBy(invoice => invoice.CashierId)
+            .OrderBy(group => group.Count())
+            .First()
+            .Key;
+            // add vào invoice id xuat hien it nhat
+            invoiceConvert.CashierId = idAppearMin;
+            bool status = dao.AddToInvoice(invoiceConvert);
+            return status;
+        }
+
+        public bool AddAutoToInvoiceDetail(InvoiceDetailAdd detail)
+        {
+            var invd = _mapper.Map<InvoiceDetail>(detail);
+            var status = dao.AddToInvoiceDetail(invd);
+            return status;
         }
 
         public List<MedicalRecordOutputDto> GetListMedicalRecord()

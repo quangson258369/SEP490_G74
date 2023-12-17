@@ -175,6 +175,7 @@ public partial class HcsContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("invoiceDetailId");
             entity.Property(e => e.InvoiceId).HasColumnName("invoiceId");
+            entity.Property(e => e.IsPrescription).HasColumnName("isPrescription");
             entity.Property(e => e.MedicalRecordId).HasColumnName("medicalRecordId");
 
             entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceDetails)

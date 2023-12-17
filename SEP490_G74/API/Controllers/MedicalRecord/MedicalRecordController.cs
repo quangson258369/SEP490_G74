@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataAccess.Entity;
 using HcsBE.Bussiness.MedicalRecord;
 using HcsBE.Bussiness.ServiceBusiness;
 using HcsBE.DTO;
@@ -24,6 +25,22 @@ namespace API.Controllers.MedicalRecord
             var list = res.GetListMedicalRecord();
             if (list == null) return NotFound();
             return Ok(list);
+        }
+        
+        [HttpPost("AddMRToInvoice")]
+        public IActionResult AddMRToInvoice(InvoiceAdd invoice)
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var bit = res.AddMedicalRecordToInvoice(invoice);
+            return Ok(bit);
+        }
+        
+        [HttpPost("AddAutoToInvoiceDetail")]
+        public IActionResult AddAutoToInvoiceDetail(InvoiceDetailAdd invoice)
+        {
+            var res = new MedicalRecordBusinessLogic(_mapper);
+            var bit = res.AddAutoToInvoiceDetail(invoice);
+            return Ok(bit);
         }
 
         [HttpGet("SearchMedicalRecord")]
