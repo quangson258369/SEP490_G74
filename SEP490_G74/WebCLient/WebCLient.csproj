@@ -31,6 +31,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="MimeKit" Version="4.3.0" />
     <PackageReference Include="NPOI" Version="2.6.2" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="23.2.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.0" />
   </ItemGroup>
 

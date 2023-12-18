@@ -245,6 +245,10 @@
               "target": "Package",
               "version": "[2.6.2, )"
             },
+            "Select.HtmlToPdf.NetCore": {
+              "target": "Package",
+              "version": "[23.2.0, )"
+            },
             "System.Text.Json": {
               "target": "Package",
               "version": "[7.0.0, )"

@@ -1,6 +1,7 @@
 ﻿using DataAccess.Entity;
 using HcsBE.DTO;
 using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.Formula.Functions;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
@@ -76,6 +77,57 @@ namespace WebCLient.Controllers
             var strData = await response.Content.ReadAsStringAsync();
             var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             return JsonSerializer.Deserialize<List<InvoiceDTO>>(strData, option);
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            //get Invoice detail
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/InvoiceService/GetInvoiceDetail?id=" + id);
+            string strI = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            InvoiceDTO invoice = JsonSerializer.Deserialize<InvoiceDTO>(strI, option);
+
+            int mrid = invoice.InvoiceDetails.First().MedicalRecordId;
+            //get list danh sach dich vu kham
+            response = await client.GetAsync("https://localhost:7249/api/MedicalRecord/ListServiceUses/" + mrid);
+            string strService = await response.Content.ReadAsStringAsync();
+            List<ServiceMRDTO> service = JsonSerializer.Deserialize<List<ServiceMRDTO>>(strService, option);
+
+            if (service == null) service = new List<ServiceMRDTO>();
+            ViewBag.Service = service;
+
+            return View(invoice);
+        }
+
+        public async Task<IActionResult> ComfirmInvoice(int id)
+        {
+            if (HttpContext.Session.GetInt32("RoleId") == 3 || HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                string payMethod = Request.Form["PayMethod"].ToString();
+                string payDate = DateTime.Now.ToString();
+                string u = "https://localhost:7249/api/InvoiceService/UpdateStatusInvoiceService?id=" + id+"&payMethod="+payMethod+"&PayDate="+payDate;
+                HttpResponseMessage response = await client.PostAsJsonAsync(u, "oke");
+                string strData = await response.Content.ReadAsStringAsync();
+                var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                Console.WriteLine(strData);
+                bool row = JsonSerializer.Deserialize<bool>(strData, option);
+                return RedirectToAction("Index", "InvoiceService");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        public async Task<IActionResult> PrintfInvoice(string Service, int idInvoice) 
+        {
+            HttpResponseMessage response = await client.GetAsync("https://localhost:7249/api/InvoiceService/GetInvoiceDetail?id=" + idInvoice);
+            string strI = await response.Content.ReadAsStringAsync();
+            var option = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            InvoiceDTO invoice = JsonSerializer.Deserialize<InvoiceDTO>(strI, option);
+
+            return View();
         }
     }
 }

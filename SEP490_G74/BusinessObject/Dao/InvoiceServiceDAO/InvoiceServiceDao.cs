@@ -39,5 +39,33 @@ namespace HcsBE.Dao.InvoiceServiceDAO
             return list;
         }
 
+        public bool UpdateStatusInvoiceService(int id, string payMethod)
+        {
+            var invoice = context.Invoices.SingleOrDefault(s => s.InvoiceId == id);
+            if (invoice != null)
+            {
+                invoice.Status = true;
+                invoice.PaymentMethod = payMethod;
+                invoice.PaymentDate = DateTime.Now;
+                context.Invoices.Update(invoice);
+                context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Invoice GetInvoiceDetail (int id)
+        {
+            if (id <= 0)
+            {
+                return new Invoice();
+            }
+            var de = context.Invoices.SingleOrDefault(s=>s.InvoiceId == id);
+            return de;
+        }
+
     }
 }

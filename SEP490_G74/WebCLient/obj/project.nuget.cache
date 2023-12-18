@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "D0b6NRDYDW459elxVSn6L3PfizbFNhDMkf7DX2Jcw1B6uqKiKH4PeHDzTj6vBOs8DXubtIMd/lNpyva+h4kvMg==",
+  "dgSpecHash": "+6WbKVRzCbSdkkg6T2ant4WqGgECHnVLEX5FCcVebHUa+T0cpU37ow8OD8vKLRmifIsy2SuEZy8ADfM9YChWog==",
   "success": true,
   "projectFilePath": "D:\\DoAnFall\\sonnk\\SEP490_G74\\SEP490_G74\\WebCLient\\WebCLient.csproj",
   "expectedPackageFiles": [
@@ -63,9 +63,11 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\select.htmltopdf.netcore\\23.2.0\\select.htmltopdf.netcore.23.2.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\sharpziplib\\1.3.3\\sharpziplib.1.3.3.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\sixlabors.fonts\\1.0.0\\sixlabors.fonts.1.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\sixlabors.imagesharp\\2.1.4\\sixlabors.imagesharp.2.1.4.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.codedom\\4.7.0\\system.codedom.4.7.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.configuration.configurationmanager\\6.0.1\\system.configuration.configurationmanager.6.0.1.nupkg.sha512",

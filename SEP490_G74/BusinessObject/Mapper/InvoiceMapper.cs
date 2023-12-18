@@ -24,9 +24,17 @@ namespace HcsBE.Mapper
                 .ForMember(x => x.CashierId, x => x.MapFrom(x => x.CashierId))
                 .ForMember(x => x.InvoiceId, x => x.MapFrom(x => x.InvoiceId))
                 .ForMember(x => x.PaymentDate, x => x.MapFrom(x => x.PaymentDate))
+                .ForMember(x=>x.CashierName, x=>x.MapFrom(x=> getCashierName(x.CashierId)))
                 .ForMember(s=>s.CreateDate, s=>s.MapFrom(s=> GetDateCreate(s.InvoiceId)))
                 .ForMember(x => x.PaymentMethod, x => x.MapFrom(x => x.PaymentMethod))
                 .ForMember(x => x.InvoiceDetails, x => x.MapFrom(x => getListDetail(x.InvoiceId)));
+        }
+
+        private string getCashierName(int cashierId)
+        {
+            Employee u = context.Employees.SingleOrDefault(s => s.UserId == cashierId);
+            Contact c = context.Contacts.Where(s => s.DoctorId == u.DoctorId).First();
+            return c.Name;
         }
 
         private DateTime GetDateCreate(int invoiceId)

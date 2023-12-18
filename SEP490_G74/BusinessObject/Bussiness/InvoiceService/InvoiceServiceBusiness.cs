@@ -21,6 +21,29 @@ namespace HcsBE.Bussiness.InvoiceService
             mapper = _mapper;
         }
 
+        public bool UpdateStatusInvoiceService(int id,string payMethod)
+        {
+            return dao.UpdateStatusInvoiceService(id,payMethod);
+        }
+
+        public InvoiceDTO GetInvoice(int id)
+        {
+            Invoice invoice = dao.GetInvoiceDetail(id);
+            if (invoice == null)
+            {
+                return new InvoiceDTO()
+                {
+                    ExceptionMessage = ConstantHcs.NotFound,
+                    ResultCd = ConstantHcs.BussinessError
+                };
+            }
+            else
+            {
+                return mapper.Map<InvoiceDTO>(invoice);
+            }
+
+        }
+
         public List<InvoiceDTO> GetListInvoiceByCashier(int page, int uid)
         {
             List<Invoice> list = dao.getListInvoiceByCashier(page, uid);

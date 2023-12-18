@@ -736,3 +736,5 @@ D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\obj\Debug\net6.0\refint\WebCLi
 D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.pdb
 D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\obj\Debug\net6.0\WebCLient.genruntimeconfig.cache
 D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\obj\Debug\net6.0\ref\WebCLient.dll
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Select.Html.dep
+D:\DoAnFall\sonnk\SEP490_G74\SEP490_G74\WebCLient\bin\Debug\net6.0\Select.HtmlToPdf.dll

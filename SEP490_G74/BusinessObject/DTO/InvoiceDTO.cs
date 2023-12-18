@@ -21,7 +21,7 @@ namespace HcsBE.DTO
         public bool Status { get; set; }
 
         public decimal Total { get; set; }
-
+        public string CashierName { get; set; }
         public DateTime CreateDate { get; set; }
         public string? PaymentMethod { get; set; }
         public User? Cashier { get; set; }

@@ -23,6 +23,23 @@ namespace API.Controllers.InvoiceService
             return Ok(list);
         }
 
+        [HttpPost("UpdateStatusInvoiceService")]
+        public IActionResult UpdateStatusInvoiceService(int id,string payMethod)
+        {
+            var res = new InvoiceServiceBusiness(_mapper);
+            var status = res.UpdateStatusInvoiceService(id,payMethod);
+            return Ok(status);
+        }
+
+        [HttpGet("GetInvoiceDetail")]
+        public IActionResult GetInvoiceDetail(int id)
+        {
+            var res = new InvoiceServiceBusiness(_mapper);
+            var list = res.GetInvoice(id);
+            if (list == null) { return NotFound(); }
+            return Ok(list);
+        }
+
         [HttpGet("SearchPagingInvoiceService")]
         public IActionResult SearchPagingInvoiceService(int page, int uid, string str, int status)
         {
