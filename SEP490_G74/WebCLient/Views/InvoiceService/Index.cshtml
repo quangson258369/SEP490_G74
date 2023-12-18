@@ -1,4 +1,5 @@
-﻿@*
+﻿@model IEnumerable<HcsBE.DTO.InvoiceDTO>
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -34,15 +35,6 @@
                         <div class="header-container">
                             <h2 class="header-text">Quản lí hóa đơn dịch vụ</h2>
                         </div>
-                        <div class="navbar-container">
-                            <nav class="navbar navbar-expand-sm  w-100">
-
-                                <ul class="navbar-nav w-100">
-                                    <li class="nav-item item-page"><a href="/InvoicePrescription"><p class=" link-room">Đơn chưa thanh toán</p></a></li>
-                                    <li class="nav-item item-page"><a href="/InvoicePrescription/ListInvoicePaid"><p class=" link-room">Đơn đã thanh toán</p></a></li>
-                                </ul>
-                            </nav>
-                        </div>
                         <div class="body-container">
                             <div id="loading" class="alert alert-info" style="display:none;">
                                 Loading...
@@ -52,11 +44,8 @@
                                         search-input" id="searchInput" placeholder="Nhập Tên Bệnh Nhân Hoặc Số Điện Thoại" oninput="filterTable()"/>
                                 <input type="radio" name="status" value="0" onchange="filterTable()" /> Chưa Thanh Toán
                                 <input type="radio" name="status" value="1" onchange="filterTable()" /> Đã Thanh Toán
-                                <input type="radio" name="status" value="-1" onchange="filterTable()" checked /> Tất Cả
+                                <input type="radio" name="status" value="-1" onchange="filterTable()"/> Tất Cả
 
-                                <span class="search-icon">
-                                    <i class="fas fa-search"></i>
-                                </span>
 
                             </div>
                             <table id="ITable" class="table table-bordered">
@@ -68,11 +57,12 @@
                                         <th>Ngày tạo đơn</th>
                                         <th>Ngày thanh toán</th>
                                         <th>Trạng thái thanh toán</th>
+                                        <th>Phương Thức Thanh Toán</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    @Html.Partial("_InvoiceServiceTablePartial", Model)
                                     <!-- Add other rows similarly -->
                                 </tbody>
                             </table>
@@ -82,13 +72,13 @@
                             }
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-end">
-                                    <li class="page-item"><a class="page-link" href="/InvoicePrescription/Index?page=@(ViewBag.CurrentPage >1 ? (ViewBag.CurrentPage-1) : ViewBag.CurrentPage)">Previous</a></li>
-                                    @for (int i = 0; i < (ViewBag.TotalItemCount + 3 - 1) / 3; i++)
+                                    <li class="page-item"><a class="page-link" href="/InvoiceService/Index?page=@(ViewBag.CurrentPage >1 ? (ViewBag.CurrentPage-1) : ViewBag.CurrentPage)">Previous</a></li>
+                                    @for (int i = 0; i < (ViewBag.TotalItemCount + 4 - 1) / 4; i++)
                                     {
                                         int pageNumber = i + 1;
-                                        <li class="page-item @(ViewBag.CurrentPage == (i+1) ? "active" : "")"><a class="page-link" href="/InvoicePrescription/Index?page=@pageNumber">@pageNumber</a></li>
+                                        <li class="page-item @(ViewBag.CurrentPage == (i+1) ? "active" : "")"><a class="page-link" href="/InvoiceService/Index?page=@pageNumber">@pageNumber</a></li>
                                     }
-                                    <li class="page-item"><a class="page-link" href="/InvoicePrescription/Index?page=@(ViewBag.CurrentPage <((ViewBag.TotalItemCount + 3 - 1) / 3) ? (ViewBag.CurrentPage+1) : ViewBag.CurrentPage)">Next</a></li>
+                                    <li class="page-item"><a class="page-link" href="/InvoiceService/Index?page=@(ViewBag.CurrentPage <((ViewBag.TotalItemCount + 4 - 1) / 4) ? (ViewBag.CurrentPage+1) : ViewBag.CurrentPage)">Next</a></li>
                                 </ul>
                             </nav>
                         </div>

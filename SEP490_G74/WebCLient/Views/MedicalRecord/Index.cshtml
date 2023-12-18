@@ -66,20 +66,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.MedicalRecordId</td>
-                                            <td>@item.PatientName</td>
-                                            <td>@item.PatientPhone</td>
-                                            <td>@item.MedicalRecordDate</td>
-                                            <td>Chưa khám</td>
-
-                                            <td><button><a class="btn text-dark" href="">Danh Sách Kết Quả</a></button></td>
-                                            <td><button><a class="btn text-dark" href="/MedicalRecord/AddReExam?examid=@item.ExamCode">Tái Khám</a></button></td>
-                                            <td><button><a class="btn text-dark" href="/MedicalRecord/MedicalRecordDetail?id=@item.MedicalRecordId">Chi Tiết</a></button></td>
-                                        </tr>
-                                    }*@
                                     @Html.Partial("_MedicalRecordTablePartial", Model)
                                     <!-- Add other rows similarly -->
                                 </tbody>

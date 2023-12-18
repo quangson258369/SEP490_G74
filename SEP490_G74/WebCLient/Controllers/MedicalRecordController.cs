@@ -240,11 +240,10 @@ namespace WebCLient.Controllers
                     price += s.price;
                 }
 
-
                 InvoiceAdd invoice = new InvoiceAdd()
                 {
                     PatientId = patient.PatientId,
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = DateTime.ParseExact("1900-01-01", "yyyy-MM-dd", null),
                     PaymentMethod = "Chưa Có Phương Thức Thanh Toán",
                     Status = false,
                     Total = (price.HasValue ? price.Value : 0)
