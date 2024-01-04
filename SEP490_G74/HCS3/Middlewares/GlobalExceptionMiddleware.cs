@@ -1,4 +1,4 @@
-﻿using HCS.Business.ResponseModel.ApiRessponse;
+﻿using HCS.Business.ResponseModel.ApiResponse;
 using Newtonsoft.Json;
 
 namespace HCS.API.Middlewares

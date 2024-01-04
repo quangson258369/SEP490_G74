@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HCS.Domain.Enums;
 
 namespace HCS.DataAccess.Repository
 {
@@ -16,6 +17,12 @@ namespace HCS.DataAccess.Repository
         {
         }
 
+        public async Task<Patient?> GetPatientByUserId(int userId)
+        {
+            return await _context.Patients
+                .Include(c => c.Contacts)
+                .FirstOrDefaultAsync(e => e.PatientId == userId);
+        }
 
         public async Task<List<Patient>> GetPatients(int userId)
         {
@@ -23,6 +30,11 @@ namespace HCS.DataAccess.Repository
             var doctor =await _context.Users.FirstOrDefaultAsync(e => e.UserId == userId);
 
             if (doctor == null || doctor.UserId < 0) throw new Exception();
+
+            if (doctor.RoleId != 2)
+            {
+                return await _context.Patients.Include(c => c.Contacts).ToListAsync();
+            }
 
             //Get MedicalRecords by doctorId and categoryId
             var patientIds = await _context.MedicalRecords
@@ -34,6 +46,7 @@ namespace HCS.DataAccess.Repository
             var output = await _context.Patients
                 .Where(patient => patientIds
                     .Contains(patient.PatientId))
+                .Include(c => c.Contacts)
                 .ToListAsync();
             return output;
         }

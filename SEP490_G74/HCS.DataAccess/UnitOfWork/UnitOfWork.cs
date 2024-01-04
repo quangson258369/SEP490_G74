@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HCS.Domain.Models;
 
 namespace HCS.DataAccess.UnitOfWork
 {
@@ -17,11 +18,15 @@ namespace HCS.DataAccess.UnitOfWork
 
         public IPatientRepo PatientRepo { get; }
 
-        public IContactRepo ContactRepo { get; }
+        public Repository.IContactRepo ContactRepo { get; }
         
         public IMedicalRecordRepo MedicalRecordRepo { get; }
         public ICategoryRepo CategoryRepo { get; }
         public ISuppliesTypeRepo SuppliesTypeRepo { get; }
+        public IPrescriptionRepo PrescriptionRepo { get; }
+        public IRoleRepo RoleRepo { get; }
+        public IServiceTypeRepo ServiceTypeRepo { get; }
+        public IServiceRepo ServiceRepo { get; }
 
         public UnitOfWork(HCSContext context)
         {
@@ -32,6 +37,10 @@ namespace HCS.DataAccess.UnitOfWork
             MedicalRecordRepo = new MedicalRecordRepo(context);
             CategoryRepo = new CategoryRepo(context);
             SuppliesTypeRepo = new SuppliesTypeRepo(context);
+            PrescriptionRepo = new PrescriptionRepo(context);
+            RoleRepo = new RoleRepo(context);
+            ServiceTypeRepo = new ServiceTypeRepo(context);
+            ServiceRepo = new ServiceRepo(context);
         }
 
         public async Task SaveChangeAsync()

@@ -1,11 +1,7 @@
-using HCS.Domain.Models;
+namespace HCS.Business.RequestModel.PatientContactRequestModel;
 
-namespace HCS.Business.ResponseModel.PatientResponseModel;
-
-public class PatientResponseModel
+public class PatientContactRequestModel
 {
-    public int PatientId { get; set; }
-
     public string Name { get; set; } = null!;
 
     public bool Gender { get; set; }
@@ -16,6 +12,8 @@ public class PatientResponseModel
 
     public string Address { get; set; } = string.Empty;
 
+    public string Img { get; set; } = string.Empty;
+    
     public string ServiceDetailName { get; set; } = null!;
 
     public byte? Height { get; set; }
@@ -26,5 +24,9 @@ public class PatientResponseModel
 
     public byte? BloodPressure { get; set; }
 
-    public string? Allergieshistory { get; set; }
+    public string? AllergiesHistory { get; set; }
+
+    //public int? PatientId { get; set; }
+    
+    public int? UserId { get; set; } 
 }
