@@ -19,8 +19,7 @@ namespace HCS.Business.RequestModel.ContactRequestModel
         public string Address { get; set; } = string.Empty;
 
         public string Img { get; set; } = string.Empty;
-
-        public int? PatientId { get; set; }
+        public int PatientId { get; set; }
 
         public int? UserId { get; set; }
     }

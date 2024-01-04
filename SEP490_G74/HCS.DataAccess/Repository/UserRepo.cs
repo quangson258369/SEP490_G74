@@ -34,7 +34,7 @@ namespace HCS.DataAccess.Repository
                     UserId = user.UserId
                 };
 
-                if(user.Contacts!= null && user.Contacts.Count > 0 )
+                if(user.Contacts is { Count: > 0 } )
                 {
                     profile.UserName = user.Contacts.First().Name;
                 }

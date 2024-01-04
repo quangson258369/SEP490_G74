@@ -30,7 +30,9 @@ namespace HCS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            return Ok();
+            var result = await _categoryService.GetCategories();
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [Authorize(Roles = "Admin")]
@@ -53,11 +55,9 @@ namespace HCS.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task DeleteCategory(int id)
         {
-            var result = await _categoryService.DeleteCategory(id);
-
-            return result.IsSuccess ? NoContent() : BadRequest(result);
+           await _categoryService.DeleteCategory(id);
         }
     }
 }
