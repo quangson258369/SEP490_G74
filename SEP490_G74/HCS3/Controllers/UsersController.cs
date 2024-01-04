@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using HCS.Business.RequestModel.UserRequestModel;
-using HCS.Business.Util.MD5PasswordGenerator;
-using HCS.Business.IService;
 using HCS.Business.RequestModel.PatientRequestModel;
 using Microsoft.AspNetCore.Authorization;
-using HCS.Business.RequestModel.ContactRequestModel;
 using System.Security.Claims;
-using HCS.Business.RequestModel.MedicalRecordRequestModel;
+using HCS.Business.RequestModel.ContactRequestModel;
+using HCS.Business.RequestModel.PatientContactRequestModel;
+using HCS.Business.Service;
 
 namespace HCS.API.Controllers
 {
@@ -33,6 +31,15 @@ namespace HCS.API.Controllers
             }
 
             return Ok(loginResponse);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegisterModel userRegisterModel)
+        {
+            var registerResponse = await _userService.RegisterUser(userRegisterModel);
+
+            return registerResponse.IsSuccess ? Ok(registerResponse) : BadRequest(registerResponse);
         }
 
         [Authorize(Roles = "Admin, Doctor, Nurse")]
@@ -66,30 +73,14 @@ namespace HCS.API.Controllers
             return BadRequest();
         }
 
-        [Authorize(Roles ="Admin, Nurse")]
-        [HttpPost("patient")]
-        public async Task<IActionResult> AddPatient([FromBody] PatientAddModel patient)
-        {
-            var response = await _userService.AddPatient(patient);
-            if (response.IsSuccess)
-            {
-                return Created("Patient created", response);
-            }
-            return BadRequest();
-        }
-
         [Authorize(Roles = "Admin, Nurse")]
-        [HttpPost("contact")]
-        public async Task<IActionResult> AddContact([FromBody] ContactAddModel contact)
+        [HttpPost("patient-contact")]
+        public async Task<IActionResult> AddPatientContact([FromBody] PatientContactRequestModel patientContactRequestModel)
         {
-            var response = await _userService.AddContact(contact);
-            if (response.IsSuccess)
-            {
-                return Created("Contact created", response);
-            }
-            return BadRequest();
+            var result = await _userService.AddPatientContact(patientContactRequestModel);
+        
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
-       
 
         [Authorize(Roles = "Admin, Doctor, Nurse")]
         [HttpGet("patients")]
@@ -98,6 +89,15 @@ namespace HCS.API.Controllers
             var response = await _userService.GetPatients(pageIndex, pageSize, userId);
 
             return response.IsSuccess ? Ok(response) : BadRequest(response);
+        }
+
+        [Authorize(Roles = "Admin, Nurse")]
+        [HttpGet("doctor/id/{categoryId:int}")]
+        public async Task<IActionResult> GetListDoctorByCategoryId(int categoryId)
+        {
+            var result = await _userService.GetListDoctorByCategoryId(categoryId);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }
 }

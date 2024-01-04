@@ -4,10 +4,17 @@ using HCS.Business.RequestModel.CategoryRequestModel;
 using HCS.Business.RequestModel.ContactRequestModel;
 using HCS.Business.RequestModel.MedicalRecordRequestModel;
 using HCS.Business.RequestModel.PatientRequestModel;
+using HCS.Business.RequestModel.PrescriptionRequestModel;
+using HCS.Business.RequestModel.ServiceTypeRequestModel;
 using HCS.Business.RequestModel.SuppliesTypeRequestModel;
+using HCS.Business.RequestModel.UserRequestModel;
 using HCS.Business.ResponseModel.CategoryResponse;
+using HCS.Business.ResponseModel.MedicalRecordResponseModel;
 using HCS.Business.ResponseModel.PatientResponseModel;
+using HCS.Business.ResponseModel.PrescriptionResponseModel;
+using HCS.Business.ResponseModel.ServiceTypeResponseModel;
 using HCS.Business.ResponseModel.SuppliesTypeResponseModel;
+using HCS.Business.ResponseModel.UserResponseModel;
 
 namespace HCS.Business.Mapper
 {
@@ -15,15 +22,38 @@ namespace HCS.Business.Mapper
     {
         public MapperConfigProfile()
         {
-            CreateMap<PatientAddModel, Patient>();
+            
+            CreateMap<UserRegisterModel, User>().ReverseMap();
+            CreateMap<UserUpdateModel, User>().ReverseMap();
+            CreateMap<UserLoginRequestModel, User>().ReverseMap();
+            
+            
             CreateMap<MedicalRecordAddModel, MedicalRecord>();
+            
             CreateMap<ContactAddModel, Contact>();
 
             CreateMap<CategoryAddModel, Category>().ReverseMap();
             CreateMap<CategoryUpdateModel, Category>().ReverseMap();
             CreateMap<CategoryResponseModel, Category>().ReverseMap();
-            
-            CreateMap<PatientResponseModel, Patient>().ReverseMap();
+
+            //CreateMap<Patient, PatientResponseModel>()
+            //    .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.Contacts.First().PatientId))
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contacts.First().Name))
+            //    .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Contacts.First().Dob))
+            //    .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Contacts.First().Gender))
+            //    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Contacts.First().Address))
+            //    .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Contacts.First().Phone))
+            //    .ReverseMap();
+
+            CreateMap<Patient, PatientResponseModel>()
+                .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Name : string.Empty))
+                .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Dob : DateTime.Now))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Contacts.Any()? src.Contacts.First().Gender : true))
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Address : string.Empty))
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Phone : string.Empty))
+                .ReverseMap();
+
             CreateMap<PatientAddModel, Patient>().ReverseMap();
             CreateMap<PatientUpdateModel, Patient>().ReverseMap();
 
@@ -31,6 +61,14 @@ namespace HCS.Business.Mapper
             CreateMap<SuppliesTypeUpdateModel, SuppliesType>().ReverseMap();
             CreateMap<SuppliesTypeResponseModel, SuppliesType>().ReverseMap();
 
+            CreateMap<PrescriptionAddModel, Prescription>().ReverseMap();
+            CreateMap<PrescriptionUpdateModel, Prescription>().ReverseMap();
+            CreateMap<PrescriptionResponseModel, Prescription>().ReverseMap();
+
+            CreateMap<ServiceTypeAddModel, ServiceType>().ReverseMap();
+            CreateMap<ServiceTypeUpdateModel, ServiceType>().ReverseMap();
+            CreateMap<ServiceType, ServiceTypeResponseModel>().ReverseMap();
+            CreateMap<HCS.Domain.Models.Service, ServiceResponseModel>().ReverseMap();
         }
     }
 }

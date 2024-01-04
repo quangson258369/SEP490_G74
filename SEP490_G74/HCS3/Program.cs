@@ -1,14 +1,10 @@
 using HCS.API.Middlewares;
 using HCS.ApplicationContext;
-using HCS.Business.IService;
 using HCS.Business.Mapper;
 using HCS.Business.Service;
-using HCS.DataAccess.IRepository;
-using HCS.DataAccess.Repository;
 using HCS.DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -25,14 +21,14 @@ builder.Services.AddSwaggerGen();
 // Add DbContext
 builder.Services.AddDbContext<HCSContext>(
     options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("LocalConnection")));
+        builder.Configuration.GetConnectionString("KhoaHT3Connection")));
 
 // Add Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost7115", builder =>
     {
-        builder.WithOrigins("https://localhost:7115")
+        builder.WithOrigins("http://localhost:3000")
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
@@ -93,6 +89,9 @@ builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<ISuppliesTypeService, SuppliesTypeService>();
+builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IServiceTypeService, ServiceTypeService>();
 
 var app = builder.Build();
 

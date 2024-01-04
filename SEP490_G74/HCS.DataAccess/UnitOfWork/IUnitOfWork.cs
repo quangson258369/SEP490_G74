@@ -16,6 +16,11 @@ namespace HCS.DataAccess.UnitOfWork
         public IMedicalRecordRepo MedicalRecordRepo { get; }
         public ICategoryRepo CategoryRepo { get; }
         public ISuppliesTypeRepo SuppliesTypeRepo { get; }
+        public IPrescriptionRepo PrescriptionRepo { get; }
+        public IRoleRepo RoleRepo { get; }
+        public IServiceTypeRepo ServiceTypeRepo { get; }
+        public IServiceRepo ServiceRepo { get; }
+
         public Task SaveChangeAsync();
     }
 }

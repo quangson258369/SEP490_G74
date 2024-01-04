@@ -17,6 +17,13 @@
     <ProjectReference Include="..\HCS.Domain\HCS.Domain.csproj" />
 
 
+
+
+
+
+
+
+
   </ItemGroup>
 
 

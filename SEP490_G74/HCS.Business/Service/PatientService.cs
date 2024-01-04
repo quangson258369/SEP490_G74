@@ -1,6 +1,6 @@
 using AutoMapper;
 using HCS.Business.RequestModel.PatientRequestModel;
-using HCS.Business.ResponseModel.ApiRessponse;
+using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.PatientResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Models;
@@ -28,8 +28,8 @@ public class PatientService : IPatientService
     public async Task<ApiResponse> GetPatient(int patientId)
     {
         var response = new ApiResponse();
-        var patient = await _unitOfWork.PatientRepo.GetAsync(entry => entry.PatientId == patientId);
-
+        //var patient = await _unitOfWork.PatientRepo.GetAsync(entry => entry.PatientId == patientId);
+        var patient = await _unitOfWork.PatientRepo.GetPatientByUserId(patientId);
         if (patient is null)
         {
             return response.SetNotFound($"Patient Not Found with Id {patientId}");
@@ -38,7 +38,7 @@ public class PatientService : IPatientService
         var patientResponse = _mapper.Map<PatientResponseModel>(patient);
 
         return response.SetOk(patientResponse);
-    }   
+    } 
     
   
     public async Task<ApiResponse> AddPatient(PatientAddModel patient)

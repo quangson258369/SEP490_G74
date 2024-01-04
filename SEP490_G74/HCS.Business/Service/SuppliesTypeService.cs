@@ -1,7 +1,7 @@
 using AutoMapper;
 using HCS.Business.Pagination;
 using HCS.Business.RequestModel.SuppliesTypeRequestModel;
-using HCS.Business.ResponseModel.ApiRessponse;
+using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.SuppliesTypeResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Models;
