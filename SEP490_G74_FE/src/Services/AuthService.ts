@@ -1,22 +1,22 @@
-import axios from "axios"
-import { LoginResponse, UserLogin } from "../Models/AuthModel";
+import { UserLogin } from "../Models/AuthModel";
+import apiLinks from "../Commons/ApiEndpoints";
+import httpClient from "../HttpClients/HttpClient";
 
-const login = async (user: UserLogin) => {
-    try {
-        var response = await axios.post<LoginResponse>("https://localhost:7021/api/Users/login", JSON.stringify(user), {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        if (response.status == 200) {
-            return response.data.result
-        }
-        return undefined
-    } catch (error) {
-        return undefined
-    }
-}
+const login = async (params: UserLogin): Promise<string|undefined> => {
+  try{
+    const response = await httpClient.post({
+      url: `${apiLinks.auth.postLogin}`,
+      data: params,
+    });
+    return response.data.result as string;
+  }catch(e){
+    console.log(e)
+    return undefined
+  }
+};
 
-export const authService = {
-    login: login
-}
+const authService = {
+  login: login,
+};
+
+export default authService;

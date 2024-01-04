@@ -5,6 +5,11 @@ export interface Doctor {
     roleId: number
 }
 
+export interface Category{
+    categoryId: number
+    name: string
+}
+
 export interface ServiceType{
     id: number
     name: string
@@ -25,9 +30,19 @@ export interface MedicalRecord extends PatientTableModel{
     bloodPressure: number
     editDate: string
     description: string
-    serviceTypes: ServiceType[]
-    selectedServices: Service[]
-    doctors: Doctor[]
+    selectedCategoryId: number
+    selectedServiceTypeIds: number[]
+    selectedServiceIds: number[]
+    selectedDoctorId: number
+}
+
+export interface MedicalRecordTableModel{
+    medicalRecordId: number
+    medicalRecordDate: string
+    categoryName: string
+    name: string
+    patientId: number
+    key: string
 }
 
 export interface PatientTableModel{
@@ -42,4 +57,15 @@ export interface PatientTableModel{
 
 export interface PatientProps{
     patientId : number
+    role?: string
 }
+
+export interface MedicalRecordAddModel {
+    medicalRecordDate: string;
+    examReason: string;
+    examCode: string;
+    categoryId: number;
+    patientId: number;
+    doctorId: number;
+    prescriptionId: number;
+  }

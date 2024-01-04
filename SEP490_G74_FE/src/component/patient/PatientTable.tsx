@@ -1,99 +1,149 @@
-import { Tag, Space, Button } from "antd";
+import { Space, Button, Modal, message } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { PatientTableModel } from "../../Models/MedicalRecordModel";
 import { useNavigate } from "react-router-dom";
+import MedicalRecordAddForm from "../MedicalRecords/MedicalRecordAddForm";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../ContextProvider/AuthContext";
+import Roles from "../../Enums/Enums";
+import patientService from "../../Services/PatientSerivce";
+import { PatientTableResponseModel } from "../../Models/PatientModel";
 
 const PatientTable = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
+  const [selectedPatientId, setSelectedPatientId] = useState<
+    number | undefined
+  >(undefined);
 
-    const handleViewPatient = (id: number) => {
-        navigate(`${id}/add-medical-record`)
+  const [patients, setPatients] = useState<PatientTableResponseModel[]>([]);
+  const [pageIndex, setPageIndex] = useState<number>(1);
+
+  const { authenticated } = useContext(AuthContext);
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const handleViewPatient = (id: number) => {
+    if (authenticated?.role === Roles.Doctor) {
+      message.error("Chức năng chỉ dành cho y tá", 2);
+    } else {
+      setOpen(true);
+      setSelectedPatientId(id);
     }
+  };
 
-    const handleViewMRs = (id: number) => {
-        alert(id)
+  const handleViewMRs = (id: number) => {
+    navigate(`${id}/medical-records`);
+  };
+
+  const columns: ColumnsType<PatientTableResponseModel> = [
+    {
+      title: "Mã bệnh nhân",
+      dataIndex: "patientId",
+      key: "patientId",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Họ và tên",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Ngày sinh",
+      dataIndex: "dob",
+      key: "dob",
+      render: (text) => <span>{new Date(text).toLocaleDateString()}</span>,
+    },
+    {
+      title: "Giới tính",
+      dataIndex: "gender",
+      key: "gender",
+      render: (gender) =>
+        gender === true ? <span>Nam</span> : <span>Nữ</span>,
+    },
+    {
+      title: "Số điện thoại",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Địa chỉ",
+      dataIndex: "address",
+      key: "address",
+    },
+    {
+      title: "",
+      key: "action",
+      render: (record: PatientTableResponseModel) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            onClick={() => handleViewPatient(record.patientId)}
+          >
+            Thêm bệnh án
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => handleViewMRs(record.patientId)}
+          >
+            Danh sách khám
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  const fetchPatient = async () => {
+    var result: PatientTableResponseModel[] | undefined =
+      await patientService.getPatients(pageIndex);
+    if (result === undefined) {
+      message.error("Lỗi lấy danh sách bệnh nhân", 2);
+    } else {
+      var pats: PatientTableResponseModel[] = result.map((item) => ({
+        ...item,
+        key: item.patientId + "key",
+      }));
+      setPatients(pats);
     }
+  };
 
-    const columns: ColumnsType<PatientTableModel> = [
-        {
-            title: 'Mã bệnh nhân',
-            dataIndex: 'id',
-            key: 'id',
-            render: (text) => <a>{text}</a>,
-        },
-        {
-            title: 'Họ và tên',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Ngày sinh',
-            dataIndex: 'dob',
-            key: 'dob',
-        },
-        {
-            title: 'Giới tính',
-            dataIndex: 'gender',
-            key: 'gender',
-            render: (gender) => gender === true ? <span>Female</span> : <span>Male</span>
-        },
-        {
-            title: 'Số điện thoại',
-            dataIndex: 'phone',
-            key: 'phone',
-        },
-        {
-            title: 'Địa chỉ',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: '',
-            key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                    <Button type="primary" onClick={() => handleViewPatient(record.id)}>Thêm bệnh án</Button>
-                    <Button type="primary" onClick={() => handleViewMRs(record.id)}>Danh sách khám</Button>
-                </Space>
-            ),
-        },
-    ];
+  useEffect(() => {
+    fetchPatient();
+  }, [authenticated, pageIndex]);
 
-    const data: PatientTableModel[] = [
-        {
-            id: 1,
-            name: "Nguyen Van A",
-            dob: "12/12/2020",
-            gender: true,
-            phone: "0123456689",
-            address: "q9",
-            key: `1`
-        },
-        {
-            id: 2,
-            name: "Nguyen Van B",
-            dob: "12/12/2020",
-            gender: true,
-            phone: "0123456689",
-            address: "q9",
-            key: "2"
-        },
-        {
-            id: 3,
-            name: "Nguyen Van C",
-            dob: "12/12/2020",
-            gender: true,
-            phone: "0123456689",
-            address: "q9",
-            key: "3"
-        },
-    ];
-
-    return (
-        <>
-            <Table columns={columns} dataSource={data} />
-        </>
-    )
-}
+  return (
+    <div style={{ minHeight: "100vh", height: "auto" }}>
+      {patients !== undefined && (
+        <Table columns={columns} dataSource={patients} />
+      )}
+      <Modal
+        title="Thêm hồ sơ bệnh án"
+        open={open}
+        onCancel={handleCancel}
+        maskClosable={false}
+        width="max-content"
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Hủy
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            form="medicalRecordAddForm"
+            htmlType="submit"
+          >
+            Tạo hồ sơ
+          </Button>,
+        ]}
+      >
+        {selectedPatientId !== undefined && (
+          <MedicalRecordAddForm patientId={selectedPatientId} />
+        )}
+      </Modal>
+    </div>
+  );
+};
 
 export default PatientTable;
