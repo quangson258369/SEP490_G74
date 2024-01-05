@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import LoginPage from "../page/LoginPage"
 import NursePage from "../page/NursePage"
-import PatientTable from "../component/patient/PatientTable"
+import PatientTable from "../component/Patient/PatientTable"
 import HomePage from "../page/HomePage"
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute"
 import DoctorLayoutPage from "../LayoutPages/DoctorLayoutPage"
