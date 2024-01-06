@@ -20,7 +20,7 @@ namespace HCS.Domain.Models
 
         public short UnitInStock { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public DateTime Inputday { get; set; } = DateTime.Now;
 

@@ -17,7 +17,7 @@ namespace HCS.API.Controllers
             _categoryService = categoryService;
         }
 
-        [Authorize(Roles = "Admin, Doctor, Nurse")]
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetCategory(int id)
         {
@@ -26,7 +26,7 @@ namespace HCS.API.Controllers
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
-        [Authorize(Roles = "Admin, Doctor, Nurse")]
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {

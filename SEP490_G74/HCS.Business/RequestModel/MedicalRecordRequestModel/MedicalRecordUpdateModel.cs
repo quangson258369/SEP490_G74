@@ -17,3 +17,15 @@ public class MedicalRecordUpdateModel
     public int PrescriptionId { get; set; }
 
 }
+
+public class NewMedicalRecordUpdateModel
+{
+    public List<int>? CategoryIds { get; set; }
+
+    public List<int>? DoctorIds { get; set; }
+
+    public List<int>? ServiceTypeIds { get; set; }
+
+    public List<int>? ServiceIds { get; set; }
+}
+

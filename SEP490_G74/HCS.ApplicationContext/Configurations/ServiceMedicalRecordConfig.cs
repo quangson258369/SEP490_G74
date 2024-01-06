@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HCS.ApplicationContext.Configurations
 {
-    internal class ServiceMedicalRecordConfig : IEntityTypeConfiguration<ServiceMedicalRecord>
+    public class ServiceMedicalRecordConfig : IEntityTypeConfiguration<ServiceMedicalRecord>
     {
         public void Configure(EntityTypeBuilder<ServiceMedicalRecord> builder)
         {

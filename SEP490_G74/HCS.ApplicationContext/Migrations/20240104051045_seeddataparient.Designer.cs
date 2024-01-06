@@ -4,6 +4,7 @@ using HCS.ApplicationContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCS.ApplicationContext.Migrations
 {
     [DbContext(typeof(HCSContext))]
-    partial class HCSContextModelSnapshot : ModelSnapshot
+    [Migration("20240104051045_seeddataparient")]
+    partial class seeddataparient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,122 +97,122 @@ namespace HCS.ApplicationContext.Migrations
                         new
                         {
                             CId = 1,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Admin Khoa",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 2,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Bsi Son",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 3,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Bsi Bang",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 4,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Bsi Tam",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 7,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Bsi Banh",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 8,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Bsi Vu",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 9,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Bsi Van",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 5,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Y Ta Nho",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 6,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Cashier Trinh",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 10,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Benh nhan A",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 11,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Benh nhan B",
-                            Phone = "0987662512"
+                            Phone = ""
                         },
                         new
                         {
                             CId = 12,
-                            Address = "Ha Noi",
+                            Address = "",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
                             Name = "Benh nhan C",
-                            Phone = "0987662512"
+                            Phone = ""
                         });
                 });
 
@@ -255,6 +258,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("CashierId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -274,6 +280,8 @@ namespace HCS.ApplicationContext.Migrations
                     b.HasKey("InvoiceId");
 
                     b.HasIndex("CashierId");
+
+                    b.HasIndex("MedicalRecordId");
 
                     b.HasIndex("PatientId");
 
@@ -324,7 +332,7 @@ namespace HCS.ApplicationContext.Migrations
                             ExamReason = "patient 1 mr1",
                             IsCheckUp = false,
                             IsPaid = false,
-                            MedicalRecordDate = new DateTime(2024, 1, 5, 22, 33, 7, 669, DateTimeKind.Local).AddTicks(8232),
+                            MedicalRecordDate = new DateTime(2024, 1, 4, 12, 10, 45, 76, DateTimeKind.Local).AddTicks(5219),
                             PatientId = 1
                         },
                         new
@@ -333,7 +341,7 @@ namespace HCS.ApplicationContext.Migrations
                             ExamReason = "patient 2 mr2",
                             IsCheckUp = false,
                             IsPaid = false,
-                            MedicalRecordDate = new DateTime(2024, 1, 5, 22, 33, 7, 669, DateTimeKind.Local).AddTicks(8250),
+                            MedicalRecordDate = new DateTime(2024, 1, 4, 12, 10, 45, 76, DateTimeKind.Local).AddTicks(5230),
                             PatientId = 2
                         });
                 });
@@ -664,23 +672,10 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("MedicalRecordId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Diagnose")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("InvoiceId")
-                        .HasColumnType("int");
-
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("ServiceId", "MedicalRecordId");
-
-                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("MedicalRecordId");
 
@@ -978,6 +973,12 @@ namespace HCS.ApplicationContext.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
+                        .WithMany("Invoices")
+                        .HasForeignKey("MedicalRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HCS.Domain.Models.Patient", "Patient")
                         .WithMany("Invoices")
                         .HasForeignKey("PatientId")
@@ -985,6 +986,8 @@ namespace HCS.ApplicationContext.Migrations
                         .IsRequired();
 
                     b.Navigation("Cashier");
+
+                    b.Navigation("MedicalRecord");
 
                     b.Navigation("Patient");
                 });
@@ -1066,10 +1069,6 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.ServiceMedicalRecord", b =>
                 {
-                    b.HasOne("HCS.Domain.Models.Invoice", "Invoice")
-                        .WithMany("ServiceMedicalRecords")
-                        .HasForeignKey("InvoiceId");
-
                     b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
                         .WithMany("ServiceMedicalRecords")
                         .HasForeignKey("MedicalRecordId")
@@ -1081,8 +1080,6 @@ namespace HCS.ApplicationContext.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Invoice");
 
                     b.Navigation("MedicalRecord");
 
@@ -1175,13 +1172,10 @@ namespace HCS.ApplicationContext.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HCS.Domain.Models.Invoice", b =>
-                {
-                    b.Navigation("ServiceMedicalRecords");
-                });
-
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
                 {
+                    b.Navigation("Invoices");
+
                     b.Navigation("MedicalRecordCategories");
 
                     b.Navigation("MedicalRecordDoctors");

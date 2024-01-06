@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace HCS.Domain.Models
     {
         public int CId { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
 
         public bool Gender { get; set; }
 
@@ -22,12 +23,8 @@ namespace HCS.Domain.Models
 
         public string Img { get; set; } = string.Empty;
 
-        public int? PatientId { get; set; }
-
         public Patient? Patient { get; set; }
-
-        public int? UserId { get; set; } 
-
+        
         public User? User { get; set; }
     }
 }

@@ -9,18 +9,12 @@ namespace HCS.Business.RequestModel.MedicalRecordRequestModel
 {
     public class MedicalRecordAddModel
     {
-        public DateTime MedicalRecordDate { get; set; } = DateTime.Now;
-        
         public string ExamReason { get; set; } = string.Empty;
 
-        public string ExamCode { get; set; } = string.Empty;
-
-        public int CategoryId { get; set; }
+        public List<int> CategoryIds { get; set; } = null!;
 
         public int PatientId { get; set; }
 
-        public int DoctorId { get; set; }
-        public int PrescriptionId { get; set; }
-
+        public List<int> DoctorIds { get; set; } = null!;
     }
 }

@@ -14,8 +14,8 @@ namespace HCS.Domain.Models
 
         public string Diagnose { get; set; } = string.Empty;
 
-        public ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+        public ExaminationResult ExaminationResult { get; set; } = null!;
 
-        public ICollection<SuppliesPrescription> SuppliesPrescriptions { get; set; } = new List<SuppliesPrescription>();
+        public ICollection<SuppliesPrescription>? SuppliesPrescriptions { get; set; }
     }
 }

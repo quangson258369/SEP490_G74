@@ -1,4 +1,5 @@
 ﻿using HCS.Business.ResponseModel.ApiResponse;
+using HCS.Domain.CustomExceptions;
 using Newtonsoft.Json;
 
 namespace HCS.API.Middlewares
@@ -17,6 +18,16 @@ namespace HCS.API.Middlewares
             try
             {
                 await next(context);
+            }
+            catch(MedicalRecordNotPaidBeforeCheckUpException ex)
+            {
+                _logger.LogError(ex, "Medical Record Not Paid Before Check Up.");
+                var response = new ApiResponse();
+                await WriteResponseAsync(context, response.SetApiResponse(
+                statusCode: System.Net.HttpStatusCode.BadRequest,
+                isSuccess: false,
+                message: ex.Message,
+                result: null));
             }
             catch (Exception ex)
             {

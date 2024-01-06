@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCS.ApplicationContext.Migrations
 {
     [DbContext(typeof(HCSContext))]
-    [Migration("20231224040020_initDb")]
-    partial class initDb
+    [Migration("20240103073817_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,21 +68,11 @@ namespace HCS.ApplicationContext.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("CId");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Contacts");
                 });
@@ -106,12 +96,14 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<DateTime>("ExamDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MedicalRecordId")
+                    b.Property<int?>("PrescriptionId")
                         .HasColumnType("int");
 
                     b.HasKey("ExamResultId");
 
-                    b.HasIndex("MedicalRecordId");
+                    b.HasIndex("PrescriptionId")
+                        .IsUnique()
+                        .HasFilter("[PrescriptionId] IS NOT NULL");
 
                     b.ToTable("ExaminationResults");
                 });
@@ -127,6 +119,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("CashierId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -140,42 +135,18 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("InvoiceId");
 
                     b.HasIndex("CashierId");
 
+                    b.HasIndex("MedicalRecordId");
+
                     b.HasIndex("PatientId");
 
                     b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("HCS.Domain.Models.InvoiceDetail", b =>
-                {
-                    b.Property<int>("InvoiceDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceDetailId"));
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsPrescription")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MedicalRecordId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InvoiceDetailId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("MedicalRecordId");
-
-                    b.ToTable("InvoiceDetails");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
@@ -186,19 +157,18 @@ namespace HCS.ApplicationContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicalRecordId"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ExamCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ExamReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExaminationResultId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCheckUp")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("MedicalRecordDate")
                         .HasColumnType("datetime2");
@@ -206,20 +176,45 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrescriptionId")
-                        .HasColumnType("int");
-
                     b.HasKey("MedicalRecordId");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("ExaminationResultId")
+                        .IsUnique()
+                        .HasFilter("[ExaminationResultId] IS NOT NULL");
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("PrescriptionId");
-
                     b.ToTable("MedicalRecords");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordCateogry", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "MedicalRecordId");
+
+                    b.HasIndex("MedicalRecordId");
+
+                    b.ToTable("MedicalRecordCategories");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordDoctor", b =>
+                {
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "MedicalRecordId");
+
+                    b.HasIndex("MedicalRecordId");
+
+                    b.ToTable("MedicalRecordDoctors");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Patient", b =>
@@ -239,6 +234,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<byte?>("BloodPressure")
                         .HasColumnType("tinyint");
 
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
                     b.Property<byte?>("Height")
                         .HasColumnType("tinyint");
 
@@ -250,6 +248,9 @@ namespace HCS.ApplicationContext.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("PatientId");
+
+                    b.HasIndex("ContactId")
+                        .IsUnique();
 
                     b.ToTable("Patients");
                 });
@@ -289,28 +290,6 @@ namespace HCS.ApplicationContext.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            RoleName = "Admin"
-                        },
-                        new
-                        {
-                            RoleId = 2,
-                            RoleName = "Doctor"
-                        },
-                        new
-                        {
-                            RoleId = 3,
-                            RoleName = "Cashier"
-                        },
-                        new
-                        {
-                            RoleId = 4,
-                            RoleName = "Nurse"
-                        });
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Service", b =>
@@ -321,8 +300,8 @@ namespace HCS.ApplicationContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("ServiceName")
                         .IsRequired()
@@ -439,8 +418,8 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<DateTime>("Inputday")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("SName")
                         .IsRequired()
@@ -460,7 +439,7 @@ namespace HCS.ApplicationContext.Migrations
 
                     b.HasIndex("SuppliesTypeId");
 
-                    b.ToTable("Supplys");
+                    b.ToTable("Supplies");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.User", b =>
@@ -474,6 +453,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -485,42 +467,28 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("Status")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("ContactId")
+                        .IsUnique();
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HCS.Domain.Models.Contact", b =>
-                {
-                    b.HasOne("HCS.Domain.Models.Patient", "Patient")
-                        .WithMany("Contacts")
-                        .HasForeignKey("PatientId");
-
-                    b.HasOne("HCS.Domain.Models.User", "User")
-                        .WithMany("Contacts")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("HCS.Domain.Models.ExaminationResult", b =>
                 {
-                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
-                        .WithMany("ExaminationResults")
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("HCS.Domain.Models.Prescription", "Prescription")
+                        .WithOne("ExaminationResult")
+                        .HasForeignKey("HCS.Domain.Models.ExaminationResult", "PrescriptionId");
 
-                    b.Navigation("MedicalRecord");
+                    b.Navigation("Prescription");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Invoice", b =>
@@ -528,52 +496,33 @@ namespace HCS.ApplicationContext.Migrations
                     b.HasOne("HCS.Domain.Models.User", "Cashier")
                         .WithMany("Invoices")
                         .HasForeignKey("CashierId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
+                        .WithMany("Invoices")
+                        .HasForeignKey("MedicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HCS.Domain.Models.Patient", "Patient")
                         .WithMany("Invoices")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Cashier");
 
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("HCS.Domain.Models.InvoiceDetail", b =>
-                {
-                    b.HasOne("HCS.Domain.Models.Invoice", "Invoice")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
                     b.Navigation("MedicalRecord");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
                 {
-                    b.HasOne("HCS.Domain.Models.Category", "Category")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HCS.Domain.Models.User", "Doctor")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("HCS.Domain.Models.ExaminationResult", "ExaminationResult")
+                        .WithOne("MedicalRecord")
+                        .HasForeignKey("HCS.Domain.Models.MedicalRecord", "ExaminationResultId");
 
                     b.HasOne("HCS.Domain.Models.Patient", "Patient")
                         .WithMany("MedicalRecords")
@@ -581,19 +530,58 @@ namespace HCS.ApplicationContext.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HCS.Domain.Models.Prescription", "Prescription")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("PrescriptionId")
+                    b.Navigation("ExaminationResult");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordCateogry", b =>
+                {
+                    b.HasOne("HCS.Domain.Models.Category", "Category")
+                        .WithMany("MedicalRecordCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
+                        .WithMany("MedicalRecordCategories")
+                        .HasForeignKey("MedicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
+                    b.Navigation("MedicalRecord");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordDoctor", b =>
+                {
+                    b.HasOne("HCS.Domain.Models.User", "Doctor")
+                        .WithMany("MedicalRecordDoctors")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
+                        .WithMany("MedicalRecordDoctors")
+                        .HasForeignKey("MedicalRecordId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Doctor");
 
-                    b.Navigation("Patient");
+                    b.Navigation("MedicalRecord");
+                });
 
-                    b.Navigation("Prescription");
+            modelBuilder.Entity("HCS.Domain.Models.Patient", b =>
+                {
+                    b.HasOne("HCS.Domain.Models.Contact", "Contact")
+                        .WithOne("Patient")
+                        .HasForeignKey("HCS.Domain.Models.Patient", "ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Service", b =>
@@ -671,6 +659,12 @@ namespace HCS.ApplicationContext.Migrations
                         .WithMany("Doctors")
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("HCS.Domain.Models.Contact", "Contact")
+                        .WithOne("User")
+                        .HasForeignKey("HCS.Domain.Models.User", "ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HCS.Domain.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
@@ -679,6 +673,8 @@ namespace HCS.ApplicationContext.Migrations
 
                     b.Navigation("Category");
 
+                    b.Navigation("Contact");
+
                     b.Navigation("Role");
                 });
 
@@ -686,29 +682,37 @@ namespace HCS.ApplicationContext.Migrations
                 {
                     b.Navigation("Doctors");
 
-                    b.Navigation("MedicalRecords");
+                    b.Navigation("MedicalRecordCategories");
 
                     b.Navigation("ServiceTypes");
                 });
 
-            modelBuilder.Entity("HCS.Domain.Models.Invoice", b =>
+            modelBuilder.Entity("HCS.Domain.Models.Contact", b =>
                 {
-                    b.Navigation("InvoiceDetails");
+                    b.Navigation("Patient");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.ExaminationResult", b =>
+                {
+                    b.Navigation("MedicalRecord")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
                 {
-                    b.Navigation("ExaminationResults");
+                    b.Navigation("Invoices");
 
-                    b.Navigation("InvoiceDetails");
+                    b.Navigation("MedicalRecordCategories");
+
+                    b.Navigation("MedicalRecordDoctors");
 
                     b.Navigation("ServiceMedicalRecords");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Patient", b =>
                 {
-                    b.Navigation("Contacts");
-
                     b.Navigation("Invoices");
 
                     b.Navigation("MedicalRecords");
@@ -716,7 +720,8 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.Prescription", b =>
                 {
-                    b.Navigation("MedicalRecords");
+                    b.Navigation("ExaminationResult")
+                        .IsRequired();
 
                     b.Navigation("SuppliesPrescriptions");
                 });
@@ -748,11 +753,9 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.User", b =>
                 {
-                    b.Navigation("Contacts");
-
                     b.Navigation("Invoices");
 
-                    b.Navigation("MedicalRecords");
+                    b.Navigation("MedicalRecordDoctors");
                 });
 #pragma warning restore 612, 618
         }

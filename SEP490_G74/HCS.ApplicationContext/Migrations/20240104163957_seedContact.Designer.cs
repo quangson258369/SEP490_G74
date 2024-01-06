@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCS.ApplicationContext.Migrations
 {
     [DbContext(typeof(HCSContext))]
-    [Migration("20231224040318_initDb3")]
-    partial class initDb3
+    [Migration("20240104163957_seedContact")]
+    partial class seedContact
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,11 @@ namespace HCS.ApplicationContext.Migrations
                         {
                             CategoryId = 2,
                             CategoryName = "Ngoại khoa"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "Khoa thần kinh"
                         });
                 });
 
@@ -80,21 +85,11 @@ namespace HCS.ApplicationContext.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("CId");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Contacts");
 
@@ -102,35 +97,122 @@ namespace HCS.ApplicationContext.Migrations
                         new
                         {
                             CId = 1,
-                            Address = "",
+                            Address = "Ha Noi",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
-                            Name = "Khoa",
-                            Phone = "",
-                            UserId = 1
+                            Name = "Admin Khoa",
+                            Phone = "0987662512"
                         },
                         new
                         {
                             CId = 2,
-                            Address = "",
+                            Address = "Ha Noi",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
-                            Name = "Son",
-                            Phone = "",
-                            UserId = 2
+                            Name = "Bsi Son",
+                            Phone = "0987662512"
                         },
                         new
                         {
                             CId = 3,
-                            Address = "",
+                            Address = "Ha Noi",
                             Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Gender = false,
                             Img = "",
-                            Name = "Y Ta",
-                            Phone = "",
-                            UserId = 3
+                            Name = "Bsi Bang",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 4,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Bsi Tam",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 7,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Bsi Banh",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 8,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Bsi Vu",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 9,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Bsi Van",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 5,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Y Ta Nho",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 6,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Cashier Trinh",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 10,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Benh nhan A",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 11,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Benh nhan B",
+                            Phone = "0987662512"
+                        },
+                        new
+                        {
+                            CId = 12,
+                            Address = "Ha Noi",
+                            Dob = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Gender = false,
+                            Img = "",
+                            Name = "Benh nhan C",
+                            Phone = "0987662512"
                         });
                 });
 
@@ -153,12 +235,14 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<DateTime>("ExamDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MedicalRecordId")
+                    b.Property<int?>("PrescriptionId")
                         .HasColumnType("int");
 
                     b.HasKey("ExamResultId");
 
-                    b.HasIndex("MedicalRecordId");
+                    b.HasIndex("PrescriptionId")
+                        .IsUnique()
+                        .HasFilter("[PrescriptionId] IS NOT NULL");
 
                     b.ToTable("ExaminationResults");
                 });
@@ -187,8 +271,8 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("InvoiceId");
 
@@ -199,32 +283,6 @@ namespace HCS.ApplicationContext.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("HCS.Domain.Models.InvoiceDetail", b =>
-                {
-                    b.Property<int>("InvoiceDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceDetailId"));
-
-                    b.Property<int>("InvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsPrescription")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MedicalRecordId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InvoiceDetailId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("MedicalRecordId");
-
-                    b.ToTable("InvoiceDetails");
-                });
-
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
                 {
                     b.Property<int>("MedicalRecordId")
@@ -233,19 +291,18 @@ namespace HCS.ApplicationContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicalRecordId"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ExamCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ExamReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExaminationResultId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCheckUp")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("MedicalRecordDate")
                         .HasColumnType("datetime2");
@@ -253,20 +310,109 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrescriptionId")
-                        .HasColumnType("int");
-
                     b.HasKey("MedicalRecordId");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("ExaminationResultId")
+                        .IsUnique()
+                        .HasFilter("[ExaminationResultId] IS NOT NULL");
 
                     b.HasIndex("PatientId");
 
-                    b.HasIndex("PrescriptionId");
-
                     b.ToTable("MedicalRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            MedicalRecordId = 1,
+                            ExamReason = "patient 1 mr1",
+                            IsCheckUp = false,
+                            IsPaid = false,
+                            MedicalRecordDate = new DateTime(2024, 1, 4, 23, 39, 56, 580, DateTimeKind.Local).AddTicks(9041),
+                            PatientId = 1
+                        },
+                        new
+                        {
+                            MedicalRecordId = 2,
+                            ExamReason = "patient 2 mr2",
+                            IsCheckUp = false,
+                            IsPaid = false,
+                            MedicalRecordDate = new DateTime(2024, 1, 4, 23, 39, 56, 580, DateTimeKind.Local).AddTicks(9054),
+                            PatientId = 2
+                        });
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordCateogry", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "MedicalRecordId");
+
+                    b.HasIndex("MedicalRecordId");
+
+                    b.ToTable("MedicalRecordCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            MedicalRecordId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            MedicalRecordId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 1,
+                            MedicalRecordId = 2
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            MedicalRecordId = 2
+                        });
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordDoctor", b =>
+                {
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "MedicalRecordId");
+
+                    b.HasIndex("MedicalRecordId");
+
+                    b.ToTable("MedicalRecordDoctors");
+
+                    b.HasData(
+                        new
+                        {
+                            DoctorId = 2,
+                            MedicalRecordId = 1
+                        },
+                        new
+                        {
+                            DoctorId = 3,
+                            MedicalRecordId = 1
+                        },
+                        new
+                        {
+                            DoctorId = 6,
+                            MedicalRecordId = 2
+                        },
+                        new
+                        {
+                            DoctorId = 4,
+                            MedicalRecordId = 2
+                        });
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Patient", b =>
@@ -286,6 +432,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<byte?>("BloodPressure")
                         .HasColumnType("tinyint");
 
+                    b.Property<int?>("ContactId")
+                        .HasColumnType("int");
+
                     b.Property<byte?>("Height")
                         .HasColumnType("tinyint");
 
@@ -298,7 +447,46 @@ namespace HCS.ApplicationContext.Migrations
 
                     b.HasKey("PatientId");
 
+                    b.HasIndex("ContactId")
+                        .IsUnique()
+                        .HasFilter("[ContactId] IS NOT NULL");
+
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            PatientId = 1,
+                            Allergieshistory = "None",
+                            BloodGroup = "A",
+                            BloodPressure = (byte)128,
+                            ContactId = 10,
+                            Height = (byte)157,
+                            ServiceDetailName = "None",
+                            Weight = (byte)50
+                        },
+                        new
+                        {
+                            PatientId = 2,
+                            Allergieshistory = "None",
+                            BloodGroup = "A",
+                            BloodPressure = (byte)128,
+                            ContactId = 11,
+                            Height = (byte)157,
+                            ServiceDetailName = "None",
+                            Weight = (byte)50
+                        },
+                        new
+                        {
+                            PatientId = 3,
+                            Allergieshistory = "None",
+                            BloodGroup = "A",
+                            BloodPressure = (byte)128,
+                            ContactId = 12,
+                            Height = (byte)157,
+                            ServiceDetailName = "None",
+                            Weight = (byte)50
+                        });
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Prescription", b =>
@@ -368,8 +556,8 @@ namespace HCS.ApplicationContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("ServiceName")
                         .IsRequired()
@@ -383,6 +571,92 @@ namespace HCS.ApplicationContext.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceId = 1,
+                            Price = 0.0,
+                            ServiceName = "Tiêm vaccine",
+                            ServiceTypeId = 1
+                        },
+                        new
+                        {
+                            ServiceId = 2,
+                            Price = 0.0,
+                            ServiceName = "Khám mắt",
+                            ServiceTypeId = 1
+                        },
+                        new
+                        {
+                            ServiceId = 3,
+                            Price = 0.0,
+                            ServiceName = "Khám đại tràng",
+                            ServiceTypeId = 2
+                        },
+                        new
+                        {
+                            ServiceId = 4,
+                            Price = 0.0,
+                            ServiceName = "Siêu âm màu",
+                            ServiceTypeId = 2
+                        },
+                        new
+                        {
+                            ServiceId = 5,
+                            Price = 0.0,
+                            ServiceName = "Xét nghiệm máu",
+                            ServiceTypeId = 3
+                        },
+                        new
+                        {
+                            ServiceId = 6,
+                            Price = 0.0,
+                            ServiceName = "Phẫu thuật cắt ruột thừa",
+                            ServiceTypeId = 3
+                        },
+                        new
+                        {
+                            ServiceId = 7,
+                            Price = 0.0,
+                            ServiceName = "Tiêm vaccine cúm",
+                            ServiceTypeId = 4
+                        },
+                        new
+                        {
+                            ServiceId = 8,
+                            Price = 0.0,
+                            ServiceName = "Khám tai mũi họng",
+                            ServiceTypeId = 4
+                        },
+                        new
+                        {
+                            ServiceId = 9,
+                            Price = 0.0,
+                            ServiceName = "Khám dạ dày",
+                            ServiceTypeId = 5
+                        },
+                        new
+                        {
+                            ServiceId = 10,
+                            Price = 0.0,
+                            ServiceName = "Siêu âm",
+                            ServiceTypeId = 5
+                        },
+                        new
+                        {
+                            ServiceId = 11,
+                            Price = 0.0,
+                            ServiceName = "Xét nghiệm nước tiểu",
+                            ServiceTypeId = 6
+                        },
+                        new
+                        {
+                            ServiceId = 12,
+                            Price = 0.0,
+                            ServiceName = "Phẫu thuật nối gân tay",
+                            ServiceTypeId = 6
+                        });
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.ServiceMedicalRecord", b =>
@@ -393,10 +667,15 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("MedicalRecordId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("int");
+
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("ServiceId", "MedicalRecordId");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("MedicalRecordId");
 
@@ -423,6 +702,44 @@ namespace HCS.ApplicationContext.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("ServiceTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceTypeId = 1,
+                            CategoryId = 1,
+                            ServiceTypeName = "Khám tổng quát"
+                        },
+                        new
+                        {
+                            ServiceTypeId = 2,
+                            CategoryId = 1,
+                            ServiceTypeName = "Khám chuyên khoa"
+                        },
+                        new
+                        {
+                            ServiceTypeId = 3,
+                            CategoryId = 2,
+                            ServiceTypeName = "Khám nội soi"
+                        },
+                        new
+                        {
+                            ServiceTypeId = 4,
+                            CategoryId = 2,
+                            ServiceTypeName = "Chẩn đoán hình ảnh"
+                        },
+                        new
+                        {
+                            ServiceTypeId = 5,
+                            CategoryId = 3,
+                            ServiceTypeName = "Xét nghiệm"
+                        },
+                        new
+                        {
+                            ServiceTypeId = 6,
+                            CategoryId = 3,
+                            ServiceTypeName = "Phẫu thuật"
+                        });
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.SuppliesPrescription", b =>
@@ -486,8 +803,8 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<DateTime>("Inputday")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<string>("SName")
                         .IsRequired()
@@ -507,7 +824,7 @@ namespace HCS.ApplicationContext.Migrations
 
                     b.HasIndex("SuppliesTypeId");
 
-                    b.ToTable("Supplys");
+                    b.ToTable("Supplies");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.User", b =>
@@ -521,6 +838,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -532,12 +852,15 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("Status")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ContactId")
+                        .IsUnique();
 
                     b.HasIndex("RoleId");
 
@@ -547,6 +870,7 @@ namespace HCS.ApplicationContext.Migrations
                         new
                         {
                             UserId = 1,
+                            ContactId = 1,
                             Email = "vkhoa871@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
                             RoleId = 1,
@@ -556,6 +880,7 @@ namespace HCS.ApplicationContext.Migrations
                         {
                             UserId = 2,
                             CategoryId = 1,
+                            ContactId = 2,
                             Email = "sonnk1@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
                             RoleId = 2,
@@ -564,37 +889,80 @@ namespace HCS.ApplicationContext.Migrations
                         new
                         {
                             UserId = 3,
+                            CategoryId = 2,
+                            ContactId = 3,
+                            Email = "doctor3@gmail.com",
+                            Password = "d0c406e82877aacad00415ca64f821e9",
+                            RoleId = 2,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            CategoryId = 3,
+                            ContactId = 4,
+                            Email = "doctor4@gmail.com",
+                            Password = "d0c406e82877aacad00415ca64f821e9",
+                            RoleId = 2,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            CategoryId = 3,
+                            ContactId = 7,
+                            Email = "doctor5@gmail.com",
+                            Password = "d0c406e82877aacad00415ca64f821e9",
+                            RoleId = 2,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 6,
+                            CategoryId = 1,
+                            ContactId = 8,
+                            Email = "doctor6@gmail.com",
+                            Password = "d0c406e82877aacad00415ca64f821e9",
+                            RoleId = 2,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 7,
+                            CategoryId = 2,
+                            ContactId = 9,
+                            Email = "doctor7@gmail.com",
+                            Password = "d0c406e82877aacad00415ca64f821e9",
+                            RoleId = 2,
+                            Status = true
+                        },
+                        new
+                        {
+                            UserId = 8,
+                            ContactId = 5,
                             Email = "yta1@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
                             RoleId = 4,
                             Status = true
+                        },
+                        new
+                        {
+                            UserId = 9,
+                            ContactId = 6,
+                            Email = "cashier1@gmail.com",
+                            Password = "d0c406e82877aacad00415ca64f821e9",
+                            RoleId = 3,
+                            Status = true
                         });
-                });
-
-            modelBuilder.Entity("HCS.Domain.Models.Contact", b =>
-                {
-                    b.HasOne("HCS.Domain.Models.Patient", "Patient")
-                        .WithMany("Contacts")
-                        .HasForeignKey("PatientId");
-
-                    b.HasOne("HCS.Domain.Models.User", "User")
-                        .WithMany("Contacts")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.ExaminationResult", b =>
                 {
-                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
-                        .WithMany("ExaminationResults")
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("HCS.Domain.Models.Prescription", "Prescription")
+                        .WithOne("ExaminationResult")
+                        .HasForeignKey("HCS.Domain.Models.ExaminationResult", "PrescriptionId");
 
-                    b.Navigation("MedicalRecord");
+                    b.Navigation("Prescription");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Invoice", b =>
@@ -602,13 +970,13 @@ namespace HCS.ApplicationContext.Migrations
                     b.HasOne("HCS.Domain.Models.User", "Cashier")
                         .WithMany("Invoices")
                         .HasForeignKey("CashierId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("HCS.Domain.Models.Patient", "Patient")
                         .WithMany("Invoices")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Cashier");
@@ -616,38 +984,11 @@ namespace HCS.ApplicationContext.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("HCS.Domain.Models.InvoiceDetail", b =>
-                {
-                    b.HasOne("HCS.Domain.Models.Invoice", "Invoice")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("MedicalRecordId")
-                        .OnDelete(DeleteBehavior.ClientNoAction)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("MedicalRecord");
-                });
-
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
                 {
-                    b.HasOne("HCS.Domain.Models.Category", "Category")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HCS.Domain.Models.User", "Doctor")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("HCS.Domain.Models.ExaminationResult", "ExaminationResult")
+                        .WithOne("MedicalRecord")
+                        .HasForeignKey("HCS.Domain.Models.MedicalRecord", "ExaminationResultId");
 
                     b.HasOne("HCS.Domain.Models.Patient", "Patient")
                         .WithMany("MedicalRecords")
@@ -655,19 +996,56 @@ namespace HCS.ApplicationContext.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HCS.Domain.Models.Prescription", "Prescription")
-                        .WithMany("MedicalRecords")
-                        .HasForeignKey("PrescriptionId")
+                    b.Navigation("ExaminationResult");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordCateogry", b =>
+                {
+                    b.HasOne("HCS.Domain.Models.Category", "Category")
+                        .WithMany("MedicalRecordCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
+                        .WithMany("MedicalRecordCategories")
+                        .HasForeignKey("MedicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
 
+                    b.Navigation("MedicalRecord");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.MedicalRecordDoctor", b =>
+                {
+                    b.HasOne("HCS.Domain.Models.User", "Doctor")
+                        .WithMany("MedicalRecordDoctors")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
+                        .WithMany("MedicalRecordDoctors")
+                        .HasForeignKey("MedicalRecordId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Doctor");
 
-                    b.Navigation("Patient");
+                    b.Navigation("MedicalRecord");
+                });
 
-                    b.Navigation("Prescription");
+            modelBuilder.Entity("HCS.Domain.Models.Patient", b =>
+                {
+                    b.HasOne("HCS.Domain.Models.Contact", "Contact")
+                        .WithOne("Patient")
+                        .HasForeignKey("HCS.Domain.Models.Patient", "ContactId");
+
+                    b.Navigation("Contact");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Service", b =>
@@ -683,6 +1061,10 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.ServiceMedicalRecord", b =>
                 {
+                    b.HasOne("HCS.Domain.Models.Invoice", "Invoice")
+                        .WithMany("ServiceMedicalRecords")
+                        .HasForeignKey("InvoiceId");
+
                     b.HasOne("HCS.Domain.Models.MedicalRecord", "MedicalRecord")
                         .WithMany("ServiceMedicalRecords")
                         .HasForeignKey("MedicalRecordId")
@@ -694,6 +1076,8 @@ namespace HCS.ApplicationContext.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Invoice");
 
                     b.Navigation("MedicalRecord");
 
@@ -745,6 +1129,12 @@ namespace HCS.ApplicationContext.Migrations
                         .WithMany("Doctors")
                         .HasForeignKey("CategoryId");
 
+                    b.HasOne("HCS.Domain.Models.Contact", "Contact")
+                        .WithOne("User")
+                        .HasForeignKey("HCS.Domain.Models.User", "ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HCS.Domain.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
@@ -753,6 +1143,8 @@ namespace HCS.ApplicationContext.Migrations
 
                     b.Navigation("Category");
 
+                    b.Navigation("Contact");
+
                     b.Navigation("Role");
                 });
 
@@ -760,29 +1152,40 @@ namespace HCS.ApplicationContext.Migrations
                 {
                     b.Navigation("Doctors");
 
-                    b.Navigation("MedicalRecords");
+                    b.Navigation("MedicalRecordCategories");
 
                     b.Navigation("ServiceTypes");
                 });
 
+            modelBuilder.Entity("HCS.Domain.Models.Contact", b =>
+                {
+                    b.Navigation("Patient");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HCS.Domain.Models.ExaminationResult", b =>
+                {
+                    b.Navigation("MedicalRecord")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HCS.Domain.Models.Invoice", b =>
                 {
-                    b.Navigation("InvoiceDetails");
+                    b.Navigation("ServiceMedicalRecords");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.MedicalRecord", b =>
                 {
-                    b.Navigation("ExaminationResults");
+                    b.Navigation("MedicalRecordCategories");
 
-                    b.Navigation("InvoiceDetails");
+                    b.Navigation("MedicalRecordDoctors");
 
                     b.Navigation("ServiceMedicalRecords");
                 });
 
             modelBuilder.Entity("HCS.Domain.Models.Patient", b =>
                 {
-                    b.Navigation("Contacts");
-
                     b.Navigation("Invoices");
 
                     b.Navigation("MedicalRecords");
@@ -790,7 +1193,8 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.Prescription", b =>
                 {
-                    b.Navigation("MedicalRecords");
+                    b.Navigation("ExaminationResult")
+                        .IsRequired();
 
                     b.Navigation("SuppliesPrescriptions");
                 });
@@ -822,11 +1226,9 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.User", b =>
                 {
-                    b.Navigation("Contacts");
-
                     b.Navigation("Invoices");
 
-                    b.Navigation("MedicalRecords");
+                    b.Navigation("MedicalRecordDoctors");
                 });
 #pragma warning restore 612, 618
         }

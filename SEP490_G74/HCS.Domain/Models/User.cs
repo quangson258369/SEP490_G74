@@ -14,20 +14,23 @@ namespace HCS.Domain.Models
 
         public string Email { get; set; } = null!;
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; } = true;
 
         public int RoleId { get; set; }
 
         public Role Role { get; set; } = null!;
 
-        public int? CategoryId { get; set; } = null;
+        public int? CategoryId { get; set; }
 
         public Category? Category { get; set; } = null;
 
-        public ICollection<Contact> Contacts { get; set; } = new List<Contact>();
+        public int ContactId { get; set; }
 
-        public ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+        public Contact? Contact { get; set; }
 
-        public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
+        public ICollection<Invoice>? Invoices { get; set; }
+
+        public ICollection<MedicalRecordDoctor>? MedicalRecordDoctors { get; set; }
+
     }
 }

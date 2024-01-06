@@ -20,7 +20,7 @@ namespace HCS.DataAccess.Repository
         public async Task<Patient?> GetPatientByUserId(int userId)
         {
             return await _context.Patients
-                .Include(c => c.Contacts)
+                .Include(c => c.Contact)
                 .FirstOrDefaultAsync(e => e.PatientId == userId);
         }
 
@@ -33,22 +33,28 @@ namespace HCS.DataAccess.Repository
 
             if (doctor.RoleId != 2)
             {
-                return await _context.Patients.Include(c => c.Contacts).ToListAsync();
+                return await _context.Patients.Include(c => c.Contact).ToListAsync();
             }
 
-            //Get MedicalRecords by doctorId and categoryId
-            var patientIds = await _context.MedicalRecords
-                .Where(med => med.DoctorId == doctor.UserId && med.CategoryId == doctor.CategoryId)
-                .Select(m => m.PatientId)
+            // get list MR doctor assigned
+            var medDocs = await _context.MedicalRecordDoctors
+                .Where(x => x.DoctorId == doctor.UserId)
+                .Select(x => x.MedicalRecordId)
                 .ToListAsync();
 
-            //Get patients from patientId list
-            var output = await _context.Patients
-                .Where(patient => patientIds
-                    .Contains(patient.PatientId))
-                .Include(c => c.Contacts)
+            // get list patientIds 
+            var patientIds = await _context.MedicalRecords
+                .Where(x => medDocs.Contains(x.MedicalRecordId))
+                .Select(x => x.PatientId)
                 .ToListAsync();
-            return output;
+
+            // get list patients that has same categoryID and doctorID with doctor who called api
+            var patients = await _context.Patients
+                .Where(x => patientIds.Contains(x.PatientId))
+                .Include(x => x.Contact)
+                .ToListAsync();
+
+            return patients;
         }
     }
 }

@@ -16,8 +16,10 @@ namespace HCS.Domain.Models
 
         public DateTime ExamDate { get; set; } = DateTime.Now;
 
-        public int MedicalRecordId { get; set; }
+        public MedicalRecord MedicalRecord { get; set; }  = null!;
 
-        public MedicalRecord MedicalRecord { get; set; } = null!;
+        public int? PrescriptionId { get; set; }
+
+        public Prescription? Prescription { get; set; } = null!;
     }
 }

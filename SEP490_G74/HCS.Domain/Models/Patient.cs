@@ -22,10 +22,12 @@ namespace HCS.Domain.Models
 
         public string? Allergieshistory { get; set; }
 
-        public ICollection<Contact> Contacts { get; set; } = new List<Contact>();
+        public int? ContactId { get; set; }
 
-        public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
+        public Contact? Contact { get; set; } = null!;
 
-        public ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+        public virtual ICollection<Invoice>? Invoices { get; set; }
+
+        public ICollection<MedicalRecord>? MedicalRecords { get; set; }
     }
 }

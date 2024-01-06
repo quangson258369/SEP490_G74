@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,28 +15,24 @@ namespace HCS.Domain.Models
 
         public string ExamReason { get; set; } = string.Empty;
 
-        public string ExamCode { get; set; } = string.Empty;
+        public bool IsPaid { get; set; } = false;
 
-        public int CategoryId { get; set; }
-
-        public Category Category { get; set; } = null!;
+        public bool IsCheckUp { get; set; } = false;
 
         public int PatientId { get; set; }
 
-        public Patient Patient { get; set; } = null!;
+        public Patient? Patient { get; set; } = null!;
 
-        public int DoctorId { get; set; }
+        //public ICollection<Invoice>? Invoices { get; set; }
 
-        public User Doctor { get; set; } = null!;
+        public int? ExaminationResultId { get; set; }
 
-        public int PrescriptionId { get; set; }
+        public ExaminationResult? ExaminationResult { get; set; }
 
-        public Prescription Prescription { get; set; } = null!;
+        public ICollection<MedicalRecordCateogry>? MedicalRecordCategories { get; set; }
 
-        public ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+        public ICollection<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; }
 
-        public ICollection<ExaminationResult> ExaminationResults { get; set; } = new List<ExaminationResult>();
-
-        public ICollection<ServiceMedicalRecord> ServiceMedicalRecords { get; set; } = new List<ServiceMedicalRecord>();
+        public ICollection<MedicalRecordDoctor>? MedicalRecordDoctors { get; set; }
     }
 }

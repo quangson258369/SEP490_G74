@@ -12,9 +12,9 @@ namespace HCS.Domain.Models
         
         public string ServiceName { get; set; } = null!;
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
-        public ICollection<ServiceMedicalRecord> ServiceMedicalRecords { get; set; } = new List<ServiceMedicalRecord>();
+        public ICollection<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; }
 
         public int ServiceTypeId { get; set; }
 

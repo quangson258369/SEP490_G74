@@ -14,20 +14,22 @@ namespace HCS.Domain.Models
 
         public bool Status { get; set; }
 
-        public decimal Total { get; set; }
+        public double Total { get; set; }
 
         public string PaymentMethod { get; set; } = string.Empty;
 
         public int PatientId { get; set; }
 
-        public Patient Patient { get; set; } = null!;
+        public Patient? Patient { get; set; }
 
         public int CashierId { get; set; }
 
-        public User Cashier { get; set; } = null!;
+        public User? Cashier { get; set; } = null!;
 
-        public ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+        //public int MedicalRecordId { get; set; }
 
-        
+        //public MedicalRecord MedicalRecord { get; set; } = null!;
+
+        public ICollection<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace HCS.API.Controllers
             return registerResponse.IsSuccess ? Ok(registerResponse) : BadRequest(registerResponse);
         }
 
-        [Authorize(Roles = "Admin, Doctor, Nurse")]
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
@@ -73,7 +73,7 @@ namespace HCS.API.Controllers
             return BadRequest();
         }
 
-        [Authorize(Roles = "Admin, Nurse")]
+        [Authorize(Roles = "Admin, Nurse, Cashier")]
         [HttpPost("patient-contact")]
         public async Task<IActionResult> AddPatientContact([FromBody] PatientContactRequestModel patientContactRequestModel)
         {
@@ -82,7 +82,7 @@ namespace HCS.API.Controllers
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
-        [Authorize(Roles = "Admin, Doctor, Nurse")]
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
         [HttpGet("patients")]
         public async Task<IActionResult> GetPatients([FromQuery] int pageIndex, [FromQuery] int pageSize, [FromQuery] int userId)
         {
@@ -91,11 +91,20 @@ namespace HCS.API.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
 
-        [Authorize(Roles = "Admin, Nurse")]
+        [Authorize(Roles = "Admin, Nurse, Cashier")]
         [HttpGet("doctor/id/{categoryId:int}")]
         public async Task<IActionResult> GetListDoctorByCategoryId(int categoryId)
         {
             var result = await _userService.GetListDoctorByCategoryId(categoryId);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [Authorize(Roles = "Admin, Nurse, Cashier")]
+        [HttpGet("doctor/least-assigned/id/{categoryId:int}")]
+        public async Task<IActionResult> GetLeastAsginedDoctorByCategoryId(int categoryId)
+        {
+            var result = await _userService.GetLeastAssginedDoctorByCategoryId(categoryId);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }

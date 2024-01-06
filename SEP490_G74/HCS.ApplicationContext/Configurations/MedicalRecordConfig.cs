@@ -14,19 +14,15 @@ namespace HCS.ApplicationContext.Configurations
         public void Configure(EntityTypeBuilder<MedicalRecord> builder)
         {
             builder
-                .HasMany(c => c.InvoiceDetails)
+                .HasOne(c => c.ExaminationResult)
                 .WithOne(c => c.MedicalRecord)
-                .HasForeignKey(c => c.MedicalRecordId);
+                .HasForeignKey<MedicalRecord>(c => c.ExaminationResultId);
 
             builder
-                .HasMany(c => c.ExaminationResults)
-                .WithOne(c => c.MedicalRecord)
-                .HasForeignKey(c => c.MedicalRecordId);
-
-            builder
-                .HasOne(c => c.Category)
-                .WithMany(c => c.MedicalRecords)
-                .HasForeignKey(c => c.CategoryId);
+                .HasData(
+                    new MedicalRecord() { MedicalRecordId = 1, ExamReason = "patient 1 mr1", PatientId = 1 },
+                    new MedicalRecord() { MedicalRecordId = 2, ExamReason = "patient 2 mr2", PatientId = 2 }
+                );
         }
     }
 }

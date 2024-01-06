@@ -16,7 +16,7 @@ namespace HCS.API.Controllers
             _patientService = patientService;
         }
 
-        [Authorize(Roles = "Admin, Doctor, Nurse")]
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetPatient(int id)
         {

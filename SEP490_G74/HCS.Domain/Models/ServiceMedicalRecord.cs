@@ -17,5 +17,13 @@ namespace HCS.Domain.Models
         public MedicalRecord MedicalRecord { get; set; } = null!;
 
         public bool? Status { get; set; }
+
+        public int? InvoiceId { get; set; }
+
+        public Invoice? Invoice { get; set; }
+
+        public string Description { get; set; } = string.Empty;
+
+        public string Diagnose { get; set; } = string.Empty;
     }
 }

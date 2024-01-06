@@ -47,11 +47,11 @@ namespace HCS.Business.Mapper
 
             CreateMap<Patient, PatientResponseModel>()
                 .ForMember(dest => dest.PatientId, opt => opt.MapFrom(src => src.PatientId))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Name : string.Empty))
-                .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Dob : DateTime.Now))
-                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Contacts.Any()? src.Contacts.First().Gender : true))
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Address : string.Empty))
-                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Contacts.Any() ? src.Contacts.First().Phone : string.Empty))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Contact != null ? src.Contact.Name : string.Empty))
+                .ForMember(dest => dest.Dob, opt => opt.MapFrom(src => src.Contact != null ? src.Contact.Dob : DateTime.Now ))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Contact != null ? src.Contact.Gender : true))
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Contact != null ? src.Contact.Address : string.Empty))
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Contact != null ? src.Contact.Phone : string.Empty))
                 .ReverseMap();
 
             CreateMap<PatientAddModel, Patient>().ReverseMap();

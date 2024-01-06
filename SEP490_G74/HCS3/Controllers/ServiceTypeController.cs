@@ -25,7 +25,7 @@ public class ServiceTypeController : ControllerBase
     //    return result.IsSuccess ? Ok(result) : BadRequest(result);
     //}
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetListServiceType(int id)
     {
@@ -34,7 +34,7 @@ public class ServiceTypeController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet("service/{id:int}")]
     public async Task<IActionResult> GetListServiceBySerivceTypeId(int id)
     {
@@ -43,7 +43,7 @@ public class ServiceTypeController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpPost]
     public async Task<IActionResult> AddServiceType([FromBody] ServiceTypeAddModel serviceTypeAddModel)
     {
@@ -52,7 +52,7 @@ public class ServiceTypeController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateServiceType(int id, [FromBody] ServiceTypeUpdateModel serviceTypeUpdateModel)
     {
@@ -61,7 +61,7 @@ public class ServiceTypeController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpDelete("{id:int}")]
     public async Task DeleteServiceType(int id)
     {

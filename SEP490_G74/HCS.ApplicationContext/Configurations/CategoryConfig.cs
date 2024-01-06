@@ -9,11 +9,6 @@ namespace HCS.ApplicationContext.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder
-                .HasMany(c => c.MedicalRecords)
-                .WithOne(c => c.Category)
-                .HasForeignKey(c => c.CategoryId);
-
-            builder
                 .HasMany(c => c.ServiceTypes)
                 .WithOne(c => c.Category)
                 .HasForeignKey(c => c.CategoryId);
@@ -22,7 +17,8 @@ namespace HCS.ApplicationContext.Configurations
                 .HasData
                     (
                         new Category() { CategoryId = 1, CategoryName = "Nội khoa" },
-                        new Category() { CategoryId = 2, CategoryName = "Ngoại khoa" }
+                        new Category() { CategoryId = 2, CategoryName = "Ngoại khoa" },
+                        new Category() { CategoryId = 3, CategoryName = "Khoa thần kinh" }
                     );
         }
     }

@@ -28,6 +28,8 @@ namespace HCS.Business.Service
         Task<ApiResponse> AddPatientContact(PatientContactRequestModel patientContactRequestModel);
 
         Task<ApiResponse> GetListDoctorByCategoryId(int categoryId);
+
+        Task<ApiResponse> GetLeastAssginedDoctorByCategoryId(int categoryId);
     }
 
     public class UserService : IUserService
@@ -143,35 +145,44 @@ namespace HCS.Business.Service
                 Weight = patientContactRequestModel.Weight,
                 BloodGroup = patientContactRequestModel.BloodGroup,
                 BloodPressure = patientContactRequestModel.BloodPressure,
-                Allergieshistory = patientContactRequestModel.AllergiesHistory
+                Allergieshistory = patientContactRequestModel.AllergiesHistory,
+                Contact = new Contact()
+                {
+                    Address = patientContactRequestModel.Address,
+                    Gender = patientContactRequestModel.Gender,
+                    Name = patientContactRequestModel.Name,
+                    Img = patientContactRequestModel.Img,
+                    Phone = patientContactRequestModel.Phone,
+                    Dob = patientContactRequestModel.Dob,
+                }
             };
 
             await _unitOfWork.PatientRepo.AddAsync(patientRequest);
             await _unitOfWork.SaveChangeAsync();
 
-            var currentPatient =
-                await _unitOfWork.PatientRepo.GetAsync(
-                    x => x.PatientId == patientRequest.PatientId);
+            //var currentPatient =
+            //    await _unitOfWork.PatientRepo.GetAsync(
+            //        x => x.PatientId == patientRequest.PatientId);
 
-            if (currentPatient is null)
-            {
-                return response.SetNotFound($"Not Found Patient with Id {patientRequest.PatientId}");
-            }
+            //if (currentPatient is null)
+            //{
+            //    return response.SetNotFound($"Not Found Patient with Id {patientRequest.PatientId}");
+            //}
 
-            var contactRequest = new Contact()
-            {
-                Name = patientContactRequestModel.Name,
-                Gender = patientContactRequestModel.Gender,
-                Phone = patientContactRequestModel.Phone,
-                Dob = patientContactRequestModel.Dob,
-                Address = patientContactRequestModel.Address,
-                Img = patientContactRequestModel.Img,
-                PatientId = currentPatient.PatientId,
-                UserId = patientContactRequestModel.UserId
-            };
+            //var contactRequest = new Contact()
+            //{
+            //    Name = patientContactRequestModel.Name,
+            //    Gender = patientContactRequestModel.Gender,
+            //    Phone = patientContactRequestModel.Phone,
+            //    Dob = patientContactRequestModel.Dob,
+            //    Address = patientContactRequestModel.Address,
+            //    Img = patientContactRequestModel.Img,
+            //    //PatientId = currentPatient.PatientId,
+            //    //UserId = patientContactRequestModel.UserId
+            //};
 
-            await _unitOfWork.ContactRepo.AddAsync(contactRequest);
-            await _unitOfWork.SaveChangeAsync();
+            //await _unitOfWork.ContactRepo.AddAsync(contactRequest);
+            //await _unitOfWork.SaveChangeAsync();
 
             return response.SetOk("Created");
         }
@@ -205,11 +216,11 @@ namespace HCS.Business.Service
 
                     var profile = await _unitOfWork.UserRepo.GetProfile(item.Email);
 
-                    if(profile is not null)
+                    if (profile is not null)
                     {
                         result.UserName = profile.UserName;
                     }
-                    else 
+                    else
                     {
                         result.UserName = "Nguyễn Văn Sơn";
                     }
@@ -220,6 +231,35 @@ namespace HCS.Business.Service
             }
 
             return response.SetOk(listDoctorResponse);
+        }
+
+        public async Task<ApiResponse> GetLeastAssginedDoctorByCategoryId(int categoryId)
+        {
+            var response = new ApiResponse();
+
+            var listExistUsers = await _unitOfWork.UserRepo.GetAllDoctorByCategoryIdAsync(categoryId);
+
+            foreach (var u in listExistUsers)
+            {
+                u.MedicalRecordDoctors ??= new List<MedicalRecordDoctor>();
+            }
+
+            var leastAssignedDoctor = listExistUsers.OrderBy(d => d.MedicalRecordDoctors?.Count).FirstOrDefault();
+
+            if (leastAssignedDoctor is null) return response.SetBadRequest();
+            else
+            {
+                var result = new UserResponseByCategoryModel()
+                {
+                    CategoryName = leastAssignedDoctor.Category is not null ? leastAssignedDoctor.Category.CategoryName : string.Empty,
+                    RoleName = leastAssignedDoctor.Role.RoleName,
+                    CategoryId = leastAssignedDoctor.CategoryId,
+                    RoleId = leastAssignedDoctor.RoleId,
+                    UserId = leastAssignedDoctor.UserId,
+                    UserName = leastAssignedDoctor.Contact is not null ? leastAssignedDoctor.Contact.Name : string.Empty
+                };
+                return response.SetOk(result);
+            }
         }
     }
 }

@@ -12,10 +12,10 @@ namespace HCS.Domain.Models
 
         public string CategoryName { get; set; } = string.Empty;
 
-        public ICollection<User> Doctors { get; set; } = new List<User>();
+        public ICollection<User>? Doctors { get; set; }
 
-        public ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+        public ICollection<MedicalRecordCateogry>? MedicalRecordCategories { get; set; }
 
-        public ICollection<ServiceType> ServiceTypes { get; set; } = new List<ServiceType>();
+        public ICollection<ServiceType>? ServiceTypes { get; set; }
     }
 }

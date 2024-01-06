@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace HCS.DataAccess.Repository
         {
             IQueryable<User> query = _dbSet;
             var user = await query
-                .Include(u => u.Contacts)
+                .Include(u => u.Contact)
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync( u => u.Email.Equals(email));
 
@@ -34,10 +35,7 @@ namespace HCS.DataAccess.Repository
                     UserId = user.UserId
                 };
 
-                if(user.Contacts is { Count: > 0 } )
-                {
-                    profile.UserName = user.Contacts.First().Name;
-                }
+                profile.UserName = user.Contact != null ? user.Contact.Name : string.Empty;  
 
                 if(user.Role != null)
                 {
@@ -48,6 +46,15 @@ namespace HCS.DataAccess.Repository
             return null;
         }
 
-        
+        public async Task<List<User>> GetAllDoctorByCategoryIdAsync(int categoryId)
+        {
+            IQueryable<User> query = _dbSet;
+            return await query
+                .Where(x => x.CategoryId == categoryId)
+                .Include(x => x.Contact)
+                .Include(x => x.MedicalRecordDoctors)
+                .Include(x => x.Role)
+                .ToListAsync();
+        }
     }
 }

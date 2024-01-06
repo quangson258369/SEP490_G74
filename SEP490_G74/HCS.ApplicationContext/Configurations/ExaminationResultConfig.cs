@@ -15,6 +15,11 @@ namespace HCS.ApplicationContext.Configurations
         {
             builder
                 .HasKey(c => c.ExamResultId);
+
+            builder
+                .HasOne(c => c.Prescription)
+                .WithOne(c => c.ExaminationResult)
+                .HasForeignKey<ExaminationResult>(c => c.PrescriptionId);
         }
     }
 }

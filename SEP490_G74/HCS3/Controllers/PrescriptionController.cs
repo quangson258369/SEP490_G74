@@ -17,7 +17,7 @@ public class PrescriptionController : ControllerBase
         _prescriptionService = prescriptionService;
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetPrescription(int id)
     {
@@ -26,7 +26,7 @@ public class PrescriptionController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet]
     public async Task<IActionResult> GetPrescriptions()
     {
@@ -35,7 +35,7 @@ public class PrescriptionController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpPost]
     public async Task<IActionResult> AddPrescription([FromBody] PrescriptionAddModel prescriptionAddModel)
     {
@@ -45,7 +45,7 @@ public class PrescriptionController : ControllerBase
 
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdatePrescription(int id,
         [FromBody] PrescriptionUpdateModel prescriptionUpdateModel)
@@ -55,7 +55,7 @@ public class PrescriptionController : ControllerBase
         return result.IsSuccess ? Ok(result) : NoContent();
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpDelete("{id:int}")]
 
     public async Task DeletePrescription(int id)

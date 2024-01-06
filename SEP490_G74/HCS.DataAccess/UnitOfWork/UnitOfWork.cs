@@ -18,7 +18,7 @@ namespace HCS.DataAccess.UnitOfWork
 
         public IPatientRepo PatientRepo { get; }
 
-        public Repository.IContactRepo ContactRepo { get; }
+        public IContactRepo ContactRepo { get; }
         
         public IMedicalRecordRepo MedicalRecordRepo { get; }
         public ICategoryRepo CategoryRepo { get; }

@@ -16,7 +16,7 @@ public class SuppliesTypeController :ControllerBase
         _suppliesTypeService = suppliesTypeService;
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetSuppliesType(int id)
     {
@@ -25,7 +25,7 @@ public class SuppliesTypeController :ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet]
     public async Task<IActionResult> GetAllSuppliesType()
     {

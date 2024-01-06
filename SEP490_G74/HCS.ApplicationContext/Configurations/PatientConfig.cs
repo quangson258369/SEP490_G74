@@ -13,20 +13,59 @@ namespace HCS.ApplicationContext.Configurations
     {
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
+
             builder
                 .HasMany(c => c.MedicalRecords)
                 .WithOne(c => c.Patient)
                 .HasForeignKey(c => c.PatientId);
 
             builder
-                .HasMany(c => c.Invoices)
+                .HasOne(c => c.Contact)
                 .WithOne(c => c.Patient)
-                .HasForeignKey(c => c.PatientId);
+                .HasForeignKey<Patient>(c => c.ContactId);
 
             builder
-                .HasMany(c => c.Contacts)
+                .HasMany(c => c.Invoices)
                 .WithOne(c => c.Patient)
-                .HasForeignKey(c => c.PatientId);
+                .HasForeignKey(c => c.PatientId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasData(
+                    new Patient()
+                    {
+                        PatientId = 1,
+                        Allergieshistory = "None",
+                        BloodGroup = "A",
+                        BloodPressure = 128,
+                        ContactId = 10,
+                        Height = 157,
+                        ServiceDetailName = "None",
+                        Weight = 50
+                    },
+                    new Patient()
+                    {
+                        PatientId = 2,
+                        Allergieshistory = "None",
+                        BloodGroup = "A",
+                        BloodPressure = 128,
+                        ContactId = 11,
+                        Height = 157,
+                        ServiceDetailName = "None",
+                        Weight = 50
+                    },
+                    new Patient()
+                    {
+                        PatientId = 3,
+                        Allergieshistory = "None",
+                        BloodGroup = "A",
+                        BloodPressure = 128,
+                        ContactId = 12,
+                        Height = 157,
+                        ServiceDetailName = "None",
+                        Weight = 50
+                    }
+                );
         }
     }
 }
