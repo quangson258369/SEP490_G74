@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace HCS.ApplicationContext.Configurations
 {
-    public class MedicalRecordCategoryConfig : IEntityTypeConfiguration<MedicalRecordCateogry>
+    public class MedicalRecordCategoryConfig : IEntityTypeConfiguration<MedicalRecordCategory>
     {
-        public void Configure(EntityTypeBuilder<MedicalRecordCateogry> builder)
+        public void Configure(EntityTypeBuilder<MedicalRecordCategory> builder)
         {
             builder
                 .HasOne(c => c.Category)
@@ -28,11 +28,11 @@ namespace HCS.ApplicationContext.Configurations
 
             builder
                 .HasData(
-                    new MedicalRecordCateogry() { CategoryId = 1, MedicalRecordId = 1 },
-                    new MedicalRecordCateogry() { CategoryId = 2, MedicalRecordId = 1 },
+                    new MedicalRecordCategory() { CategoryId = 1, MedicalRecordId = 1 },
+                    new MedicalRecordCategory() { CategoryId = 2, MedicalRecordId = 1 },
 
-                    new MedicalRecordCateogry() { CategoryId = 1, MedicalRecordId = 2 },
-                    new MedicalRecordCateogry() { CategoryId = 3, MedicalRecordId = 2 }
+                    new MedicalRecordCategory() { CategoryId = 1, MedicalRecordId = 2 },
+                    new MedicalRecordCategory() { CategoryId = 3, MedicalRecordId = 2 }
                 );
         }
     }

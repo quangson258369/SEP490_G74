@@ -32,7 +32,7 @@ namespace HCS.ApplicationContext
         public DbSet<SuppliesType> SuppliesTypes { get; set; }
         public DbSet<Supply> Supplies { get; set; }
 
-        public DbSet<MedicalRecordCateogry> MedicalRecordCategories { get; set; }
+        public DbSet<MedicalRecordCategory> MedicalRecordCategories { get; set; }
         public DbSet<MedicalRecordDoctor> MedicalRecordDoctors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

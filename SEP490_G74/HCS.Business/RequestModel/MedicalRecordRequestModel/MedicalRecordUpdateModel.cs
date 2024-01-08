@@ -2,9 +2,8 @@ namespace HCS.Business.RequestModel.MedicalRecordRequestModel;
 
 public class MedicalRecordUpdateModel
 {
-    
     public DateTime MedicalRecordDate { get; set; } = DateTime.Now;
-        
+
     public string ExamReason { get; set; } = string.Empty;
 
     public string ExamCode { get; set; } = string.Empty;
@@ -15,7 +14,6 @@ public class MedicalRecordUpdateModel
 
     public int DoctorId { get; set; }
     public int PrescriptionId { get; set; }
-
 }
 
 public class NewMedicalRecordUpdateModel
@@ -28,4 +26,3 @@ public class NewMedicalRecordUpdateModel
 
     public List<int>? ServiceIds { get; set; }
 }
-

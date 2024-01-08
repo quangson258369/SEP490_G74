@@ -15,6 +15,10 @@ public interface ISuppliesTypeService
     Task<ApiResponse> AddSuppliesType(SuppliesTypeAddModel suppliesType);
     Task<ApiResponse> UpdateSuppliesType(int suppliesTypeId, SuppliesTypeUpdateModel suppliesType);
     Task<ApiResponse> DeleteSuppliesType(int suppliesTypeId);
+    Task<ApiResponse> GetSuppliesByType(int id);
+    Task<ApiResponse> AddSuppliesPrescription(int mrId, SupplyPrescriptionsAddModel supplyPresAddModel);
+    Task<ApiResponse> GetSelectedSuppliesByMrId(int mrId);
+
 }
 
 public class SuppliesTypeService : ISuppliesTypeService
@@ -106,5 +110,74 @@ public class SuppliesTypeService : ISuppliesTypeService
         await _unitOfWork.SaveChangeAsync();
 
         return response.SetOk("Deleted");
+    }
+
+    public async Task<ApiResponse> GetSuppliesByType(int id)
+    {
+        var response = new ApiResponse();
+        var supplyType = await _unitOfWork.SuppliesTypeRepo.GetSuppliesByTypeAsync(id);
+        if(supplyType == null)
+        {
+            return response.SetNotFound("Supplies Type not found");
+        }   
+
+        var supplyTypeResponse = new SuppliesByTypeModel()
+        {
+            SuppliesTypeId = supplyType.SuppliesTypeId,
+            SuppliesTypeName = supplyType.SuppliesTypeName,
+            Supplies = supplyType.Supplies.Select(x => new SupplyResponseModel()
+            {
+                SId = x.SId,
+                Distributor = x.Distributor,
+                Exp = x.Exp,
+                Inputday = x.Inputday,
+                Price = x.Price,
+                SName = x.SName,
+                UnitInStock = x.UnitInStock,
+                Uses = x.Uses,
+                SuppliesTypeId = x.SuppliesTypeId
+            }).ToList()
+        };
+
+        return response.SetOk(supplyTypeResponse);
+    }
+
+    public async Task<ApiResponse> AddSuppliesPrescription(int mrId, SupplyPrescriptionsAddModel supplyPresAddModel)
+    {
+        var response = new ApiResponse();
+        var supplyPresEntity = new List<SuppliesPrescription>();
+        foreach(var supplyPres in supplyPresAddModel.SupplyIds)
+        {
+            var supplyPreEntity = new SuppliesPrescription()
+            {
+                SupplyId = supplyPres.SupplyId,
+                Quantity = supplyPres.Quantity,
+            };
+            supplyPresEntity.Add(supplyPreEntity);
+        }
+        var isSuccess = await _unitOfWork.SuppliesTypeRepo.AddSuppliesPrescription(mrId, supplyPresEntity);
+        
+        response.SetBadRequest("add failed");
+
+        if(isSuccess)
+        {
+            await _unitOfWork.SaveChangeAsync();
+            response.SetOk("add success");
+        }
+
+        return response;
+    }
+
+    public async Task<ApiResponse> GetSelectedSuppliesByMrId(int mrId)
+    {
+        var supplyPresEntities = await _unitOfWork.SuppliesTypeRepo.GetSelectedSuppliesByMrIdAsync(mrId);
+        var supplyPresResponse = supplyPresEntities.Select(x => new SupplyPrescriptionResponseModel()
+        {
+            SupplyId = x.SupplyId,
+            SupplyName = x.Supply.SName,
+            Quantity = x.Quantity,
+            Price = x.Supply.Price,
+        }).ToList();
+        return new ApiResponse().SetOk(supplyPresResponse);
     }
 }

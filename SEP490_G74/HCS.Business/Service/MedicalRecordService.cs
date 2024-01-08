@@ -3,6 +3,7 @@ using HCS.Business.Pagination;
 using HCS.Business.RequestModel.MedicalRecordRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
+using HCS.Business.ResponseModel.ExaminationResultResponseModel;
 using HCS.Business.ResponseModel.MedicalRecordResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Enums;
@@ -17,8 +18,9 @@ public interface IMedicalRecordService
 
     Task<ApiResponse> GetListMrByPatientId(int patientId, int pageIndex, int pageSize);
     Task<ApiResponse> GetMrById(int id);
-    Task<ApiResponse> UpdateMrStatus(int mrId, bool isPaid);
+    Task<ApiResponse> UpdateMrStatus(int mrId, bool isPaid, int? userId);
     Task<ApiResponse> NewUpdateMedicalRecord(int userId, int id, NewMedicalRecordUpdateModel newMedicalRecord);
+    Task<ApiResponse> GetReCheckUpMedicalRecordByPreviosMedicalRecordId(int prevMrId);
 }
 public class MedicalRecordService : IMedicalRecordService
 {
@@ -41,8 +43,14 @@ public class MedicalRecordService : IMedicalRecordService
             IsCheckUp = false,
             IsPaid = false
         };
+
+        if(medicalRecord.PreviousMedicalRecordId != null && medicalRecord.PreviousMedicalRecordId > 0)
+        {
+            medicalRecordEntity.PreviousMedicalRecordId = medicalRecord.PreviousMedicalRecordId;
+        }   
+
         medicalRecordEntity.MedicalRecordCategories = medicalRecord.CategoryIds.Select(
-            c => new MedicalRecordCateogry()
+            c => new MedicalRecordCategory()
             {
                 CategoryId = c
             }).ToList();
@@ -109,8 +117,10 @@ public class MedicalRecordService : IMedicalRecordService
             listItemResponse.Add(result);
         }
 
-        listItemResponse.Paginate(pageIndex, pageSize);
-        return response.SetOk(listItemResponse.OrderByDescending(x => x.MedicalRecordDate));
+        // order list by date
+        listItemResponse = listItemResponse.OrderByDescending(x => x.MedicalRecordDate).ToList();
+        var paginationResult = listItemResponse.Paginate(pageIndex, pageSize);
+        return response.SetOk(paginationResult);
     }
 
     public async Task<ApiResponse> GetMrById(int id)
@@ -127,6 +137,7 @@ public class MedicalRecordService : IMedicalRecordService
             ExamReason = mrById.ExamReason,
             ExamCode = mrById.ExamReason,
             PatientId = mrById.PatientId,
+            PrevMedicalRecordId = mrById.PreviousMedicalRecordId,
             Categories = mrById.MedicalRecordCategories!.Select(
                                c => new CategoryResponseModel()
                                {
@@ -174,13 +185,13 @@ public class MedicalRecordService : IMedicalRecordService
         return new ApiResponse().SetOk(mrByIdResponse);
     }
 
-    public async Task<ApiResponse> UpdateMrStatus(int mrId, bool isPaid)
+    public async Task<ApiResponse> UpdateMrStatus(int mrId, bool isPaid, int? userId)
     {
         switch (isPaid)
         {
             case true:
                 {
-                    await _unitOfWork.MedicalRecordRepo.UpdateMrStatusToPaid(mrId);
+                    await _unitOfWork.MedicalRecordRepo.UpdateMrStatusToPaid(mrId, userId);
                     break;
                 }
             case false:
@@ -210,7 +221,7 @@ public class MedicalRecordService : IMedicalRecordService
                         {
                             existMed.MedicalRecordCategories?.Clear();
                             existMed.MedicalRecordCategories = newMedicalRecord.CategoryIds.Select(
-                                                   c => new MedicalRecordCateogry()
+                                                   c => new MedicalRecordCategory()
                                                    {
                                                        CategoryId = c
                                                    }).ToList();
@@ -246,7 +257,7 @@ public class MedicalRecordService : IMedicalRecordService
                         {
                             existMed.MedicalRecordCategories?.Clear();
                             existMed.MedicalRecordCategories = newMedicalRecord.CategoryIds.Select(
-                                                   c => new MedicalRecordCateogry()
+                                                   c => new MedicalRecordCategory()
                                                    {
                                                        CategoryId = c
                                                    }).ToList();
@@ -284,5 +295,17 @@ public class MedicalRecordService : IMedicalRecordService
             return new ApiResponse().SetOk("Updated");
         }
         return new ApiResponse().SetBadRequest("Not Found");
+    }
+
+    public async Task<ApiResponse> GetReCheckUpMedicalRecordByPreviosMedicalRecordId(int prevMrId)
+    {
+        var response = new ApiResponse();
+        var prevMr = await _unitOfWork.MedicalRecordRepo.GetAsync(x => x.PreviousMedicalRecordId == prevMrId);
+        if(prevMr is null)
+        {
+            return new ApiResponse().SetNotFound("Not Found");
+        }
+        response.SetOk(prevMr.MedicalRecordId);
+        return response;
     }
 }

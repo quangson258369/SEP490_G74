@@ -13,7 +13,7 @@ public class PatientContactRequestModel
     public string Address { get; set; } = string.Empty;
 
     public string Img { get; set; } = string.Empty;
-    
+
     public string ServiceDetailName { get; set; } = null!;
 
     public byte? Height { get; set; }
@@ -27,6 +27,6 @@ public class PatientContactRequestModel
     public string? AllergiesHistory { get; set; }
 
     //public int? PatientId { get; set; }
-    
-    public int? UserId { get; set; } 
+
+    public int? UserId { get; set; }
 }

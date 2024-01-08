@@ -17,7 +17,7 @@ namespace HCS.API.Controllers
             _medicalRecordService = medicalRecordService;
         }
         
-        [Authorize(Roles = "Admin, Nurse")]
+        [Authorize(Roles = "Admin, Nurse, Doctor")]
         [HttpPost()]
         public async Task<IActionResult> AddMedicalRecord([FromBody] MedicalRecordAddModel medicalRecord)
         {
@@ -53,9 +53,21 @@ namespace HCS.API.Controllers
         public async Task<IActionResult> UpdateMrStatusToPaid(
             int id)
         {
-            var result = await _medicalRecordService.UpdateMrStatus(id, true);
-
-            return result.IsSuccess ? Ok(result) : BadRequest(result);
+            //get user id from token
+            var roleClaims = User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            //parse to int
+            if(roleClaims is not null)
+            {
+                var userIdString = roleClaims.Value;
+                var userId = int.Parse(userIdString);
+                var result = await _medicalRecordService.UpdateMrStatus(id, true, userId);
+                return result.IsSuccess ? Ok(result) : BadRequest(result);
+            }
+            else
+            {
+                return BadRequest();
+            }   
         }
 
         [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
@@ -63,7 +75,7 @@ namespace HCS.API.Controllers
         public async Task<IActionResult> UpdateMrStatusToCheckUp(
             int id)
         {
-            var result = await _medicalRecordService.UpdateMrStatus(id, false);
+            var result = await _medicalRecordService.UpdateMrStatus(id, false, null);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
@@ -87,5 +99,14 @@ namespace HCS.API.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize(Roles = "Admin, Nurse, Doctor, Cashier")]
+        [HttpGet("recheck-up/id/{id:int}")]
+        public async Task<IActionResult> GetRecheckUpMrByPrevMrId(int id)
+        {
+            var result = await _medicalRecordService.GetReCheckUpMedicalRecordByPreviosMedicalRecordId(id);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }   
     }
 }

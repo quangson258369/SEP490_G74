@@ -19,6 +19,11 @@ namespace HCS.ApplicationContext.Configurations
                 .HasForeignKey<MedicalRecord>(c => c.ExaminationResultId);
 
             builder
+                .HasOne(c => c.PreviousMedicalRecordNavigation)
+                .WithOne()
+                .HasForeignKey<MedicalRecord>(c => c.PreviousMedicalRecordId);
+
+            builder
                 .HasData(
                     new MedicalRecord() { MedicalRecordId = 1, ExamReason = "patient 1 mr1", PatientId = 1 },
                     new MedicalRecord() { MedicalRecordId = 2, ExamReason = "patient 2 mr2", PatientId = 2 }
