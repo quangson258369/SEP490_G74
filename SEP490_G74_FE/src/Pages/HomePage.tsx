@@ -29,7 +29,7 @@ const HomePage = () => {
                 break;
             }
             default: {
-                navigate("/error")
+                navigate("/login")
                 break;
             }
         }

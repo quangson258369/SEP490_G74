@@ -84,7 +84,7 @@ const AppRoutes = () => {
 
         <Route
           path={ROUTE_URLS.NURSE_HOME_PAGE}
-          element={<ProtectedRoute role={[Roles.Nurse]} />}
+          element={<ProtectedRoute role={[Roles.Nurse, Roles.Cashier]} />}
         >
           <Route
             path=""

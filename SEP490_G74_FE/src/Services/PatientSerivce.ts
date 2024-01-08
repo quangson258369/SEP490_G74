@@ -1,7 +1,8 @@
-import { JWTTokenModel, UserLogin } from "../Models/AuthModel";
+import { JWTTokenModel } from "../Models/AuthModel";
 import apiLinks from "../Commons/ApiEndpoints";
 import httpClient from "../HttpClients/HttpClient";
 import {
+  ApiResponseModel,
   PatientAddModel,
   PatientTableResponseModel,
 } from "../Models/PatientModel";
@@ -9,8 +10,9 @@ import { TOKEN } from "../Commons/Global";
 import { jwtDecode } from "jwt-decode";
 
 const getPatients = async (
-  pageIndex: number
-): Promise<PatientTableResponseModel[] | undefined> => {
+  pageIndex: number,
+  pageSize:number
+): Promise<ApiResponseModel | undefined> => {
   try {
     const token = localStorage.getItem(TOKEN);
     if (token !== null) {
@@ -20,14 +22,17 @@ const getPatients = async (
         if (pageIndex <= 0) pageIndex = 1;
         var url = `${
           apiLinks.patients.getPatients
-        }?pageIndex=${pageIndex}&pageSize=${5}&userId=${uToken.nameid}`;
+        }?pageIndex=${pageIndex}&pageSize=${pageSize}&userId=${uToken.nameid}`;
 
         const response = await httpClient.get({
           url: url,
           authorization: `Bearer ${token}`,
         });
 
-        return response.data.result.items as PatientTableResponseModel[];
+        var apiResponse : ApiResponseModel = response.data.result as ApiResponseModel
+        console.log(apiResponse)
+        //return response.data.result.items as PatientTableResponseModel[];
+        return apiResponse;
       }
     }
     return undefined;

@@ -24,3 +24,8 @@ export interface PatientTableResponseModel {
     address: string;
     key: string;
   }
+
+export interface ApiResponseModel{
+    totalCount: number,
+    items: any[]
+}

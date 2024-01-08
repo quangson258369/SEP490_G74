@@ -1,10 +1,8 @@
-import { JWTTokenModel, UserLogin } from "../Models/AuthModel";
+import { JWTTokenModel } from "../Models/AuthModel";
 import apiLinks from "../Commons/ApiEndpoints";
 import httpClient from "../HttpClients/HttpClient";
-import { PatientTableResponseModel } from "../Models/PatientModel";
 import { TOKEN } from "../Commons/Global";
 import { jwtDecode } from "jwt-decode";
-import { MedicalRecordAddModel } from "../Models/MedicalRecordModel";
 import { CategoryAddModel, CategoryResponseModel } from "../Models/SubEntityModel";
 
 const addCategory = async (params: CategoryAddModel

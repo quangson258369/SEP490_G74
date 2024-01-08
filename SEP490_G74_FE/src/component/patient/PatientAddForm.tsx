@@ -8,7 +8,6 @@ import {
   Col,
   InputNumber,
 } from "antd";
-import { MedicalRecord } from "../../Models/MedicalRecordModel";
 import dayjs from "dayjs";
 import { PatientAddModel } from "../../Models/PatientModel";
 import TextArea from "antd/es/input/TextArea";

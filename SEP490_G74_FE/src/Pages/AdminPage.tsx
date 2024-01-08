@@ -4,7 +4,6 @@ import PatientAddForm from "../component/Patient/PatientAddForm";
 import CategoryAddForm from "../component/SubEntities/CategoryAddForm";
 import ServiceTypeAddForm from "../component/SubEntities/ServiceTypeAddForm";
 import ServiceAddForm from "../component/SubEntities/ServiceAddForm";
-
 interface ParentCompProps {
   childComp?: React.ReactNode;
 }

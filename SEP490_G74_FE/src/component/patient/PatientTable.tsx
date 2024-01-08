@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
 import patientService from "../../Services/PatientSerivce";
-import { PatientTableResponseModel } from "../../Models/PatientModel";
+import { ApiResponseModel, PatientTableResponseModel } from "../../Models/PatientModel";
 
 const PatientTable = () => {
   const navigate = useNavigate();
@@ -17,7 +17,11 @@ const PatientTable = () => {
   >(undefined);
 
   const [patients, setPatients] = useState<PatientTableResponseModel[]>([]);
-  const [pageIndex, setPageIndex] = useState<number>(1);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5,
+    total: 0,
+  });
 
   const { authenticated } = useContext(AuthContext);
 
@@ -96,27 +100,58 @@ const PatientTable = () => {
   ];
 
   const fetchPatient = async () => {
-    var result: PatientTableResponseModel[] | undefined =
-      await patientService.getPatients(pageIndex);
+    // var result: PatientTableResponseModel[] | undefined =
+    //   await patientService.getPatients(pagination.current, pagination.pageSize);
+    // if (result === undefined) {
+    //   message.error("Lỗi lấy danh sách bệnh nhân", 2);
+    // } else {
+    //   var pats: PatientTableResponseModel[] = result.map((item) => ({
+    //     ...item,
+    //     key: item.patientId + "key",
+    //   }));
+    //   setPatients(pats);
+    //   console.log(result);
+    //   setPagination({
+    //     ...pagination,
+    //     total: result.length, // Update total count
+    //   });
+    // }
+    var result: ApiResponseModel | undefined =
+      await patientService.getPatients(pagination.current, pagination.pageSize);
     if (result === undefined) {
       message.error("Lỗi lấy danh sách bệnh nhân", 2);
     } else {
-      var pats: PatientTableResponseModel[] = result.map((item) => ({
+      var pats: PatientTableResponseModel[] = result.items.map((item) => ({
         ...item,
         key: item.patientId + "key",
       }));
       setPatients(pats);
+      console.log(result);
+      setPagination({
+        ...pagination,
+        total: result.totalCount, // Update total count
+      });
     }
+  };
+
+  const handleTableChange = (pagination: any) => {
+    setPagination(pagination);
   };
 
   useEffect(() => {
     fetchPatient();
-  }, [authenticated, pageIndex]);
+  }, [authenticated, pagination.current, pagination.pageSize]);
 
   return (
     <div style={{ minHeight: "100vh", height: "auto" }}>
       {patients !== undefined && (
-        <Table columns={columns} dataSource={patients} />
+        <Table
+          columns={columns}
+          dataSource={patients}
+          rowKey={(record) => record.patientId}
+          pagination={pagination}
+          onChange={handleTableChange}
+        />
       )}
       <Modal
         title="Thêm hồ sơ bệnh án"
