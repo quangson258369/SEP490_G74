@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 // Add DbContext
 builder.Services.AddDbContext<HCSContext>(
     options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("KhoaHT3Connection")));
+        builder.Configuration.GetConnectionString("SonnkConnection")));
 
 // Add Cors
 builder.Services.AddCors(options =>
@@ -92,6 +92,9 @@ builder.Services.AddScoped<ISuppliesTypeService, SuppliesTypeService>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IServiceTypeService, ServiceTypeService>();
+builder.Services.AddScoped<IExaminationResultService, ExaminationResultService>();
+builder.Services.AddScoped<ISuppliesService, SuppliesService>();
+builder.Services.AddScoped<ISuppliesPrescriptionService, SuppliesPrescriptionService>();
 
 var app = builder.Build();
 

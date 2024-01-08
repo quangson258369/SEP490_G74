@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HCS.Domain.Models
 {
-    public class MedicalRecordCateogry
+    public class MedicalRecordCategory
     {
         public int MedicalRecordId { get; set; }
 

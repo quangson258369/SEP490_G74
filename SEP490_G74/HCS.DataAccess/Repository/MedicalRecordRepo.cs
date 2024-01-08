@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HCS.DataAccess.Repository;
 
 public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
+
 {
     public MedicalRecordRepo(HCSContext context) : base(context)
     {
@@ -28,7 +29,22 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
         return mrById;
     }
 
-    public Task<List<MedicalRecord>> GetMRByPatientId(int patientId)
+    public async Task<MedicalRecord?> GetMrForPrescriptionByMedicalRecordId(int id)
+    {
+        IQueryable<MedicalRecord> query = _dbSet;
+
+        var medicalRecord = await query.Where(med => med.MedicalRecordId == id)
+            .Include(exam => exam.ExaminationResult)
+            .ThenInclude(pre => pre.Prescription)
+            .ThenInclude(temp => temp.SuppliesPrescriptions)
+            .ThenInclude(x=> x.Supply)
+            .ThenInclude(x=> x.SuppliesType)
+            .FirstOrDefaultAsync();
+
+        return medicalRecord;
+    }
+
+    public Task<List<MedicalRecord>> GetMrByPatientId(int patientId)
     {
         var listMrByPatientId = _context.MedicalRecords
             .Where(med => med.PatientId == patientId)
@@ -50,12 +66,38 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
         }
     }
 
-    public async Task UpdateMrStatusToPaid(int mrId)
+    public async Task UpdateMrStatusToPaid(int mrId, int? userId)
     {
-        var mr = await _context.MedicalRecords.FindAsync(mrId);
+        var mr = await _context.MedicalRecords
+            .Where(x => x.MedicalRecordId == mrId)
+            .Include(x => x.ServiceMedicalRecords!)
+            .ThenInclude(x => x.Service)
+            .FirstOrDefaultAsync();
+
         if (mr != null)
         {
             mr.IsPaid = true;
+
+            var newInvoice = new Invoice()
+            {
+                PatientId = mr.PatientId,
+                CashierId = userId??= 1,
+                ServiceMedicalRecords = mr.ServiceMedicalRecords,
+                Total = mr.ServiceMedicalRecords != null ? mr.ServiceMedicalRecords.Sum(s => s.Service!= null? s.Service.Price : 0) : 0,
+                Status = true,
+                PaymentDate = DateTime.Now,
+                PaymentMethod = "Ti?n m?t",
+            };
+
+            if(mr.ServiceMedicalRecords != null)
+            {
+                foreach (var serviceMedicalRecord in mr.ServiceMedicalRecords)
+                {
+                    serviceMedicalRecord.Status = true;
+                }
+            }
+
+            await _context.Invoices.AddAsync(newInvoice);
         }
     }
 }

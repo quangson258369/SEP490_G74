@@ -14,7 +14,7 @@ namespace HCS.Domain.Models
 
         public ICollection<User>? Doctors { get; set; }
 
-        public ICollection<MedicalRecordCateogry>? MedicalRecordCategories { get; set; }
+        public ICollection<MedicalRecordCategory>? MedicalRecordCategories { get; set; }
 
         public ICollection<ServiceType>? ServiceTypes { get; set; }
     }

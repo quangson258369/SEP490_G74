@@ -16,5 +16,7 @@ namespace HCS.Business.RequestModel.MedicalRecordRequestModel
         public int PatientId { get; set; }
 
         public List<int> DoctorIds { get; set; } = null!;
+
+        public int? PreviousMedicalRecordId { get; set; }
     }
 }

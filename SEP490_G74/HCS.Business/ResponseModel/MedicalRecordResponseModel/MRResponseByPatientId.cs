@@ -35,6 +35,8 @@ public class MedicalRecordDetailResponseModel
     public bool IsCheckUp { get; set; } = false;
 
     public List<ServiceTypeDetailResponseModel> ServiceTypes { get; set; } = new List<ServiceTypeDetailResponseModel>();
+
+    public int? PrevMedicalRecordId { get; set; }
 }
 
 public class ServiceTypeDetailResponseModel

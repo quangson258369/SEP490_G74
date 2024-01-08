@@ -20,6 +20,9 @@ namespace HCS.DataAccess.UnitOfWork
         public IRoleRepo RoleRepo { get; }
         public IServiceTypeRepo ServiceTypeRepo { get; }
         public IServiceRepo ServiceRepo { get; }
+        public IExaminationResultRepo ExaminationResultRepo { get; }
+        public ISuppliesRepo SuppliesRepo { get; }
+        public ISuppliesPrescriptionRepo SuppliesPrescriptionRepo { get; }
 
         public Task SaveChangeAsync();
     }

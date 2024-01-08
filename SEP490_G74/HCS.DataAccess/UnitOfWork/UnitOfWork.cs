@@ -17,9 +17,7 @@ namespace HCS.DataAccess.UnitOfWork
         public IUserRepo UserRepo { get; }
 
         public IPatientRepo PatientRepo { get; }
-
         public IContactRepo ContactRepo { get; }
-        
         public IMedicalRecordRepo MedicalRecordRepo { get; }
         public ICategoryRepo CategoryRepo { get; }
         public ISuppliesTypeRepo SuppliesTypeRepo { get; }
@@ -27,6 +25,9 @@ namespace HCS.DataAccess.UnitOfWork
         public IRoleRepo RoleRepo { get; }
         public IServiceTypeRepo ServiceTypeRepo { get; }
         public IServiceRepo ServiceRepo { get; }
+        public IExaminationResultRepo ExaminationResultRepo { get; }
+        public ISuppliesRepo SuppliesRepo { get; }
+        public ISuppliesPrescriptionRepo SuppliesPrescriptionRepo { get; }
 
         public UnitOfWork(HCSContext context)
         {
@@ -41,6 +42,9 @@ namespace HCS.DataAccess.UnitOfWork
             RoleRepo = new RoleRepo(context);
             ServiceTypeRepo = new ServiceTypeRepo(context);
             ServiceRepo = new ServiceRepo(context);
+            ExaminationResultRepo = new ExaminationResultRepo(context);
+            SuppliesRepo = new SuppliesRepo(context);
+            SuppliesPrescriptionRepo = new SuppliesPrescriptionRepo(context);
         }
 
         public async Task SaveChangeAsync()

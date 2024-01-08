@@ -29,10 +29,14 @@ namespace HCS.Domain.Models
 
         public ExaminationResult? ExaminationResult { get; set; }
 
-        public ICollection<MedicalRecordCateogry>? MedicalRecordCategories { get; set; }
+        public ICollection<MedicalRecordCategory>? MedicalRecordCategories { get; set; }
 
         public ICollection<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; }
 
         public ICollection<MedicalRecordDoctor>? MedicalRecordDoctors { get; set; }
+
+        public int? PreviousMedicalRecordId { get; set; }
+
+        public MedicalRecord? PreviousMedicalRecordNavigation { get; set; }
     }
 }
