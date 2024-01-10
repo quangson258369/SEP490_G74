@@ -18,6 +18,7 @@ public interface IServiceTypeService
     Task<ApiResponse> GetListServiceByServiceTypeId(int serviceTypeId);
     Task<ApiResponse> AddService(ServiceAddModel serviceAddModel);
     Task<ApiResponse> UpdateService(int serviceTypeId, ServiceUpdateModel serviceUpdateModel);
+    Task DeleteService(int serviceId);
 }
 public class ServiceTypeService : IServiceTypeService
 {
@@ -68,6 +69,11 @@ public class ServiceTypeService : IServiceTypeService
     {
         var response = new ApiResponse();
 
+        var currentServiceType = await _unitOfWork.ServiceTypeRepo.GetAsync(x => x.ServiceTypeName == serviceTypeAddModel.ServiceTypeName);
+        if (currentServiceType is not null) {
+            return response.SetBadRequest("Service Type Name is already exist");
+        }
+
         var entity = _mapper.Map<ServiceType>(serviceTypeAddModel);
 
         await _unitOfWork.ServiceTypeRepo.AddAsync(entity);
@@ -107,6 +113,7 @@ public class ServiceTypeService : IServiceTypeService
 
         //_mapper.Map<ServiceType>(serviceTypeUpdateModel);
         currentEntity.ServiceName = serviceUpdateModel.ServiceName;
+        currentEntity.Price = serviceUpdateModel.Price;
         await _unitOfWork.SaveChangeAsync();
 
         return response.SetOk("Updated");
@@ -116,11 +123,18 @@ public class ServiceTypeService : IServiceTypeService
     {
         var response = new ApiResponse();
 
+        var currentService = await _unitOfWork.ServiceRepo.GetAsync(x => x.ServiceName == serviceAddModel.ServiceName);
+        if (currentService is not null)
+        {
+            return response.SetBadRequest("Service Name is already exist");
+        }
+
         //var entity = _mapper.Map<ServiceType>(serviceTypeAddModel);
         var entity = new HCS.Domain.Models.Service()
         {
             ServiceName = serviceAddModel.ServiceName,
-            ServiceTypeId = serviceAddModel.ServiceTypeId
+            ServiceTypeId = serviceAddModel.ServiceTypeId,
+            Price = serviceAddModel.Price
         };
 
         await _unitOfWork.ServiceRepo.AddAsync(entity);
@@ -131,7 +145,14 @@ public class ServiceTypeService : IServiceTypeService
 
     public async Task DeleteServiceType(int serviceTypeId)
     {
-        await _unitOfWork.ServiceTypeRepo.RemoveByIdAsync(serviceTypeId);
+        await _unitOfWork.ServiceTypeRepo.RemoveById(serviceTypeId);
+        await _unitOfWork.SaveChangeAsync();
+    }
+
+    public async Task DeleteService(int serviceId)
+    {
+        await _unitOfWork.ServiceRepo.RemoveById(serviceId);
+        await _unitOfWork.SaveChangeAsync();
     }
 
     public async Task<ApiResponse> GetListServiceByServiceTypeId(int serviceTypeId)

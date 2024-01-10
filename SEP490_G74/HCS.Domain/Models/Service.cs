@@ -14,6 +14,8 @@ namespace HCS.Domain.Models
 
         public double Price { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public ICollection<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; }
 
         public int ServiceTypeId { get; set; }

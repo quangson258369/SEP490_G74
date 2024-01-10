@@ -12,6 +12,8 @@ namespace HCS.Domain.Models
 
         public string SuppliesTypeName { get; set; } = null!;
 
+        public bool IsDeleted { get; set; } = false;
+
         public ICollection<Supply> Supplies { get; set; } = new List<Supply>();
     }
 }

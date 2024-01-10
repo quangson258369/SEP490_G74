@@ -10,12 +10,28 @@ public interface ISuppliesTypeRepo : IGenericRepo<SuppliesType>
     Task<SuppliesType?> GetSuppliesByTypeAsync(int id);
     Task<bool> AddSuppliesPrescription(int medicalRecordId, List<SuppliesPrescription> supplyPrescriptions);
     Task<List<SuppliesPrescription>> GetSelectedSuppliesByMrIdAsync(int id);
+    Task<bool> RemoveById(int id);
 }
 public class SuppliesTypeRepo : GenericRepo<SuppliesType>, ISuppliesTypeRepo
 {
     public SuppliesTypeRepo(HCSContext context) : base(context)
     {
     }
+
+    public async Task<bool> RemoveById(int id)
+    {
+        var entity = await _dbSet.FindAsync(id);
+        if (entity is null)
+        {
+            return false;
+        }
+        else
+        {
+            entity.IsDeleted = true;
+            return true;
+        }
+    }
+
     public async Task<SuppliesType?> GetSuppliesByTypeAsync(int id)
     {
         var supplyType = await _context.SuppliesTypes

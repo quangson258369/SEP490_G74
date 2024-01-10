@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using HCS.ApplicationContext.Configurations;
@@ -37,6 +38,21 @@ namespace HCS.ApplicationContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>()
+                .HasQueryFilter(b => !b.IsDeleted);
+
+            modelBuilder.Entity<Service>()
+                .HasQueryFilter(b => !b.IsDeleted);
+
+            modelBuilder.Entity<ServiceType>()
+                .HasQueryFilter(b => !b.IsDeleted);
+
+            modelBuilder.Entity<SuppliesType>()
+                .HasQueryFilter(b => !b.IsDeleted);
+
+            modelBuilder.Entity<Supply>()
+                .HasQueryFilter(b => !b.IsDeleted);
+
             modelBuilder.ApplyConfiguration(new RoleConfig());
             modelBuilder.ApplyConfiguration(new CategoryConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());

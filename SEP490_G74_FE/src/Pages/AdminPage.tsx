@@ -53,7 +53,7 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
               Thêm mới khoa khám
             </Button>
           </Col>
-          <Col span={6}>
+          {/* <Col span={6}>
             <Button type="primary" onClick={handleAddServiceType}>
               Thêm mới loại dịch vụ
             </Button>
@@ -62,7 +62,7 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
             <Button type="primary" onClick={handleAddService}>
               Thêm mới dịch vụ
             </Button>
-          </Col>
+          </Col> */}
         </Row>
         <Modal
           title="Thêm mới bệnh nhân"
@@ -110,7 +110,7 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
           <CategoryAddForm />
         </Modal>
 
-        <Modal
+        {/* <Modal
           title="Thêm mới loại dịch vụ"
           open={openServiceType}
           onCancel={handleCancelServiceType}
@@ -131,9 +131,9 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
           ]}
         >
           <ServiceTypeAddForm />
-        </Modal>
+        </Modal> */}
 
-        <Modal
+        {/* <Modal
           title="Thêm mới dịch vụ"
           open={openService}
           onCancel={handleCancelService}
@@ -154,7 +154,7 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
           ]}
         >
           <ServiceAddForm />
-        </Modal>
+        </Modal> */}
       </div>
       <br />
       <div>{childComp}</div>

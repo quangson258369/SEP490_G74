@@ -12,9 +12,11 @@ namespace HCS.Domain.Models
 
         public string ServiceTypeName { get; set; } = null!;
 
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         public Category? Category { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
 
         public ICollection<Service> Services { get; set; } = new List<Service>();
     }

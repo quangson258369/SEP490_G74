@@ -10,4 +10,5 @@ public class ServiceAddModel
 {
     public string ServiceName { get; set; } = string.Empty;
     public int ServiceTypeId { get; set; }
+    public double Price { get; set; } = 1000;
 }

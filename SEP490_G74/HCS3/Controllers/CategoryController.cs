@@ -46,7 +46,7 @@ namespace HCS.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateCategory([FromQuery]int id, [FromBody] CategoryUpdateModel category)
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryUpdateModel category)
         {
             var result = await _categoryService.UpdateCategory(id, category);
 

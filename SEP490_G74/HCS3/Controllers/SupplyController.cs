@@ -63,8 +63,9 @@ public class SupplyController : ControllerBase
 
     [Authorize(Roles = "Admin, Doctor, Nurse")]
     [HttpDelete("{supplyId:int}")]
-    public async Task DeleteSupplies(int supplyId)
+    public async Task<IActionResult> DeleteSupplies(int supplyId)
     {
         await _suppliesService.DeleteSupply(supplyId);
+        return Ok("deleted");
     }
 }

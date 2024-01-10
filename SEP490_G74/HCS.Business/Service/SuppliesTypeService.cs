@@ -62,6 +62,13 @@ public class SuppliesTypeService : ISuppliesTypeService
     {
         var response = new ApiResponse();
 
+        var currentSupplyType = await _unitOfWork.SuppliesTypeRepo.GetAsync(entry =>
+                   entry.SuppliesTypeName == suppliesType.SuppliesTypeName);
+        if (currentSupplyType is not null)
+        {
+            return response.SetBadRequest("SupplyType Name is already exists");
+        }
+
         var mapSuppliesType = _mapper.Map<SuppliesType>(suppliesType);
 
         var currentItem =
@@ -106,7 +113,7 @@ public class SuppliesTypeService : ISuppliesTypeService
             return response.SetNotFound($"Supplies Type Not Found with Id {suppliesTypeId}");
         }
 
-        await _unitOfWork.SuppliesTypeRepo.RemoveByIdAsync(suppliesTypeId);
+        await _unitOfWork.SuppliesTypeRepo.RemoveById(suppliesTypeId);
         await _unitOfWork.SaveChangeAsync();
 
         return response.SetOk("Deleted");

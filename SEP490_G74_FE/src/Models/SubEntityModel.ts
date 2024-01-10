@@ -3,11 +3,14 @@ export interface CategoryAddModel {
 }
 
 export interface ServiceTypeAddModel {
-  name: string;
+  serviceTypeName: string;
+  categoryId: number;
 }
 
 export interface ServiceAddModel {
-  name: string;
+  serviceName: string;
+  serviceTypeId: number;
+  price?: number;
 }
 
 export interface BaseModel {
@@ -24,14 +27,17 @@ export interface CategoryResponseModel {
 export interface ServiceTypeResponseModel {
     serviceTypeId: number;
     serviceTypeName: string;
+    categoryId?: number;
+    categoryName?: string;
 }
 
 export interface ServiceResponseModel {
     serviceId: number;
     serviceName: string;
     price: number;
+    serviceTypeId?: number;
+    serviceTypeName?: string;
 }
-
 
 export interface DoctorResponseModel {
     userId: number,
@@ -83,6 +89,7 @@ export interface SupplyResponseModel {
   price: number
   inputday: string
   suppliesTypeId: number
+  suppliesTypeName?: string
 }
 
 export interface SuppliesPresAddModel {
@@ -116,4 +123,26 @@ export interface SelectedSuppliesResponseModel {
   supplyName: string
   quantity: number
   price: number
+}
+
+export interface ServiceTypeUpdateModel{
+  serviceTypeName: string
+}
+
+export interface ServiceUpdateModel{
+  serviceName: string
+}
+
+export interface SupplyTypeAddModel{
+  suppliesTypeName: string
+}
+
+export interface SupplyAddModel {
+  sName: string
+  uses: string
+  exp: string
+  distributor: string
+  unitInStock: number
+  price: number
+  suppliesTypeId: number
 }

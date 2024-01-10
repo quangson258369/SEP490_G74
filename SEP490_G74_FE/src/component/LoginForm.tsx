@@ -19,7 +19,8 @@ const LoginForm = () => {
         break;
       }
       case Roles.Doctor: {
-        navigate("/doctor/patients");
+        //navigate("/doctor/patients");
+        navigate("/");
         break;
       }
       case Roles.Nurse: {
@@ -27,7 +28,7 @@ const LoginForm = () => {
         break;
       }
       case Roles.Cashier: {
-        navigate("/nurse/patients");
+        navigate("/cashier/patients");
         break;
       }
       default: {

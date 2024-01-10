@@ -11,7 +11,7 @@ import {
   Divider,
 } from "antd";
 import { ExaminationProps } from "../../Models/MedicalRecordModel";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   SelectedSuppliesResponseModel,
   SuppliesPresAddModel,
@@ -24,12 +24,15 @@ import subService from "../../Services/SubService";
 import generatePDF from "react-to-pdf";
 import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
+import Roles from "../../Enums/Enums";
+import { AuthContext } from "../../ContextProvider/AuthContext";
 
 const SupplyPrescriptionDetailForm = ({
   medicalRecordId,
   isReload,
 }: ExaminationProps) => {
   const [supplyPresForm] = Form.useForm();
+  const { authenticated } = useContext(AuthContext);
 
   const [supplyTypeOptions, setSupplyTypeOptions] = useState<
     SelectProps["options"]
@@ -400,7 +403,12 @@ const SupplyPrescriptionDetailForm = ({
             );
           })}
           </div> */}
-          <Collapse items={items} />
+          {authenticated?.role !== Roles.Admin &&
+          authenticated?.role !== Roles.Doctor ? (
+            <></>
+          ) : (
+            <Collapse items={items} />
+          )}
         </Form>
       </div>
     </div>

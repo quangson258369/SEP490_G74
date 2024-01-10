@@ -15,8 +15,8 @@ import InvoiceForm from "./InvoiceForm";
 import SupplyPrescriptionDetailForm from "./SupplyPrescriptionDetailForm";
 import { ApiResponseModel } from "../../Models/PatientModel";
 
-const MedicalRecordTable = () => {
-  const { id } = useParams<{ id: string }>();
+const ListMedicalRecordTable = () => {
+  //const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState<boolean>(false);
   const [openExaminate, setOpenExaminate] = useState<boolean>(false);
   const [selectedPatientId, setSelectedPatientId] = useState<number>(1);
@@ -193,7 +193,7 @@ const MedicalRecordTable = () => {
               </Button>
             </Col>
             <Col>
-              {authenticated?.role !== Roles.Admin &&
+            {authenticated?.role !== Roles.Admin &&
               authenticated?.role !== Roles.Doctor ? (
                 <></>
               ) : (
@@ -225,8 +225,8 @@ const MedicalRecordTable = () => {
         >
           <Row gutter={[5, 5]}>
             <Col>
-              {authenticated?.role !== Roles.Cashier &&
-              authenticated?.role !== Roles.Admin ? (
+              {authenticated?.role !== Roles.Admin &&
+              authenticated?.role !== Roles.Cashier ? (
                 <></>
               ) : (
                 <Button
@@ -271,37 +271,24 @@ const MedicalRecordTable = () => {
   ];
 
   const fetchMedicalRecords = async () => {
-    if (id !== undefined) {
-      const patientId = parseInt(id);
-      if (patientId === undefined || patientId === null || isNaN(patientId)) {
-        message
-          .error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2)
-          .then(() => navigate("/"));
-      } else {
-        var response: ApiResponseModel | undefined =
-          await medicalRecordService.getMedicalRecordsByPatientId(
-            patientId,
-            pagination.current,
-            pagination.pageSize
-          );
-        if (response === undefined) {
-          message.error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2);
-        } else {
-          console.log(response);
-          const mappedResponse: MedicalRecordTableModel[] = response.items.map(
-            (item) => ({ ...item, key: item.medicalRecordId + "" })
-          );
-          setMedicalRecords(mappedResponse);
-          setPagination({
-            ...pagination,
-            total: response.totalCount, // Update total count
-          });
-        }
-      }
+    var response: ApiResponseModel | undefined =
+      await medicalRecordService.getMedicalRecordsByPatientId(
+        0,
+        pagination.current,
+        pagination.pageSize
+      );
+    if (response === undefined) {
+      message.error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2);
     } else {
-      message
-        .error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2)
-        .then(() => navigate("/"));
+      console.log(response);
+      const mappedResponse: MedicalRecordTableModel[] = response.items.map(
+        (item) => ({ ...item, key: item.medicalRecordId + "" })
+      );
+      setMedicalRecords(mappedResponse);
+      setPagination({
+        ...pagination,
+        total: response.totalCount, // Update total count
+      });
     }
   };
 
@@ -348,20 +335,14 @@ const MedicalRecordTable = () => {
               Đã khám
             </Button>
           ),
-          authenticated?.role !== Roles.Admin &&
-          authenticated?.role !== Roles.Doctor &&
-          authenticated?.role !== Roles.Nurse ? (
-            <></>
-          ) : (
-            <Button
-              key="submit"
-              type="primary"
-              form="medicalRecordDetailForm"
-              htmlType="submit"
-            >
-              Lưu
-            </Button>
-          ),
+          <Button
+            key="submit"
+            type="primary"
+            form="medicalRecordDetailForm"
+            htmlType="submit"
+          >
+            Lưu
+          </Button>,
         ]}
       />
 
@@ -439,4 +420,4 @@ const MedicalRecordTable = () => {
   );
 };
 
-export default MedicalRecordTable;
+export default ListMedicalRecordTable;

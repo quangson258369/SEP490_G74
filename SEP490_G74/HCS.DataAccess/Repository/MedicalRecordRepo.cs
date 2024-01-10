@@ -44,7 +44,7 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
         return medicalRecord;
     }
 
-    public Task<List<MedicalRecord>> GetMrByPatientId(int patientId)
+    public Task<List<MedicalRecord>> GetMRByPatientId(int patientId)
     {
         var listMrByPatientId = _context.MedicalRecords
             .Where(med => med.PatientId == patientId)
@@ -90,6 +90,41 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
             };
 
             if(mr.ServiceMedicalRecords != null)
+            {
+                foreach (var serviceMedicalRecord in mr.ServiceMedicalRecords)
+                {
+                    serviceMedicalRecord.Status = true;
+                }
+            }
+
+            await _context.Invoices.AddAsync(newInvoice);
+        }
+    }
+
+    public async Task UpdateMrStatusToPaid(int mrId)
+    {
+        var mr = await _context.MedicalRecords
+            .Where(x => x.MedicalRecordId == mrId)
+            .Include(x => x.ServiceMedicalRecords!)
+            .ThenInclude(x => x.Service)
+            .FirstOrDefaultAsync();
+
+        if (mr != null)
+        {
+            mr.IsPaid = true;
+
+            var newInvoice = new Invoice()
+            {
+                PatientId = mr.PatientId,
+                CashierId = 1,
+                ServiceMedicalRecords = mr.ServiceMedicalRecords,
+                Total = mr.ServiceMedicalRecords != null ? mr.ServiceMedicalRecords.Sum(s => s.Service != null ? s.Service.Price : 0) : 0,
+                Status = true,
+                PaymentDate = DateTime.Now,
+                PaymentMethod = "Ti?n m?t",
+            };
+
+            if (mr.ServiceMedicalRecords != null)
             {
                 foreach (var serviceMedicalRecord in mr.ServiceMedicalRecords)
                 {

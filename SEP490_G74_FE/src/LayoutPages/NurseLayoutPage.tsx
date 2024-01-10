@@ -74,9 +74,12 @@ const NurseLayoutPage = (props: any) => {
               style={{ background: "#146C94", color: "white" }}
             >
               <Menu.Item key="1">
-                <Link to={"/"}>Trang chủ</Link>
+                <Link to={"/"}>Danh sách bệnh nhân</Link>
               </Menu.Item>
-              <Menu.Item key="3">
+              <Menu.Item key="2"> 
+                <Link to={ROUTE_URLS.NURSE + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
+              </Menu.Item>
+              {/* <Menu.Item key="3">
                 <Link to={"/"}>Hóa đơn thuốc</Link>
               </Menu.Item>
               <Menu.Item key="4">
@@ -90,7 +93,7 @@ const NurseLayoutPage = (props: any) => {
               </Menu.Item>
               <Menu.Item key="7">
                 <Link to={"/"}>Hồ sơ cá nhân</Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </Sider>
           <Layout>

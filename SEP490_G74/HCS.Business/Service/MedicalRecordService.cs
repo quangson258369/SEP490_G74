@@ -16,8 +16,8 @@ public interface IMedicalRecordService
     Task<ApiResponse> AddMedicalRecord(MedicalRecordAddModel medicalRecord);
     Task<ApiResponse> UpdateMedicalRecord(int mrId, MedicalRecordUpdateModel medicalRecordUpdateModel);
 
-    Task<ApiResponse> GetListMrByPatientId(int patientId, int pageIndex, int pageSize);
-    Task<ApiResponse> GetMrById(int id);
+    Task<ApiResponse> GetListMrByPatientId(int patientId, int pageIndex, int pageSize, int userId);
+    Task<ApiResponse> GetMrById(int id, int userId);
     Task<ApiResponse> UpdateMrStatus(int mrId, bool isPaid, int? userId);
     Task<ApiResponse> NewUpdateMedicalRecord(int userId, int id, NewMedicalRecordUpdateModel newMedicalRecord);
     Task<ApiResponse> GetReCheckUpMedicalRecordByPreviosMedicalRecordId(int prevMrId);
@@ -44,18 +44,18 @@ public class MedicalRecordService : IMedicalRecordService
             IsPaid = false
         };
 
-        if(medicalRecord.PreviousMedicalRecordId != null && medicalRecord.PreviousMedicalRecordId > 0)
+        if (medicalRecord.PreviousMedicalRecordId != null && medicalRecord.PreviousMedicalRecordId > 0)
         {
             medicalRecordEntity.PreviousMedicalRecordId = medicalRecord.PreviousMedicalRecordId;
-        }   
+        }
 
         medicalRecordEntity.MedicalRecordCategories = medicalRecord.CategoryIds.Select(
             c => new MedicalRecordCategory()
             {
                 CategoryId = c
             }).ToList();
-                       
-        medicalRecordEntity.MedicalRecordDoctors = medicalRecord.DoctorIds.Select(  
+
+        medicalRecordEntity.MedicalRecordDoctors = medicalRecord.DoctorIds.Select(
             d => new MedicalRecordDoctor()
             {
                 DoctorId = d
@@ -90,14 +90,17 @@ public class MedicalRecordService : IMedicalRecordService
         return response.SetOk("Updated");
     }
 
-    public async Task<ApiResponse> GetListMrByPatientId(int patientId, int pageIndex, int pageSize)
+    public async Task<ApiResponse> GetListMrByPatientId(int patientId, int pageIndex, int pageSize, int userId)
     {
         var response = new ApiResponse();
 
         var listItem = await _unitOfWork.MedicalRecordRepo.GetAllAsync(x => x.PatientId == patientId);
 
-        if(patientId == 0)
+        if (patientId == 0)
+        {
             listItem = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
+            listItem = await GetListMedicalRecordsByRole(userId, listItem);
+        }
 
         var listItemResponse = new List<MrResponseByPatientId>();
 
@@ -126,7 +129,7 @@ public class MedicalRecordService : IMedicalRecordService
         return response.SetOk(paginationResult);
     }
 
-    public async Task<ApiResponse> GetMrById(int id)
+    public async Task<ApiResponse> GetMrById(int id, int userId)
     {
         var mrById = await _unitOfWork.MedicalRecordRepo.GetMrById(id);
         if (mrById is null)
@@ -144,27 +147,27 @@ public class MedicalRecordService : IMedicalRecordService
             Categories = mrById.MedicalRecordCategories!.Select(
                                c => new CategoryResponseModel()
                                {
-                    CategoryId = c.CategoryId,
-                    CategoryName = c.Category.CategoryName
-                }
+                                   CategoryId = c.CategoryId,
+                                   CategoryName = c.Category.CategoryName
+                               }
                                               ).ToList(),
             Doctors = mrById.MedicalRecordDoctors!.Select(
                                d => new DoctorResponseModel()
                                {
-                    DoctorId = d.DoctorId,
-                    DoctorName = d.Doctor.Contact != null ? d.Doctor.Contact.Name : string.Empty,
-                    CategoryId = d.Doctor.CategoryId ?? 0
-                }
+                                   DoctorId = d.DoctorId,
+                                   DoctorName = d.Doctor.Contact != null ? d.Doctor.Contact.Name : string.Empty,
+                                   CategoryId = d.Doctor.CategoryId ?? 0
+                               }
                                                                             ).ToList(),
             IsPaid = mrById.IsPaid,
             IsCheckUp = mrById.IsCheckUp,
         };
         // get serviceTypes
-        if(mrById.ServiceMedicalRecords is not null)
+        if (mrById.ServiceMedicalRecords is not null)
         {
             // get selected serviceTypes
             var typeIds = mrById.ServiceMedicalRecords.Select(x => x.Service.ServiceTypeId).Distinct();
-            foreach(var typeId in typeIds)
+            foreach (var typeId in typeIds)
             {
                 var typeEntity = await _unitOfWork.ServiceTypeRepo.GetAsync(x => x.ServiceTypeId == typeId);
                 if (typeEntity != null)
@@ -182,6 +185,77 @@ public class MedicalRecordService : IMedicalRecordService
                             ServiceTypeId = x.ServiceTypeId
                         }).ToList()
                     });
+                }
+            }
+        }
+
+        // check if role is doctor => filter mrById list categories, service types, service by doctorId
+        if (userId > 0)
+        {
+            var user = await _unitOfWork.UserRepo.GetAsync(u => u.UserId == userId);
+            if (user != null)
+            {
+                if (user.RoleId == (int)UserRole.Doctor)
+                {
+                    // filter only doctor call api
+                    mrById.MedicalRecordDoctors = mrById.MedicalRecordDoctors?.Where(x => x.DoctorId == userId).ToList();
+
+                    if (mrById.MedicalRecordDoctors != null)
+                    {
+                        mrByIdResponse.Doctors = mrById.MedicalRecordDoctors.Select(x => new DoctorResponseModel()
+                        {
+                            DoctorId = x.DoctorId,
+                            DoctorName = x.Doctor.Contact != null ? x.Doctor.Contact.Name : string.Empty,
+                            CategoryId = x.Doctor.CategoryId ?? 0
+                        }).ToList();
+                    }
+
+                    // filter category
+                    mrById.MedicalRecordCategories = mrById.MedicalRecordCategories?.Where(x => x.CategoryId == user.CategoryId).ToList();
+
+                    if (mrById.MedicalRecordCategories != null)
+                    {
+                        mrByIdResponse.Categories = mrById.MedicalRecordCategories.Select(x => new CategoryResponseModel()
+                        {
+                            CategoryId = x.CategoryId,
+                            CategoryName = x.Category.CategoryName
+                        }).ToList();
+                    }
+
+                    List<int> listCateIds = mrById.MedicalRecordCategories?.Select(x => x.CategoryId).ToList() ?? new List<int>();
+                    // filter service type
+                    if (mrById.ServiceMedicalRecords is not null)
+                    {
+                        // get list types in mr that have same categoryId with user
+                        var listServiceTypeIds = mrById.ServiceMedicalRecords
+                            .Where(x => x.Service.ServiceType.CategoryId == user.CategoryId)
+                            .Select(x => x.Service.ServiceTypeId)
+                            .Distinct()
+                            .ToList();
+                        // get all type from db then filter by list type ids
+                        var types = await _unitOfWork.ServiceTypeRepo.GetAllAsync(null);
+                        types = types.Where(t => listServiceTypeIds.Contains(t.ServiceTypeId)).ToList();
+
+                        mrByIdResponse.ServiceTypes = types.Select(x => new ServiceTypeDetailResponseModel()
+                        {
+                            ServiceTypeId = x.ServiceTypeId,
+                            ServiceTypeName = x.ServiceTypeName,
+                            Services = new List<ServiceResponseDetailModel>()
+                        }).ToList();
+
+                        foreach (var serviceType in mrByIdResponse.ServiceTypes)
+                        {
+                            serviceType.Services = mrById.ServiceMedicalRecords
+                                .Where(x => x.Service.ServiceTypeId == serviceType.ServiceTypeId)
+                                .Select(x => new ServiceResponseDetailModel()
+                                {
+                                    ServiceId = x.Service.ServiceId,
+                                    ServiceName = x.Service.ServiceName,
+                                    Price = x.Service.Price,
+                                    ServiceTypeId = x.Service.ServiceTypeId
+                                }).ToList();
+                        }
+                    }
                 }
             }
         }
@@ -211,10 +285,10 @@ public class MedicalRecordService : IMedicalRecordService
     {
         var existMed = await _unitOfWork.MedicalRecordRepo.GetMrById(id);
 
-        if(existMed is not null)
+        if (existMed is not null)
         {
             var user = await _unitOfWork.UserRepo.GetAsync(u => u.UserId == userId);
-            if(user == null) return new ApiResponse().SetNotFound("User Not Found");
+            if (user == null) return new ApiResponse().SetNotFound("User Not Found");
 
             switch (user.RoleId)
             {
@@ -304,11 +378,37 @@ public class MedicalRecordService : IMedicalRecordService
     {
         var response = new ApiResponse();
         var prevMr = await _unitOfWork.MedicalRecordRepo.GetAsync(x => x.PreviousMedicalRecordId == prevMrId);
-        if(prevMr is null)
+        if (prevMr is null)
         {
             return new ApiResponse().SetNotFound("Not Found");
         }
         response.SetOk(prevMr.MedicalRecordId);
         return response;
+    }
+
+    public async Task<List<MedicalRecord>> GetListMedicalRecordsByRole(int userId, List<MedicalRecord> medicalRecords)
+    {
+        var user = await _unitOfWork.UserRepo.GetAsync(u => u.UserId == userId);
+        if (user == null) return medicalRecords;
+        if (user.RoleId != (int)UserRole.Doctor) return medicalRecords;
+
+        var filteredListMr = new List<MedicalRecord>();
+
+        foreach (var mr in medicalRecords)
+        {
+            var mrDetail = await _unitOfWork.MedicalRecordRepo.GetMrById(mr.MedicalRecordId);
+
+            if (mrDetail != null && mrDetail.MedicalRecordDoctors != null)
+            {
+                foreach (var mrDoctor in mrDetail.MedicalRecordDoctors)
+                {
+                    if (mrDoctor.DoctorId == user.UserId)
+                    {
+                        filteredListMr.Add(mr);
+                    }
+                }
+            }
+        }
+        return filteredListMr;
     }
 }

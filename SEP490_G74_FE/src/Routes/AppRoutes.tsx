@@ -15,6 +15,9 @@ import NurseLayoutPage from "../LayoutPages/NurseLayoutPage";
 import MedicalRecordsPage from "../Pages/MedicalRecordsPage";
 import { ROUTE_URLS } from "../Commons/Global";
 import SubEntityTable from "../component/Admin/SubEntityTable";
+import CashierLayoutPage from "../LayoutPages/CashierLayoutPage";
+import CashierPage from "../Pages/CashierPage";
+import ListMedicalRecordPage from "../Pages/ListMedicalRecordPage";
 
 const AppRoutes = () => {
   return (
@@ -41,6 +44,19 @@ const AppRoutes = () => {
             element={
               <AdminLayoutPage
                 childComp={<AdminPage childComp={<MedicalRecordsPage />} />}
+              />
+            }
+          />
+        </Route>
+        <Route
+          path={ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
+          element={<ProtectedRoute role={[Roles.Admin]} />}
+        >
+          <Route
+            path=""
+            element={
+              <AdminLayoutPage
+                childComp={<AdminPage childComp={<ListMedicalRecordPage />} />}
               />
             }
           />
@@ -83,8 +99,22 @@ const AppRoutes = () => {
         </Route>
 
         <Route
+            path={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
+          element={<ProtectedRoute role={[Roles.Doctor]} />}
+        >
+          <Route
+            path=""
+            element={
+              <DoctorLayoutPage
+                childComp={<DoctorPage childComp={<ListMedicalRecordPage />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
           path={ROUTE_URLS.NURSE_HOME_PAGE}
-          element={<ProtectedRoute role={[Roles.Nurse, Roles.Cashier]} />}
+          element={<ProtectedRoute role={[Roles.Nurse]} />}
         >
           <Route
             path=""
@@ -100,6 +130,57 @@ const AppRoutes = () => {
             element={
               <NurseLayoutPage
                 childComp={<NursePage childComp={<MedicalRecordsPage />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
+          path={ROUTE_URLS.NURSE + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
+          element={<ProtectedRoute role={[Roles.Nurse]} />}
+        >
+          <Route
+            path=""
+            element={
+              <NurseLayoutPage
+                childComp={<NursePage childComp={<ListMedicalRecordPage />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
+          path={ROUTE_URLS.CASHIER_HOME_PAGE}
+          element={<ProtectedRoute role={[Roles.Cashier]} />}
+        >
+          <Route
+            path=""
+            element={
+              <CashierLayoutPage
+                childComp={<CashierPage childComp={<PatientTable />} />}
+              />
+            }
+          />
+
+          <Route
+            path={ROUTE_URLS.MEDICAL_RECORDS_PAGE}
+            element={
+              <CashierLayoutPage
+                childComp={<CashierPage childComp={<MedicalRecordsPage />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
+          path={ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
+          element={<ProtectedRoute role={[Roles.Cashier]} />}
+        >
+          <Route
+            path=""
+            element={
+              <CashierLayoutPage
+                childComp={<CashierPage childComp={<ListMedicalRecordPage />} />}
               />
             }
           />

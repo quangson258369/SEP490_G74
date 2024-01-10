@@ -8,13 +8,12 @@ import { jwtDecode } from "jwt-decode";
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
 import { ROUTE_URLS, TOKEN } from "../Commons/Global";
-import { Category, ServiceType } from "../Models/MedicalRecordModel";
 
-const AdminLayoutPage = (props: any) => {
+const CashierLayoutPage = (props: any) => {
   const { childComp } = props;
   const { setAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [WelcomeMessage, setWelcomeMessage] = useState<string>("Hello Admin");
+  const [WelcomeMessage, setWelcomeMessage] = useState<string>("");
   const [collapsed] = useState(false);
   const handleLogout = () => {
     let user: User = {
@@ -23,7 +22,7 @@ const AdminLayoutPage = (props: any) => {
 
     setAuthenticated(user);
     localStorage.removeItem(TOKEN);
-    message.info("Logged out" ,1);
+    message.info("Logged out", 1);
     navigate(ROUTE_URLS.LOGIN_PAGE);
   };
 
@@ -32,7 +31,7 @@ const AdminLayoutPage = (props: any) => {
     if (token !== null) {
       var user: JWTTokenModel = jwtDecode(token);
       if (user !== null) {
-        setWelcomeMessage("Xin chào Quản trị viên, " + user.unique_name);
+        setWelcomeMessage("Xin chào Thu ngân, " + user.unique_name);
       }
     }
   };
@@ -65,36 +64,36 @@ const AdminLayoutPage = (props: any) => {
             trigger={null}
             collapsible
             collapsed={collapsed}
-            style={{ background: "#146C94", color: "white", height:"auto"}}
+            style={{ background: "#146C94", color: "white", height: "auto" }}
           >
             <div className="demo-logo-vertical" />
             <Menu
               theme="light"
               mode="inline"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={["3"]}
               style={{ background: "#146C94", color: "white" }}
             >
-              <Menu.Item key="1">
+              {/* <Menu.Item key="1">
                 <Link to={"/"}>Trang chủ</Link>
-              </Menu.Item>
-              <Menu.Item key="3">
+              </Menu.Item> */}
+              <Menu.Item key="1">
                 <Link to={"/"}>Hóa đơn thuốc</Link>
               </Menu.Item>
-              <Menu.Item key="4">
+              <Menu.Item key="2">
                 <Link to={"/"}>Hóa đơn dịch vụ</Link>
               </Menu.Item>
-              <Menu.Item key="5">
+              <Menu.Item key="3">
+                <Link to={ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
+              </Menu.Item>
+              {/* <Menu.Item key="5">
                 <Link to={"/"}>Nhân sự</Link>
               </Menu.Item>
               <Menu.Item key="6">
-                <Link to={ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
+                <Link to={"/"}>Hồ sơ bệnh án</Link>
               </Menu.Item>
               <Menu.Item key="7">
                 <Link to={"/"}>Hồ sơ cá nhân</Link>
-              </Menu.Item>
-              <Menu.Item key="8">
-                <Link to={ROUTE_URLS.ADMIN_SUB_PAGE}>Khoa và dịch vụ</Link>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </Sider>
           <Layout>
@@ -114,4 +113,4 @@ const AdminLayoutPage = (props: any) => {
   );
 };
 
-export default AdminLayoutPage;
+export default CashierLayoutPage;

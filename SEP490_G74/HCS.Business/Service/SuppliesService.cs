@@ -73,6 +73,12 @@ public class SuppliesService : ISuppliesService
     {
         var response = new ApiResponse();
 
+        var currentsupply = await _unitOfWork.SuppliesRepo.GetAsync(x => x.SName == suppliesAddModel.SName);
+        if (currentsupply != null)
+        {
+            return response.SetBadRequest("Supply Name is already exist");
+        }
+
         var supplyRequest = _mapper.Map<Supply>(suppliesAddModel);
 
         await _unitOfWork.SuppliesRepo.AddAsync(supplyRequest);
@@ -108,6 +114,7 @@ public class SuppliesService : ISuppliesService
 
     public async Task DeleteSupply(int supplyId)
     {
-        await _unitOfWork.SuppliesRepo.RemoveByIdAsync(supplyId);
+        await _unitOfWork.SuppliesRepo.RemoveById(supplyId);
+        await _unitOfWork.SaveChangeAsync();
     }
 }

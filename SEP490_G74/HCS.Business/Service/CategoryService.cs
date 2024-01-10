@@ -62,6 +62,9 @@ public class CategoryService : ICategoryService
         var response = new ApiResponse();
         var categoryEntity = _mapper.Map<Category>(category);
 
+        var currentCate = await _unitOfWork.CategoryRepo.GetAsync(entry => entry.CategoryName == category.CategoryName);
+        if (currentCate != null) return response.SetBadRequest("Category Name is already exist");
+
         await _unitOfWork.CategoryRepo.AddAsync(categoryEntity);
         await _unitOfWork.SaveChangeAsync();
 
@@ -85,8 +88,8 @@ public class CategoryService : ICategoryService
     public async Task DeleteCategory(int categoryId)
     {
         var response = new ApiResponse();
-        
-        await _unitOfWork.CategoryRepo.RemoveByIdAsync(categoryId);
+
+        await _unitOfWork.CategoryRepo.RemoveCategoryById(categoryId);
         await _unitOfWork.SaveChangeAsync();
         
     }

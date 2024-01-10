@@ -26,12 +26,18 @@ const apiLinks = {
     category:{
         getCategories:`${baseUrls}Category`,
         postCategory:`${baseUrls}Category`,
+        putCategory:`${baseUrls}Category/`,
+        deleteCategory:`${baseUrls}Category/`,
     },
     serviceType:{
         getServicesType:`${baseUrls}ServiceType/`,
+        postServicesType:`${baseUrls}ServiceType`,
+        deleteServicesType:`${baseUrls}ServiceType/`,
     },
     service:{
         getServices:`${baseUrls}ServiceType/service/`,
+        postServices:`${baseUrls}ServiceType/service`,
+        deleteServices:`${baseUrls}ServiceType/service/`,
     }
     ,
     doctor:{
@@ -49,6 +55,12 @@ const apiLinks = {
         getSuppliesBySupplyTypeId:`${baseUrls}SuppliesType/supplies/`,
         postSuppliesPrescriptionByMrId:`${baseUrls}SuppliesType/supplies-prescription/`,
         getSelectedSuppliesByMrId:`${baseUrls}SuppliesType/selected-supplies/`,
+        getAllSupplies: `${baseUrls}Supply`,
+        putUpdateSupplyType:`${baseUrls}SuppliesType/`,
+        deleteSupplyType:`${baseUrls}SuppliesType/`,
+        postAddSupply:`${baseUrls}Supply`,
+        putUpdateSupply:`${baseUrls}Supply/`,
+        deleteSupply:`${baseUrls}Supply/`,
     }
 }
 

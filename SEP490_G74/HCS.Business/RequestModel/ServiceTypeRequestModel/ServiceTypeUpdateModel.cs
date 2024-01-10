@@ -9,5 +9,6 @@ public class ServiceTypeUpdateModel
 public class ServiceUpdateModel
 {
     public string ServiceName { get; set; } = string.Empty;
+    public double Price { get; set; } = 1000;
     //public int CategoryId { get; set; }
 }
