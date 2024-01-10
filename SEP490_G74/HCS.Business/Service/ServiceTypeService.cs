@@ -4,6 +4,7 @@ using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.ServiceTypeResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Models;
+using System.Security.Authentication.ExtendedProtection;
 
 namespace HCS.Business.Service;
 
@@ -15,8 +16,10 @@ public interface IServiceTypeService
     Task<ApiResponse> UpdateServiceType(int serviceTypeId, ServiceTypeUpdateModel serviceTypeUpdateModel);
     Task DeleteServiceType(int serviceTypeId);
     Task<ApiResponse> GetListServiceByServiceTypeId(int serviceTypeId);
+    Task<ApiResponse> AddService(ServiceAddModel serviceAddModel);
+    Task<ApiResponse> UpdateService(int serviceTypeId, ServiceUpdateModel serviceUpdateModel);
 }
-public class ServiceTypeService: IServiceTypeService
+public class ServiceTypeService : IServiceTypeService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -45,8 +48,16 @@ public class ServiceTypeService: IServiceTypeService
     public async Task<ApiResponse> GetListServiceType(int categoryID)
     {
         var response = new ApiResponse();
+        var listEntity = new List<ServiceType>();
 
-        var listEntity = await _unitOfWork.ServiceTypeRepo.GetAllAsync(x => x.CategoryId == categoryID);
+        if (categoryID > 0)
+        {
+            listEntity = await _unitOfWork.ServiceTypeRepo.GetAllAsync(x => x.CategoryId == categoryID);
+        }
+        else
+        {
+            listEntity = await _unitOfWork.ServiceTypeRepo.GetAllAsync(null);
+        }
 
         var entityResponse = _mapper.Map<List<ServiceTypeResponseModel>>(listEntity);
 
@@ -76,10 +87,46 @@ public class ServiceTypeService: IServiceTypeService
             return response.SetNotFound($"Not Found ServiceType with Id {serviceTypeId}");
         }
 
-        _mapper.Map<ServiceType>(serviceTypeUpdateModel);
+        //_mapper.Map<ServiceType>(serviceTypeUpdateModel);
+        currentEntity.ServiceTypeName = serviceTypeUpdateModel.ServiceTypeName;
         await _unitOfWork.SaveChangeAsync();
 
         return response.SetOk("Updated");
+    }
+
+    public async Task<ApiResponse> UpdateService(int serviceId, ServiceUpdateModel serviceUpdateModel)
+    {
+        var response = new ApiResponse();
+
+        var currentEntity = await _unitOfWork.ServiceRepo.GetAsync(x => x.ServiceId == serviceId);
+
+        if (currentEntity is null)
+        {
+            return response.SetNotFound($"Not Found ServiceType with Id {serviceId}");
+        }
+
+        //_mapper.Map<ServiceType>(serviceTypeUpdateModel);
+        currentEntity.ServiceName = serviceUpdateModel.ServiceName;
+        await _unitOfWork.SaveChangeAsync();
+
+        return response.SetOk("Updated");
+    }
+
+    public async Task<ApiResponse> AddService(ServiceAddModel serviceAddModel)
+    {
+        var response = new ApiResponse();
+
+        //var entity = _mapper.Map<ServiceType>(serviceTypeAddModel);
+        var entity = new HCS.Domain.Models.Service()
+        {
+            ServiceName = serviceAddModel.ServiceName,
+            ServiceTypeId = serviceAddModel.ServiceTypeId
+        };
+
+        await _unitOfWork.ServiceRepo.AddAsync(entity);
+        await _unitOfWork.SaveChangeAsync();
+
+        return response.SetOk("Created");
     }
 
     public async Task DeleteServiceType(int serviceTypeId)
@@ -90,7 +137,15 @@ public class ServiceTypeService: IServiceTypeService
     public async Task<ApiResponse> GetListServiceByServiceTypeId(int serviceTypeId)
     {
         var response = new ApiResponse();
-        var services = await _unitOfWork.ServiceRepo.GetAllAsync(x => x.ServiceTypeId == serviceTypeId);
+        var services = new List<HCS.Domain.Models.Service>();
+        if(serviceTypeId > 0)
+        {
+            services = await _unitOfWork.ServiceRepo.GetAllAsync(x => x.ServiceTypeId == serviceTypeId);
+        }
+        else
+        {
+            services = await _unitOfWork.ServiceRepo.GetAllAsync(null);
+        }
         var servicesResponse = _mapper.Map<List<ServiceResponseModel>>(services);
         return response.SetOk(servicesResponse);
     }

@@ -96,6 +96,9 @@ public class MedicalRecordService : IMedicalRecordService
 
         var listItem = await _unitOfWork.MedicalRecordRepo.GetAllAsync(x => x.PatientId == patientId);
 
+        if(patientId == 0)
+            listItem = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
+
         var listItemResponse = new List<MrResponseByPatientId>();
 
         foreach (var item in listItem)
