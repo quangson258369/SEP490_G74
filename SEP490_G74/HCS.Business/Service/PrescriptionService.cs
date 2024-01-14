@@ -3,6 +3,7 @@ using HCS.Business.RequestModel.PrescriptionRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.PrescriptionResponseModel;
 using HCS.DataAccess.UnitOfWork;
+using HCS.Domain.Enums;
 using HCS.Domain.Models;
 
 namespace HCS.Business.Service;
@@ -10,7 +11,7 @@ namespace HCS.Business.Service;
 public interface IPrescriptionService
 {
     Task<ApiResponse> GetPrescription(int prescriptionId);
-    Task<ApiResponse> GetPrescriptions();
+    Task<ApiResponse> GetPrescriptions(int userId);
     Task<ApiResponse> AddPrescription(PrescriptionAddModel prescription);
     Task<ApiResponse> UpdatePrescription(int id, PrescriptionUpdateModel prescription);
     Task DeletePrescription(int id);
@@ -40,7 +41,7 @@ public class PrescriptionService : IPrescriptionService
         return response.SetOk(prescriptionResponse);
     }
 
-    public async Task<ApiResponse> GetPrescriptions()
+    public async Task<ApiResponse> GetPrescriptions(int userId)
     {
         var response = new ApiResponse();
         
@@ -48,7 +49,27 @@ public class PrescriptionService : IPrescriptionService
 
         var prescriptionsResponse = _mapper.Map<List<PrescriptionResponseModel>>(prescriptions);
 
-        return response.SetOk(prescriptionsResponse);
+        var result = new List<PrescriptionResponseModel>();
+        var user = await _unitOfWork.UserRepo.GetAsync(x => x.UserId == userId);
+        if(user != null)
+        {
+            if(user.RoleId == (int)UserRole.Doctor)
+            {
+                foreach(var pres in prescriptionsResponse)
+                {
+                    var isSameCate = await _unitOfWork.PrescriptionRepo.IsPresSameCategoryWithDoctor(pres.PrescriptionId, userId); 
+                    if(isSameCate)
+                    {
+                        result.Add(pres);
+                    }
+                }
+            }
+            else
+            {
+                return response.SetOk(prescriptionsResponse);
+            }
+        }
+        return response.SetOk(result);
     }
 
     public async Task<ApiResponse> AddPrescription(PrescriptionAddModel prescription)

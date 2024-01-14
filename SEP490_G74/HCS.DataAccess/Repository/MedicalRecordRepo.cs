@@ -44,7 +44,7 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
         return medicalRecord;
     }
 
-    public Task<List<MedicalRecord>> GetMRByPatientId(int patientId)
+    public Task<List<MedicalRecord>> GetMrByPatientId(int patientId)
     {
         var listMrByPatientId = _context.MedicalRecords
             .Where(med => med.PatientId == patientId)

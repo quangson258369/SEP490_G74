@@ -21,6 +21,7 @@ public interface IMedicalRecordService
     Task<ApiResponse> UpdateMrStatus(int mrId, bool isPaid, int? userId);
     Task<ApiResponse> NewUpdateMedicalRecord(int userId, int id, NewMedicalRecordUpdateModel newMedicalRecord);
     Task<ApiResponse> GetReCheckUpMedicalRecordByPreviosMedicalRecordId(int prevMrId);
+    Task<ApiResponse> GetListMrUnCheckByPatientId(int patientId, int pageIndex, int pageSize, int userId);
 }
 public class MedicalRecordService : IMedicalRecordService
 {
@@ -123,6 +124,45 @@ public class MedicalRecordService : IMedicalRecordService
             listItemResponse.Add(result);
         }
 
+        // order list by date
+        listItemResponse = listItemResponse.OrderByDescending(x => x.MedicalRecordDate).ToList();
+        var paginationResult = listItemResponse.Paginate(pageIndex, pageSize);
+        return response.SetOk(paginationResult);
+    }
+
+    public async Task<ApiResponse> GetListMrUnCheckByPatientId(int patientId, int pageIndex, int pageSize, int userId)
+    {
+        var response = new ApiResponse();
+
+        var listItem = await _unitOfWork.MedicalRecordRepo.GetAllAsync(x => x.PatientId == patientId);
+
+        if (patientId == 0)
+        {
+            listItem = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
+            listItem = await GetListMedicalRecordsByRole(userId, listItem);
+        }
+
+        var listItemResponse = new List<MrResponseByPatientId>();
+
+        foreach (var item in listItem)
+        {
+            var contact = await _unitOfWork.ContactRepo.GetAsync(x => x.Patient!.PatientId == item.PatientId);
+
+            //var category = await _unitOfWork.CategoryRepo.GetAsync(x => x.CategoryId == item.CategoryId);
+            var result = new MrResponseByPatientId()
+            {
+                MedicalRecordId = item.MedicalRecordId,
+                MedicalRecordDate = item.MedicalRecordDate,
+                Name = contact.Name,
+                //CategoryName = category.CategoryName,
+                IsCheckUp = item.IsCheckUp,
+                IsPaid = item.IsPaid,
+                PatientId = item.PatientId
+            };
+
+            listItemResponse.Add(result);
+        }
+        listItemResponse = listItemResponse.Where(x => x.IsCheckUp == false).ToList();
         // order list by date
         listItemResponse = listItemResponse.OrderByDescending(x => x.MedicalRecordDate).ToList();
         var paginationResult = listItemResponse.Paginate(pageIndex, pageSize);
@@ -319,12 +359,110 @@ public class MedicalRecordService : IMedicalRecordService
                     {
                         if (newMedicalRecord.ServiceIds is not null)
                         {
-                            existMed.ServiceMedicalRecords?.Clear();
-                            existMed.ServiceMedicalRecords = newMedicalRecord.ServiceIds.Select(
-                                                                                         s => new ServiceMedicalRecord()
-                                                                                         {
-                                                                                             ServiceId = s
-                                                                                         }).ToList();
+                            if (existMed.ServiceMedicalRecords is null || existMed.ServiceMedicalRecords.Count < 1)
+                            {
+                                existMed.ServiceMedicalRecords = new List<ServiceMedicalRecord>();
+                                existMed.ServiceMedicalRecords = newMedicalRecord.ServiceIds.Select(
+                                                                           s => new ServiceMedicalRecord()
+                                                                           {
+                                                                               ServiceId = s
+                                                                           }).ToList();
+
+                            }
+                            else
+                            {
+                                //Lay danh sach category cua cac service trong medical record
+                                Dictionary<int, List<int>> cateServices = new Dictionary<int, List<int>>();
+
+                                foreach (var service in existMed.ServiceMedicalRecords)
+                                {
+                                    var category = await _unitOfWork.CategoryRepo.GetCategoryByServiceId(service.ServiceId);
+                                    if (category != null)
+                                    {
+                                        if (cateServices.ContainsKey(category.CategoryId))
+                                        {
+                                            cateServices[category.CategoryId].Add(service.ServiceId);
+                                        }
+                                        else
+                                        {
+                                            cateServices.Add(category.CategoryId, new List<int>() { service.ServiceId });
+                                        }
+                                    }
+                                }
+                                // lay danh sach category moi va service moi
+                                Dictionary<int, List<int>> newCateServices = new Dictionary<int, List<int>>();
+
+                                foreach (var serviceId in newMedicalRecord.ServiceIds)
+                                {
+                                    var category = await _unitOfWork.CategoryRepo.GetCategoryByServiceId(serviceId);
+                                    if (category != null)
+                                    {
+                                        if (newCateServices.ContainsKey(category.CategoryId))
+                                        {
+                                            newCateServices[category.CategoryId].Add(serviceId);
+                                        }
+                                        else
+                                        {
+                                            newCateServices.Add(category.CategoryId, new List<int>() { serviceId });
+                                        }
+                                    }
+                                }
+                                // remove all service has same category with cateServices
+                                foreach (var oldService in existMed.ServiceMedicalRecords)
+                                {
+                                    var cate = await _unitOfWork.CategoryRepo.GetCategoryByServiceId(oldService.ServiceId);
+                                    if (cate != null)
+                                    {
+                                        if (newCateServices.ContainsKey(cate.CategoryId))
+                                        {
+                                            existMed.ServiceMedicalRecords.Remove(oldService);
+                                        }
+                                    }
+                                }
+
+                                // parse new services of same category doctor to current services
+                                foreach (var newCate in newCateServices)
+                                {
+                                    // if current cateServices contains new category, update new serviceIds for selected categoryId
+                                    if (cateServices.ContainsKey(newCate.Key))
+                                    {
+                                        cateServices[newCate.Key] = newCate.Value;
+                                    }
+                                    // if current cateServices not contains new category, add new category and serviceIds
+                                    else
+                                    {
+                                        var newServiceIds = newCate.Value;
+                                        foreach(var newServiceId in newServiceIds)
+                                        {
+                                            if (!existMed.ServiceMedicalRecords.Select(x => x.ServiceId).Contains(newServiceId))
+                                            {
+                                                existMed.ServiceMedicalRecords.Add(new ServiceMedicalRecord()
+                                                {
+                                                    ServiceId = newServiceId
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (user.CategoryId is not null)
+                                {
+                                    if (cateServices.ContainsKey((int)user.CategoryId))
+                                    {
+                                        var newServiceIds = cateServices[(int)user.CategoryId];
+                                        foreach (var serviceId in newServiceIds)
+                                        {
+                                            if (!existMed.ServiceMedicalRecords.Select(x => x.ServiceId).Contains(serviceId))
+                                            {
+                                                existMed.ServiceMedicalRecords.Add(new ServiceMedicalRecord()
+                                                {
+                                                    ServiceId = serviceId
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                         break;
                     }

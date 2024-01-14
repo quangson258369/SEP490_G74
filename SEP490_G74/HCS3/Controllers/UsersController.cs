@@ -108,5 +108,13 @@ namespace HCS.API.Controllers
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> GetAccounts()
+        {
+            var result = await _userService.GetAllAccounts();
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
     }
 }

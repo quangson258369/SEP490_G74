@@ -9,6 +9,7 @@ public interface ICategoryRepo : IGenericRepo<Category>
 {
     Task<List<Category>> GetCategories();
     Task<bool> RemoveCategoryById(int id);
+    Task<Category?> GetCategoryByServiceId(int id);
 }
 
 public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
@@ -33,6 +34,20 @@ public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
         {
             category.IsDeleted = true;
             return true;
+        }
+    }
+
+    public async Task<Category?> GetCategoryByServiceId(int id)
+    {
+        var service =  await _context.Services.Include(s => s.ServiceType).ThenInclude(t => t.Category)
+            .FirstOrDefaultAsync(s => s.ServiceId == id);
+        if(service is null || service.ServiceType is null || service.ServiceType.Category is null)
+        {
+            return null;
+        }
+        else
+        {
+            return service.ServiceType.Category;
         }
     }
 }

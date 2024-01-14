@@ -12,6 +12,8 @@ using HCS.Business.RequestModel.PatientContactRequestModel;
 using HCS.Business.RequestModel.PatientRequestModel;
 using HCS.Business.ResponseModel.UserResponseModel;
 using static HCS.Business.Util.MD5PasswordGenerator.PasswordGenerator;
+using HCS.Domain;
+using Microsoft.Identity.Client;
 
 
 namespace HCS.Business.Service
@@ -30,6 +32,8 @@ namespace HCS.Business.Service
         Task<ApiResponse> GetListDoctorByCategoryId(int categoryId);
 
         Task<ApiResponse> GetLeastAssginedDoctorByCategoryId(int categoryId);
+
+        Task<ApiResponse> GetAllAccounts();
     }
 
     public class UserService : IUserService
@@ -160,30 +164,6 @@ namespace HCS.Business.Service
             await _unitOfWork.PatientRepo.AddAsync(patientRequest);
             await _unitOfWork.SaveChangeAsync();
 
-            //var currentPatient =
-            //    await _unitOfWork.PatientRepo.GetAsync(
-            //        x => x.PatientId == patientRequest.PatientId);
-
-            //if (currentPatient is null)
-            //{
-            //    return response.SetNotFound($"Not Found Patient with Id {patientRequest.PatientId}");
-            //}
-
-            //var contactRequest = new Contact()
-            //{
-            //    Name = patientContactRequestModel.Name,
-            //    Gender = patientContactRequestModel.Gender,
-            //    Phone = patientContactRequestModel.Phone,
-            //    Dob = patientContactRequestModel.Dob,
-            //    Address = patientContactRequestModel.Address,
-            //    Img = patientContactRequestModel.Img,
-            //    //PatientId = currentPatient.PatientId,
-            //    //UserId = patientContactRequestModel.UserId
-            //};
-
-            //await _unitOfWork.ContactRepo.AddAsync(contactRequest);
-            //await _unitOfWork.SaveChangeAsync();
-
             return response.SetOk("Created");
         }
 
@@ -260,6 +240,28 @@ namespace HCS.Business.Service
                 };
                 return response.SetOk(result);
             }
+        }
+
+        public async Task<ApiResponse> GetAllAccounts()
+        {
+            var accounts = await _unitOfWork.UserRepo.GetAllAsync(x => true);
+
+            if (accounts is null)
+            {
+                accounts = new List<User>();
+            }
+
+            List<UserJWTModel> result = new();
+
+            foreach (var account in accounts)
+            {
+                var item = await _unitOfWork.UserRepo.GetProfile(account.Email);
+                if (item != null)
+                {
+                    result.Add(item);
+                }
+            }
+            return new ApiResponse().SetOk(result);
         }
     }
 }

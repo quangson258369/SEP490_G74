@@ -49,6 +49,26 @@ namespace HCS.API.Controllers
         }
 
         [Authorize(Roles = "Admin, Nurse, Doctor, Cashier")]
+        [HttpGet("id/un-check/{patientId:int}")]
+        public async Task<IActionResult> GetMedicalRecordUnCheckByPatientId(
+            int patientId,
+            [FromQuery] int pageIndex,
+            [FromQuery] int pageSize)
+        {
+            var roleClaims = User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            //parse to int
+            if (roleClaims is not null)
+            {
+                var userIdString = roleClaims.Value;
+                var userId = int.Parse(userIdString);
+                var result = await _medicalRecordService.GetListMrUnCheckByPatientId(patientId, pageIndex, pageSize, userId);
+                return result.IsSuccess ? Ok(result) : BadRequest(result);
+            }
+            return BadRequest();
+        }
+
+        [Authorize(Roles = "Admin, Nurse, Doctor, Cashier")]
         [HttpGet("detail/id/{id:int}")]
         public async Task<IActionResult> GetMedicalRecordById(
             int id)

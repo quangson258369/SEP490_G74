@@ -1,8 +1,10 @@
 using HCS.Business.RequestModel.PrescriptionRequestModel;
 using HCS.Business.Service;
+using HCS.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HCS.API.Controllers;
 
@@ -30,9 +32,20 @@ public class PrescriptionController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetPrescriptions()
     {
-        var result = await _prescriptionService.GetPrescriptions();
-
-        return result.IsSuccess ? Ok(result) : BadRequest(result);
+        var roleClaims = User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        //parse to int
+        if (roleClaims is not null)
+        {
+            var userIdString = roleClaims.Value;
+            var userId = int.Parse(userIdString);
+            var result = await _prescriptionService.GetPrescriptions(userId);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+        else
+        {
+            return BadRequest("User not found");
+        }
     }
 
     [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]

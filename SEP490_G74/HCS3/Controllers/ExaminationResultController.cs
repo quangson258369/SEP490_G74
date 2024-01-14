@@ -10,10 +10,12 @@ namespace HCS.API.Controllers;
 public class ExaminationResultController : ControllerBase
 {
     private readonly IExaminationResultService _service;
+    private readonly IWebHostEnvironment _environment;
 
-    public ExaminationResultController(IExaminationResultService service)
+    public ExaminationResultController(IExaminationResultService service, IWebHostEnvironment environment)
     {
         _service = service;
+        _environment = environment;
     }
 
     [Authorize(Roles = "Admin, Doctor, Nurse")]
@@ -51,5 +53,49 @@ public class ExaminationResultController : ControllerBase
         var result = await _service.AddExamDetailsByMedicalRecordId(id, examDetails);
 
         return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
+    [AllowAnonymous]
+    [HttpPost("upload")]
+    public async Task<IActionResult> UploadImage(IFormFile image)
+    {
+        if (image != null)
+        {
+            var folderPath = Path.Combine(_environment.ContentRootPath, "Images");
+            Directory.CreateDirectory(folderPath); // Create the folder if it doesn't exist
+
+            var fileName = image.FileName;
+            var filePath = Path.Combine(folderPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            return Ok(filePath);
+        }
+        else
+        {
+            return BadRequest("Please select an image to upload.");
+        }
+    }
+
+    //create an api to get image by name
+    [AllowAnonymous]
+    [HttpGet("image/{name}")]
+    public IActionResult GetImage(string name)
+    {
+        var folderPath = Path.Combine(_environment.ContentRootPath, "Images");
+        var filePath = Path.Combine(folderPath, name);
+
+        try
+        {
+            var image = System.IO.File.OpenRead(filePath);
+            return File(image, "image/jpeg");
+        }
+        catch(Exception e)
+        {
+            return NotFound();
+        }
     }
 }
