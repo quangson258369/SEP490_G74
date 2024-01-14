@@ -84,7 +84,7 @@ const AdminLayoutPage = (props: any) => {
                 <Link to={"/"}>Hóa đơn dịch vụ</Link>
               </Menu.Item>
               <Menu.Item key="5">
-                <Link to={"/"}>Nhân sự</Link>
+                <Link to={ROUTE_URLS.ADMIN_ACCOUNTS_PAGE}>Nhân sự</Link>
               </Menu.Item>
               <Menu.Item key="6">
                 <Link to={ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>

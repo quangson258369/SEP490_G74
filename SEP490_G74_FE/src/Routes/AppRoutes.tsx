@@ -18,6 +18,8 @@ import SubEntityTable from "../component/Admin/SubEntityTable";
 import CashierLayoutPage from "../LayoutPages/CashierLayoutPage";
 import CashierPage from "../Pages/CashierPage";
 import ListMedicalRecordPage from "../Pages/ListMedicalRecordPage";
+import ListMedicalRecordUnCheckPage from "../Pages/ListMedicalRecordUnCheckPage";
+import AccountsTable from "../component/Admin/AccountsTable";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +78,20 @@ const AppRoutes = () => {
         </Route>
 
         <Route
+          path={ROUTE_URLS.ADMIN_ACCOUNTS_PAGE}
+          element={<ProtectedRoute role={[Roles.Admin]} />}
+        >
+          <Route
+            path=""
+            element={
+              <AdminLayoutPage
+                childComp={<AdminPage childComp={<AccountsTable />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
           path={ROUTE_URLS.DOCTOR_HOME_PAGE}
           element={<ProtectedRoute role={[Roles.Doctor]} />}
         >
@@ -107,6 +123,20 @@ const AppRoutes = () => {
             element={
               <DoctorLayoutPage
                 childComp={<DoctorPage childComp={<ListMedicalRecordPage />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
+            path={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_CHECK_PAGE}
+          element={<ProtectedRoute role={[Roles.Doctor]} />}
+        >
+          <Route
+            path=""
+            element={
+              <DoctorLayoutPage
+                childComp={<DoctorPage childComp={<ListMedicalRecordUnCheckPage />} />}
               />
             }
           />

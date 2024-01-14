@@ -5,7 +5,8 @@ const baseUrls = `https://localhost:${vsPort}/api/`
 
 const apiLinks = {
     auth: {
-        postLogin: `${baseUrls}Users/login`
+        postLogin: `${baseUrls}Users/login`,
+        getAccounts: `${baseUrls}Users`,
     },
     patients:{
         getPatients:`${baseUrls}Users/patients`,
@@ -16,6 +17,7 @@ const apiLinks = {
         getMedicalRecords:`${baseUrls}MedicalRecords`,
         // getMedicalRecordsByPatientId:`${baseUrls}MedicalRecords/id/:patientId?pageIndex=1&pageSize=5`,
         getMedicalRecordsByPatientId:`${baseUrls}MedicalRecords/id/`,
+        getMedicalRecordsUnCheckByPatientId:`${baseUrls}MedicalRecords/id/un-check/`,
         postMedicalRecord:`${baseUrls}MedicalRecords`,
         getMedicalRecordById:`${baseUrls}MedicalRecords/detail/id/`,
         patchMrStatusPaid:`${baseUrls}MedicalRecords/payment/id/`,

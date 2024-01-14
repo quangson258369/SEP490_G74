@@ -12,6 +12,7 @@ const GenericModal = ({
   return (
     <Modal
       title={title}
+      destroyOnClose={true}
       open={isOpen}
       onOk={onClose}
       onCancel={onClose}

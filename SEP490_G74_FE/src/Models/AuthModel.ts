@@ -21,3 +21,19 @@ export interface JWTTokenModel {
   unique_name: string;
   nameid?: string;
 }
+
+export interface AccountResponseModel {
+  userId: number;
+  userName: string;
+  email: string;
+  roleId: number;
+  roleName: string;
+}
+
+export interface AddAccountModel {
+  password: string
+  email: string
+  status: boolean
+  roleId: number
+  categoryId: number
+}

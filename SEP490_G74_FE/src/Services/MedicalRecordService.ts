@@ -88,6 +88,34 @@ const getMedicalRecordsByPatientId = async (
   }
 };
 
+const getMedicalRecordsUnCheckByPatientId = async (
+  patientId: number,
+  pageIndex: number,
+  pageSize: number
+): Promise<ApiResponseModel | undefined> => {
+  try {
+    const token = localStorage.getItem(TOKEN);
+    if (token !== null) {
+      var uToken: JWTTokenModel = jwtDecode(token);
+
+      if (uToken !== null) {
+        var url = `${
+          apiLinks.medicalRecords.getMedicalRecordsUnCheckByPatientId
+        }${patientId}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
+        const response = await httpClient.get({
+          url: url,
+          authorization: `Bearer ${token}`,
+        });
+        return response.data.result as ApiResponseModel;
+      }
+    }
+    return undefined;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+
 const getMedicalRecordDetailById = async (
   id: number
 ): Promise<MedicalRecordDetailModel | undefined> => {
@@ -190,6 +218,7 @@ const medicalRecordService = {
   updateMrCheckUpStatus: updateMrCheckUpStatus,
   updateMedicalRecord: updateMedicalRecord,
   getReCheckUpByPrevMrId: getReCheckUpByPrevMrId,
+  getMedicalRecordsUnCheckByPatientId: getMedicalRecordsUnCheckByPatientId,
 };
 
 export default medicalRecordService;

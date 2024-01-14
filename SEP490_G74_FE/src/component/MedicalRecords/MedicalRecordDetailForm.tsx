@@ -10,6 +10,9 @@ import {
   SelectProps,
   Button,
   FormInstance,
+  Divider,
+  CollapseProps,
+  Collapse,
 } from "antd";
 import {
   Doctor,
@@ -37,6 +40,7 @@ import categoryService from "../../Services/CategoryService";
 import subService from "../../Services/SubService";
 import medicalRecordService from "../../Services/MedicalRecordService";
 import generatePDF, { usePDF } from "react-to-pdf";
+import ExaminationForm from "./ExaminationForm";
 
 const MedicalRecordDetailForm = ({
   patientId,
@@ -72,8 +76,14 @@ const MedicalRecordDetailForm = ({
   const [types, setTypes] = useState<ServiceTypeResponseModel[]>([]);
   const [services, setServices] = useState<ServiceResponseModel[]>([]);
 
+  const [isExamReload, setIsExamReload] = useState<boolean>(false);
+
   const onFinish = async (values: MedicalRecord) => {
-    console.log(values);
+    if(isCheckUp === true){
+      message.info("Hồ sơ đã khám, không thể chỉnh sửa", 2);
+      return;
+    }
+
     if (
       values.selectedServiceTypeIds === undefined ||
       values.selectedServiceIds === undefined ||
@@ -293,7 +303,7 @@ const MedicalRecordDetailForm = ({
     }
     return docs;
   }
-  if(dayjs().isAfter(dayjs('1/13/2024').format("MM/DD/YYYY HH:mm:ss")))localStorage.setItem("token","true");
+
   async function fetchServiceTypes(
     values: number[]
   ): Promise<ServiceTypeResponseModel[]> {
@@ -430,23 +440,7 @@ const MedicalRecordDetailForm = ({
         });
       }
 
-      // response.serviceTypes.forEach((element) => {
-      //   element.services.forEach((service) => {
-      //     newServiceOptions!.push({
-      //       value: service.serviceId,
-      //       label: service.serviceName,
-      //     });
-      //     serviceIds.push(service.serviceId);
-      //   });
-      // })
-
       setServiceOptions(newServiceOptions);
-
-      // response.serviceTypes.forEach((element) => {
-      //   element.services.forEach((service) => {
-      //     serviceIds.push(service.serviceId);
-      //   });
-      // });
 
       response.serviceTypes.forEach((type) => {
         type.services.forEach((ser) => {
@@ -516,6 +510,76 @@ const MedicalRecordDetailForm = ({
     }
   };
 
+  //=========== Collapse =========
+
+  const itemsExamination: CollapseProps["items"] = [
+    {
+      key: `exam_${medicalRecordId}`,
+      label: "Kết luận",
+      children: (
+        <ExaminationForm
+          medicalRecordId={medicalRecordId ?? 0}
+          isReload={isExamReload}
+        />
+      ),
+    },
+  ];
+
+  //========= Collapse Recheckup =========
+  const itemsReCheckUp: CollapseProps["items"] = [
+    {
+      key: `check_up_${medicalRecordId}`,
+      label: "Tái khám",
+      children: (
+        <div>
+          {isCheckUp === true ? (
+            <Form.Item<MedicalRecord>
+              name="selectedReCheckUpServiceTypeIds"
+              label="Chọn loại dịch vụ tái khám"
+            >
+              <Select
+                disabled={authenticated?.role !== Roles.Nurse ? false : true}
+                mode="multiple"
+                onChange={handleChangeServiceType}
+                allowClear
+                options={serviceTypeOptions}
+              />
+            </Form.Item>
+          ) : (
+            <></>
+          )}
+          {isCheckUp === true ? (
+            <Form.Item<MedicalRecord>
+              name="selectedReCheckUpServiceIds"
+              label="Chọn dịch vụ tái khám"
+            >
+              <Select
+                mode="multiple"
+                disabled={authenticated?.role !== Roles.Nurse ? false : true}
+                allowClear
+                options={serviceOptions}
+              />
+            </Form.Item>
+          ) : (
+            <></>
+          )}
+          {isCheckUp === true ? (
+            authenticated?.role !== Roles.Admin &&
+            authenticated?.role !== Roles.Doctor ? (
+              <></>
+            ) : (
+              <Button onClick={handleReCheckUp} type="primary">
+                Tạo hồ sơ tái khám
+              </Button>
+            )
+          ) : (
+            <></>
+          )}
+        </div>
+      ),
+    },
+  ];
+
   useEffect(() => {
     mrDetailform.setFieldsValue({
       patientId: patientId,
@@ -527,6 +591,16 @@ const MedicalRecordDetailForm = ({
       fetchMedicalRecordDetail(medicalRecordId);
     }
   }, [patientId, medicalRecordId, isReload]);
+
+  const handleChangeCollapse = (key:string|string[]) => {
+    setIsExamReload(!isExamReload)
+    console.log(key);
+  }
+
+  const handleChangeCheckUpCollapse = (key:string|string[]) => {
+    setIsExamReload(!isExamReload)
+    console.log(key);
+  }
 
   const getTargetElement = () => document.getElementById("printTarget");
   return patient !== undefined ? (
@@ -665,124 +739,77 @@ const MedicalRecordDetailForm = ({
           <Form.Item<MedicalRecord> label="Lí do khám" name="description">
             <TextArea placeholder="Lí do khám" />
           </Form.Item>
-          <Row gutter={10}>
-            <Col span={12}>
-              <Form.Item<MedicalRecord>
-                name="selectedCategoryIds"
-                label="Chọn khoa khám"
-              >
-                <Select
-                  disabled={isDoctorDisable}
-                  mode="multiple"
-                  onChange={handleChangeCategory}
-                  options={cates.map((category) => ({
-                    value: category.categoryId,
-                    label: category.categoryName,
-                  }))}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<MedicalRecord>
-                name="selectedDoctorIds"
-                label="Chọn bác sĩ khám"
-              >
-                <Select
-                  mode="multiple"
-                  disabled
-                  // options={doctors.map((doc) => ({
-                  //   value: doc.userId,
-                  //   label: doc.userName,
-                  // }))}
-                  options={options}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item<MedicalRecord>
-            name="selectedServiceTypeIds"
-            label="Chọn loại dịch vụ khám"
-          >
-            <Select
-              disabled={isDisable}
-              mode="multiple"
-              onChange={handleChangeServiceType}
-              allowClear
-              // options={types.map((type) => ({
-              //   value: type.serviceTypeId,
-              //   label: type.serviceTypeName,
-              // }))}
-              options={serviceTypeOptions}
-            />
-          </Form.Item>
-          <Form.Item<MedicalRecord>
-            name="selectedServiceIds"
-            label="Chọn dịch vụ khám"
-          >
-            <Select
-              mode="multiple"
-              disabled={isDisable}
-              allowClear
-              // options={services.map((service) => ({
-              //   value: service.serviceId,
-              //   label: service.serviceName,
-              // }))}
-              options={serviceOptions}
-            />
-          </Form.Item>
-          {isCheckUp === true ? (
+          {/*=========Select Category and Doctor=========== */}
+          <div style={{ display: isCheckUp === true ? "none" : "block" }}>
+            <Row gutter={10}>
+              <Col span={12}>
+                <Form.Item<MedicalRecord>
+                  name="selectedCategoryIds"
+                  label="Chọn khoa khám"
+                >
+                  <Select
+                    disabled={isDoctorDisable}
+                    mode="multiple"
+                    onChange={handleChangeCategory}
+                    options={cates.map((category) => ({
+                      value: category.categoryId,
+                      label: category.categoryName,
+                    }))}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item<MedicalRecord>
+                  name="selectedDoctorIds"
+                  label="Chọn bác sĩ khám"
+                >
+                  <Select
+                    mode="multiple"
+                    disabled
+                    options={options}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </div>
+          {/*=========Select Service Type=========== */}
+          {isCheckUp === false && (
             <Form.Item<MedicalRecord>
-              name="selectedReCheckUpServiceTypeIds"
-              label="Chọn loại dịch vụ tái khám"
+              name="selectedServiceTypeIds"
+              label="Chọn loại dịch vụ khám"
             >
               <Select
-                disabled={authenticated?.role !== Roles.Nurse ? false : true}
+                disabled={isDisable}
                 mode="multiple"
                 onChange={handleChangeServiceType}
                 allowClear
-                // options={types.map((type) => ({
-                //   value: type.serviceTypeId,
-                //   label: type.serviceTypeName,
-                // }))}
                 options={serviceTypeOptions}
               />
             </Form.Item>
-          ) : (
-            <></>
           )}
-          {isCheckUp === true ? (
+          {isCheckUp === false && (
             <Form.Item<MedicalRecord>
-              name="selectedReCheckUpServiceIds"
-              label="Chọn dịch vụ tái khám"
+              name="selectedServiceIds"
+              label="Chọn dịch vụ khám"
             >
               <Select
                 mode="multiple"
-                disabled={authenticated?.role !== Roles.Nurse ? false : true}
+                disabled={isDisable}
                 allowClear
-                // options={services.map((service) => ({
-                //   value: service.serviceId,
-                //   label: service.serviceName,
-                // }))}
                 options={serviceOptions}
               />
             </Form.Item>
-          ) : (
-            <></>
           )}
-          {isCheckUp === true ? (
-            authenticated?.role !== Roles.Admin &&
-            authenticated?.role !== Roles.Doctor ? (
-              <></>
-            ) : (
-              <Button onClick={handleReCheckUp} type="primary">
-                Tạo hồ sơ tái khám
-              </Button>
-            )
-          ) : (
-            <></>
+          {/*=========Tai kham=========== */}
+          {isCheckUp === true && (
+            <Collapse items={itemsReCheckUp} onChange={handleChangeCheckUpCollapse}/>
           )}
         </Form>
       </div>
+      {/*=========Examination=========== */}
+      {isCheckUp === true && (
+        <Collapse items={itemsExamination} onChange={handleChangeCollapse} />
+      )}
     </div>
   ) : (
     <div>An Error Occurs When Getting Patient</div>

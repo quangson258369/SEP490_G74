@@ -28,7 +28,7 @@ const LoginForm = () => {
         break;
       }
       case Roles.Cashier: {
-        navigate("/cashier/patients");
+        navigate("/");
         break;
       }
       default: {

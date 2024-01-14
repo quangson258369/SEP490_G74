@@ -1,4 +1,4 @@
-import { Space, Button, Modal, message, Row, Col, Divider } from "antd";
+import { Button, message, Row, Col, InputRef, Space, Input } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { MedicalRecordTableModel } from "../../Models/MedicalRecordModel";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -10,10 +10,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import GenericModal from "../Generic/GenericModal";
 import ExaminationForm from "./ExaminationForm";
-import ExaminationService from "../../Services/ExaminationService";
 import InvoiceForm from "./InvoiceForm";
 import SupplyPrescriptionDetailForm from "./SupplyPrescriptionDetailForm";
 import { ApiResponseModel } from "../../Models/PatientModel";
+import { ColumnType, FilterConfirmProps } from "antd/es/table/interface";
+import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
 
 const MedicalRecordTable = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,10 +31,123 @@ const MedicalRecordTable = () => {
   const [openInvoice, setOpenInvoice] = useState<boolean>(false);
   const [openSupplyPres, setOpenSupplyPres] = useState<boolean>(false);
 
+  //Search
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef<InputRef>(null);
+  type DataIndex = keyof MedicalRecordTableModel
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ColumnType<
+  MedicalRecordTableModel
+  > => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+
   //Pagination
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 5,
+    pageSize: 20,
     total: 0,
   });
 
@@ -111,16 +226,6 @@ const MedicalRecordTable = () => {
     }
   };
 
-  const handleExaminate = (mrId: number, isCheckUp: boolean) => {
-    if (isCheckUp === false) {
-      message.info("Hồ sơ chưa khám", 2);
-      return;
-    }
-    setIsExamReload(!isExamReload);
-    setOpenExaminate(true);
-    setSelectedMrId(mrId);
-  };
-
   const handleInvoice = (mrId: number) => {
     setIsInvoiceReload(!isInvoiceReload);
     setOpenInvoice(true);
@@ -151,12 +256,14 @@ const MedicalRecordTable = () => {
       dataIndex: "name",
       key: "name",
       render: (text) => <a>{text}</a>,
+      ...getColumnSearchProps("name"),
     },
     {
       title: "Ngày tháng",
       dataIndex: "medicalRecordDate",
       key: "medicalRecordDate",
       render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
+      ...getColumnSearchProps("medicalRecordDate"),
     },
     {
       title: "Thanh toán",
@@ -191,22 +298,6 @@ const MedicalRecordTable = () => {
               >
                 Xem hồ sơ
               </Button>
-            </Col>
-            <Col>
-              {authenticated?.role !== Roles.Admin &&
-              authenticated?.role !== Roles.Doctor ? (
-                <></>
-              ) : (
-                <Button
-                  key="examinate"
-                  type="primary"
-                  onClick={() =>
-                    handleExaminate(record.medicalRecordId, record.isCheckUp)
-                  }
-                >
-                  Kết luận
-                </Button>
-              )}
             </Col>
           </Row>
         </div>
@@ -366,7 +457,7 @@ const MedicalRecordTable = () => {
       />
 
       {/* =============== Modal Examination Result */}
-      <GenericModal
+      {/* <GenericModal
         isOpen={openExaminate}
         onClose={handleCancelExaminate}
         title={`Kết luận hồ sơ ${selectedMrId}`}
@@ -389,7 +480,7 @@ const MedicalRecordTable = () => {
             Lưu kết luận tổng
           </Button>,
         ]}
-      />
+      /> */}
 
       {/* =============== Modal Invoice */}
       <GenericModal

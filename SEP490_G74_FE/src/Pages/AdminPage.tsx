@@ -2,8 +2,7 @@ import { Button, Col, Modal, Row } from "antd";
 import { useState } from "react";
 import PatientAddForm from "../component/Patient/PatientAddForm";
 import CategoryAddForm from "../component/SubEntities/CategoryAddForm";
-import ServiceTypeAddForm from "../component/SubEntities/ServiceTypeAddForm";
-import ServiceAddForm from "../component/SubEntities/ServiceAddForm";
+import AccountAddForm from "../component/SubEntities/AccountAddForm";
 interface ParentCompProps {
   childComp?: React.ReactNode;
 }
@@ -12,8 +11,7 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
   const { childComp } = props;
   const [open, setOpen] = useState<boolean>(false);
   const [openCategory, setOpenCategory] = useState<boolean>(false);
-  const [openServiceType, setOpenServiceType] = useState<boolean>(false);
-  const [openService, setOpenService] = useState<boolean>(false);
+  const [openAccount, setOpenAccount] = useState<boolean>(false);
 
   const handleCancel = () => {
     setOpen(false);
@@ -21,11 +19,8 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
   const handleCancelCategory = () => {
     setOpenCategory(false);
   };
-  const handleCancelServiceType = () => {
-    setOpenServiceType(false);
-  };
-  const handleCancelService = () => {
-    setOpenService(false);
+  const handleCancelAccount = () => {
+    setOpenAccount(false);
   };
   const handleAddPatient = () => {
     setOpen(true);
@@ -33,11 +28,8 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
   const handleAddCategory = () => {
     setOpenCategory(true);
   };
-  const handleAddServiceType = () => {
-    setOpenServiceType(true);
-  };
-  const handleAddService = () => {
-    setOpenService(true);
+  const handleAddAccount = () => {
+    setOpenAccount(true);
   };
   return (
     <div>
@@ -53,16 +45,11 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
               Thêm mới khoa khám
             </Button>
           </Col>
-          {/* <Col span={6}>
-            <Button type="primary" onClick={handleAddServiceType}>
-              Thêm mới loại dịch vụ
+          <Col span={6}>
+            <Button type="primary" onClick={handleAddAccount}>
+              Thêm mới tài khoản
             </Button>
           </Col>
-          <Col span={6}>
-            <Button type="primary" onClick={handleAddService}>
-              Thêm mới dịch vụ
-            </Button>
-          </Col> */}
         </Row>
         <Modal
           title="Thêm mới bệnh nhân"
@@ -110,51 +97,30 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
           <CategoryAddForm />
         </Modal>
 
-        {/* <Modal
-          title="Thêm mới loại dịch vụ"
-          open={openServiceType}
-          onCancel={handleCancelServiceType}
+        <Modal
+          title="Thêm mới tài khoản"
+          open={openAccount}
+          onCancel={handleCancelAccount}
           maskClosable={false}
           width="500px"
           footer={[
-            <Button key="back" onClick={handleCancelServiceType}>
+            <Button key="back" onClick={handleCancelAccount}>
               Hủy
             </Button>,
             <Button
               key="submit"
               type="primary"
-              form="serviceTypeAddForm"
+              form="categoryAddForm"
               htmlType="submit"
             >
               Lưu
             </Button>,
           ]}
         >
-          <ServiceTypeAddForm />
-        </Modal> */}
+          <AccountAddForm />
+        </Modal>
 
-        {/* <Modal
-          title="Thêm mới dịch vụ"
-          open={openService}
-          onCancel={handleCancelService}
-          maskClosable={false}
-          width="500px"
-          footer={[
-            <Button key="back" onClick={handleCancelService}>
-              Hủy
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
-              form="serviceAddForm"
-              htmlType="submit"
-            >
-              Lưu
-            </Button>,
-          ]}
-        >
-          <ServiceAddForm />
-        </Modal> */}
+
       </div>
       <br />
       <div>{childComp}</div>

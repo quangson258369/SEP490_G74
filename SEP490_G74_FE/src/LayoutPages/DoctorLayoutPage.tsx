@@ -73,18 +73,13 @@ const DoctorLayoutPage = (props: any) => {
               defaultSelectedKeys={["1"]}
               style={{ background: "#146C94", color: "white" }}
             >
-              {/* <Menu.Item key="1">
-                <Link to={"/"}>Hồ sơ bệnh án</Link>
-              </Menu.Item> */}
-              {/* <Menu.Item key="3">
-                <Link to={"/"}>Hóa đơn thuốc</Link>
-              </Menu.Item> */}
-              {/* <Menu.Item key="4">
-                <Link to={"/"}>Hóa đơn dịch vụ</Link>
-              </Menu.Item> */}
-              {/* <Menu.Item key="5">
-                <Link to={"/"}>Nhân sự</Link>
-              </Menu.Item> */}
+              <Menu.Item key="2"> 
+                <Link
+                  to={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_CHECK_PAGE}
+                >
+                  Hồ sơ chưa khám
+                </Link>
+              </Menu.Item>
               <Menu.Item key="1"> 
                 <Link
                   to={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
@@ -92,11 +87,8 @@ const DoctorLayoutPage = (props: any) => {
                   Hồ sơ bệnh án
                 </Link>
               </Menu.Item>
-              <Menu.Item key="2">
+              {/* <Menu.Item key="3">
                 <Link to={"/"}>Kết quả</Link>
-              </Menu.Item>
-              {/* <Menu.Item key="7">
-                <Link to={"/"}>Hồ sơ cá nhân</Link>
               </Menu.Item> */}
             </Menu>
           </Sider>

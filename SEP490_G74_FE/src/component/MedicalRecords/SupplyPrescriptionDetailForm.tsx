@@ -188,7 +188,7 @@ const SupplyPrescriptionDetailForm = ({
 
   const items: CollapseProps["items"] = [
     {
-      key: "1",
+      key: `supplies_${medicalRecordId}`,
       label: <b>Thêm thuốc</b>,
       children: (
         <div id="add-supplies-container">

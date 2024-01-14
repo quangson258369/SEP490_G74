@@ -58,6 +58,7 @@ export interface ExamDetail {
   diagnose: string;
   price?: number;
   status?: boolean;
+  image? : string;
 }
 
 export interface ExamResultAddModel{

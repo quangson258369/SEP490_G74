@@ -1,14 +1,4 @@
-import {
-  Space,
-  Button,
-  Modal,
-  message,
-  Row,
-  Col,
-  Divider,
-  Input,
-  InputRef,
-} from "antd";
+import { Space, Button, message, Row, Col, Input, InputRef } from "antd";
 import Table, { ColumnType, ColumnsType } from "antd/es/table";
 import { MedicalRecordTableModel } from "../../Models/MedicalRecordModel";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -16,22 +6,17 @@ import MedicalRecordDetailForm from "./MedicalRecordDetailForm";
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
 import medicalRecordService from "../../Services/MedicalRecordService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import GenericModal from "../Generic/GenericModal";
-import ExaminationForm from "./ExaminationForm";
-import ExaminationService from "../../Services/ExaminationService";
 import InvoiceForm from "./InvoiceForm";
 import SupplyPrescriptionDetailForm from "./SupplyPrescriptionDetailForm";
-import {
-  ApiResponseModel,
-  PatientTableResponseModel,
-} from "../../Models/PatientModel";
+import { ApiResponseModel } from "../../Models/PatientModel";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
 
-const ListMedicalRecordTable = () => {
+const ListMedicalRecordUnCheckTable = () => {
   //const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState<boolean>(false);
   const [openExaminate, setOpenExaminate] = useState<boolean>(false);
@@ -174,15 +159,11 @@ const ListMedicalRecordTable = () => {
     MedicalRecordTableModel[]
   >([]);
 
-  const navigate = useNavigate();
 
   const handleCancel = () => {
     setOpen(false);
   };
 
-  const handleCancelExaminate = () => {
-    setOpenExaminate(false);
-  };
 
   const handleCancelInvoice = () => {
     setOpenInvoice(false);
@@ -238,15 +219,6 @@ const ListMedicalRecordTable = () => {
     }
   };
 
-  const handleExaminate = (mrId: number, isCheckUp: boolean) => {
-    if (isCheckUp === false) {
-      message.info("Hồ sơ chưa khám", 2);
-      return;
-    }
-    setIsExamReload(!isExamReload);
-    setOpenExaminate(true);
-    setSelectedMrId(mrId);
-  };
 
   const handleInvoice = (mrId: number) => {
     setIsInvoiceReload(!isInvoiceReload);
@@ -266,14 +238,14 @@ const ListMedicalRecordTable = () => {
       dataIndex: "medicalRecordId",
       key: "medicalRecordId",
       render: (text) => <a>{text}</a>,
-      sorter: (a, b) => a.medicalRecordId - b.medicalRecordId,
+      sorter : (a, b) => a.medicalRecordId - b.medicalRecordId
     },
     {
       title: "Mã bệnh nhân",
       dataIndex: "patientId",
       key: "patientId",
       render: (text) => <a>{text}</a>,
-      sorter: (a, b) => a.patientId - b.patientId,
+      sorter : (a, b) => a.patientId - b.patientId
     },
     {
       title: "Tên bệnh nhân",
@@ -393,7 +365,7 @@ const ListMedicalRecordTable = () => {
 
   const fetchMedicalRecords = async () => {
     var response: ApiResponseModel | undefined =
-      await medicalRecordService.getMedicalRecordsByPatientId(
+      await medicalRecordService.getMedicalRecordsUnCheckByPatientId(
         0,
         pagination.current,
         pagination.pageSize
@@ -547,4 +519,4 @@ const ListMedicalRecordTable = () => {
   );
 };
 
-export default ListMedicalRecordTable;
+export default ListMedicalRecordUnCheckTable;
