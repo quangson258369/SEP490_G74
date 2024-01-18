@@ -6,6 +6,7 @@ using HCS.Business.ResponseModel.CategoryResponse;
 using HCS.Business.ResponseModel.ExaminationResultResponseModel;
 using HCS.Business.ResponseModel.MedicalRecordResponseModel;
 using HCS.DataAccess.UnitOfWork;
+using HCS.Domain.Commons;
 using HCS.Domain.Enums;
 using HCS.Domain.Models;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -50,17 +51,39 @@ public class MedicalRecordService : IMedicalRecordService
             medicalRecordEntity.PreviousMedicalRecordId = medicalRecord.PreviousMedicalRecordId;
         }
 
+        if(medicalRecord.CategoryIds == null || medicalRecord.CategoryIds.Count == 0 || !medicalRecord.CategoryIds.Any(c => c == DefaultMrOption.DefaultCategoryId))
+        {
+            medicalRecord.CategoryIds ??= new List<int>();
+            medicalRecord.CategoryIds.Add(DefaultMrOption.DefaultCategoryId);
+        }
+
+
         medicalRecordEntity.MedicalRecordCategories = medicalRecord.CategoryIds.Select(
             c => new MedicalRecordCategory()
             {
                 CategoryId = c
             }).ToList();
 
+        if (medicalRecord.DoctorIds == null || medicalRecord.DoctorIds.Count == 0 || !medicalRecord.DoctorIds.Any(c => c == DefaultMrOption.DefaultDoctorId))
+        {
+            medicalRecord.DoctorIds ??= new List<int>();
+            medicalRecord.DoctorIds.Add(DefaultMrOption.DefaultDoctorId);
+        }
+
         medicalRecordEntity.MedicalRecordDoctors = medicalRecord.DoctorIds.Select(
             d => new MedicalRecordDoctor()
             {
                 DoctorId = d
             }).ToList();
+
+        ServiceMedicalRecord defaultService = new()
+        {
+            ServiceId = DefaultMrOption.DefaultServiceId,
+            MedicalRecord = medicalRecordEntity
+        };
+
+        medicalRecordEntity.ServiceMedicalRecords ??= new List<ServiceMedicalRecord>();
+        medicalRecordEntity.ServiceMedicalRecords.Add(defaultService);
 
         await _unitOfWork.MedicalRecordRepo.AddAsync(medicalRecordEntity);
         await _unitOfWork.SaveChangeAsync();
@@ -188,7 +211,9 @@ public class MedicalRecordService : IMedicalRecordService
                                c => new CategoryResponseModel()
                                {
                                    CategoryId = c.CategoryId,
-                                   CategoryName = c.Category.CategoryName
+                                   CategoryName = c.Category.CategoryName,
+                                   IsDeleted = c.Category.IsDeleted
+
                                }
                                               ).ToList(),
             Doctors = mrById.MedicalRecordDoctors!.Select(
@@ -196,7 +221,8 @@ public class MedicalRecordService : IMedicalRecordService
                                {
                                    DoctorId = d.DoctorId,
                                    DoctorName = d.Doctor.Contact != null ? d.Doctor.Contact.Name : string.Empty,
-                                   CategoryId = d.Doctor.CategoryId ?? 0
+                                   CategoryId = d.Doctor.CategoryId ?? 0,
+                                   IsDeleted = d.Doctor.IsDeleted
                                }
                                                                             ).ToList(),
             IsPaid = mrById.IsPaid,
@@ -217,12 +243,14 @@ public class MedicalRecordService : IMedicalRecordService
                     {
                         ServiceTypeId = typeEntity.ServiceTypeId,
                         ServiceTypeName = typeEntity.ServiceTypeName,
+                        IsDeleted = typeEntity.IsDeleted,
                         Services = servicesByTyped.Select(x => new ServiceResponseDetailModel()
                         {
                             ServiceId = x.ServiceId,
                             ServiceName = x.ServiceName,
                             Price = x.Price,
-                            ServiceTypeId = x.ServiceTypeId
+                            ServiceTypeId = x.ServiceTypeId,
+                            IsDeleted = x.IsDeleted
                         }).ToList()
                     });
                 }

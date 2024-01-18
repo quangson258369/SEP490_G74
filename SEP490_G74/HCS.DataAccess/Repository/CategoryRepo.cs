@@ -2,6 +2,7 @@ using HCS.ApplicationContext;
 using HCS.DataAccess.IRepository;
 using HCS.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace HCS.DataAccess.Repository;
 

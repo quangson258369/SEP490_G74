@@ -14,12 +14,14 @@ import UnauthorizedPage from "../Pages/UnauthorizedPage";
 import NurseLayoutPage from "../LayoutPages/NurseLayoutPage";
 import MedicalRecordsPage from "../Pages/MedicalRecordsPage";
 import { ROUTE_URLS } from "../Commons/Global";
-import SubEntityTable from "../component/Admin/SubEntityTable";
+import CategoryTable from "../component/Admin/CategoryTable";
 import CashierLayoutPage from "../LayoutPages/CashierLayoutPage";
 import CashierPage from "../Pages/CashierPage";
 import ListMedicalRecordPage from "../Pages/ListMedicalRecordPage";
 import ListMedicalRecordUnCheckPage from "../Pages/ListMedicalRecordUnCheckPage";
 import AccountsTable from "../component/Admin/AccountsTable";
+import ServiceTable from "../component/Admin/ServiceTable";
+import SupplyTable from "../component/Admin/SupplyTable";
 
 const AppRoutes = () => {
   return (
@@ -64,14 +66,42 @@ const AppRoutes = () => {
           />
         </Route>
         <Route
-          path={ROUTE_URLS.ADMIN_SUB_PAGE}
+          path={ROUTE_URLS.ADMIN_CATEGORY_PAGE}
           element={<ProtectedRoute role={[Roles.Admin]} />}
         >
           <Route
             path=""
             element={
               <AdminLayoutPage
-                childComp={<AdminPage childComp={<SubEntityTable />} />}
+                childComp={<AdminPage childComp={<CategoryTable />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
+          path={ROUTE_URLS.ADMIN_SERVICE_PAGE}
+          element={<ProtectedRoute role={[Roles.Admin]} />}
+        >
+          <Route
+            path=""
+            element={
+              <AdminLayoutPage
+                childComp={<AdminPage childComp={<ServiceTable />} />}
+              />
+            }
+          />
+        </Route>
+
+        <Route
+          path={ROUTE_URLS.ADMIN_SUPPLY_PAGE}
+          element={<ProtectedRoute role={[Roles.Admin]} />}
+        >
+          <Route
+            path=""
+            element={
+              <AdminLayoutPage
+                childComp={<AdminPage childComp={<SupplyTable />} />}
               />
             }
           />

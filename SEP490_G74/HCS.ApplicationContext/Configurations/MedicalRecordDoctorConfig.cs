@@ -27,15 +27,6 @@ namespace HCS.ApplicationContext.Configurations
 
             builder
                 .HasKey(sm => new { sm.DoctorId, sm.MedicalRecordId });
-
-            builder
-                .HasData(
-                    new MedicalRecordDoctor() { MedicalRecordId = 1, DoctorId = 2 },
-                    new MedicalRecordDoctor() { MedicalRecordId = 1, DoctorId = 3 },
-
-                    new MedicalRecordDoctor() { MedicalRecordId = 2, DoctorId = 6 },
-                    new MedicalRecordDoctor() { MedicalRecordId = 2, DoctorId = 4 }
-                );
         }
     }
 }

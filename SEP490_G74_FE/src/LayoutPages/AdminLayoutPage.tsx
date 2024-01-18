@@ -23,7 +23,7 @@ const AdminLayoutPage = (props: any) => {
 
     setAuthenticated(user);
     localStorage.removeItem(TOKEN);
-    message.info("Logged out" ,1);
+    message.info("Logged out", 1);
     navigate(ROUTE_URLS.LOGIN_PAGE);
   };
 
@@ -65,7 +65,7 @@ const AdminLayoutPage = (props: any) => {
             trigger={null}
             collapsible
             collapsed={collapsed}
-            style={{ background: "#146C94", color: "white", height:"auto"}}
+            style={{ background: "#146C94", color: "white", height: "auto" }}
           >
             <div className="demo-logo-vertical" />
             <Menu
@@ -77,23 +77,22 @@ const AdminLayoutPage = (props: any) => {
               <Menu.Item key="1">
                 <Link to={"/"}>Trang chủ</Link>
               </Menu.Item>
-              <Menu.Item key="3">
-                <Link to={"/"}>Hóa đơn thuốc</Link>
-              </Menu.Item>
-              <Menu.Item key="4">
-                <Link to={"/"}>Hóa đơn dịch vụ</Link>
-              </Menu.Item>
-              <Menu.Item key="5">
+              <Menu.Item key="2">
                 <Link to={ROUTE_URLS.ADMIN_ACCOUNTS_PAGE}>Nhân sự</Link>
               </Menu.Item>
+              <Menu.Item key="3">
+                <Link to={ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>
+                  Hồ sơ bệnh án
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to={ROUTE_URLS.ADMIN_CATEGORY_PAGE}>Khoa khám</Link>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <Link to={ROUTE_URLS.ADMIN_SERVICE_PAGE}>Dịch vụ</Link>
+              </Menu.Item>
               <Menu.Item key="6">
-                <Link to={ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
-              </Menu.Item>
-              <Menu.Item key="7">
-                <Link to={"/"}>Hồ sơ cá nhân</Link>
-              </Menu.Item>
-              <Menu.Item key="8">
-                <Link to={ROUTE_URLS.ADMIN_SUB_PAGE}>Khoa và dịch vụ</Link>
+                <Link to={ROUTE_URLS.ADMIN_SUPPLY_PAGE}>Thuốc</Link>
               </Menu.Item>
             </Menu>
           </Sider>

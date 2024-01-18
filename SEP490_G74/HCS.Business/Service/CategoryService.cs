@@ -4,6 +4,7 @@ using HCS.Business.RequestModel.CategoryRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
 using HCS.DataAccess.UnitOfWork;
+using HCS.Domain.Enums;
 using HCS.Domain.Models;
 
 namespace HCS.Business.Service;
@@ -11,10 +12,11 @@ namespace HCS.Business.Service;
 public interface ICategoryService
 {
     Task<ApiResponse> GetCategory(int categoryId);
-    Task<ApiResponse> GetCategories();
+    Task<ApiResponse> GetCategories(int userId);
     Task<ApiResponse> AddCategory(CategoryAddModel category);
     Task<ApiResponse> UpdateCategory(int categoryId, CategoryUpdateModel category);
     Task DeleteCategory(int categoryId);
+    Task<ApiResponse> GetDoctorCategoryByServiceId(int serviceId, int mrId);
 }
 
 public class CategoryService : ICategoryService
@@ -45,14 +47,20 @@ public class CategoryService : ICategoryService
         
     }
 
-    public async Task<ApiResponse> GetCategories()
+    public async Task<ApiResponse> GetCategories(int userId)
     {
         var response = new ApiResponse();
 
         var categories = await _unitOfWork.CategoryRepo.GetCategories();
 
+        var user = await _unitOfWork.UserRepo.GetAsync(entry => entry.UserId == userId);
+
+        if(user != null && user.RoleId == (int)UserRole.Doctor)
+        {
+            categories = categories.Where(c => c.CategoryId == user.CategoryId).ToList();
+        }
+
         var categoriesResponse = _mapper.Map<List<CategoryResponseModel>>(categories);
-        
         
         return response.SetOk(categoriesResponse);
     }
@@ -93,4 +101,29 @@ public class CategoryService : ICategoryService
         await _unitOfWork.SaveChangeAsync();
         
     }
+
+    public async Task<ApiResponse> GetDoctorCategoryByServiceId(int serviceId, int mrId)
+    {
+        var category = await _unitOfWork.CategoryRepo.GetCategoryByServiceId(serviceId);
+        if (category == null) return new ApiResponse().SetNotFound();
+        var docsInCate = await _unitOfWork.UserRepo.GetAllDoctorByCategoryIdAsync(category.CategoryId);
+
+        var mr = await _unitOfWork.MedicalRecordRepo.GetMrById(mrId);
+        var docInMrWithSameCate = mr?.MedicalRecordDoctors!.Where(x => docsInCate.Select(d => d.UserId).ToList().Contains(x.DoctorId)).ToList();
+        if(docInMrWithSameCate == null || docInMrWithSameCate.Count <= 0) return new ApiResponse().SetNotFound();
+        
+        var result = new DoctorCategoryModel
+        {
+            CategoryName = category.CategoryName,
+            DoctorName = docInMrWithSameCate?.First()?.Doctor?.Contact?.Name??string.Empty
+        };
+
+        return new ApiResponse().SetOk(result);
+    }
+}
+
+class DoctorCategoryModel
+{
+    public string CategoryName { get; set; } = string.Empty;
+    public string DoctorName { get; set; } = string.Empty;
 }

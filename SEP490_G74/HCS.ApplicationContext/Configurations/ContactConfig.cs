@@ -17,14 +17,9 @@ namespace HCS.ApplicationContext.Configurations
                         new Contact() { CId = 2, Name = "Bsi Son", Address = "Ha Noi", Phone = "0987662512" },
                         new Contact() { CId = 3, Name = "Bsi Bang", Address = "Ha Noi", Phone = "0987662512" },
                         new Contact() { CId = 4, Name = "Bsi Tam", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 7, Name = "Bsi Banh", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 8, Name = "Bsi Vu", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 9, Name = "Bsi Van", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 5, Name = "Y Ta Nho", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 6, Name = "Cashier Trinh", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 10, Name = "Benh nhan A", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 11, Name = "Benh nhan B", Address = "Ha Noi", Phone = "0987662512" },
-                        new Contact() { CId = 12, Name = "Benh nhan C", Address = "Ha Noi", Phone = "0987662512" }
+                        new Contact() { CId = 5, Name = "Bsi Van", Address = "Ha Noi", Phone = "0987662512" },
+                        new Contact() { CId = 6, Name = "Y Ta Nho", Address = "Ha Noi", Phone = "0987662512" },
+                        new Contact() { CId = 7, Name = "Cashier Trinh", Address = "Ha Noi", Phone = "0987662512" }
                     );
         }
     }

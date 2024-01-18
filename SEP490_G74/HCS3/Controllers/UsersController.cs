@@ -100,7 +100,7 @@ namespace HCS.API.Controllers
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
-        [Authorize(Roles = "Admin, Nurse, Cashier")]
+        [Authorize(Roles = "Admin, Nurse, Cashier, Doctor")]
         [HttpGet("doctor/least-assigned/id/{categoryId:int}")]
         public async Task<IActionResult> GetLeastAsginedDoctorByCategoryId(int categoryId)
         {
@@ -115,6 +115,32 @@ namespace HCS.API.Controllers
         {
             var result = await _userService.GetAllAccounts();
             return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [Authorize(Roles ="Admin")]
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var result = await _userService.GetAllRoles();
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] AccountUpdateModel account)
+        {
+            var registerResponse = await _userService.UpdateAccount(account);
+
+            return registerResponse.IsSuccess ? Ok(registerResponse) : BadRequest(registerResponse);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var registerResponse = await _userService.RemoveAccount(id);
+
+            return registerResponse.IsSuccess ? Ok(registerResponse) : BadRequest(registerResponse);
         }
     }
 }

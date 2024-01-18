@@ -38,20 +38,20 @@ namespace HCS.ApplicationContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>()
-                .HasQueryFilter(b => !b.IsDeleted);
+            //modelBuilder.Entity<Category>()
+            //    .HasQueryFilter(b => !b.IsDeleted);
 
-            modelBuilder.Entity<Service>()
-                .HasQueryFilter(b => !b.IsDeleted);
+            //modelBuilder.Entity<Service>()
+            //    .HasQueryFilter(b => !b.IsDeleted);
 
-            modelBuilder.Entity<ServiceType>()
-                .HasQueryFilter(b => !b.IsDeleted);
+            //modelBuilder.Entity<ServiceType>()
+            //    .HasQueryFilter(b => !b.IsDeleted);
 
-            modelBuilder.Entity<SuppliesType>()
-                .HasQueryFilter(b => !b.IsDeleted);
+            //modelBuilder.Entity<SuppliesType>()
+            //    .HasQueryFilter(b => !b.IsDeleted);
 
-            modelBuilder.Entity<Supply>()
-                .HasQueryFilter(b => !b.IsDeleted);
+            //modelBuilder.Entity<Supply>()
+            //    .HasQueryFilter(b => !b.IsDeleted);
 
             modelBuilder.ApplyConfiguration(new RoleConfig());
             modelBuilder.ApplyConfiguration(new CategoryConfig());

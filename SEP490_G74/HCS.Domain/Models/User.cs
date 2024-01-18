@@ -28,6 +28,8 @@ namespace HCS.Domain.Models
 
         public Contact? Contact { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public ICollection<Invoice>? Invoices { get; set; }
 
         public ICollection<MedicalRecordDoctor>? MedicalRecordDoctors { get; set; }

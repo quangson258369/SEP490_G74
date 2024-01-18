@@ -36,7 +36,7 @@ import { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
-const SubEntityTable: React.FC = () => {
+const CategoryTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
@@ -391,7 +391,6 @@ const SubEntityTable: React.FC = () => {
 
   //================= Handle Add Call API =================
   const handleInsertSupplyType = async (values: SupplyTypeResponseModel) => {
-    message.error(`Check supply type add click: ${values.suppliesTypeName}`, 2);
 
     var supplyTypeAdd: SupplyTypeAddModel = {
       suppliesTypeName: values.suppliesTypeName,
@@ -535,7 +534,7 @@ const SubEntityTable: React.FC = () => {
             type="primary"
             onClick={() => handleDeleteCategory(record.categoryId)}
           >
-            Xóa
+            Vô hiệu hóa
           </Button>
           <Button
             key={`addTypeC_${record.categoryId}`}
@@ -588,7 +587,7 @@ const SubEntityTable: React.FC = () => {
             type="primary"
             onClick={() => handleDeleteServiceType(record.serviceTypeId)}
           >
-            Xóa
+            Vô hiệu hóa
           </Button>
           <Button
             key={`addTypeC_${record.serviceTypeId}`}
@@ -647,7 +646,7 @@ const SubEntityTable: React.FC = () => {
             type="primary"
             onClick={() => handleDeleteService(record.serviceId)}
           >
-            Xóa
+            Vô hiệu hóa
           </Button>
         </Space>
       ),
@@ -691,7 +690,7 @@ const SubEntityTable: React.FC = () => {
             type="primary"
             onClick={() => handleDeleteSupplyType(record.suppliesTypeId)}
           >
-            Xóa
+            Vô hiệu hóa
           </Button>
           <Button
             key={`addTypeC_${record.suppliesTypeId}`}
@@ -768,7 +767,7 @@ const SubEntityTable: React.FC = () => {
             type="primary"
             onClick={() => handleDeleteSupply(record.sId)}
           >
-            Xóa
+            Vô hiệu hóa
           </Button>
         </Space>
       ),
@@ -866,8 +865,8 @@ const SubEntityTable: React.FC = () => {
   //show confirm dialog before delete
   const handleDeleteCategory = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa?",
+      title: "Xác nhận Vô hiệu hóa",
+      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
       onOk: () => {
         removeCategory(id);
       },
@@ -879,8 +878,8 @@ const SubEntityTable: React.FC = () => {
 
   const handleDeleteServiceType = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa?",
+      title: "Xác nhận Vô hiệu hóa",
+      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
       onOk: () => {
         removeServiceType(id);
       },
@@ -892,8 +891,8 @@ const SubEntityTable: React.FC = () => {
 
   const handleDeleteService = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa?",
+      title: "Xác nhận Vô hiệu hóa",
+      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
       onOk: () => {
         removeService(id);
       },
@@ -905,8 +904,8 @@ const SubEntityTable: React.FC = () => {
 
   const handleDeleteSupplyType = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa?",
+      title: "Xác nhận Vô hiệu hóa",
+      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
       onOk: () => {
         removeSupplyType(id);
       },
@@ -918,8 +917,8 @@ const SubEntityTable: React.FC = () => {
 
   const handleDeleteSupply = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa?",
+      title: "Xác nhận Vô hiệu hóa",
+      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
       onOk: () => {
         removeSupply(id);
       },
@@ -932,55 +931,55 @@ const SubEntityTable: React.FC = () => {
   const removeCategory = async (id: number) => {
     var response = await categoryService.deleteCategories(id);
     if (response === 200) {
-      message.success("Xóa thành công", 2).then(() => {
+      message.success("Vô hiệu hóa thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Xóa thất bại", 2);
+      message.error("Vô hiệu hóa thất bại", 2);
     }
   };
 
   const removeServiceType = async (id: number) => {
     var response = await subService.deleteServiceType(id);
     if (response === 200) {
-      message.success("Xóa thành công", 2).then(() => {
+      message.success("Vô hiệu hóa thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Xóa thất bại", 2);
+      message.error("Vô hiệu hóa thất bại", 2);
     }
   };
 
   const removeService = async (id: number) => {
     var response = await subService.deleteService(id);
     if (response === 200) {
-      message.success("Xóa thành công", 2).then(() => {
+      message.success("Vô hiệu hóa thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Xóa thất bại", 2);
+      message.error("Vô hiệu hóa thất bại", 2);
     }
   };
 
   const removeSupplyType = async (id: number) => {
     var response = await subService.deleteSupplyType(id);
     if (response === 200) {
-      message.success("Xóa thành công", 2).then(() => {
+      message.success("Vô hiệu hóa thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Xóa thất bại", 2);
+      message.error("Vô hiệu hóa thất bại", 2);
     }
   };
 
   const removeSupply = async (id: number) => {
     var response = await subService.deleteSupply(id);
     if (response === 200) {
-      message.success("Xóa thành công", 2).then(() => {
+      message.success("Vô hiệu hóa thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Xóa thất bại", 2);
+      message.error("Vô hiệu hóa thất bại", 2);
     }
   };
 
@@ -1017,7 +1016,7 @@ const SubEntityTable: React.FC = () => {
       }}
     >
       {/*===================== Category =====================*/}
-      <h2>Khoa khám</h2>
+      {/* <h2>Khoa khám</h2>
       <Row>
         <Col span={24}></Col>
       </Row>
@@ -1037,9 +1036,9 @@ const SubEntityTable: React.FC = () => {
             })}
           />
         </Col>
-      </Row>
+      </Row> */}
       {/*===================== Service Type =====================*/}
-      <h2>Loại dịch vụ</h2>
+      {/* <h2>Loại dịch vụ</h2>
       <Row>
         <Col span={24}></Col>
       </Row>
@@ -1059,9 +1058,9 @@ const SubEntityTable: React.FC = () => {
             })}
           />
         </Col>
-      </Row>
+      </Row> */}
       {/*===================== Service =====================*/}
-      <h2>Dịch vụ</h2>
+      {/* <h2>Dịch vụ</h2>
       <Row>
         <Col span={24}></Col>
       </Row>
@@ -1081,7 +1080,7 @@ const SubEntityTable: React.FC = () => {
             })}
           />
         </Col>
-      </Row>
+      </Row> */}
 
       {/*============== Supply type ==================*/}
 
@@ -1413,7 +1412,7 @@ const SubEntityTable: React.FC = () => {
             <Input placeholder="Nhà phân phối" />
           </Form.Item>
           <Form.Item<SupplyAddModel> label="Số lượng" name="unitInStock">
-            <InputNumber min={1} max={1000000} placeholder="Số lượng" />
+            <InputNumber min={1} max={10000000} placeholder="Số lượng" />
           </Form.Item>
           <Form.Item<SupplyAddModel> label="Giá" name="price">
             <InputNumber min={1} max={100000000} placeholder="Giá" />
@@ -1518,4 +1517,4 @@ const SubEntityTable: React.FC = () => {
   );
 };
 
-export default SubEntityTable;
+export default CategoryTable;

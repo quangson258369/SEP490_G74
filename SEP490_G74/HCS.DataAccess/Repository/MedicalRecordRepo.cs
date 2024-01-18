@@ -89,13 +89,13 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
                 PaymentMethod = "Ti?n m?t",
             };
 
-            if(mr.ServiceMedicalRecords != null)
-            {
-                foreach (var serviceMedicalRecord in mr.ServiceMedicalRecords)
-                {
-                    serviceMedicalRecord.Status = true;
-                }
-            }
+            //if(mr.ServiceMedicalRecords != null)
+            //{
+            //    foreach (var serviceMedicalRecord in mr.ServiceMedicalRecords)
+            //    {
+            //        serviceMedicalRecord.Status = false;
+            //    }
+            //}
 
             await _context.Invoices.AddAsync(newInvoice);
         }

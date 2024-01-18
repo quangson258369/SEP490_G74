@@ -1,5 +1,12 @@
 export const TOKEN = "token";
 
+export const defaultMrOption = {
+  DEFAULT_CATEGORY_ID: 1,
+  defaultServiceTypeId: 1,
+  defaultServiceId: 1,
+  defaultDoctorId: 2,
+}
+
 //Routing
 const HOME_PAGE = "/"
 
@@ -23,7 +30,9 @@ const LIST_MEDICAL_RECORDS_PAGE = "/medical-records";
 
 const LIST_MEDICAL_RECORDS_UN_CHECK_PAGE = "/medical-records/un-check";
 
-const ADMIN_SUB_PAGE = "/admin/sub-entities";
+const ADMIN_CATEGORY_PAGE = "/admin/categories";
+const ADMIN_SERVICE_PAGE = "/admin/services";
+const ADMIN_SUPPLY_PAGE = "/admin/supplies";
 
 const ADMIN_ACCOUNTS_PAGE = "/admin/accounts";
 
@@ -40,7 +49,9 @@ export const ROUTE_URLS = {
   MEDICAL_RECORDS_PAGE: MEDICAL_RECORDS_PAGE,
   LIST_MEDICAL_RECORDS_PAGE: LIST_MEDICAL_RECORDS_PAGE,
   LIST_MEDICAL_RECORDS_UN_CHECK_PAGE: LIST_MEDICAL_RECORDS_UN_CHECK_PAGE,
-  ADMIN_SUB_PAGE: ADMIN_SUB_PAGE,
+  ADMIN_CATEGORY_PAGE: ADMIN_CATEGORY_PAGE,
+  ADMIN_SERVICE_PAGE: ADMIN_SERVICE_PAGE,
+  ADMIN_SUPPLY_PAGE: ADMIN_SUPPLY_PAGE,
   ADMIN_ACCOUNTS_PAGE: ADMIN_ACCOUNTS_PAGE,
   DOCTOR: DOCTOR,
   NURSE: NURSE,

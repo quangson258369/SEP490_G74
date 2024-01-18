@@ -11,7 +11,7 @@ import {
 import dayjs from "dayjs";
 import { PatientAddModel } from "../../Models/PatientModel";
 import TextArea from "antd/es/input/TextArea";
-import patientService from "../../Services/PatientSerivce";
+import patientService from "../../Services/PatientService";
 import { Rule } from "antd/es/form";
 
 const PatientAddForm = () => {

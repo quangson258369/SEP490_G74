@@ -43,6 +43,7 @@ public class ServiceTypeDetailResponseModel
 {
     public int ServiceTypeId { get; set; }
     public string ServiceTypeName { get; set; } = string.Empty;
+    public bool IsDeleted { get; set; } = false;
     public List<ServiceResponseDetailModel> Services { get; set; } = new List<ServiceResponseDetailModel>();
 }
 
@@ -52,6 +53,7 @@ public class ServiceResponseDetailModel
     public string ServiceName { get; set; } = string.Empty;
     public int ServiceTypeId { get; set; }
     public double Price { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }
 
 public class DoctorResponseModel
@@ -59,4 +61,5 @@ public class DoctorResponseModel
     public int DoctorId { get; set; }
     public string DoctorName { get; set; } = string.Empty;
     public int CategoryId { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }

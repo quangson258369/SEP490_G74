@@ -21,11 +21,12 @@ namespace HCS.ApplicationContext.Configurations
             builder
                 .HasData(
                     new ServiceType { ServiceTypeId = 1, ServiceTypeName = "Khám tổng quát", CategoryId = 1 },
-                    new ServiceType { ServiceTypeId = 2, ServiceTypeName = "Khám chuyên khoa", CategoryId = 1 },
-                    new ServiceType { ServiceTypeId = 3, ServiceTypeName = "Khám nội soi", CategoryId = 2 },
-                    new ServiceType { ServiceTypeId = 4, ServiceTypeName = "Chẩn đoán hình ảnh", CategoryId = 2 },
-                    new ServiceType { ServiceTypeId = 5, ServiceTypeName = "Xét nghiệm", CategoryId = 3 },
-                    new ServiceType { ServiceTypeId = 6, ServiceTypeName = "Phẫu thuật", CategoryId = 3 }
+                    
+                    new ServiceType { ServiceTypeId = 2, ServiceTypeName = "Chẩn đoán nội", CategoryId = 2 },
+                    new ServiceType { ServiceTypeId = 3, ServiceTypeName = "Khám nội", CategoryId = 2 },
+                    
+                    new ServiceType { ServiceTypeId = 4, ServiceTypeName = "Chẩn đoán ngoại", CategoryId = 3 },
+                    new ServiceType { ServiceTypeId = 5, ServiceTypeName = "Khám ngoại", CategoryId = 3 }
                 );
         }
     }

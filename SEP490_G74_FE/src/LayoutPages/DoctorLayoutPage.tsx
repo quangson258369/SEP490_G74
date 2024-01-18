@@ -73,14 +73,14 @@ const DoctorLayoutPage = (props: any) => {
               defaultSelectedKeys={["1"]}
               style={{ background: "#146C94", color: "white" }}
             >
-              <Menu.Item key="2"> 
+              <Menu.Item key="1"> 
                 <Link
                   to={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_CHECK_PAGE}
                 >
                   Hồ sơ chưa khám
                 </Link>
               </Menu.Item>
-              <Menu.Item key="1"> 
+              <Menu.Item key="2"> 
                 <Link
                   to={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
                 >

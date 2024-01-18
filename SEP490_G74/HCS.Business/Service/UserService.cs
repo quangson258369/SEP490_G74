@@ -14,6 +14,7 @@ using HCS.Business.ResponseModel.UserResponseModel;
 using static HCS.Business.Util.MD5PasswordGenerator.PasswordGenerator;
 using HCS.Domain;
 using Microsoft.Identity.Client;
+using HCS.Domain.Enums;
 
 
 namespace HCS.Business.Service
@@ -34,6 +35,12 @@ namespace HCS.Business.Service
         Task<ApiResponse> GetLeastAssginedDoctorByCategoryId(int categoryId);
 
         Task<ApiResponse> GetAllAccounts();
+
+        Task<ApiResponse> GetAllRoles();
+
+        Task<ApiResponse> UpdateAccount(AccountUpdateModel account);
+
+        Task<ApiResponse> RemoveAccount(int userId);
     }
 
     public class UserService : IUserService
@@ -112,12 +119,62 @@ namespace HCS.Business.Service
                 Email = registerUser.Email,
                 Status = true,
                 RoleId = registerUser.RoleId,
-                CategoryId = registerUser.CategoryId
+                CategoryId = registerUser.CategoryId < 1 ? null : registerUser.CategoryId,
+                Contact = new Contact()
+                {
+                    Address = string.Empty,
+                    Dob = DateTime.Now,
+                    Gender = true,
+                    Img = string.Empty,
+                    Name = registerUser.Email.Split('@')[0],
+                    Phone = string.Empty,
+                }
             };
+
+            var profile = await _unitOfWork.UserRepo.GetProfile(registerUser.Email);
+            if (profile is not null) return new ApiResponse().SetBadRequest("Email existed");
 
             await _unitOfWork.UserRepo.AddAsync(newUser);
             await _unitOfWork.SaveChangeAsync();
             return response.SetOk("Created");
+        }
+
+        public async Task<ApiResponse> UpdateAccount(AccountUpdateModel account)
+        {
+            var response = new ApiResponse();
+
+            var isMatchPassword = IsMatchPassword(user: new UserRegisterModel()
+            {
+                Password = account.Password,
+                ConfirmPassword = account.ConfirmPassword
+            });
+
+            if (isMatchPassword is false)
+            {
+                return response.SetBadRequest(message: "Confirm Password does not matched");
+            }
+
+            var user = await _unitOfWork.UserRepo.GetAsync(x => x.UserId == account.UserId);
+            if (user == null) return response.SetNotFound();
+            user.Password = GetMD5Hash(account.Password);
+            user.RoleId = account.RoleId;
+            user.CategoryId = account.RoleId == (int)UserRole.Doctor ? account.CategoryId : null;
+            await _unitOfWork.SaveChangeAsync();
+            return response.SetOk("Updated");
+        }
+
+        public async Task<ApiResponse> RemoveAccount(int userId)
+        {
+            var response = new ApiResponse();
+
+            var user = await _unitOfWork.UserRepo.GetAsync(x => x.UserId == userId);
+            if(user != null)
+            {
+                user.Status = false;
+                await _unitOfWork.SaveChangeAsync();
+                return response.SetOk("deleted");
+            }
+            return response.SetNotFound("Not found");
         }
 
         private static bool IsMatchPassword(UserRegisterModel user)
@@ -192,6 +249,7 @@ namespace HCS.Business.Service
                         CategoryId = item.CategoryId,
                         RoleId = item.RoleId,
                         UserId = item.UserId,
+                        IsDeleted = item.IsDeleted
                     };
 
                     var profile = await _unitOfWork.UserRepo.GetProfile(item.Email);
@@ -236,7 +294,8 @@ namespace HCS.Business.Service
                     CategoryId = leastAssignedDoctor.CategoryId,
                     RoleId = leastAssignedDoctor.RoleId,
                     UserId = leastAssignedDoctor.UserId,
-                    UserName = leastAssignedDoctor.Contact is not null ? leastAssignedDoctor.Contact.Name : string.Empty
+                    UserName = leastAssignedDoctor.Contact is not null ? leastAssignedDoctor.Contact.Name : string.Empty,
+                    IsDeleted = leastAssignedDoctor.IsDeleted
                 };
                 return response.SetOk(result);
             }
@@ -244,7 +303,7 @@ namespace HCS.Business.Service
 
         public async Task<ApiResponse> GetAllAccounts()
         {
-            var accounts = await _unitOfWork.UserRepo.GetAllAsync(x => true);
+            var accounts = await _unitOfWork.UserRepo.GetAllAsync(x => x.Status == true);
 
             if (accounts is null)
             {
@@ -262,6 +321,18 @@ namespace HCS.Business.Service
                 }
             }
             return new ApiResponse().SetOk(result);
+        }
+
+        public async Task<ApiResponse> GetAllRoles()
+        {
+            var roles = await _unitOfWork.RoleRepo.GetAllAsync(x => true);
+            roles = roles.Select(x => new Role()
+            {
+                RoleId = x.RoleId,
+                RoleName = x.RoleName,
+                Users = null,
+            }).ToList();
+            return new ApiResponse().SetOk(roles);
         }
     }
 }

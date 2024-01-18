@@ -73,11 +73,11 @@ const NurseLayoutPage = (props: any) => {
               defaultSelectedKeys={["1"]}
               style={{ background: "#146C94", color: "white" }}
             >
-              <Menu.Item key="1">
-                <Link to={"/"}>Danh sách bệnh nhân</Link>
-              </Menu.Item>
-              <Menu.Item key="2"> 
+              <Menu.Item key="1"> 
                 <Link to={ROUTE_URLS.NURSE + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to={"/nurse/patients"}>Danh sách bệnh nhân</Link>
               </Menu.Item>
               {/* <Menu.Item key="3">
                 <Link to={"/"}>Hóa đơn thuốc</Link>

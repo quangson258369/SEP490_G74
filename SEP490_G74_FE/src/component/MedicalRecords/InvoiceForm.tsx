@@ -4,7 +4,7 @@ import ExaminationService from "../../Services/ExaminationService";
 import { ExamDetail } from "../../Models/SubEntityModel";
 import { useEffect, useState } from "react";
 import { PatientAddModel } from "../../Models/PatientModel";
-import patientService from "../../Services/PatientSerivce";
+import patientService from "../../Services/PatientService";
 import dayjs from "dayjs";
 import generatePDF from "react-to-pdf";
 import { JWTTokenModel } from "../../Models/AuthModel";

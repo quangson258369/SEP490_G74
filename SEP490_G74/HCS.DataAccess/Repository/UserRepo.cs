@@ -32,7 +32,8 @@ namespace HCS.DataAccess.Repository
                 {
                     Email = user.Email,
                     RoleId = user.RoleId,
-                    UserId = user.UserId
+                    UserId = user.UserId,
+                    IsDeleted = user.IsDeleted
                 };
 
                 profile.UserName = user.Contact != null ? user.Contact.Name : string.Empty;  

@@ -211,9 +211,9 @@ const SupplyPrescriptionDetailForm = ({
             <Col span={6}>
               <b>Giá tiền (VND)</b>
             </Col>
-            <Col span={4}>
+            {/* <Col span={4}>
               <b>Số lượng còn lại</b>
-            </Col>
+            </Col> */}
             <Col span={4}>
               <b>Số lượng đã chọn</b>
             </Col>
@@ -225,7 +225,7 @@ const SupplyPrescriptionDetailForm = ({
                 <Row gutter={10}>
                   <Col span={10}>{element.sName}</Col>
                   <Col span={6}>{element.price.toLocaleString()} VND</Col>
-                  <Col span={4}>{element.unitInStock}</Col>
+                  {/* <Col span={4}>{element.unitInStock}</Col> */}
                   <Col span={4}>
                     <Form.Item name={`selected_supply_${element.sId}`}>
                       <InputNumber

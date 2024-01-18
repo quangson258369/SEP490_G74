@@ -32,8 +32,23 @@ export interface AccountResponseModel {
 
 export interface AddAccountModel {
   password: string
+  confirmPassword: string
   email: string
   status: boolean
   roleId: number
   categoryId: number
+  roles?: RoleResponseModel[]
+}
+
+export interface UpdateAccountModel {
+  userId: number
+  password: string
+  confirmPassword: string
+  roleId: number
+  categoryId: number
+}
+
+export interface RoleResponseModel {
+  roleId: number;
+  roleName: string;
 }

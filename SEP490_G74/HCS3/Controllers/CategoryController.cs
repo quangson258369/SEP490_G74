@@ -2,6 +2,7 @@ using HCS.Business.RequestModel.CategoryRequestModel;
 using HCS.Business.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HCS.API.Controllers
 {
@@ -30,9 +31,17 @@ namespace HCS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var result = await _categoryService.GetCategories();
+            var roleClaims = User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
-            return result.IsSuccess ? Ok(result) : BadRequest(result);
+            if (roleClaims is not null)
+            {
+                var userIdString = roleClaims.Value;
+                var userId = int.Parse(userIdString);
+                var result = await _categoryService.GetCategories(userId);
+                return result.IsSuccess ? Ok(result) : BadRequest(result);
+            }
+            return Unauthorized();
         }
 
         [Authorize(Roles = "Admin")]
@@ -58,6 +67,14 @@ namespace HCS.API.Controllers
         public async Task DeleteCategory(int id)
         {
            await _categoryService.DeleteCategory(id);
+        }
+
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
+        [HttpGet("doctor-category/{id:int}/{mrId:int}")]
+        public async Task<IActionResult> GetDoctorCategoryByServiceId(int id, int mrId)
+        {
+            var result = await _categoryService.GetDoctorCategoryByServiceId(id, mrId);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }
 }

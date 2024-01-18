@@ -76,12 +76,12 @@ const CashierLayoutPage = (props: any) => {
               {/* <Menu.Item key="1">
                 <Link to={"/"}>Trang chủ</Link>
               </Menu.Item> */}
-              <Menu.Item key="1">
+              {/* <Menu.Item key="1">
                 <Link to={"/"}>Hóa đơn thuốc</Link>
               </Menu.Item>
               <Menu.Item key="2">
                 <Link to={"/"}>Hóa đơn dịch vụ</Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="3">
                 <Link to={ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
               </Menu.Item>

@@ -35,12 +35,13 @@ import {
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
 import { PatientAddModel } from "../../Models/PatientModel";
-import patientService from "../../Services/PatientSerivce";
+import patientService from "../../Services/PatientService";
 import categoryService from "../../Services/CategoryService";
 import subService from "../../Services/SubService";
 import medicalRecordService from "../../Services/MedicalRecordService";
 import generatePDF, { usePDF } from "react-to-pdf";
 import ExaminationForm from "./ExaminationForm";
+import { useNavigate } from "react-router-dom";
 
 const MedicalRecordDetailForm = ({
   patientId,
@@ -49,16 +50,20 @@ const MedicalRecordDetailForm = ({
 }: PatientProps) => {
   const [mrDetailform] = Form.useForm();
   const today = dayjs();
+  const navigate = useNavigate();
+
   const { authenticated } = useContext(AuthContext);
-  const [isDisable, setIsDisable] = useState<boolean>(false);
+  const [isServiceTypeDisable, setIsServiceTypeDisable] =
+    useState<boolean>(false);
   const [isDoctorDisable, setIsDoctorDisable] = useState<boolean>(false);
   const [isCheckUp, setIsCheckUp] = useState<boolean>(false);
+  const [isPaid, setIsPaid] = useState<boolean>(false);
   const [prevMrId, setPrevMrId] = useState<number | undefined>(undefined);
-  const [patient, SetPatient] = useState<PatientAddModel | undefined>(
+  const [patient, setPatient] = useState<PatientAddModel | undefined>(
     undefined
   );
 
-  const [options, setOptions] = useState<SelectProps["options"]>([]);
+  const [doctorOptions, setOptions] = useState<SelectProps["options"]>([]);
   const [serviceTypeOptions, setServiceTypeOptions] = useState<
     SelectProps["options"]
   >([]);
@@ -68,18 +73,23 @@ const MedicalRecordDetailForm = ({
   const [, setDoctorIds] = useState<number[]>([]);
 
   //const [cates, setCates] = useState<CategoryResponseModel[]>([]);
-  const [docs, setDocs] = useState<DoctorResponseModel[]>([]);
+  //const [docs, setDocs] = useState<DoctorResponseModel[]>([]);
   //===================
-
+  const [mrDetail, setMrDetail] = useState<
+    MedicalRecordDetailModel | undefined
+  >(undefined);
   const [cates, setCates] = useState<CategoryResponseModel[]>([]);
   const [doctors, setDoctors] = useState<DoctorResponseModel[]>([]);
   const [types, setTypes] = useState<ServiceTypeResponseModel[]>([]);
   const [services, setServices] = useState<ServiceResponseModel[]>([]);
+  const [selectedServices, setSelectedServices] = useState<
+    ServiceResponseModel[]
+  >([]);
 
   const [isExamReload, setIsExamReload] = useState<boolean>(false);
 
   const onFinish = async (values: MedicalRecord) => {
-    if(isCheckUp === true){
+    if (isCheckUp === true) {
       message.info("Hồ sơ đã khám, không thể chỉnh sửa", 2);
       return;
     }
@@ -88,7 +98,9 @@ const MedicalRecordDetailForm = ({
       values.selectedServiceTypeIds === undefined ||
       values.selectedServiceIds === undefined ||
       values.selectedDoctorIds === undefined ||
-      values.selectedCategoryIds.length === 0
+      values.selectedCategoryIds.length === 0 ||
+      values.selectedDoctorIds.length === 0 ||
+      values.selectedServiceIds.length === 0
     ) {
       message.error("Chưa chọn dịch vụ khám", 2);
       return;
@@ -134,6 +146,11 @@ const MedicalRecordDetailForm = ({
       setOptions([]);
       setServiceTypeOptions([]);
       setServiceOptions([]);
+
+      setDoctors([]);
+      setTypes([]);
+      setServices([]);
+
       mrDetailform.resetFields([
         "selectedDoctorIds",
         "selectedServiceTypeIds",
@@ -141,116 +158,144 @@ const MedicalRecordDetailForm = ({
       ]);
       return;
     }
+
+    var currentSelectedDoctorIds: number[] =
+      mrDetailform.getFieldValue("selectedDoctorIds");
+    if (currentSelectedDoctorIds === undefined) {
+      currentSelectedDoctorIds = [];
+    }
+
     mrDetailform.resetFields([
       "selectedDoctorIds",
       "selectedServiceTypeIds",
       "selectedServiceIds",
     ]);
     // ----------- new get least assigned doctor
-    var docs: DoctorResponseModel[] = await fetchDoctors(values);
-
-    var newDocIds: number[] = [];
-    var newOptions: SelectProps["options"] = [];
-    console.log(docs);
-    docs.forEach((element) => {
-      newOptions!.push({
-        value: element.userId,
-        label: element.userName,
+    var newDoctorsSelectedByCategories: DoctorResponseModel[] =
+      await fetchDoctors(values);
+    if (newDoctorsSelectedByCategories.length > 0) {
+      setDoctors(newDoctorsSelectedByCategories);
+      // keep selected doctors if still available
+      var oldAvailableDocIds: number[] = [];
+      currentSelectedDoctorIds.forEach((oldDocId) => {
+        if (
+          newDoctorsSelectedByCategories.find(
+            (newDoc) => newDoc.userId === oldDocId
+          )
+        ) {
+          oldAvailableDocIds.push(oldDocId);
+        }
       });
-      newDocIds.push(element.userId);
-    });
-    console.log(newDocIds);
-    setOptions(newOptions);
-    setDocs(docs);
-    setDoctorIds(newDocIds);
-    mrDetailform.setFieldsValue({
-      selectedDoctorIds: newDocIds,
-    });
-
-    // get types
-    var newTypeOptions: SelectProps["options"] = [];
-    var categoriesBySelectedTypes: ServiceTypeResponseModel[] =
-      await fetchServiceTypes(values);
-
-    if (categoriesBySelectedTypes.length > 0) {
-      categoriesBySelectedTypes.forEach((element) => {
-        newTypeOptions?.push({
-          value: element.serviceTypeId,
-          label: element.serviceTypeName,
-        });
-      });
-      setServiceTypeOptions(newTypeOptions);
-      mrDetailform.resetFields(["selectedServiceTypeIds"]);
       mrDetailform.setFieldsValue({
-        selectedServiceTypeIds: categoriesBySelectedTypes.map(
-          (element) => element.serviceTypeId
-        ),
+        selectedDoctorIds: oldAvailableDocIds,
       });
     }
 
+    // get types
+    //var newTypeOptions: SelectProps["options"] = [];
+    var typesBySelectedCategories: ServiceTypeResponseModel[] =
+      await fetchServiceTypes(values);
+
+    if (typesBySelectedCategories.length > 0) {
+      // typesBySelectedCategories.forEach((element) => {
+      //   newTypeOptions?.push({
+      //     value: element.serviceTypeId,
+      //     label: element.serviceTypeName,
+      //   });
+      // });
+      // setServiceTypeOptions(newTypeOptions);
+      mrDetailform.resetFields(["selectedServiceTypeIds"]);
+      // mrDetailform.setFieldsValue({
+      //   selectedServiceTypeIds: typesBySelectedCategories.map(
+      //     (element) => element.serviceTypeId
+      //   ),
+      // });
+      setTypes(typesBySelectedCategories);
+    }
+
     // set services
-    var newServiceOptions: SelectProps["options"] = [];
+    //var newServiceOptions: SelectProps["options"] = [];
     var servicesByServiceTypes: ServiceResponseModel[] = await fetchServices(
-      categoriesBySelectedTypes.map((element) => element.serviceTypeId)
+      typesBySelectedCategories.map((element) => element.serviceTypeId)
     );
 
-    console.log(servicesByServiceTypes);
     if (servicesByServiceTypes.length > 0) {
-      servicesByServiceTypes.forEach((element) => {
-        newServiceOptions?.push({
-          value: element.serviceId,
-          label: element.serviceName,
-        });
-      });
-      setServiceOptions(newServiceOptions);
+      // servicesByServiceTypes.forEach((element) => {
+      //   newServiceOptions?.push({
+      //     value: element.serviceId,
+      //     label: element.serviceName,
+      //   });
+      // });
+      // setServiceOptions(newServiceOptions);
       mrDetailform.resetFields(["selectedServiceIds"]);
-      mrDetailform.setFieldsValue({
-        selectedServiceIds: servicesByServiceTypes.map(
-          (element) => element.serviceId
-        ),
-      });
+      // mrDetailform.setFieldsValue({
+      //   selectedServiceIds: servicesByServiceTypes.map(
+      //     (element) => element.serviceId
+      //   ),
+      // });
+      setServices(servicesByServiceTypes);
     }
   };
 
   const handleChangeServiceType = async (values: number[]) => {
-    mrDetailform.resetFields([
-      //"selectedDoctorIds",
-      //"selectedServiceTypeIds",
-      "selectedServiceIds",
-    ]);
-
     // new
     if (values.length === 0) {
       setServiceOptions([]);
-      mrDetailform.resetFields(["selectedServiceIds"]);
+
+      setServices([]);
+
+      mrDetailform.setFieldsValue({
+        selectedServiceIds: [],
+      });
       return;
     }
-    var newServiceOptions: SelectProps["options"] = [];
-    var servicesByServiceTypes: ServiceResponseModel[] = await fetchServices(
-      values
-    );
+    var currentSelectedServiceIds: number[] =
+      mrDetailform.getFieldValue("selectedServiceIds");
+    if (currentSelectedServiceIds === undefined) {
+      currentSelectedServiceIds = [];
+    }
+    //var newServiceOptions: SelectProps["options"] = [];
+    var newSelectedServicesByServiceTypes: ServiceResponseModel[] =
+      await fetchServices(values);
 
-    console.log(servicesByServiceTypes);
-    if (servicesByServiceTypes.length > 0) {
-      servicesByServiceTypes.forEach((element) => {
-        newServiceOptions?.push({
-          value: element.serviceId,
-          label: element.serviceName,
-        });
+    if (newSelectedServicesByServiceTypes.length > 0) {
+      setServices(newSelectedServicesByServiceTypes);
+      var oldSelectedServiceIds: number[] = [];
+      currentSelectedServiceIds.forEach((oldServiceId) => {
+        if (
+          newSelectedServicesByServiceTypes.find(
+            (newService) => newService.serviceId === oldServiceId
+          )
+        ) {
+          oldSelectedServiceIds.push(oldServiceId);
+        }
       });
-      setServiceOptions(newServiceOptions);
       mrDetailform.resetFields(["selectedServiceIds"]);
       mrDetailform.setFieldsValue({
-        selectedServiceIds: servicesByServiceTypes.map(
-          (element) => element.serviceId
-        ),
+        selectedServiceIds: oldSelectedServiceIds,
       });
+      setSelectedServices(
+        newSelectedServicesByServiceTypes.filter((service) =>
+          oldSelectedServiceIds.includes(service.serviceId)
+        )
+      );
     }
+  };
+
+  const handleChangeService = (values: number[]) => {
+    if (values.length === 0) {
+      setSelectedServices([]);
+      return;
+    }
+    var newSelectedServices: ServiceResponseModel[] = services.filter(
+      (service) => values.includes(service.serviceId)
+    );
+    setSelectedServices(newSelectedServices);
   };
 
   const checkRole = () => {
     if (authenticated?.role === Roles.Nurse) {
-      setIsDisable(true);
+      setIsServiceTypeDisable(true);
     }
     if (authenticated?.role === Roles.Doctor) {
       setIsDoctorDisable(true);
@@ -263,9 +308,11 @@ const MedicalRecordDetailForm = ({
       await patientService.getPatientById(patientId);
     if (response === undefined) {
       message.error("Get Patient Failed", 2);
+      return undefined;
     } else {
       console.log(response);
-      SetPatient(response);
+      //setPatient(response);
+      return response;
     }
   };
 
@@ -273,35 +320,39 @@ const MedicalRecordDetailForm = ({
     var response = await categoryService.getCategories();
     if (response === undefined) {
       message.error("Get Categories Failed", 2);
+      return [];
     } else {
       console.log(response);
-      setCates(response);
+      //setCates(response);
+      return response;
     }
   };
 
   async function fetchDoctors(
     values: number[]
   ): Promise<DoctorResponseModel[]> {
-    const docs: DoctorResponseModel[] = [];
+    var docsResponse: DoctorResponseModel[] = [];
 
     try {
       await Promise.all(
         values.map(async (cateId) => {
-          const leastAsiggnedDoc =
-            await subService.getLeastAssignedDoctorByCategoryId(cateId);
-          if (leastAsiggnedDoc) {
-            docs.push(leastAsiggnedDoc);
+          const selectedDocsByCate = await subService.getDoctorsByCategoryId(
+            cateId
+          );
+          if (selectedDocsByCate) {
+            docsResponse = [...docsResponse, ...selectedDocsByCate];
           } else {
             throw new Error(`Failed to get doctor for category ${cateId}`);
           }
         })
       );
-    } catch (error) {
-      message.error("Get Doctors Failed", 2);
+    } catch (error: any) {
+      //message.error(error.message, 2);
       // Log or handle the error more specifically if needed
-      console.error(error);
+      console.error(error.message);
+      return [];
     }
-    return docs;
+    return docsResponse;
   }
 
   async function fetchServiceTypes(
@@ -318,12 +369,12 @@ const MedicalRecordDetailForm = ({
           }
         })
       );
-    } catch (error) {
-      message.error("Get Categories by Service Failed", 2);
+    } catch (error: any) {
+      //message.error("Get Categories by Service Failed", 2);
       // Log or handle the error more specifically if needed
-      console.error(error);
+      console.error(error.message);
+      return [];
     }
-    console.log(types);
     return types;
   }
 
@@ -338,15 +389,16 @@ const MedicalRecordDetailForm = ({
           var serviceByType = await subService.getServices(typeId);
           if (serviceByType !== undefined) {
             services = [...services, ...serviceByType];
+            //setServices(services);
           }
         })
       );
-    } catch (error) {
-      message.error("Get Categories by Service Failed", 2);
+    } catch (error: any) {
+      //message.error("Get Categories by Service Failed", 2);
       // Log or handle the error more specifically if needed
-      console.error(error);
+      console.error(error.message);
+      return [];
     }
-    console.log(services);
     return services;
   }
 
@@ -355,108 +407,74 @@ const MedicalRecordDetailForm = ({
       id: medicalRecordId,
     });
 
-    var response: MedicalRecordDetailModel | undefined =
+    var mrDetailResponse: MedicalRecordDetailModel | undefined =
       await medicalRecordService.getMedicalRecordDetailById(id);
-    if (response === undefined) {
+    if (mrDetailResponse === undefined) {
       message.error("Get Medical Record Detail Failed", 2);
     } else {
-      setPrevMrId(response.prevMedicalRecordId);
-      if (response.isCheckUp === true) {
+      setMrDetail(mrDetailResponse);
+      setPrevMrId(mrDetailResponse.prevMedicalRecordId);
+
+      if (mrDetailResponse.isCheckUp === true) {
         setIsCheckUp(true);
-        setIsDisable(true);
+        setIsServiceTypeDisable(true);
       }
-      var docs: DoctorResponseModel[] = response.doctors.map((doc) => ({
-        userId: doc.doctorId,
-        userName: doc.doctorName,
-      }));
-
-      setDoctors(docs);
-
-      mrDetailform.setFieldsValue({
-        isPaid: response.isPaid,
-        isCheckUp: response.isCheckUp,
-      });
-
-      mrDetailform.setFieldsValue({
-        selectedCategoryIds: response.categories.map((cate) => cate.categoryId),
-        selectedDoctorIds: response.doctors.map((doc) => doc.doctorId),
-        prevMedicalRecordId: response.prevMedicalRecordId,
-      });
-      //===============================
-      var newOptions: SelectProps["options"] = [];
-      var newDocIds: number[] = [];
-      docs.forEach((element) => {
-        newOptions!.push({
-          value: element.userId,
-          label: element.userName,
-        });
-        newDocIds.push(element.userId);
-      });
-      console.log(newDocIds);
-      setOptions(newOptions);
-      setDocs(docs);
-      setDoctorIds(newDocIds);
-      mrDetailform.setFieldsValue({
-        selectedDoctorIds: newDocIds,
-      });
-
-      //=========================Parse selected service types to setFieldsValue=========
-      var serviceTypeIds = response?.serviceTypes.map(
-        (element) => element.serviceTypeId
-      );
-
-      mrDetailform.setFieldsValue({
-        selectedServiceTypeIds: serviceTypeIds,
-      });
-      setTypes(response.serviceTypes);
-
-      //========= set full type options by selected categories ============
-      var typesBySelectedCategories = await fetchServiceTypes(
-        response.categories.map((cate) => cate.categoryId)
-      );
-      if (typesBySelectedCategories.length > 0) {
-        var newTypeOptions: SelectProps["options"] = [];
-        typesBySelectedCategories.forEach((element) => {
-          newTypeOptions!.push({
-            value: element.serviceTypeId,
-            label: element.serviceTypeName,
-          });
-        });
-        setServiceTypeOptions(newTypeOptions);
+      if (mrDetailResponse.isPaid === true) {
+        setIsPaid(true);
       }
-      // get service
+      // set cates
+      var currentSelectedCategories: CategoryResponseModel[] =
+        mrDetailResponse.categories.map((cate) => ({
+          categoryId: cate.categoryId,
+          categoryName: cate.categoryName,
+          isDeleted: cate.isDeleted,
+        }));
+
+      setCates(currentSelectedCategories);
+
+      // set doctors
+      var currentSelectedDoctors: DoctorResponseModel[] =
+        mrDetailResponse.doctors.map((doc) => ({
+          userId: doc.doctorId,
+          userName: doc.doctorName,
+          isDeleted: doc.isDeleted,
+          categoryId: doc.categoryId,
+        }));
+
+      setDoctors(currentSelectedDoctors);
+
+      // set types
+      setTypes(mrDetailResponse.serviceTypes);
+
+      // set services
       var serviceIds: number[] = [];
-      var newServiceOptions: SelectProps["options"] = [];
-
-      var allServicesByServiceTypes = await fetchServices(
-        typesBySelectedCategories.map((x) => x.serviceTypeId)
-      );
-      if (allServicesByServiceTypes.length > 0) {
-        allServicesByServiceTypes.forEach((service) => {
-          newServiceOptions!.push({
-            value: service.serviceId,
-            label: service.serviceName,
-          });
-        });
-      }
-
-      setServiceOptions(newServiceOptions);
-
-      response.serviceTypes.forEach((type) => {
-        type.services.forEach((ser) => {
-          serviceIds.push(ser.serviceId);
-        });
+      mrDetailResponse.serviceTypes.forEach((type) => {
+        serviceIds = [...serviceIds, ...type.services.map((x) => x.serviceId)];
       });
 
+      var selectedServices = mrDetailResponse.serviceTypes
+        .map((element) => element.services)
+        .flat();
+
+      setServices(selectedServices);
+      setSelectedServices(selectedServices);
+
+      // set default static values
       mrDetailform.setFieldsValue({
+        isPaid: mrDetailResponse.isPaid,
+        isCheckUp: mrDetailResponse.isCheckUp,
+        prevMedicalRecordId: mrDetailResponse.prevMedicalRecordId,
+        selectedCategoryIds: mrDetailResponse.categories.map(
+          (cate) => cate.categoryId
+        ),
+        selectedDoctorIds: mrDetailResponse.doctors.map((doc) => doc.doctorId),
+        selectedServiceTypeIds: mrDetailResponse.serviceTypes.map(
+          (element) => element.serviceTypeId
+        ),
         selectedServiceIds: serviceIds,
       });
 
-      var selectedServices = response.serviceTypes
-        .map((element) => element.services)
-        .flat();
-      console.log(selectedServices);
-      setServices(selectedServices);
+      return mrDetailResponse;
     }
   };
 
@@ -520,12 +538,13 @@ const MedicalRecordDetailForm = ({
         <ExaminationForm
           medicalRecordId={medicalRecordId ?? 0}
           isReload={isExamReload}
+          patientId={patientId}
         />
       ),
     },
   ];
 
-  //========= Collapse Recheckup =========
+  //========= Collapse Re checkup =========
   const itemsReCheckUp: CollapseProps["items"] = [
     {
       key: `check_up_${medicalRecordId}`,
@@ -580,29 +599,63 @@ const MedicalRecordDetailForm = ({
     },
   ];
 
+  const fetchData = async () => {
+    if (medicalRecordId === undefined) {
+      message.error("Mã hồ sơ không hợp lệ", 2).then(() => navigate("/"));
+    } else {
+      //Fetch patient info, medical record detail and categories
+      var responses = await Promise.all([
+        fetchPatient(),
+        fetchMedicalRecordDetail(medicalRecordId),
+      ]);
+      if (responses !== undefined && responses.length === 2) {
+        setPatient(responses[0]);
+        setMrDetail(responses[1]);
+        //get cate, doc, type, service options
+        var cateResponses: CategoryResponseModel[] = await fetchCates();
+        if (cateResponses !== undefined) {
+          setCates(cateResponses.filter((cate) => cate.isDeleted === false));
+          var [docs, types] = await Promise.all([
+            fetchDoctors(cateResponses.map((cate) => cate.categoryId)),
+            fetchServiceTypes(cateResponses.map((cate) => cate.categoryId)),
+          ]);
+          if (docs !== undefined && types !== undefined) {
+            setDoctors(docs.filter((doc) => doc.isDeleted === false));
+            setTypes(types.filter((type) => type.isDeleted === false));
+            var services = await fetchServices(
+              types.map((type) => type.serviceTypeId)
+            );
+            if (services !== undefined) {
+              setServices(
+                services.filter((service) => service.isDeleted === false)
+              );
+            }
+          }
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     mrDetailform.setFieldsValue({
       patientId: patientId,
     });
     checkRole();
-    fetchPatient();
-    fetchCates();
-    if (medicalRecordId !== undefined) {
-      fetchMedicalRecordDetail(medicalRecordId);
-    }
+    fetchData();
   }, [patientId, medicalRecordId, isReload]);
 
-  const handleChangeCollapse = (key:string|string[]) => {
-    setIsExamReload(!isExamReload)
+  const handleChangeCollapse = (key: string | string[]) => {
+    setIsExamReload(!isExamReload);
     console.log(key);
-  }
+  };
 
-  const handleChangeCheckUpCollapse = (key:string|string[]) => {
-    setIsExamReload(!isExamReload)
+  const handleChangeCheckUpCollapse = (key: string | string[]) => {
+    setIsExamReload(!isExamReload);
     console.log(key);
-  }
+  };
 
   const getTargetElement = () => document.getElementById("printTarget");
+
   return patient !== undefined ? (
     <div>
       <Button type="link" onClick={() => generatePDF(getTargetElement)}>
@@ -740,7 +793,11 @@ const MedicalRecordDetailForm = ({
             <TextArea placeholder="Lí do khám" />
           </Form.Item>
           {/*=========Select Category and Doctor=========== */}
-          <div style={{ display: isCheckUp === true ? "none" : "block" }}>
+          <div
+            style={{
+              display: isPaid === true || isCheckUp === true ? "none" : "block",
+            }}
+          >
             <Row gutter={10}>
               <Col span={12}>
                 <Form.Item<MedicalRecord>
@@ -764,55 +821,107 @@ const MedicalRecordDetailForm = ({
                   label="Chọn bác sĩ khám"
                 >
                   <Select
+                    disabled={isDoctorDisable}
                     mode="multiple"
-                    disabled
-                    options={options}
+                    options={doctors.map((doc) => ({
+                      value: doc.userId,
+                      label: doc.userName,
+                    }))}
                   />
                 </Form.Item>
               </Col>
             </Row>
           </div>
           {/*=========Select Service Type=========== */}
-          {isCheckUp === false && (
-            <Form.Item<MedicalRecord>
-              name="selectedServiceTypeIds"
-              label="Chọn loại dịch vụ khám"
-            >
-              <Select
-                disabled={isDisable}
-                mode="multiple"
-                onChange={handleChangeServiceType}
-                allowClear
-                options={serviceTypeOptions}
-              />
-            </Form.Item>
-          )}
-          {isCheckUp === false && (
-            <Form.Item<MedicalRecord>
-              name="selectedServiceIds"
-              label="Chọn dịch vụ khám"
-            >
-              <Select
-                mode="multiple"
-                disabled={isDisable}
-                allowClear
-                options={serviceOptions}
-              />
-            </Form.Item>
+          {authenticated?.role === Roles.Admin ||
+          authenticated?.role === Roles.Doctor ? (
+            <>
+              {isPaid === true ||
+                (isCheckUp === false && (
+                  <Form.Item<MedicalRecord>
+                    name="selectedServiceTypeIds"
+                    label="Chọn loại dịch vụ khám"
+                  >
+                    <Select
+                      disabled={isServiceTypeDisable}
+                      mode="multiple"
+                      onChange={handleChangeServiceType}
+                      allowClear
+                      options={types.map((type) => ({
+                        value: type.serviceTypeId,
+                        label: type.serviceTypeName,
+                      }))}
+                    />
+                  </Form.Item>
+                ))}
+              {isPaid === true ||
+                (isCheckUp === false && (
+                  <Form.Item<MedicalRecord>
+                    name="selectedServiceIds"
+                    label="Chọn dịch vụ khám"
+                  >
+                    <Select
+                      mode="multiple"
+                      onChange={handleChangeService}
+                      disabled={isServiceTypeDisable}
+                      allowClear
+                      options={services.map((service) => ({
+                        value: service.serviceId,
+                        label: service.serviceName,
+                      }))}
+                    />
+                  </Form.Item>
+                ))}
+            </>
+          ) : (
+            <></>
           )}
           {/*=========Tai kham=========== */}
           {isCheckUp === true && (
-            <Collapse items={itemsReCheckUp} onChange={handleChangeCheckUpCollapse}/>
+            <Collapse
+              items={itemsReCheckUp}
+              onChange={handleChangeCheckUpCollapse}
+            />
           )}
         </Form>
       </div>
+      <Divider />
+      <div>
+        <b>Dịch vụ đã chọn:</b>{" "}
+      </div>
+      <br />
+      <div id="listServicePrice">
+        {selectedServices.map((service) => (
+          <div key={service.serviceId}>
+            <Row>
+              <Col span={12}>{service.serviceName}</Col>
+              <Col span={12}>{service.price.toLocaleString()} VND</Col>
+            </Row>
+          </div>
+        ))}
+      </div>
+      <Divider dashed/>
+      <Row>
+        <Col span={12}>
+          <b>Tạm tính: </b>
+        </Col>
+        <Col span={12}>
+          {(selectedServices.reduce((total, s) => total + s.price, 0)).toLocaleString()} VND
+        </Col>
+      </Row>
       {/*=========Examination=========== */}
-      {isCheckUp === true && (
-        <Collapse items={itemsExamination} onChange={handleChangeCollapse} />
+      {isPaid === true || isCheckUp === true ? (
+        <Collapse
+          destroyInactivePanel
+          items={itemsExamination}
+          onChange={handleChangeCollapse}
+        />
+      ) : (
+        <></>
       )}
     </div>
   ) : (
-    <div>An Error Occurs When Getting Patient</div>
+    <div>Loading...</div>
   );
 };
 

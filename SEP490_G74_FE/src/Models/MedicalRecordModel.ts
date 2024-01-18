@@ -93,23 +93,27 @@ export interface ServiceTypeDetailModel {
   serviceTypeId: number;
   serviceTypeName: string;
   services: ServiceDetailModel[];
+  isDeleted: boolean;
 }
 export interface ServiceDetailModel {
   serviceId: number;
   serviceName: string;
   serviceTypeId: number;
   price: number;
+  isDeleted: boolean;
 }
 
 export interface CategoryDetailModel{
   categoryId: number;
   categoryName: string;
+  isDeleted : boolean;
 }
 
 export interface DoctorDetailModel{
   doctorId: number;
   doctorName: string;
   categoryId: number;
+  isDeleted: boolean;
 }
 
 export interface MedicalRecordUpdateModel {
@@ -122,4 +126,41 @@ export interface ExaminationProps {
   medicalRecordId: number;
   isReload: boolean;
   patientId?: number;
+}
+
+export interface PatientMedicalRecordExaminationPrintModel{
+  id: number;
+  patientId: number;
+  name: string;
+  dob: string;
+  gender: boolean;
+  phone: string;
+  address: string;
+  height: number;
+  weight: number;
+  blood: string;
+  bloodPressure: number;
+  editDate: string;
+  description: string;
+  isPaid: boolean;
+  isCheckUp: boolean;
+  categoryName: string;
+  doctorName: string;
+  serviceId: number;
+  serviceName: string;
+  diagnose: string;
+  conclusion: string;
+  status: boolean;
+  price: number;
+  image: string;
+}
+
+export interface ServicePrintModel {
+  serviceId: number;
+  serviceName: string;
+  diagnose: string;
+  conclusion: string;
+  status: boolean;
+  price: number;
+  image: string;
 }

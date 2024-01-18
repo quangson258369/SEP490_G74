@@ -67,14 +67,14 @@ public class SuppliesTypeRepo : GenericRepo<SuppliesType>, ISuppliesTypeRepo
                 mr.ExaminationResult.Prescription.SuppliesPrescriptions = supplyPrescriptions;
                 
                 //update stock of supplies
-                foreach(var supPre in supplyPrescriptions)
-                {
-                    var supply = await _context.Supplies.FindAsync(supPre.SupplyId);
-                    if(supply is not null)
-                    {
-                        supply.UnitInStock -= (short)supPre.Quantity;
-                    }
-                }
+                //foreach(var supPre in supplyPrescriptions)
+                //{
+                //    var supply = await _context.Supplies.FindAsync(supPre.SupplyId);
+                //    if(supply is not null)
+                //    {
+                //        supply.UnitInStock -= (short)supPre.Quantity;
+                //    }
+                //}
 
                 return true;
            }
@@ -98,14 +98,14 @@ public class SuppliesTypeRepo : GenericRepo<SuppliesType>, ISuppliesTypeRepo
                     }
                 }
                 //update stock of supplies
-                foreach (var supPre in supplyPrescriptions)
-                {
-                    var supply = await _context.Supplies.FindAsync(supPre.SupplyId);
-                    if (supply is not null)
-                    {
-                        supply.UnitInStock -= (short)supPre.Quantity;
-                    }
-                }
+                //foreach (var supPre in supplyPrescriptions)
+                //{
+                //    var supply = await _context.Supplies.FindAsync(supPre.SupplyId);
+                //    if (supply is not null)
+                //    {
+                //        supply.UnitInStock -= (short)supPre.Quantity;
+                //    }
+                //}
                 return true;
             }
         }

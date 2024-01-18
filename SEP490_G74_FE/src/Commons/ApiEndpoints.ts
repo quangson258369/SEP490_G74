@@ -7,6 +7,10 @@ const apiLinks = {
     auth: {
         postLogin: `${baseUrls}Users/login`,
         getAccounts: `${baseUrls}Users`,
+        postRegister: `${baseUrls}Users/register`,
+        getRoles: `${baseUrls}Users/roles`,
+        putAccount: `${baseUrls}Users/update`,
+        deleteAccount: `${baseUrls}Users/`,
     },
     patients:{
         getPatients:`${baseUrls}Users/patients`,
@@ -30,6 +34,7 @@ const apiLinks = {
         postCategory:`${baseUrls}Category`,
         putCategory:`${baseUrls}Category/`,
         deleteCategory:`${baseUrls}Category/`,
+        getDoctorCategory: `${baseUrls}Category/doctor-category/`,
     },
     serviceType:{
         getServicesType:`${baseUrls}ServiceType/`,

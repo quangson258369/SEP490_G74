@@ -22,6 +22,7 @@ export interface BaseModel {
 export interface CategoryResponseModel {
   categoryId: number;
   categoryName: string;
+  isDeleted: boolean;
 }
 
 export interface ServiceTypeResponseModel {
@@ -29,6 +30,7 @@ export interface ServiceTypeResponseModel {
     serviceTypeName: string;
     categoryId?: number;
     categoryName?: string;
+    isDeleted?: boolean;
 }
 
 export interface ServiceResponseModel {
@@ -37,11 +39,14 @@ export interface ServiceResponseModel {
     price: number;
     serviceTypeId?: number;
     serviceTypeName?: string;
+    isDeleted: boolean;
 }
 
 export interface DoctorResponseModel {
     userId: number,
     userName: string,
+    isDeleted: boolean,
+    categoryId: number,
 }
 
 export interface ExaminationsResultModel {
@@ -146,4 +151,9 @@ export interface SupplyAddModel {
   unitInStock: number
   price: number
   suppliesTypeId: number
+}
+
+export interface DoctorCategoryByServiceModel{
+  categoryName: string
+  doctorName: string
 }

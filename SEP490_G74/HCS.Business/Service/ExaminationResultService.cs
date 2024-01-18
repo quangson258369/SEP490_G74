@@ -39,6 +39,8 @@ public class ExaminationResultService : IExaminationResultService
             Diagnosis = examinationResultAddModel.Diagnosis,
             Conclusion = examinationResultAddModel.Conclusion
         };
+
+        medicalRecordEntity.IsCheckUp = true;
         
         await _unitOfWork.SaveChangeAsync();
 
@@ -117,6 +119,7 @@ public class ExaminationResultService : IExaminationResultService
             {
                 serviceMedicalRecord.Description = detail.Description;
                 serviceMedicalRecord.Diagnose = detail.Diagnose;
+                serviceMedicalRecord.Status = true;
             }
         }
         await _unitOfWork.SaveChangeAsync();

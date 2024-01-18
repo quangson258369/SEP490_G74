@@ -17,5 +17,7 @@ namespace HCS.Domain
         public int RoleId { get; set; }
 
         public string RoleName { get; set; } = string.Empty;
+
+        public bool IsDeleted { get; set; } = false;
     }
 }

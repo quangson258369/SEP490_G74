@@ -262,8 +262,9 @@ const MedicalRecordTable = () => {
       title: "Ngày tháng",
       dataIndex: "medicalRecordDate",
       key: "medicalRecordDate",
-      render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
       ...getColumnSearchProps("medicalRecordDate"),
+      render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
+      sorter: (a, b) => dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix(),
     },
     {
       title: "Thanh toán",
@@ -431,14 +432,14 @@ const MedicalRecordTable = () => {
           <Button key="back" onClick={handleCancel}>
             Hủy
           </Button>,
-          authenticated?.role !== Roles.Admin &&
-          authenticated?.role !== Roles.Doctor ? (
-            <></>
-          ) : (
-            <Button key="paid" onClick={handlePaid}>
-              Đã khám
-            </Button>
-          ),
+          // authenticated?.role !== Roles.Admin &&
+          // authenticated?.role !== Roles.Doctor ? (
+          //   <></>
+          // ) : (
+          //   <Button key="paid" onClick={handlePaid}>
+          //     Đã khám
+          //   </Button>
+          // ),
           authenticated?.role !== Roles.Admin &&
           authenticated?.role !== Roles.Doctor &&
           authenticated?.role !== Roles.Nurse ? (

@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 // Add DbContext
 builder.Services.AddDbContext<HCSContext>(
     options => options.UseSqlServer(
-        builder.Configuration.GetConnectionString("SonnkConnection")));
+        builder.Configuration.GetConnectionString("LocalConnection")));
 
 // Add Cors
 builder.Services.AddCors(options =>

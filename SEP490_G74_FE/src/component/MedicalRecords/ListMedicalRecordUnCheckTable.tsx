@@ -420,14 +420,14 @@ const ListMedicalRecordUnCheckTable = () => {
           <Button key="back" onClick={handleCancel}>
             Hủy
           </Button>,
-          authenticated?.role !== Roles.Admin &&
-          authenticated?.role !== Roles.Doctor ? (
-            <></>
-          ) : (
-            <Button key="paid" onClick={handlePaid}>
-              Đã khám
-            </Button>
-          ),
+          // authenticated?.role !== Roles.Admin &&
+          // authenticated?.role !== Roles.Doctor ? (
+          //   <></>
+          // ) : (
+          //   <Button key="paid" onClick={handlePaid}>
+          //     Đã khám
+          //   </Button>
+          // ),
           authenticated?.role !== Roles.Admin &&
           authenticated?.role !== Roles.Doctor &&
           authenticated?.role !== Roles.Nurse ? (

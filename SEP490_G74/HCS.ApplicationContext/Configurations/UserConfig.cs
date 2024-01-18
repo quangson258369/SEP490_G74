@@ -48,10 +48,10 @@ namespace HCS.ApplicationContext.Configurations
                             UserId = 2,
                             Email = "sonnk1@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
-                            CategoryId = 1, // Noi khoa
+                            CategoryId = 1, // Tong quat
                             Status = true,
                             RoleId = 2,
-                            ContactId = 2
+                            ContactId = 2 // Bsi Son
                         },
                         new User() // Doctor
                         {
@@ -61,67 +61,47 @@ namespace HCS.ApplicationContext.Configurations
                             CategoryId = 2, // Noi khoa
                             Status = true,
                             RoleId = 2,
-                            ContactId = 3
+                            ContactId = 3 // Bsi Banh
                         },
                         new User() // Doctor
                         {
                             UserId = 4,
                             Email = "doctor4@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
-                            CategoryId = 3, // Noi khoa
+                            CategoryId = 3, // Ngoại khoa
                             Status = true,
                             RoleId = 2,
-                            ContactId = 4
+                            ContactId = 4 // Bsi Tam
                         },
                         new User() // Doctor
                         {
                             UserId = 5,
                             Email = "doctor5@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
-                            CategoryId = 3, // Noi khoa
+                            CategoryId = 3, // Ngoại khoa
                             Status = true,
                             RoleId = 2,
-                            ContactId = 7
-                        },
-                        new User() // Doctor
-                        {
-                            UserId = 6,
-                            Email = "doctor6@gmail.com",
-                            Password = "d0c406e82877aacad00415ca64f821e9",
-                            CategoryId = 1, // Noi khoa
-                            Status = true,
-                            RoleId = 2,
-                            ContactId = 8
-                        },
-                        new User() // Doctor
-                        {
-                            UserId = 7,
-                            Email = "doctor7@gmail.com",
-                            Password = "d0c406e82877aacad00415ca64f821e9",
-                            CategoryId = 2, // Noi khoa
-                            Status = true,
-                            RoleId = 2,
-                            ContactId = 9
+                            ContactId = 5 // Bsi Van
                         },
                         new User()
                         {
-                            UserId = 8,
+                            UserId = 6,
                             Email = "yta1@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
                             CategoryId = null,
                             Status = true, // Y ta
                             RoleId = 4,
-                            ContactId = 5
+                            ContactId = 6
                         },
                         new User()
                         {
-                            UserId = 9,
+                            UserId = 7,
                             Email = "cashier1@gmail.com",
                             Password = "d0c406e82877aacad00415ca64f821e9",
                             CategoryId = null,
-                            Status = true, // Y ta
+                            Status = true, // Cashier
                             RoleId = 3,
-                            ContactId = 6
+                            ContactId = 7
                         }
                     );
         }

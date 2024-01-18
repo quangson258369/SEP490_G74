@@ -16,9 +16,9 @@ namespace HCS.ApplicationContext.Configurations
             builder
                 .HasData
                     (
-                        new Category() { CategoryId = 1, CategoryName = "Nội khoa" },
-                        new Category() { CategoryId = 2, CategoryName = "Ngoại khoa" },
-                        new Category() { CategoryId = 3, CategoryName = "Khoa thần kinh" }
+                        new Category() { CategoryId = 1, CategoryName = "Khám sơ bộ" },
+                        new Category() { CategoryId = 2, CategoryName = "Nội khoa" },
+                        new Category() { CategoryId = 3, CategoryName = "Ngoại khoa" }
                     );
         }
     }

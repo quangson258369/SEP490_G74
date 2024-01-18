@@ -6,7 +6,7 @@ import MedicalRecordAddForm from "../MedicalRecords/MedicalRecordAddForm";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
-import patientService from "../../Services/PatientSerivce";
+import patientService from "../../Services/PatientService";
 import { ApiResponseModel, PatientTableResponseModel } from "../../Models/PatientModel";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/es/table/interface";

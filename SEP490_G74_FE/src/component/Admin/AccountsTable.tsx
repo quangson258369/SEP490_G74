@@ -1,5 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Space, Table, message, Modal, Form, Row, Col } from "antd";
+import {
+  Button,
+  Space,
+  Table,
+  message,
+  Modal,
+  Form,
+  Row,
+  Col,
+  Select,
+  InputNumber,
+} from "antd";
 import { ColumnType, ColumnsType } from "antd/es/table";
 import Input, { InputRef } from "antd/es/input/Input";
 import {
@@ -10,8 +21,16 @@ import categoryService from "../../Services/CategoryService";
 import { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import { AccountResponseModel } from "../../Models/AuthModel";
+import {
+  AccountResponseModel,
+  JWTTokenModel,
+  RoleResponseModel,
+  UpdateAccountModel,
+} from "../../Models/AuthModel";
 import authService from "../../Services/AuthService";
+import { TOKEN } from "../../Commons/Global";
+import { jwtDecode } from "jwt-decode";
+import { useForm } from "antd/es/form/Form";
 
 const AccountsTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
@@ -129,11 +148,11 @@ const AccountsTable: React.FC = () => {
 
   const [editAccountModalVisible, setEditAccountModalVisible] = useState(false);
 
-  const [editAccountForm] = Form.useForm();
-
   const [selectedAccountId, setSelectedAccountId] = useState<number | null>(
     null
   );
+
+  const [accountEditForm] = useForm();
 
   //===================handle cancel==================
   //===== handle cancel edit form =====
@@ -145,18 +164,7 @@ const AccountsTable: React.FC = () => {
   const handleOpenEditAccount = (id: number) => {
     setSelectedAccountId(id);
     setEditAccountModalVisible(true);
-  };
-
-  //============ Handle Edit Call API =============
-
-  const handleEditAccount = async (values: CategoryResponseModel) => {
-    if (selectedAccountId === null) {
-      message.error("Vui lòng chọn tài khoản", 2);
-      return;
-    }
-
-    message.info("Chức năng đang phát triển", 2);
-    setEditAccountModalVisible(false);
+    accountEditForm.setFieldsValue({ userId: id });
   };
 
   //===================== Columns =====================
@@ -206,7 +214,7 @@ const AccountsTable: React.FC = () => {
             type="primary"
             onClick={() => handleDeleteAccount(record.userId)}
           >
-            Xóa
+            Vô hiệu hóa
           </Button>
         </Space>
       ),
@@ -230,8 +238,8 @@ const AccountsTable: React.FC = () => {
   //show confirm dialog before delete
   const handleDeleteAccount = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: "Bạn có chắc chắn muốn xóa?",
+      title: "Xác nhận Vô hiệu hóa",
+      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
       onOk: () => {
         removeAccount(id);
       },
@@ -242,7 +250,28 @@ const AccountsTable: React.FC = () => {
   };
   //===========Delete API=============
   const removeAccount = async (id: number) => {
-    message.info("Chức năng đang phát triển", 2)
+
+    var token = localStorage.getItem(TOKEN);
+    if(token !== null){
+      var user : JWTTokenModel = jwtDecode(token);
+      if(user!==undefined){
+        if(user.nameid !== undefined){
+          if(Number.parseInt(user.nameid) === id){
+            message.error("Không thể Vô hiệu hóa chính mình", 2);
+            return;
+          }
+        }
+      }
+    }
+
+    var response = await authService.deleteAccount(id);
+    if (response !== undefined && response === 200) {
+      message.success("Delete Success", 1).then(() => {
+        window.location.reload();
+      });
+    } else {
+      message.error("Delete Failed");
+    }
   };
 
   //=============================
@@ -254,6 +283,69 @@ const AccountsTable: React.FC = () => {
     fetchData();
   }, []);
 
+  // Edit account
+  const [roles, setRoles] = useState<RoleResponseModel[]>([]);
+  const [cates, setCates] = useState<CategoryResponseModel[]>([]);
+  const [isDoctor, setIsDoctor] = useState<boolean>(false);
+
+  const onFinishEditAccount = async (values: UpdateAccountModel) => {
+    if (values.roleId !== 2) {
+      values.categoryId = 0;
+    }
+    values = {...values, userId: selectedAccountId ?? 0}
+    console.log(values);
+    var response = await authService.updateAccount(values);
+    if (response !== undefined && response === 200) {
+      message.success("Update Success", 1).then(() => {
+        window.location.reload();
+      });
+    } else {
+      message.error("Update Failed");
+    }
+  };
+
+  const onFinishFailed = () => {
+    message.error("Create Failed");
+  };
+
+  const fetchRoles = async () => {
+    var response = await authService.getRoles();
+    if (response !== undefined) {
+      setRoles(response);
+    } else {
+      message.error("Get Roles Failed");
+    }
+  };
+
+  const fetchCates = async () => {
+    var response = await categoryService.getCategories();
+    if (response !== undefined) {
+      setCates(response);
+    } else {
+      message.error("Get Roles Failed");
+    }
+  };
+
+  const prepareData = async () => {
+    var response = await Promise.all([fetchRoles(), fetchCates()]);
+    if (response !== undefined) {
+      console.log(response);
+    }
+  };
+
+  const handleOnChane = (values: number) => {
+    console.log(values);
+    if (values === 2) {
+      setIsDoctor(true);
+    } else {
+      setIsDoctor(false);
+    }
+  };
+
+  useEffect(() => {
+    prepareData();
+  }, [isDoctor]);
+
   // Filter Search
 
   return (
@@ -263,6 +355,8 @@ const AccountsTable: React.FC = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        height: "auto",
+        minHeight:"100vh"
       }}
     >
       {/*===================== Accounts =====================*/}
@@ -290,13 +384,14 @@ const AccountsTable: React.FC = () => {
 
       {/*=============== Edit account modal ========================*/}
       <Modal
-        title="Chỉnh sửa account khám"
+        title="Chỉnh sửa account"
         key="editSubModal"
         onCancel={handleCancelAccountEdit}
+        destroyOnClose={true}
         open={editAccountModalVisible}
         footer={[
           <Button
-            key="submitF"
+            key="editForm"
             form="editForm"
             type="primary"
             htmlType="submit"
@@ -315,16 +410,45 @@ const AccountsTable: React.FC = () => {
         {/* Edit account form */}
         <Form
           id="editForm"
-          form={editAccountForm}
-          layout="vertical"
+          form={accountEditForm}
           name="basic"
-          onFinish={handleEditAccount}
+          layout="vertical"
+          onFinish={onFinishEditAccount}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
         >
-          <Form.Item<AccountResponseModel> label="ID" name="userId">
-            <Input placeholder="ID" disabled />
+          <Form.Item<UpdateAccountModel> label="ID" name="userId">
+            <InputNumber disabled />
           </Form.Item>
-          <Form.Item<AccountResponseModel> label="Tên" name="userName">
-            <Input placeholder="Nhập tên" />
+          <Form.Item<UpdateAccountModel> label="Password" name="password">
+            <Input type="password" placeholder="Password" />
+          </Form.Item>
+          <Form.Item<UpdateAccountModel>
+            label="Confirm Password"
+            name="confirmPassword"
+          >
+            <Input type="password" placeholder="Password" />
+          </Form.Item>
+          <Form.Item<UpdateAccountModel> name="roleId" label="Chọn chức vụ">
+            <Select
+              onChange={handleOnChane}
+              options={roles.map((role) => ({
+                value: role.roleId,
+                label: role.roleName,
+              }))}
+            />
+          </Form.Item>
+          <Form.Item<UpdateAccountModel>
+            name="categoryId"
+            label="Khoa khám (nếu là bác sĩ)"
+          >
+            <Select
+              disabled={!isDoctor}
+              options={cates.map((cate) => ({
+                value: cate.categoryId,
+                label: cate.categoryName,
+              }))}
+            />
           </Form.Item>
         </Form>
       </Modal>

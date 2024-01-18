@@ -5,13 +5,18 @@ import {
   Form,
   Image,
   Input,
+  Modal,
   Row,
   Upload,
   UploadFile,
   UploadProps,
   message,
 } from "antd";
-import { ExaminationProps } from "../../Models/MedicalRecordModel";
+import {
+  DoctorDetailModel,
+  ExaminationProps,
+  PatientMedicalRecordExaminationPrintModel,
+} from "../../Models/MedicalRecordModel";
 import ExaminationService from "../../Services/ExaminationService";
 import {
   ExamResultAddModel,
@@ -26,10 +31,23 @@ import Roles from "../../Enums/Enums";
 import { UploadOutlined } from "@ant-design/icons";
 import { RcFile } from "antd/es/upload";
 import axios from "axios";
+import generatePDF from "react-to-pdf";
+import { lte } from "cypress/types/lodash";
+import patientService from "../../Services/PatientService";
+import medicalRecordService from "../../Services/MedicalRecordService";
+import { TOKEN } from "../../Commons/Global";
+import { jwtDecode } from "jwt-decode";
+import { JWTTokenModel } from "../../Models/AuthModel";
+import categoryService from "../../Services/CategoryService";
 
-const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
+const ExaminationForm = ({
+  medicalRecordId,
+  isReload,
+  patientId,
+}: ExaminationProps) => {
   const { authenticated } = useContext(AuthContext);
   const [examAddForm] = Form.useForm();
+  const [selectedServiceId, setSelectedServiceId] = useState<number>(0);
   const [examDetailList, setExamDetailList] = useState<
     ExaminationsResultModel | undefined
   >(undefined);
@@ -85,17 +103,21 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
     }
   };
 
-  const handleUpdateExaminationDetail = async () => {
+  const handleUpdateExaminationDetail = async (serviceId: number) => {
     if (isExamConclused) {
       message.error("Khám đã kết luận, không thể cập nhật kết quả khám");
       return;
     }
 
     const examDetails = examAddForm.getFieldValue("examDetails");
+    var serviceUpdated = examDetails.filter(
+      (detail: any) => detail.serviceId === serviceId
+    );
     console.log(examDetails);
+    console.log(serviceUpdated);
     var examDetail: ExaminationsResultModel = {
       medicalRecordId: medicalRecordId,
-      examDetails: examDetails,
+      examDetails: serviceUpdated,
     };
     var response = await ExaminationService.putUpdateExaminationResult(
       medicalRecordId,
@@ -160,7 +182,7 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
           }
         })
       );
-      if(isAddImageDon !== undefined){
+      if (isAddImageDon !== undefined) {
         console.log(examDetails);
         setExamDetailList(examDetails);
         setIsLoaded(true);
@@ -173,7 +195,7 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
       await fetchExam();
     };
     getExamData();
-  }, [isReload, isLoaded]);
+  }, [isReload, isLoaded, selectedServiceId]);
 
   //======== upload file============
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -221,7 +243,7 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
         return undefined;
       }
     } catch (error) {
-      console.error("Failed to fetch image:", error);
+      //console.error("Failed to fetch image:", error);
       return undefined;
     }
   };
@@ -261,6 +283,115 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
     fileList,
   };
 
+  const getTargetElement = () =>
+    document.getElementById("targetExamServicePrint" + selectedServiceId);
+
+  // Print Modal
+  const [openPrintModal, setOpenPrintModal] = useState<boolean>(false);
+  const [printModel, setPrintModel] = useState<
+    PatientMedicalRecordExaminationPrintModel | undefined
+  >(undefined);
+
+  const fetchPatient = async () => {
+    if (patientId !== undefined) {
+      var patient = await patientService.getPatientById(patientId);
+      if (patient !== undefined) {
+        return patient;
+      }
+    }
+  };
+
+  const fetchMedicalRecords = async () => {
+    if (medicalRecordId !== undefined) {
+      var mr = await medicalRecordService.getMedicalRecordDetailById(
+        medicalRecordId
+      );
+      if (mr !== undefined) {
+        return mr;
+      }
+    }
+  };
+
+  const fetchDoctorCategoryByService = async (serviceId : number
+  ) => {
+    var response = await categoryService.getDoctorCategoryByService(
+      serviceId,
+      medicalRecordId
+    );
+    if (response !== undefined) {
+      return response;
+    }
+    return undefined;
+  };
+
+  const fetchPatientMedical = async (serviceId: number) => {
+    var response = await Promise.all([
+      fetchPatient(),
+      fetchDoctorCategoryByService(serviceId),
+      fetchMedicalRecords(),
+    ]);
+    if (response !== undefined && response.length > 0) {
+      var patient = response[0];
+      var cateDoc = response[1];
+      var medicalRecord = response[2];
+      if (
+        patient !== undefined &&
+        medicalRecord !== undefined &&
+        response[2] !== undefined
+      ) {
+        var examDetail = examDetailList?.examDetails.find(
+          (detail) => detail.serviceId === serviceId
+        );
+
+        if (examDetail === undefined) return;
+
+        let printModel: PatientMedicalRecordExaminationPrintModel = {
+          patientId: patientId ?? 0,
+          name: patient.name,
+          address: patient.address,
+          dob: patient.dob,
+          blood: patient.bloodGroup,
+          bloodPressure: Number.parseInt(patient.bloodPressure),
+          height: patient.height,
+          weight: patient.weight,
+          description: medicalRecord.examReason,
+          editDate: dayjs(medicalRecord.medicalRecordDate).format(
+            "DD/MM/YYYY HH:mm:ss"
+          ),
+          doctorName: cateDoc?.doctorName ?? "",
+          categoryName: cateDoc?.categoryName ?? "",
+          phone: patient.phone,
+          gender: patient.gender === "true" ? true : false,
+          id: medicalRecordId ?? 0,
+          diagnose: examDetail.diagnose,
+          conclusion: examDetail.description,
+          image: examDetail.image ?? "",
+          price: examDetail.price ?? 50000,
+          isCheckUp: true,
+          isPaid: true,
+          serviceId: examDetail.serviceId,
+          serviceName: examDetail.serviceName,
+          status: examDetail.status ?? true,
+        };
+        setPrintModel(printModel);
+        console.log(printModel);
+      }
+      return response;
+    }
+  };
+
+  const handlePrint = async (serviceId: number) => {
+    setSelectedServiceId(serviceId);
+    var res = await fetchPatientMedical(serviceId);
+    if (res !== undefined && res.length > 0) {
+      setOpenPrintModal(true);
+    }
+  };
+
+  const printModal = () => {
+    generatePDF(getTargetElement);
+  };
+
   return examDetailList === undefined ? (
     <></>
   ) : (
@@ -288,80 +419,113 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
         <br />
         {examDetailList.examDetails.map((examDetail, index) => (
           <div key={examDetail.serviceId}>
+            <div>
+              <Row>
+                <Col span={16}>
+                  Dịch vụ: <b>{examDetail.serviceName}</b>
+                </Col>
+                <Col span={8}>
+                  Trạng thái:{" "}
+                  <b>
+                    {examDetail.status === undefined ||
+                    examDetail.status! === false
+                      ? "Chưa khám"
+                      : "Đã khám"}
+                  </b>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <div style={{ marginBottom: "5px" }}>
+                    <div>Hình ảnh</div>
+                    {
+                      <Image
+                        src={examDetail.image}
+                        style={{ maxWidth: "300px", maxHeight: "300px" }}
+                      />
+                    }
+                  </div>
+                  <Upload {...uploadProps}>
+                    <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
+                  </Upload>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      handleUpload(
+                        examDetail.medicalRecordId,
+                        examDetail.serviceId
+                      )
+                    }
+                    disabled={fileList.length === 0}
+                    loading={uploading}
+                    style={{ marginTop: 16 }}
+                  >
+                    {uploading ? "Đang tải" : "Tải ảnh lên"}
+                  </Button>
+                </Col>
+              </Row>
+              <Row key={examDetail.serviceId}>
+                <Col span={24}>
+                  <Form.Item<ExaminationsResultModel>
+                    label="Mô tả"
+                    name={["examDetails", index, "description"]}
+                    required
+                  >
+                    <TextArea showCount placeholder="Description" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item<ExaminationsResultModel>
+                    label="Kết luận"
+                    name={["examDetails", index, "diagnose"]}
+                    required
+                  >
+                    <TextArea showCount placeholder="Diagnose" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </div>
             <Row>
-              <Col span={24}>
-                Dịch vụ: <b>{examDetail.serviceName}</b>
+              <Col
+                span={12}
+                style={{ display: "flex", justifyContent: "flex-start" }}
+              >
+                {authenticated?.role !== Roles.Admin &&
+                authenticated?.role !== Roles.Doctor ? (
+                  <></>
+                ) : (
+                  <Button
+                    onClick={() => handlePrint(examDetail.serviceId)}
+                    type="primary"
+                  >
+                    In kết quả
+                  </Button>
+                )}
               </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <div style={{ marginBottom: "5px" }}>
-                  <div>Hình ảnh</div>
-                  {
-                    <Image
-                      src={examDetail.image}
-                      style={{ maxWidth: "300px", maxHeight: "300px" }}
-                    />
-                  }
-                </div>
-                <Upload {...uploadProps}>
-                  <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
-                </Upload>
-                <Button
-                  type="primary"
-                  onClick={() =>
-                    handleUpload(
-                      examDetail.medicalRecordId,
-                      examDetail.serviceId
-                    )
-                  }
-                  disabled={fileList.length === 0}
-                  loading={uploading}
-                  style={{ marginTop: 16 }}
-                >
-                  {uploading ? "Đang tải" : "Tải ảnh lên"}
-                </Button>
-              </Col>
-            </Row>
-            <Row key={examDetail.serviceId}>
-              <Col span={24}>
-                <Form.Item<ExaminationsResultModel>
-                  label="Mô tả"
-                  name={["examDetails", index, "description"]}
-                >
-                  <TextArea placeholder="Description" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <Form.Item<ExaminationsResultModel>
-                  label="Kết luận"
-                  name={["examDetails", index, "diagnose"]}
-                >
-                  <TextArea placeholder="Diagnose" />
-                </Form.Item>
+              <Col
+                span={12}
+                style={{ display: "flex", justifyContent: "flex-end" }}
+              >
+                {authenticated?.role !== Roles.Admin &&
+                authenticated?.role !== Roles.Doctor ? (
+                  <></>
+                ) : (
+                  <Button
+                    onClick={() =>
+                      handleUpdateExaminationDetail(examDetail.serviceId)
+                    }
+                    type="primary"
+                  >
+                    Đã khám
+                  </Button>
+                )}
               </Col>
             </Row>
             <Divider dashed />
           </div>
         ))}
-        <Row>
-          <Col
-            span={24}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            {authenticated?.role !== Roles.Admin &&
-            authenticated?.role !== Roles.Doctor ? (
-              <></>
-            ) : (
-              <Button onClick={handleUpdateExaminationDetail} type="primary">
-                Lưu kết quả
-              </Button>
-            )}
-          </Col>
-        </Row>
-        <Divider />
         <Row style={{ display: "flex", alignItems: "center" }}>
           <Col span={24}>
             <Form.Item<ExaminationsResultModel>
@@ -390,8 +554,8 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
         </Row>
       </Form>
       <Row>
-        <Col span={18} />
-        <Col span={6}>
+        <Col span={10} />
+        <Col span={14}>
           {authenticated?.role !== Roles.Admin &&
           authenticated?.role !== Roles.Doctor ? (
             <></>
@@ -402,11 +566,117 @@ const ExaminationForm = ({ medicalRecordId, isReload }: ExaminationProps) => {
               form="examAddForm"
               htmlType="submit"
             >
-              Lưu kết luận tổng
+              Khám hoàn tất
             </Button>
           )}
         </Col>
       </Row>
+      <Modal
+        open={openPrintModal}
+        onOk={() => printModal()}
+        onCancel={() => setOpenPrintModal(false)}
+        title="In kết quả khám"
+        key={"printModal" + selectedServiceId}
+        destroyOnClose={true}
+      >
+        <div>
+          <div
+            id={"targetExamServicePrint" + selectedServiceId}
+            style={{ padding: "20px" }}
+          >
+            <Row gutter={10}>
+              <Col span={12}>
+                <b>Mã hồ sơ:</b> {printModel?.id}
+              </Col>
+              <Col span={12}>
+                <b>Ngày:</b> {printModel?.editDate}
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col span={24}>
+                <b>Mã bệnh nhân:</b> {printModel?.patientId}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <b>Tên bệnh nhân:</b> {printModel?.name.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <b>Ngày sinh:</b>{" "}
+                {dayjs(printModel?.dob).format("DD/MM/YYYY hh:mm:ss")}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={12}>
+                <b>Giới tính:</b> {printModel?.gender === true ? "Nam" : " Nữ"}
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col span={12}>
+                <b>Địa chỉ:</b> {printModel?.address.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col span={12}>
+                <b>Nhóm máu:</b> {printModel?.blood.toUpperCase()}
+              </Col>
+              <Col span={12}>
+                <b>Huyết áp:</b> {printModel?.bloodPressure} (mmHg)
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col span={12}>
+                <b>Chiều cao:</b> {printModel?.height} (cm)
+              </Col>
+              <Col span={12}>
+                <b>Cân nặng:</b> {printModel?.weight} (kg)
+              </Col>
+            </Row>
+            <Divider dashed />
+            <Row>
+              <Col>
+                <b>Khoa khám: </b>
+                {printModel?.categoryName.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <b>Bác sĩ khám: </b>
+                {printModel?.doctorName.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <b>Dịch vụ khám: </b>
+                {printModel?.serviceName.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col>
+                <b>Hình ảnh:</b>{" "}
+              </Col>
+            </Row>
+            <Row>
+              <Col span={18}>
+                <Image src={printModel?.image} />
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col>
+                <b>Mô tả:</b> {printModel?.diagnose.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col>
+                <b>Chẩn đoán sơ bộ:</b>{" "}
+                {printModel?.conclusion.toLocaleUpperCase()}
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

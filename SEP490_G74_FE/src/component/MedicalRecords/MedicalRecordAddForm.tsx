@@ -7,17 +7,12 @@ import {
   Select,
   Row,
   Col,
-  SelectProps,
   InputNumber,
 } from "antd";
 import {
-  Category,
-  Doctor,
   MedicalRecord,
   MedicalRecordAddModel,
   PatientProps,
-  Service,
-  ServiceType,
 } from "../../Models/MedicalRecordModel";
 import dayjs from "dayjs";
 import TextArea from "antd/es/input/TextArea";
@@ -25,46 +20,65 @@ import { useContext, useEffect, useState } from "react";
 import {
   CategoryResponseModel,
   DoctorResponseModel,
-  ServiceResponseModel,
-  ServiceTypeResponseModel,
 } from "../../Models/SubEntityModel";
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
 import medicalRecordService from "../../Services/MedicalRecordService";
-import patientService from "../../Services/PatientSerivce";
+import patientService from "../../Services/PatientService";
 import { PatientAddModel } from "../../Models/PatientModel";
 import subService from "../../Services/SubService";
 import categoryService from "../../Services/CategoryService";
+import { defaultMrOption as DEFAULT_MR_OPTION } from "../../Commons/Global";
 
 const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
   const [mrAddform] = Form.useForm();
   const today = dayjs();
-  const [options, setOptions] = useState<SelectProps["options"]>([]);
-  const [serviceTypeOptions, setServiceTypeOptions] = useState<
-    SelectProps["options"]
-  >([]);
-  const [serviceOptions, setServiceOptions] = useState<SelectProps["options"]>(
-    []
-  );
+
   const { authenticated } = useContext(AuthContext);
   const [isDisable, setIsDisable] = useState<boolean>(false);
-  const [patient, SetPatient] = useState<PatientAddModel | undefined>(
+  const [patient, setPatient] = useState<PatientAddModel | undefined>(
     undefined
   );
 
-  const [, setDoctors] = useState<number[]>([]);
-
   const [cates, setCates] = useState<CategoryResponseModel[]>([]);
-  const [docs, setDocs] = useState<DoctorResponseModel[]>([]);
+  const [doctors, setDoctors] = useState<DoctorResponseModel[]>([]);
 
   const onFinish = async (values: MedicalRecord) => {
+    let isCateHasDoc = true;
+
     var medAddForm: MedicalRecordAddModel = {
       categoryIds: values.selectedCategoryIds,
       doctorIds: values.selectedDoctorIds,
       examReason: "",
       patientId: values.patientId,
     };
-    console.log(medAddForm);
+
+    if (medAddForm.categoryIds.length > medAddForm.doctorIds.length) {
+      message.error("Hãy chọn đủ bác sĩ cho các khoa khám");
+      return;
+    }
+
+    var selectedCates = cates.filter((cate) =>
+      medAddForm.categoryIds.includes(cate.categoryId)
+    );
+    var selectedDoctors = doctors.filter((doc) =>
+      medAddForm.doctorIds.includes(doc.userId)
+    );
+
+    for (const cate of selectedCates) {
+      const countDocInCate = selectedDoctors.filter(
+        (doc) => doc.categoryId === cate.categoryId
+      );
+
+      if (countDocInCate === undefined || countDocInCate.length < 1) {
+        message.error("Hãy chọn đủ bác sĩ cho các khoa khám");
+        isCateHasDoc = false;
+        break;
+      }
+    }
+
+    if (isCateHasDoc === false) return;
+
     var response = await medicalRecordService.addMedicalRecord(medAddForm);
     if (response !== 200 && response !== 201) {
       message.error("Created MR Failed");
@@ -79,18 +93,19 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
     message.error("Create MR Failed With Validation");
   };
 
-  async function fetchDoctors(
+  async function fetchDoctorsByCategories(
     values: number[]
   ): Promise<DoctorResponseModel[]> {
-    const docs: DoctorResponseModel[] = [];
+    var docs: DoctorResponseModel[] = [];
 
     try {
       await Promise.all(
         values.map(async (cateId) => {
-          const leastAsiggnedDoc =
-            await subService.getLeastAssignedDoctorByCategoryId(cateId);
-          if (leastAsiggnedDoc) {
-            docs.push(leastAsiggnedDoc);
+          const doctorsByCategory = await subService.getDoctorsByCategoryId(
+            cateId
+          );
+          if (doctorsByCategory) {
+            docs = [...docs, ...doctorsByCategory];
           } else {
             throw new Error(`Failed to get doctor for category ${cateId}`);
           }
@@ -104,150 +119,33 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
     return docs;
   }
 
-  async function fetchServiceTypes(
-    values: number[]
-  ): Promise<ServiceTypeResponseModel[]> {
-    var types: ServiceTypeResponseModel[] = [];
-
-    try {
-      await Promise.all(
-        values.map(async (cateId) => {
-          var cateByType = await subService.getServicesType(cateId);
-          if (cateByType !== undefined) {
-            types = [...types, ...cateByType];
-          }
-        })
-      );
-    } catch (error) {
-      message.error("Get Categories by Service Failed", 2);
-      // Log or handle the error more specifically if needed
-      console.error(error);
-    }
-    console.log(types);
-    return types;
-  }
-
   const handleChangeCategory = async (values: number[]) => {
     if (values.length === 0) {
-      setOptions([]);
-      setServiceTypeOptions([]);
-      setServiceOptions([]);
-      mrAddform.resetFields([
-        "selectedDoctorIds",
-        "selectedServiceTypeIds",
-        "selectedServiceIds",
-      ]);
+      mrAddform.resetFields(["selectedDoctorIds"]);
       return;
     }
     // ----------- new get least assigned doctor
-    var docs: DoctorResponseModel[] = await fetchDoctors(values);
-
-    var newDocIds: number[] = [];
-    var newOptions: SelectProps["options"] = [];
-    console.log(docs);
-    docs.forEach((element) => {
-      newOptions!.push({
-        value: element.userId,
-        label: element.userName,
-      });
-      newDocIds.push(element.userId);
-    });
-    console.log(newDocIds);
-    setOptions(newOptions);
-    setDocs(docs);
-    setDoctors(newDocIds);
-    mrAddform.setFieldsValue({
-      selectedDoctorIds: newDocIds,
-    });
-
-    // get types
-    var newTypeOptions: SelectProps["options"] = [];
-    var categoriesBySelectedTypes: ServiceTypeResponseModel[] =
-      await fetchServiceTypes(values);
-
-    if (categoriesBySelectedTypes.length > 0) {
-      categoriesBySelectedTypes.forEach((element) => {
-        newTypeOptions?.push({
-          value: element.serviceTypeId,
-          label: element.serviceTypeName,
-        });
-      });
-      setServiceTypeOptions(newTypeOptions);
-      mrAddform.resetFields(["selectedServiceTypeIds"]);
-      mrAddform.setFieldsValue({
-        selectedServiceTypeIds: categoriesBySelectedTypes.map(
-          (element) => element.serviceTypeId
-        ),
-      });
+    var currentSelectedDoctorIds: number[] =
+      mrAddform.getFieldValue("selectedDoctorIds");
+    if (currentSelectedDoctorIds === undefined) {
+      currentSelectedDoctorIds = [];
     }
 
-    // set services
-    var newServiceOptions: SelectProps["options"] = [];
-    var servicesByServiceTypes: ServiceResponseModel[] = await fetchServices(
-      categoriesBySelectedTypes.map((element) => element.serviceTypeId)
-    );
+    var newSelectedDoctors: DoctorResponseModel[] =
+      await fetchDoctorsByCategories(values);
+    if (newSelectedDoctors) {
+      mrAddform.resetFields(["selectedDoctorIds"]);
+      setDoctors(newSelectedDoctors);
 
-    console.log(servicesByServiceTypes);
-    if (servicesByServiceTypes.length > 0) {
-      servicesByServiceTypes.forEach((element) => {
-        newServiceOptions?.push({
-          value: element.serviceId,
-          label: element.serviceName,
-        });
+      // keep selected doctors if still available
+      var oldAvailableDocIds: number[] = [];
+      currentSelectedDoctorIds.forEach((oldDocId) => {
+        if (newSelectedDoctors.find((newDoc) => newDoc.userId === oldDocId)) {
+          oldAvailableDocIds.push(oldDocId);
+        }
       });
-      setServiceOptions(newServiceOptions);
-      mrAddform.resetFields(["selectedServiceIds"]);
       mrAddform.setFieldsValue({
-        selectedServiceIds: servicesByServiceTypes.map(
-          (element) => element.serviceId
-        ),
-      });
-    }
-  };
-
-  async function fetchServices(
-    values: number[]
-  ): Promise<ServiceResponseModel[]> {
-    var services: ServiceResponseModel[] = [];
-
-    try {
-      await Promise.all(
-        values.map(async (typeId) => {
-          var serviceByType = await subService.getServices(typeId);
-          if (serviceByType !== undefined) {
-            services = [...services, ...serviceByType];
-          }
-        })
-      );
-    } catch (error) {
-      message.error("Get Categories by Service Failed", 2);
-      // Log or handle the error more specifically if needed
-      console.error(error);
-    }
-    console.log(services);
-    return services;
-  }
-
-  const handleChangeServiceType = async (values: number[]) => {
-    var newServiceOptions: SelectProps["options"] = [];
-    var servicesByServiceTypes: ServiceResponseModel[] = await fetchServices(
-      values
-    );
-
-    console.log(servicesByServiceTypes);
-    if (servicesByServiceTypes.length > 0) {
-      servicesByServiceTypes.forEach((element) => {
-        newServiceOptions?.push({
-          value: element.serviceId,
-          label: element.serviceName,
-        });
-      });
-      setServiceOptions(newServiceOptions);
-      mrAddform.resetFields(["selectedServiceIds"]);
-      mrAddform.setFieldsValue({
-        selectedServiceIds: servicesByServiceTypes.map(
-          (element) => element.serviceId
-        ),
+        selectedDoctorIds: oldAvailableDocIds,
       });
     }
   };
@@ -264,9 +162,11 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
       await patientService.getPatientById(patientId);
     if (response === undefined) {
       message.error("Get Patient Failed", 2);
+      return false;
     } else {
       console.log(response);
-      SetPatient(response);
+      setPatient(response);
+      return true;
     }
   };
 
@@ -274,9 +174,40 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
     var response = await categoryService.getCategories();
     if (response === undefined) {
       message.error("Get Categories Failed", 2);
+      return false;
     } else {
-      console.log(response);
+      response = response.filter((cate) => cate.isDeleted !== true);
       setCates(response);
+
+      var defaultCate = response.find(
+        (cate) => cate.categoryId === DEFAULT_MR_OPTION.DEFAULT_CATEGORY_ID
+      );
+      if (defaultCate) {
+        var defaultDoctors = await fetchDoctorsByCategories([
+          defaultCate.categoryId,
+        ]);
+        if (defaultDoctors) {
+          defaultDoctors = defaultDoctors.filter(
+            (doctor) => doctor.isDeleted !== true
+          );
+          setDoctors(defaultDoctors);
+          mrAddform.setFieldsValue({
+            selectedCategoryIds: [defaultCate.categoryId],
+            selectedDoctorIds: defaultDoctors.map((doctor) => doctor.userId),
+          });
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const fetchData = async () => {
+    var responses = await Promise.all([fetchPatient(), fetchCates()]);
+    if (responses !== undefined && responses.length === 2) {
+      console.log("Data fetched");
+    } else {
+      console.log("Data fetch failed");
     }
   };
 
@@ -285,8 +216,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
       patientId: patientId,
     });
     checkRole();
-    fetchPatient();
-    fetchCates();
+    fetchData();
   }, [patientId]);
 
   return patient !== undefined ? (
@@ -309,7 +239,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
         blood: patient.bloodGroup,
         bloodPressure: patient.bloodPressure,
         description: patient.allergieshistory,
-        docs: docs,
+        docs: doctors,
       }}
       autoComplete="off"
     >
@@ -354,18 +284,12 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
       </Row>
       <Row>
         <Col span={12}>
-          <Form.Item<MedicalRecord>
-            label="Số điện thoại"
-            name="phone"
-          >
+          <Form.Item<MedicalRecord> label="Số điện thoại" name="phone">
             <Input disabled placeholder="0983872xxx" />
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item<MedicalRecord>
-        label="Địa chỉ"
-        name="address"
-      >
+      <Form.Item<MedicalRecord> label="Địa chỉ" name="address">
         <Input disabled placeholder="Địa chỉ" />
       </Form.Item>
       <Row gutter={10}>
@@ -421,36 +345,19 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
             name="selectedDoctorIds"
             label="Chọn bác sĩ khám"
           >
-            <Select disabled mode="multiple" options={options} />
+            <Select
+              mode="multiple"
+              options={doctors.map((doctor) => ({
+                value: doctor.userId,
+                label: doctor.userName,
+              }))}
+            />
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item<MedicalRecord>
-        name="selectedServiceTypeIds"
-        label="Chọn loại dịch vụ khám"
-      >
-        <Select
-          disabled={isDisable}
-          mode="multiple"
-          onChange={handleChangeServiceType}
-          allowClear
-          options={serviceTypeOptions}
-        />
-      </Form.Item>
-      <Form.Item<MedicalRecord>
-        name="selectedServiceIds"
-        label="Chọn dịch vụ khám"
-      >
-        <Select
-          mode="multiple"
-          disabled={isDisable}
-          allowClear
-          options={serviceOptions}
-        />
-      </Form.Item>
     </Form>
   ) : (
-    <div>Error Occurs When Getting Patient</div>
+    <div>Loading...</div>
   );
 };
 
