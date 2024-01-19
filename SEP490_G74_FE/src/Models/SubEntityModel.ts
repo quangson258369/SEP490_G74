@@ -40,6 +40,8 @@ export interface ServiceResponseModel {
     serviceTypeId?: number;
     serviceTypeName?: string;
     isDeleted: boolean;
+    doctorId?: number;
+    doctorName?: string;
 }
 
 export interface DoctorResponseModel {
@@ -64,6 +66,7 @@ export interface ExamDetail {
   price?: number;
   status?: boolean;
   image? : string;
+  isPaid: boolean;
 }
 
 export interface ExamResultAddModel{
@@ -82,6 +85,7 @@ export interface ExamResultGetModel{
 export interface SupplyTypeResponseModel {
   suppliesTypeId: number
   suppliesTypeName: string
+  isDeleted: boolean
   supplies: SupplyResponseModel[]
 }
 
@@ -94,6 +98,7 @@ export interface SupplyResponseModel {
   unitInStock: number
   price: number
   inputday: string
+  isDeleted:boolean
   suppliesTypeId: number
   suppliesTypeName?: string
 }

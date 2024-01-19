@@ -91,7 +91,7 @@ namespace HCS.API.Controllers
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
 
-        [Authorize(Roles = "Admin, Nurse, Cashier")]
+        [Authorize(Roles = "Admin, Nurse, Cashier, Doctor")]
         [HttpGet("doctor/id/{categoryId:int}")]
         public async Task<IActionResult> GetListDoctorByCategoryId(int categoryId)
         {

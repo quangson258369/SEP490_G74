@@ -43,6 +43,7 @@ const HomePage = () => {
       var jwtUser: JWTTokenModel = jwtDecode(token);
       let newUser: User = {
         role: jwtUser.role,
+        userId: Number.parseInt(jwtUser.nameid!),
       };
 
       setAuthenticated(newUser);

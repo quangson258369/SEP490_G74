@@ -13,7 +13,7 @@ public interface IExaminationResultService
     Task<ApiResponse> GetExaminationResultByMedicalRecordId(int medicalRecordId);
     Task<ApiResponse> GetListExamDetailByMedicalRecordId(int medicalRecordId);
     Task<ApiResponse> AddExamDetailsByMedicalRecordId(int medicalRecordId, ExaminationDetaislResponseModel examDetails);
-
+    Task<ApiResponse> PayServiceMr(int medicalRecordId, int serviceId);
 }
 public class ExaminationResultService : IExaminationResultService
 {
@@ -95,7 +95,8 @@ public class ExaminationResultService : IExaminationResultService
             Description = x.Description,
             Diagnose = x.Diagnose,
             Price = x.Service.Price,
-            Status = x.Status ?? false
+            Status = x.Status ?? false,
+            IsPaid = x.IsPaid
         }).ToList();
 
         return response.SetOk(new ExaminationDetaislResponseModel() { MedicalRecordId = medicalRecordId, ExamDetails = details });
@@ -124,5 +125,16 @@ public class ExaminationResultService : IExaminationResultService
         }
         await _unitOfWork.SaveChangeAsync();
         return new ApiResponse().SetOk("Updated");
+    }
+
+    public async Task<ApiResponse> PayServiceMr(int medicalRecordId, int serviceId)
+    {
+        var isPaid = await _unitOfWork.ExaminationResultRepo.PayService(medicalRecordId, serviceId);
+        if (isPaid)
+        {
+            await _unitOfWork.SaveChangeAsync();
+            return new ApiResponse().SetOk("Paid");
+        }
+        return new ApiResponse().SetNotFound("Not paid");
     }
 }

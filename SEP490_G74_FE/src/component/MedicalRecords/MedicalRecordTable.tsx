@@ -30,6 +30,7 @@ const MedicalRecordTable = () => {
   const [isSupplyPresReload, setIsSupplyPresReload] = useState<boolean>(false);
   const [openInvoice, setOpenInvoice] = useState<boolean>(false);
   const [openSupplyPres, setOpenSupplyPres] = useState<boolean>(false);
+  const [isSelectedMrPaid, setIsSelectedMrPaid ] = useState<boolean>(false);
 
   //Search
   const [searchText, setSearchText] = useState("");
@@ -226,7 +227,8 @@ const MedicalRecordTable = () => {
     }
   };
 
-  const handleInvoice = (mrId: number) => {
+  const handleInvoice = (mrId: number, isPaid:boolean) => {
+    setIsSelectedMrPaid(isPaid);
     setIsInvoiceReload(!isInvoiceReload);
     setOpenInvoice(true);
     setSelectedMrId(mrId);
@@ -350,7 +352,7 @@ const MedicalRecordTable = () => {
                 <Button
                   key="checkout"
                   type="primary"
-                  onClick={() => handleInvoice(record.medicalRecordId)}
+                  onClick={() => handleInvoice(record.medicalRecordId, record.isPaid)}
                 >
                   Hóa đơn
                 </Button>
@@ -493,6 +495,7 @@ const MedicalRecordTable = () => {
             isReload={isInvoiceReload}
             medicalRecordId={selectedMrId}
             patientId={selectedPatientId}
+            isPaid={isSelectedMrPaid}
           />
         }
         footer={[

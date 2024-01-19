@@ -13,4 +13,9 @@ namespace HCS.Domain.Commons
         public static int DefaultServiceId { get; } = 1; // Đo chỉ số tổng quát
         public static int DefaultDoctorId { get; } = 2; // Bsi Son
     }
+
+    public static class DefaultText
+    {
+        public static string NOT_AVAILABLE { get; } = "N/A";
+    }
 }

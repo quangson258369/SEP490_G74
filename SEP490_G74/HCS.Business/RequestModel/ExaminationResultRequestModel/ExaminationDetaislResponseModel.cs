@@ -28,5 +28,7 @@ namespace HCS.Business.RequestModel.ExaminationResultRequestModel
         public double? Price { get; set; }
 
         public bool? Status { get; set; }
+
+        public bool IsPaid { get; set; } = false;
     }
 }

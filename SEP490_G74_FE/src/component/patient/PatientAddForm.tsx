@@ -27,16 +27,16 @@ const PatientAddForm = () => {
     console.log(values);
     var response = await patientService.addPatientContact(values);
     if (response === 200 || response === 201) {
-      message.success("Create patient with contact success: " + values.name, 2, () => {
+      message.success("Thêm bệnh nhân thành công", 2, () => {
         window.location.reload();
       });
     } else {
-      message.error("Create patient with contact failed: " + values.name, 2);
+      message.error("Thêm bệnh nhân thất bại", 2);
     }
   };
 
   const onFinishFailed = () => {
-    message.error("Tạo thất bại");
+    message.error("Thêm bệnh nhân thất bại");
   };
   const phoneValidationRule: Rule = {
     required: true,
@@ -123,7 +123,6 @@ const PatientAddForm = () => {
           <Form.Item<PatientAddModel>
             label="Nhóm máu"
             name="bloodGroup"
-            rules={[{ required: true, message: "Hãy nhập nhóm máu" }]}
           >
             <Input placeholder="A" />
           </Form.Item>
@@ -140,7 +139,6 @@ const PatientAddForm = () => {
       <Form.Item<PatientAddModel>
         label="Lịch sử bệnh dị ứng"
         name="allergieshistory"
-        rules={[{ required: true, message: "Hãy nhập lịch sử bệnh dị ứng" }]}
       >
         <TextArea placeholder="Không" />
       </Form.Item>

@@ -34,5 +34,8 @@ namespace HCS.Domain.Models
 
         public ICollection<MedicalRecordDoctor>? MedicalRecordDoctors { get; set; }
 
+        public ICollection<ServiceMedicalRecord>? ServiceMedicalRecords { get; set; }
+
+
     }
 }

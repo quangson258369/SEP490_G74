@@ -834,7 +834,7 @@ const CategoryTable: React.FC = () => {
     } else {
       console.log(response);
       //map category name to service type
-      setSupplyTypes(response);
+      setSupplyTypes(response.filter((c) => c.isDeleted === false));
       return response;
     }
   };
@@ -856,7 +856,7 @@ const CategoryTable: React.FC = () => {
             (type) => type.suppliesTypeId === item.suppliesTypeId
           )?.suppliesTypeId ?? 0;
       });
-      setSupplies(response);
+      setSupplies(response.filter((c) => c.isDeleted === false));
       return response;
     }
   };

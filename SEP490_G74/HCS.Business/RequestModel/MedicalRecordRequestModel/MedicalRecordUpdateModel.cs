@@ -25,4 +25,12 @@ public class NewMedicalRecordUpdateModel
     public List<int>? ServiceTypeIds { get; set; }
 
     public List<int>? ServiceIds { get; set; }
+
+    public List<NewServiceMrDoctorUpdateModel> ServiceDetails { get; set; } = new();
+}
+
+public class NewServiceMrDoctorUpdateModel
+{
+    public int ServiceId { get; set; }
+    public int DoctorId { get; set; }
 }

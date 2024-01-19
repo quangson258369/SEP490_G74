@@ -48,6 +48,7 @@ const LoginForm = () => {
 
       let newUser: User = {
         role: jwtUser.role,
+        userId: Number.parseInt(jwtUser.nameid!),
       };
 
       setAuthenticated(newUser);

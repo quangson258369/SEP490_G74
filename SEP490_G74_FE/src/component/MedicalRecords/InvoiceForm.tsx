@@ -15,6 +15,7 @@ const InvoiceForm = ({
   medicalRecordId,
   isReload,
   patientId,
+  isPaid,
 }: ExaminationProps) => {
   const [invoice, setInvoice] = useState<ExamDetail[] | undefined>(undefined);
   const [patient, setPatient] = useState<PatientAddModel | undefined>(
@@ -59,6 +60,27 @@ const InvoiceForm = ({
   };
 
   const [name, setName] = useState<string>("");
+
+  const handlePayServiceMr = async (
+    medicalRecordId: number,
+    serviceId: number
+  ) => {
+    if(isPaid){
+      message.info("Hóa đơn đã thanh toán không thể chỉnh sửa", 2)
+      return;
+    }
+    var response = await ExaminationService.patchPayServiceMr(
+      medicalRecordId,
+      serviceId
+    );
+    if (response === undefined && response !== 200) {
+      message.error("Có lỗi xảy ra, vui lòng thử lại sau", 2);
+    } else {
+      message.success("Thanh toán thành công", 2).then(() => {
+        window.location.reload();
+      });
+    }
+  };
 
   useEffect(() => {
     var token = localStorage.getItem(TOKEN);
@@ -164,24 +186,39 @@ const InvoiceForm = ({
             <Col span={8}>
               <b>Tên dịch vụ</b>
             </Col>
-            <Col span={6}>
+            <Col span={4}>
               <b>Trạng thái</b>
             </Col>
-            <Col span={10}>
+            <Col span={6}>
               <b>Giá</b>
             </Col>
+            <Col span={6}></Col>
           </Row>
           <Divider />
           {invoice.map((examDetail) => (
             <div key={examDetail.serviceId}>
               <Row>
                 <Col span={8}>{examDetail.serviceName}</Col>
-                <Col span={6}>
-                  {examDetail.status === true
+                <Col span={4}>
+                  {examDetail.isPaid === true
                     ? "Đã thanh toán"
                     : "Chưa thanh toán"}
                 </Col>
-                <Col span={10}>{examDetail.price?.toLocaleString()} VND</Col>
+                <Col span={6}>{examDetail.price?.toLocaleString()} VND</Col>
+                <Col span={6}>
+                  <Button
+                    type="primary"
+                    disabled={examDetail.isPaid === true ? true : false}
+                    onClick={() =>
+                      handlePayServiceMr(
+                        examDetail.medicalRecordId,
+                        examDetail.serviceId
+                      )
+                    }
+                  >
+                    Thanh toán
+                  </Button>
+                </Col>
               </Row>
               <Divider />
             </div>

@@ -115,11 +115,37 @@ const postAddExaminationResult = async (
   }
 };
 
+const patchPayServiceMr = async (
+  mrId: number,
+  serviceId: number
+) => {
+  try {
+    const token = localStorage.getItem(TOKEN);
+    if (token !== null) {
+      var uToken: JWTTokenModel = jwtDecode(token);
+
+      if (uToken !== null) {
+        const response = await httpClient.patch({
+          url: `${apiLinks.examination.patchPayServiceMr}${mrId}/serviceId/${serviceId}`,
+          authorization: `Bearer ${token}`,
+        });
+
+        return response.status as number;
+      }
+    }
+    return undefined;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+
 const ExaminationService = {
   getListExamServicesByMrId: getListExamServicesByMrId,
   putUpdateExaminationResult: putUpdateExaminationResult,
   postAddExaminationResult: postAddExaminationResult,
   getExamResultByMrId: getExamResultByMrId,
+  patchPayServiceMr: patchPayServiceMr,
 };
 
 export default ExaminationService;

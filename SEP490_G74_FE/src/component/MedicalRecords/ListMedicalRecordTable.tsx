@@ -44,6 +44,7 @@ const ListMedicalRecordTable = () => {
   const [isSupplyPresReload, setIsSupplyPresReload] = useState<boolean>(false);
   const [openInvoice, setOpenInvoice] = useState<boolean>(false);
   const [openSupplyPres, setOpenSupplyPres] = useState<boolean>(false);
+  const [isSelectedMrPaid, setIsSelectedMrPaid] = useState<boolean>(false);
 
   //Pagination
   const [pagination, setPagination] = useState({
@@ -248,7 +249,8 @@ const ListMedicalRecordTable = () => {
     setSelectedMrId(mrId);
   };
 
-  const handleInvoice = (mrId: number) => {
+  const handleInvoice = (mrId: number, isPaid: boolean) => {
+    setIsSelectedMrPaid(isPaid);
     setIsInvoiceReload(!isInvoiceReload);
     setOpenInvoice(true);
     setSelectedMrId(mrId);
@@ -379,7 +381,9 @@ const ListMedicalRecordTable = () => {
                 <Button
                   key="checkout"
                   type="primary"
-                  onClick={() => handleInvoice(record.medicalRecordId)}
+                  onClick={() =>
+                    handleInvoice(record.medicalRecordId, record.isPaid)
+                  }
                 >
                   Hóa đơn
                 </Button>
@@ -509,6 +513,7 @@ const ListMedicalRecordTable = () => {
             isReload={isInvoiceReload}
             medicalRecordId={selectedMrId}
             patientId={selectedPatientId}
+            isPaid={isSelectedMrPaid}
           />
         }
         footer={[

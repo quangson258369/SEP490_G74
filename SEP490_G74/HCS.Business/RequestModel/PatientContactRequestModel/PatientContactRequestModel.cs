@@ -1,3 +1,5 @@
+using HCS.Domain.Commons;
+
 namespace HCS.Business.RequestModel.PatientContactRequestModel;
 
 public class PatientContactRequestModel
@@ -20,11 +22,11 @@ public class PatientContactRequestModel
 
     public byte? Weight { get; set; }
 
-    public string? BloodGroup { get; set; }
+    public string? BloodGroup { get; set; } = DefaultText.NOT_AVAILABLE;
 
     public byte? BloodPressure { get; set; }
 
-    public string? AllergiesHistory { get; set; }
+    public string? AllergiesHistory { get; set; } = DefaultText.NOT_AVAILABLE;
 
     //public int? PatientId { get; set; }
 

@@ -54,6 +54,8 @@ public class ServiceResponseDetailModel
     public int ServiceTypeId { get; set; }
     public double Price { get; set; }
     public bool IsDeleted { get; set; } = false;
+    public int DoctorId { get; set; }
+    public string DoctorName { get; set; } = string.Empty;
 }
 
 public class DoctorResponseModel

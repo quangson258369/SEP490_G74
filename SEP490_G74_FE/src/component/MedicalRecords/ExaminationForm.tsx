@@ -312,8 +312,7 @@ const ExaminationForm = ({
     }
   };
 
-  const fetchDoctorCategoryByService = async (serviceId : number
-  ) => {
+  const fetchDoctorCategoryByService = async (serviceId: number) => {
     var response = await categoryService.getDoctorCategoryByService(
       serviceId,
       medicalRecordId
@@ -424,14 +423,27 @@ const ExaminationForm = ({
                 <Col span={16}>
                   Dịch vụ: <b>{examDetail.serviceName}</b>
                 </Col>
-                <Col span={8}>
-                  Trạng thái:{" "}
-                  <b>
-                    {examDetail.status === undefined ||
-                    examDetail.status! === false
-                      ? "Chưa khám"
-                      : "Đã khám"}
-                  </b>
+                <Col span={4}>
+                  <div>Trạng thái: </div>
+                  <div>
+                    <b>
+                      {examDetail.status === undefined ||
+                      examDetail.status! === false
+                        ? "Chưa khám"
+                        : "Đã khám"}
+                    </b>
+                  </div>
+                </Col>
+                <Col span={4}>
+                  <div>Thanh toán: </div>
+                  <div>
+                    <b>
+                      {examDetail.isPaid === undefined ||
+                      examDetail.isPaid === false
+                        ? "Chưa thanh toán"
+                        : "Đã thanh toán"}
+                    </b>
+                  </div>
                 </Col>
               </Row>
               <Row>
@@ -513,6 +525,7 @@ const ExaminationForm = ({
                   <></>
                 ) : (
                   <Button
+                    disabled={!examDetail.isPaid}
                     onClick={() =>
                       handleUpdateExaminationDetail(examDetail.serviceId)
                     }
@@ -565,6 +578,7 @@ const ExaminationForm = ({
               type="primary"
               form="examAddForm"
               htmlType="submit"
+              disabled={false}
             >
               Khám hoàn tất
             </Button>

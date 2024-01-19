@@ -250,7 +250,7 @@ const CategoryTable: React.FC = () => {
       message.error("Get Categories Failed", 2);
     } else {
       console.log(response);
-      setCates(response);
+      setCates(response.filter(c => c.isDeleted === false));
       return response;
     }
   };

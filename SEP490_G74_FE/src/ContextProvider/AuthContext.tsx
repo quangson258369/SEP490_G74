@@ -2,16 +2,19 @@ import { createContext, useState } from "react"
 import Roles from "../Enums/Enums"
 import { jwtDecode } from "jwt-decode"
 import { JWTTokenModel } from "../Models/AuthModel"
+
 type Props = {
     children?: React.ReactNode
 }
 
 export interface User {
     role: string
+    userId: number
 }
 
 var currAuthenticated: User = {
-    role: Roles.Guest
+    role: Roles.Guest,
+    userId: 0
 }
 
 const getCurrentUser = () =>{
@@ -20,6 +23,7 @@ const getCurrentUser = () =>{
         var jwtUser = jwtDecode<JWTTokenModel>(tokenString)
         if(jwtUser!==null){
             currAuthenticated.role = jwtUser.role
+            currAuthenticated.userId = Number.parseInt(jwtUser.nameid!)
             console.log(currAuthenticated.role)
         }
     }

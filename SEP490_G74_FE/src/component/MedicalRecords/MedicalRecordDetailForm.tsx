@@ -42,6 +42,7 @@ import medicalRecordService from "../../Services/MedicalRecordService";
 import generatePDF, { usePDF } from "react-to-pdf";
 import ExaminationForm from "./ExaminationForm";
 import { useNavigate } from "react-router-dom";
+import { defaultMrOption } from "../../Commons/Global";
 
 const MedicalRecordDetailForm = ({
   patientId,
@@ -62,18 +63,6 @@ const MedicalRecordDetailForm = ({
   const [patient, setPatient] = useState<PatientAddModel | undefined>(
     undefined
   );
-
-  const [doctorOptions, setOptions] = useState<SelectProps["options"]>([]);
-  const [serviceTypeOptions, setServiceTypeOptions] = useState<
-    SelectProps["options"]
-  >([]);
-  const [serviceOptions, setServiceOptions] = useState<SelectProps["options"]>(
-    []
-  );
-  const [, setDoctorIds] = useState<number[]>([]);
-
-  //const [cates, setCates] = useState<CategoryResponseModel[]>([]);
-  //const [docs, setDocs] = useState<DoctorResponseModel[]>([]);
   //===================
   const [mrDetail, setMrDetail] = useState<
     MedicalRecordDetailModel | undefined
@@ -89,21 +78,39 @@ const MedicalRecordDetailForm = ({
   const [isExamReload, setIsExamReload] = useState<boolean>(false);
 
   const onFinish = async (values: MedicalRecord) => {
+    if (authenticated?.role === Roles.Admin) {
+      message.info("Không thể sử dụng tính năng này");
+      return;
+    }
+
     if (isCheckUp === true) {
       message.info("Hồ sơ đã khám, không thể chỉnh sửa", 2);
       return;
     }
 
     if (
-      values.selectedServiceTypeIds === undefined ||
-      values.selectedServiceIds === undefined ||
       values.selectedDoctorIds === undefined ||
+      values.selectedCategoryIds === undefined ||
       values.selectedCategoryIds.length === 0 ||
-      values.selectedDoctorIds.length === 0 ||
-      values.selectedServiceIds.length === 0
+      (values.selectedDoctorIds.length === 0 &&
+        authenticated?.role !== Roles.Doctor)
     ) {
-      message.error("Chưa chọn dịch vụ khám", 2);
+      message.error("Chưa chọn khoa khám hoặc bác sĩ khám", 2);
       return;
+    }
+
+    if (authenticated?.role === Roles.Doctor) {
+      if (values.selectedServiceIds === undefined) {
+        message.error("Chưa chọn dịch vụ khám", 2);
+        return;
+      }
+      if (
+        values.selectedServiceIds !== undefined &&
+        values.selectedServiceIds.length === 0
+      ) {
+        message.error("Chưa chọn dịch vụ khám", 2);
+        return;
+      }
     }
 
     if (values.isCheckUp === true) {
@@ -114,11 +121,20 @@ const MedicalRecordDetailForm = ({
     var medUpdate: MedicalRecordUpdateModel = {
       categoryIds: [...values.selectedCategoryIds],
       doctorIds: [...values.selectedDoctorIds],
-      serviceIds: [...values.selectedServiceIds],
+      serviceIds: [],
+      serviceDetails: [],
     };
 
+    if (authenticated?.role === Roles.Doctor) {
+      medUpdate.serviceIds = [...values.selectedServiceIds];
+      medUpdate.serviceDetails = selectedServices.map((service) => ({
+        serviceId: service.serviceId,
+        doctorId: service.doctorId ?? defaultMrOption.defaultDoctorId,
+      }));
+    }
+
     if (medicalRecordId === undefined) {
-      message.error("Update MR Failed Because Of Invalid Medical Record ID", 2);
+      message.error("Lỗi không tìm thấy mã hồ sơ", 2);
       return;
     }
 
@@ -129,24 +145,20 @@ const MedicalRecordDetailForm = ({
 
     if (response === 200) {
       message
-        .success("Update MR Success", 2)
+        .success("Cập nhật thành công", 2)
         .then(() => window.location.reload());
     } else {
-      message.error("Update MR Failed", 2);
+      message.error("Cập nhật thất bại", 2);
     }
   };
 
   const onFinishFailed = () => {
-    message.error("Create MR Failed");
+    message.error("Cập nhật thất bại", 2);
   };
 
   //=================new==============
   const handleChangeCategory = async (values: number[]) => {
     if (values.length === 0) {
-      setOptions([]);
-      setServiceTypeOptions([]);
-      setServiceOptions([]);
-
       setDoctors([]);
       setTypes([]);
       setServices([]);
@@ -158,6 +170,10 @@ const MedicalRecordDetailForm = ({
       ]);
       return;
     }
+    var filteredCates = cates.filter(
+      (cate) => cate.categoryId !== defaultMrOption.DEFAULT_CATEGORY_ID
+    );
+    setCates(filteredCates);
 
     var currentSelectedDoctorIds: number[] =
       mrDetailform.getFieldValue("selectedDoctorIds");
@@ -170,6 +186,9 @@ const MedicalRecordDetailForm = ({
       "selectedServiceTypeIds",
       "selectedServiceIds",
     ]);
+    setTypes([]);
+    setServices([]);
+    setSelectedServices([]);
     // ----------- new get least assigned doctor
     var newDoctorsSelectedByCategories: DoctorResponseModel[] =
       await fetchDoctors(values);
@@ -220,19 +239,7 @@ const MedicalRecordDetailForm = ({
     );
 
     if (servicesByServiceTypes.length > 0) {
-      // servicesByServiceTypes.forEach((element) => {
-      //   newServiceOptions?.push({
-      //     value: element.serviceId,
-      //     label: element.serviceName,
-      //   });
-      // });
-      // setServiceOptions(newServiceOptions);
       mrDetailform.resetFields(["selectedServiceIds"]);
-      // mrDetailform.setFieldsValue({
-      //   selectedServiceIds: servicesByServiceTypes.map(
-      //     (element) => element.serviceId
-      //   ),
-      // });
       setServices(servicesByServiceTypes);
     }
   };
@@ -240,8 +247,6 @@ const MedicalRecordDetailForm = ({
   const handleChangeServiceType = async (values: number[]) => {
     // new
     if (values.length === 0) {
-      setServiceOptions([]);
-
       setServices([]);
 
       mrDetailform.setFieldsValue({
@@ -254,7 +259,7 @@ const MedicalRecordDetailForm = ({
     if (currentSelectedServiceIds === undefined) {
       currentSelectedServiceIds = [];
     }
-    //var newServiceOptions: SelectProps["options"] = [];
+
     var newSelectedServicesByServiceTypes: ServiceResponseModel[] =
       await fetchServices(values);
 
@@ -271,15 +276,45 @@ const MedicalRecordDetailForm = ({
         }
       });
       mrDetailform.resetFields(["selectedServiceIds"]);
-      mrDetailform.setFieldsValue({
-        selectedServiceIds: oldSelectedServiceIds,
-      });
-      setSelectedServices(
-        newSelectedServicesByServiceTypes.filter((service) =>
-          oldSelectedServiceIds.includes(service.serviceId)
-        )
-      );
+      // mrDetailform.setFieldsValue({
+      //   selectedServiceIds: oldSelectedServiceIds,
+      // });
+
+      // setSelectedServices(
+      //   newSelectedServicesByServiceTypes.filter((service) =>
+      //     oldSelectedServiceIds.includes(service.serviceId)
+      //   )
+      // );
+      setSelectedServices([]);
+
+      // var serviceByTypes: ServiceResponseModel[] =
+      //   newSelectedServicesByServiceTypes.filter((service) =>
+      //     oldSelectedServiceIds.includes(service.serviceId)
+      //   );
+      // var ids: number[] = serviceByTypes.map((s) => s.serviceTypeId!);
+      // if (ids !== undefined) {
+      //   setServiceSelectedDocs(ids);
+      // }
     }
+  };
+
+  const setServiceSelectedDocs = async (values: number[]) => {
+    var newSelectedServices: ServiceResponseModel[] = services.filter(
+      (service) => values.includes(service.serviceId)
+    );
+    setSelectedServices([]);
+    await Promise.all(
+      newSelectedServices.map(async (service) => {
+        var leastAssignedDoctor = await getLeastAssignedDoctorByServiceType(
+          service.serviceTypeId
+        );
+        if (leastAssignedDoctor !== undefined) {
+          service.doctorId = leastAssignedDoctor.userId;
+          service.doctorName = leastAssignedDoctor.userName;
+          setSelectedServices((prev) => [...prev, service]);
+        }
+      })
+    );
   };
 
   const handleChangeService = (values: number[]) => {
@@ -287,17 +322,17 @@ const MedicalRecordDetailForm = ({
       setSelectedServices([]);
       return;
     }
-    var newSelectedServices: ServiceResponseModel[] = services.filter(
-      (service) => values.includes(service.serviceId)
-    );
-    setSelectedServices(newSelectedServices);
+    setServiceSelectedDocs(values);
   };
 
   const checkRole = () => {
     if (authenticated?.role === Roles.Nurse) {
       setIsServiceTypeDisable(true);
     }
-    if (authenticated?.role === Roles.Doctor) {
+    if (
+      authenticated?.role === Roles.Doctor &&
+      authenticated?.userId !== defaultMrOption.defaultDoctorId
+    ) {
       setIsDoctorDisable(true);
     }
   };
@@ -502,6 +537,15 @@ const MedicalRecordDetailForm = ({
           categoryIds: mrDetail.selectedCategoryIds,
           doctorIds: mrDetail.selectedDoctorIds,
           serviceIds: mrDetail.selectedReCheckUpServiceIds,
+          serviceDetails: mrDetail.selectedReCheckUpServiceIds.map(
+            (serviceId: number) => ({
+              serviceId: serviceId,
+              doctorId:
+                selectedServices.find(
+                  (service) => service.serviceId === serviceId
+                )?.doctorId ?? defaultMrOption.defaultDoctorId,
+            })
+          ),
         };
 
         if (medicalRecordId === undefined) {
@@ -561,7 +605,10 @@ const MedicalRecordDetailForm = ({
                 mode="multiple"
                 onChange={handleChangeServiceType}
                 allowClear
-                options={serviceTypeOptions}
+                options={types.map((type) => ({
+                  value: type.serviceTypeId,
+                  label: type.serviceTypeName,
+                }))}
               />
             </Form.Item>
           ) : (
@@ -576,7 +623,10 @@ const MedicalRecordDetailForm = ({
                 mode="multiple"
                 disabled={authenticated?.role !== Roles.Nurse ? false : true}
                 allowClear
-                options={serviceOptions}
+                options={services.map((service) => ({
+                  value: service.serviceId,
+                  label: service.serviceName,
+                }))}
               />
             </Form.Item>
           ) : (
@@ -611,6 +661,7 @@ const MedicalRecordDetailForm = ({
       if (responses !== undefined && responses.length === 2) {
         setPatient(responses[0]);
         setMrDetail(responses[1]);
+        var currentMrDetail = responses[1];
         //get cate, doc, type, service options
         var cateResponses: CategoryResponseModel[] = await fetchCates();
         if (cateResponses !== undefined) {
@@ -622,9 +673,14 @@ const MedicalRecordDetailForm = ({
           if (docs !== undefined && types !== undefined) {
             setDoctors(docs.filter((doc) => doc.isDeleted === false));
             setTypes(types.filter((type) => type.isDeleted === false));
-            var services = await fetchServices(
-              types.map((type) => type.serviceTypeId)
+            // get services by selectedTypes
+            var typeIds: number[] | undefined = currentMrDetail?.serviceTypes.map(
+              (t) => t.serviceTypeId
             );
+            var services: ServiceResponseModel[] = [];
+            if (typeIds !== undefined) {
+              services = await fetchServices(typeIds);
+            }
             if (services !== undefined) {
               setServices(
                 services.filter((service) => service.isDeleted === false)
@@ -652,6 +708,28 @@ const MedicalRecordDetailForm = ({
   const handleChangeCheckUpCollapse = (key: string | string[]) => {
     setIsExamReload(!isExamReload);
     console.log(key);
+  };
+
+  const getLeastAssignedDoctorByServiceType = async (
+    serviceTypeId: number | undefined
+  ) => {
+    if (serviceTypeId === undefined) {
+      return undefined;
+    }
+    var type: ServiceTypeResponseModel | undefined = types.find(
+      (type) => type.serviceTypeId === serviceTypeId
+    );
+    if (type !== undefined) {
+      var cate = cates.find((cate) => cate.categoryId === type?.categoryId);
+      if (cate) {
+        var leastAssignedDoctor =
+          await subService.getLeastAssignedDoctorByCategoryId(cate.categoryId);
+        if (leastAssignedDoctor !== undefined) {
+          return leastAssignedDoctor;
+        }
+      }
+    }
+    return undefined;
   };
 
   const getTargetElement = () => document.getElementById("printTarget");
@@ -795,7 +873,11 @@ const MedicalRecordDetailForm = ({
           {/*=========Select Category and Doctor=========== */}
           <div
             style={{
-              display: isPaid === true || isCheckUp === true ? "none" : "block",
+              // display: isPaid === true || isCheckUp === true ? "none" : "block",
+              display:
+                authenticated?.userId !== defaultMrOption.defaultDoctorId
+                  ? "none"
+                  : undefined,
             }}
           >
             <Row gutter={10}>
@@ -805,7 +887,7 @@ const MedicalRecordDetailForm = ({
                   label="Chọn khoa khám"
                 >
                   <Select
-                    disabled={isDoctorDisable}
+                    disabled={isDoctorDisable || isServiceTypeDisable}
                     mode="multiple"
                     onChange={handleChangeCategory}
                     options={cates.map((category) => ({
@@ -815,7 +897,7 @@ const MedicalRecordDetailForm = ({
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={12} style={{ display: "none" }}>
                 <Form.Item<MedicalRecord>
                   name="selectedDoctorIds"
                   label="Chọn bác sĩ khám"
@@ -833,49 +915,49 @@ const MedicalRecordDetailForm = ({
             </Row>
           </div>
           {/*=========Select Service Type=========== */}
-          {authenticated?.role === Roles.Admin ||
-          authenticated?.role === Roles.Doctor ? (
-            <>
-              {isPaid === true ||
-                (isCheckUp === false && (
-                  <Form.Item<MedicalRecord>
-                    name="selectedServiceTypeIds"
-                    label="Chọn loại dịch vụ khám"
-                  >
-                    <Select
-                      disabled={isServiceTypeDisable}
-                      mode="multiple"
-                      onChange={handleChangeServiceType}
-                      allowClear
-                      options={types.map((type) => ({
-                        value: type.serviceTypeId,
-                        label: type.serviceTypeName,
-                      }))}
-                    />
-                  </Form.Item>
-                ))}
-              {isPaid === true ||
-                (isCheckUp === false && (
-                  <Form.Item<MedicalRecord>
-                    name="selectedServiceIds"
-                    label="Chọn dịch vụ khám"
-                  >
-                    <Select
-                      mode="multiple"
-                      onChange={handleChangeService}
-                      disabled={isServiceTypeDisable}
-                      allowClear
-                      options={services.map((service) => ({
-                        value: service.serviceId,
-                        label: service.serviceName,
-                      }))}
-                    />
-                  </Form.Item>
-                ))}
-            </>
-          ) : (
-            <></>
-          )}
+          <div
+            style={{
+              display:
+                authenticated?.userId !== defaultMrOption.defaultDoctorId
+                  ? "none"
+                  : undefined,
+            }}
+          >
+            {isPaid === false && isCheckUp === false && (
+              <Form.Item<MedicalRecord>
+                name="selectedServiceTypeIds"
+                label="Chọn loại dịch vụ khám"
+              >
+                <Select
+                  disabled={isServiceTypeDisable}
+                  mode="multiple"
+                  onChange={handleChangeServiceType}
+                  allowClear
+                  options={types.map((type) => ({
+                    value: type.serviceTypeId,
+                    label: type.serviceTypeName,
+                  }))}
+                />
+              </Form.Item>
+            )}
+            {isPaid === false && isCheckUp === false && (
+              <Form.Item<MedicalRecord>
+                name="selectedServiceIds"
+                label="Chọn dịch vụ khám"
+              >
+                <Select
+                  mode="multiple"
+                  onChange={handleChangeService}
+                  disabled={isServiceTypeDisable}
+                  allowClear
+                  options={services.map((service) => ({
+                    value: service.serviceId,
+                    label: service.serviceName,
+                  }))}
+                />
+              </Form.Item>
+            )}
+          </div>
           {/*=========Tai kham=========== */}
           {isCheckUp === true && (
             <Collapse
@@ -886,39 +968,42 @@ const MedicalRecordDetailForm = ({
         </Form>
       </div>
       <Divider />
-      <div>
-        <b>Dịch vụ đã chọn:</b>{" "}
-      </div>
+      <Row style={{ fontWeight: "bold" }}>
+        <Col span={8}>Dịch vụ đã chọn: </Col>
+        <Col span={8}>Giá tiền: </Col>
+        <Col span={8}>Bác sĩ khám: </Col>
+      </Row>
       <br />
       <div id="listServicePrice">
         {selectedServices.map((service) => (
           <div key={service.serviceId}>
             <Row>
-              <Col span={12}>{service.serviceName}</Col>
-              <Col span={12}>{service.price.toLocaleString()} VND</Col>
+              <Col span={8}>{service.serviceName}</Col>
+              <Col span={8}>{service.price.toLocaleString()} VND</Col>
+              <Col span={8}>{service.doctorName}</Col>
             </Row>
           </div>
         ))}
       </div>
-      <Divider dashed/>
+      <Divider dashed />
       <Row>
         <Col span={12}>
           <b>Tạm tính: </b>
         </Col>
         <Col span={12}>
-          {(selectedServices.reduce((total, s) => total + s.price, 0)).toLocaleString()} VND
+          {selectedServices
+            .reduce((total, s) => total + s.price, 0)
+            .toLocaleString()}{" "}
+          VND
         </Col>
       </Row>
+      <br />
       {/*=========Examination=========== */}
-      {isPaid === true || isCheckUp === true ? (
-        <Collapse
-          destroyInactivePanel
-          items={itemsExamination}
-          onChange={handleChangeCollapse}
-        />
-      ) : (
-        <></>
-      )}
+      <Collapse
+        destroyInactivePanel
+        items={itemsExamination}
+        onChange={handleChangeCollapse}
+      />
     </div>
   ) : (
     <div>Loading...</div>

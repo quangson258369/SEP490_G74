@@ -81,9 +81,9 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
 
     var response = await medicalRecordService.addMedicalRecord(medAddForm);
     if (response !== 200 && response !== 201) {
-      message.error("Created MR Failed");
+      message.error("Tạo bệnh án thất bại", 2);
     } else {
-      message.success("Created success: " + response).then(() => {
+      message.success("Tạo bệnh án thành công", 2).then(() => {
         window.location.reload();
       });
     }
@@ -107,7 +107,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
           if (doctorsByCategory) {
             docs = [...docs, ...doctorsByCategory];
           } else {
-            throw new Error(`Failed to get doctor for category ${cateId}`);
+            throw new Error(`Không thể lấy danh sách bác sĩ cho khoa khám ID: ${cateId}`);
           }
         })
       );
@@ -193,8 +193,14 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
           setDoctors(defaultDoctors);
           mrAddform.setFieldsValue({
             selectedCategoryIds: [defaultCate.categoryId],
-            selectedDoctorIds: defaultDoctors.map((doctor) => doctor.userId),
           });
+          var leastAssignedDefaultDoctor = await subService.getLeastAssignedDoctorByCategoryId(defaultCate.categoryId);
+          if(leastAssignedDefaultDoctor){
+            mrAddform.setFieldsValue({
+              selectedDoctorIds: [leastAssignedDefaultDoctor.userId],
+            });
+          }
+          
           return true;
         }
       }
@@ -332,6 +338,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
           >
             <Select
               mode="multiple"
+              disabled
               onChange={handleChangeCategory}
               options={cates.map((category) => ({
                 value: category.categoryId,
@@ -347,6 +354,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
           >
             <Select
               mode="multiple"
+              disabled
               options={doctors.map((doctor) => ({
                 value: doctor.userId,
                 label: doctor.userName,

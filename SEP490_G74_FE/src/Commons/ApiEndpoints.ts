@@ -56,6 +56,7 @@ const apiLinks = {
         getListServicesByCategoryId:`${baseUrls}ExaminationResult/detail/id/`,
         putUpdateExaminationResult:`${baseUrls}ExaminationResult/detail/id/`,
         getExamResultByMedicalRecordId:`${baseUrls}ExaminationResult/id/`,
+        patchPayServiceMr:`${baseUrls}ExaminationResult/detail/pay/mrId/`,
     },
     supply:{
         getAllSupplyTypes:`${baseUrls}SuppliesType`,

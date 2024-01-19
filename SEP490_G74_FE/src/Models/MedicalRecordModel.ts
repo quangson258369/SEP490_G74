@@ -64,7 +64,7 @@ export interface PatientProps {
   patientId: number;
   role?: string;
   medicalRecordId?: number;
-  isReload? : boolean;
+  isReload?: boolean;
 }
 
 export interface MedicalRecordAddModel {
@@ -87,7 +87,7 @@ export interface MedicalRecordDetailModel {
   patientId: number;
   doctors: DoctorDetailModel[];
   serviceTypes: ServiceTypeDetailModel[];
-  prevMedicalRecordId : number;
+  prevMedicalRecordId: number;
 }
 export interface ServiceTypeDetailModel {
   serviceTypeId: number;
@@ -103,13 +103,13 @@ export interface ServiceDetailModel {
   isDeleted: boolean;
 }
 
-export interface CategoryDetailModel{
+export interface CategoryDetailModel {
   categoryId: number;
   categoryName: string;
-  isDeleted : boolean;
+  isDeleted: boolean;
 }
 
-export interface DoctorDetailModel{
+export interface DoctorDetailModel {
   doctorId: number;
   doctorName: string;
   categoryId: number;
@@ -120,15 +120,22 @@ export interface MedicalRecordUpdateModel {
   categoryIds: number[];
   doctorIds: number[];
   serviceIds: number[];
+  serviceDetails: ServiceDetails[];
+}
+
+export interface ServiceDetails {
+  doctorId: number;
+  serviceId: number;
 }
 
 export interface ExaminationProps {
   medicalRecordId: number;
   isReload: boolean;
   patientId?: number;
+  isPaid?: boolean;
 }
 
-export interface PatientMedicalRecordExaminationPrintModel{
+export interface PatientMedicalRecordExaminationPrintModel {
   id: number;
   patientId: number;
   name: string;

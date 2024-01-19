@@ -19,4 +19,6 @@ public class ServiceResponseModel
     public int ServiceTypeId { get; set; }
 
     public bool IsDeleted { get; set; } = false;
+
+    public int DoctorId { get; set; }
 }

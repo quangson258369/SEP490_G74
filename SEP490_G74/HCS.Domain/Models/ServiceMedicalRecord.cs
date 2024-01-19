@@ -25,5 +25,11 @@ namespace HCS.Domain.Models
         public string Description { get; set; } = string.Empty;
 
         public string Diagnose { get; set; } = string.Empty;
+
+        public bool IsPaid { get; set; } = false;
+
+        public int DoctorId { get; set;}
+
+        public User Doctor { get; set; } = null!;
     }
 }

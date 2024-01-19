@@ -31,6 +31,12 @@ namespace HCS.ApplicationContext.Configurations
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
+                .HasMany(c => c.ServiceMedicalRecords)
+                .WithOne(c => c.Doctor)
+                .HasForeignKey(c => c.DoctorId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
                 .HasData
                     (
                         new User() // Admin

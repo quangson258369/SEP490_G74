@@ -4,6 +4,7 @@ using HCS.ApplicationContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HCS.ApplicationContext.Migrations
 {
     [DbContext(typeof(HCSContext))]
-    partial class HCSContextModelSnapshot : ModelSnapshot
+    [Migration("20240117173353_addIsPaid")]
+    partial class addIsPaid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -527,9 +530,6 @@ namespace HCS.ApplicationContext.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("InvoiceId")
                         .HasColumnType("int");
 
@@ -540,8 +540,6 @@ namespace HCS.ApplicationContext.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("ServiceId", "MedicalRecordId");
-
-                    b.HasIndex("DoctorId");
 
                     b.HasIndex("InvoiceId");
 
@@ -933,12 +931,6 @@ namespace HCS.ApplicationContext.Migrations
 
             modelBuilder.Entity("HCS.Domain.Models.ServiceMedicalRecord", b =>
                 {
-                    b.HasOne("HCS.Domain.Models.User", "Doctor")
-                        .WithMany("ServiceMedicalRecords")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("HCS.Domain.Models.Invoice", "Invoice")
                         .WithMany("ServiceMedicalRecords")
                         .HasForeignKey("InvoiceId");
@@ -954,8 +946,6 @@ namespace HCS.ApplicationContext.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("Invoice");
 
@@ -1111,8 +1101,6 @@ namespace HCS.ApplicationContext.Migrations
                     b.Navigation("Invoices");
 
                     b.Navigation("MedicalRecordDoctors");
-
-                    b.Navigation("ServiceMedicalRecords");
                 });
 #pragma warning restore 612, 618
         }

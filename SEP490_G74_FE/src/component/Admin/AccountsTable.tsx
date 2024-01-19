@@ -226,7 +226,7 @@ const AccountsTable: React.FC = () => {
   const fetchAccounts = async () => {
     var response = await authService.getAccounts();
     if (response === undefined) {
-      message.error("Get accounts Failed", 2);
+      message.error("Tải tài khoản thất bại", 2);
     } else {
       console.log(response);
       setAccounts(response);

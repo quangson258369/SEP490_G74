@@ -98,4 +98,14 @@ public class ExaminationResultController : ControllerBase
             return NotFound();
         }
     }
+
+    [Authorize(Roles = "Admin, Cashier")]
+    [HttpPatch("detail/pay/mrId/{mrId:int}/serviceId/{serviceId:int}")]
+    public async Task<IActionResult> PayServiceMr(int mrId, int serviceId)
+    {
+        var result = await _service.PayServiceMr(mrId, serviceId);
+
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
 }

@@ -83,17 +83,17 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
                 PatientId = mr.PatientId,
                 CashierId = userId??= 1,
                 ServiceMedicalRecords = mr.ServiceMedicalRecords,
-                Total = mr.ServiceMedicalRecords != null ? mr.ServiceMedicalRecords.Sum(s => s.Service!= null? s.Service.Price : 0) : 0,
+                Total = mr.ServiceMedicalRecords != null ? mr.ServiceMedicalRecords.Sum(s => s.IsPaid == true && s.Service != null ? s.Service.Price : 0) : 0,
                 Status = true,
                 PaymentDate = DateTime.Now,
                 PaymentMethod = "Ti?n m?t",
             };
 
-            //if(mr.ServiceMedicalRecords != null)
+            //if (mr.ServiceMedicalRecords != null)
             //{
             //    foreach (var serviceMedicalRecord in mr.ServiceMedicalRecords)
             //    {
-            //        serviceMedicalRecord.Status = false;
+            //        serviceMedicalRecord.IsPaid = true;
             //    }
             //}
 
@@ -112,6 +112,7 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
         if (mr != null)
         {
             mr.IsPaid = true;
+            mr.ServiceMedicalRecords = mr.ServiceMedicalRecords?.Where(x => x.IsPaid == true).ToList();
 
             var newInvoice = new Invoice()
             {

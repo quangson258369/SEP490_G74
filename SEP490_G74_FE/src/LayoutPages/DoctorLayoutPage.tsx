@@ -18,6 +18,7 @@ const DoctorLayoutPage = (props: any) => {
   const handleLogout = () => {
     let user: User = {
       role: Roles.Guest,
+      userId: 0,
     };
 
     setAuthenticated(user);

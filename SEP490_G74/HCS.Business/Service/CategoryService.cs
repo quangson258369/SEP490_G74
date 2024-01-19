@@ -4,6 +4,7 @@ using HCS.Business.RequestModel.CategoryRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
 using HCS.DataAccess.UnitOfWork;
+using HCS.Domain.Commons;
 using HCS.Domain.Enums;
 using HCS.Domain.Models;
 
@@ -55,7 +56,7 @@ public class CategoryService : ICategoryService
 
         var user = await _unitOfWork.UserRepo.GetAsync(entry => entry.UserId == userId);
 
-        if(user != null && user.RoleId == (int)UserRole.Doctor)
+        if(user != null && user.RoleId == (int)UserRole.Doctor && user.UserId != DefaultMrOption.DefaultDoctorId)
         {
             categories = categories.Where(c => c.CategoryId == user.CategoryId).ToList();
         }

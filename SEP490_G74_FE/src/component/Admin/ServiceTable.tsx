@@ -495,7 +495,7 @@ const ServiceTable: React.FC = () => {
       message.error("Get Categories Failed", 2);
     } else {
       console.log(response);
-      setCates(response);
+      setCates(response.filter((c) => c.isDeleted === false));
       return response;
     }
   };
@@ -515,7 +515,7 @@ const ServiceTable: React.FC = () => {
           (cate) => cate.categoryId === item.categoryId
         )?.categoryId;
       });
-      setServiceTypes(response);
+      setServiceTypes(response.filter((c) => c.isDeleted === false));
       return response;
     }
   };
@@ -535,7 +535,7 @@ const ServiceTable: React.FC = () => {
           (type) => type.serviceTypeId === item.serviceTypeId
         )?.serviceTypeId;
       });
-      setServices(response);
+      setServices(response.filter((c) => c.isDeleted === false));
       return response;
     }
   };
