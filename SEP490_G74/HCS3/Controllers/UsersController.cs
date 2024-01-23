@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HCS.Business.RequestModel.UserRequestModel;
-using HCS.Business.RequestModel.PatientRequestModel;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using HCS.Business.RequestModel.ContactRequestModel;
 using HCS.Business.RequestModel.PatientContactRequestModel;
 using HCS.Business.Service;
 

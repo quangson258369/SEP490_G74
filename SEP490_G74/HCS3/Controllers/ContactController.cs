@@ -1,7 +1,6 @@
 using HCS.Business.RequestModel.ContactRequestModel;
 using HCS.Business.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HCS.API.Controllers;

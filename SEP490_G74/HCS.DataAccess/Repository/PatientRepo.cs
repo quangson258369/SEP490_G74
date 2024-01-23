@@ -1,13 +1,7 @@
 ﻿using HCS.ApplicationContext;
 using HCS.DataAccess.IRepository;
 using HCS.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using HCS.Domain.Enums;
 
 namespace HCS.DataAccess.Repository
 {

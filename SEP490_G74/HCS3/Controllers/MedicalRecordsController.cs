@@ -1,9 +1,7 @@
 ﻿using HCS.Business.RequestModel.MedicalRecordRequestModel;
 using HCS.Business.Service;
-using HCS.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 
 namespace HCS.API.Controllers

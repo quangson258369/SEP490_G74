@@ -7,13 +7,10 @@ using HCS.Business.ResponseModel.PatientResponseModel;
 using HCS.Business.Util.JWT;
 using HCS.Business.Util.MD5PasswordGenerator;
 using HCS.Business.Pagination;
-using HCS.Business.RequestModel.ContactRequestModel;
 using HCS.Business.RequestModel.PatientContactRequestModel;
-using HCS.Business.RequestModel.PatientRequestModel;
 using HCS.Business.ResponseModel.UserResponseModel;
 using static HCS.Business.Util.MD5PasswordGenerator.PasswordGenerator;
 using HCS.Domain;
-using Microsoft.Identity.Client;
 using HCS.Domain.Enums;
 
 

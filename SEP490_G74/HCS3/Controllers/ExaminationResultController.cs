@@ -1,6 +1,5 @@
 using HCS.Business.RequestModel.ExaminationResultRequestModel;
 using HCS.Business.Service;
-using HCS.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

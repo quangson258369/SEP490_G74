@@ -3,16 +3,11 @@ using HCS.Business.Pagination;
 using HCS.Business.RequestModel.MedicalRecordRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
-using HCS.Business.ResponseModel.ExaminationResultResponseModel;
 using HCS.Business.ResponseModel.MedicalRecordResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Commons;
 using HCS.Domain.Enums;
 using HCS.Domain.Models;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Collections;
-using System.Collections.Generic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HCS.Business.Service;
 public interface IMedicalRecordService

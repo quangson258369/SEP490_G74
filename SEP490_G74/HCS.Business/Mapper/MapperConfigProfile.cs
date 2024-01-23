@@ -12,13 +12,11 @@ using HCS.Business.RequestModel.SuppliesTypeRequestModel;
 using HCS.Business.RequestModel.UserRequestModel;
 using HCS.Business.ResponseModel.CategoryResponse;
 using HCS.Business.ResponseModel.ExaminationResultResponseModel;
-using HCS.Business.ResponseModel.MedicalRecordResponseModel;
 using HCS.Business.ResponseModel.PatientResponseModel;
 using HCS.Business.ResponseModel.PrescriptionResponseModel;
 using HCS.Business.ResponseModel.ServiceTypeResponseModel;
 using HCS.Business.ResponseModel.SuppliesResponseModel;
 using HCS.Business.ResponseModel.SuppliesTypeResponseModel;
-using HCS.Business.ResponseModel.UserResponseModel;
 
 namespace HCS.Business.Mapper
 {
