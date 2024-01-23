@@ -121,12 +121,33 @@ const getDoctorCategoryByService = async (serviceId: number, mrId: number) => {
   }
 };
 
+const postIsDefaultDoctor = async () => {
+  try {
+    const token = localStorage.getItem(TOKEN);
+    if (token !== null) {
+      var uToken: JWTTokenModel = jwtDecode(token);
+      if (uToken !== null) {
+        const response = await httpClient.post({
+          url: `${apiLinks.category.postIsDefaultDoctor}`,
+          authorization: `Bearer ${token}`,
+        });
+        return response.status as number;
+      }
+    }
+    return undefined;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+
 const categoryService = {
   addCategory: addCategory,
   getCategories: getCategories,
   updateCategory: updateCategory,
   deleteCategories: deleteCategories,
   getDoctorCategoryByService: getDoctorCategoryByService,
+  postIsDefaultDoctor: postIsDefaultDoctor,
 };
 
 export default categoryService;

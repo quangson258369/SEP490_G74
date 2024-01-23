@@ -8,6 +8,8 @@ public class SuppliesTypeResponseModel
 
     public string SuppliesTypeName { get; set; } = string.Empty;
 
+    public bool IsDeleted { get; set; } = false;
+
 }
 
 public class SuppliesByTypeModel
@@ -38,6 +40,8 @@ public class SupplyResponseModel
     public DateTime Inputday { get; set; } = DateTime.Now;
 
     public int SuppliesTypeId { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 }
 
 public class SupplyPrescriptionsAddModel
@@ -58,4 +62,5 @@ public class SupplyPrescriptionResponseModel
     public string SupplyName { get; set; } = string.Empty;
     public int Quantity { get; set; }
     public double Price { get; set; }
+    public string Uses { get; set; } = string.Empty;
 }

@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Form, Row, message } from "antd";
+import { Button, Col, Divider, Form, Modal, Row, message } from "antd";
 import { ExaminationProps } from "../../Models/MedicalRecordModel";
 import ExaminationService from "../../Services/ExaminationService";
 import { ExamDetail } from "../../Models/SubEntityModel";
@@ -10,6 +10,7 @@ import generatePDF from "react-to-pdf";
 import { JWTTokenModel } from "../../Models/AuthModel";
 import { TOKEN } from "../../Commons/Global";
 import { jwtDecode } from "jwt-decode";
+import Table, { ColumnsType } from "antd/es/table";
 
 const InvoiceForm = ({
   medicalRecordId,
@@ -23,6 +24,8 @@ const InvoiceForm = ({
   );
   const [total, setTotal] = useState<number>(0);
   const [invoiceForm] = Form.useForm();
+  const [isPrintInvoiceModalOpen, setIsPrintInvoiceModalOpen] =
+    useState<boolean>(false);
 
   const fetchInvoice = async (medicalRecordId: number) => {
     var response = await ExaminationService.getListExamServicesByMrId(
@@ -61,12 +64,47 @@ const InvoiceForm = ({
 
   const [name, setName] = useState<string>("");
 
+  const invoicePrintColumns: ColumnsType<ExamDetail> = [
+    {
+      title: "STT",
+      key: "STT",
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: "Tên dịch vụ",
+      key: "serviceName",
+      dataIndex: "serviceName",
+    },
+    {
+      title: "Số lượng",
+      key: "STT",
+      dataIndex: "STT",
+      render: () => <span>1</span>,
+    },
+    {
+      title: "Đơn giá",
+      key: "price",
+      dataIndex: "price",
+      render: (text, record, index) => (
+        <span>{record.price?.toLocaleString()} VND</span>
+      ),
+    },
+    {
+      title: "Thành tiền",
+      key: "price",
+      dataIndex: "price",
+      render: (text, record, index) => (
+        <span>{record.price?.toLocaleString()} VND</span>
+      ),
+    },
+  ];
+
   const handlePayServiceMr = async (
     medicalRecordId: number,
     serviceId: number
   ) => {
-    if(isPaid){
-      message.info("Hóa đơn đã thanh toán không thể chỉnh sửa", 2)
+    if (isPaid) {
+      message.info("Hóa đơn đã thanh toán không thể chỉnh sửa", 2);
       return;
     }
     var response = await ExaminationService.patchPayServiceMr(
@@ -80,6 +118,23 @@ const InvoiceForm = ({
         window.location.reload();
       });
     }
+  };
+
+  const TableFooter = () => {
+    return (
+      <Table.Summary.Row>
+        <Table.Summary.Cell index={0}></Table.Summary.Cell>
+        <Table.Summary.Cell index={1} colSpan={3}>Tổng Cộng</Table.Summary.Cell>
+        <Table.Summary.Cell index={2}>
+          <b>
+            {(invoice!
+              .filter((detail) => detail.isPaid === true)
+              .reduce((total, detail) => total + detail!.price!, 0)).toLocaleString()}{" "}
+            VND
+          </b>
+        </Table.Summary.Cell>
+      </Table.Summary.Row>
+    );
   };
 
   useEffect(() => {
@@ -109,71 +164,117 @@ const InvoiceForm = ({
             alignItems: "flex-end",
           }}
         >
-          <Button type="primary" onClick={() => generatePDF(getTargetElement)}>
+          <Button
+            type="primary"
+            onClick={() => setIsPrintInvoiceModalOpen(true)}
+          >
             In hóa đơn
           </Button>
         </Col>
       </Row>
-      <div id="printInvoice" style={{ padding: "20px" }}>
+      <div id="printInvoiceContainer" style={{ padding: "20px" }}>
         {patient !== undefined ? (
           <div>
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                  fontSize: "15px",
+                }}
+              >
+                <div>
+                  <div>
+                    <b>PHÒNG KHÁM HCS</b>
+                  </div>
+                  <div>
+                    <i>Hola University</i>
+                  </div>
+                  <div>
+                    <i>0123456789</i>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <b>Kí hiệu: HCS</b>
+                  </div>
+                  <div>
+                    Số: <b>{medicalRecordId}</b>
+                  </div>
+                  <div>Ngày thu: {dayjs().format("DD/MM/YYYY HH:mm:ss")}</div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <br />
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
               }}
             >
               <Row>
-                <Col span={12}>
-                  <h1>
-                    <b>Phòng khám HCS</b>
-                  </h1>
-                </Col>
-                <Col span={12}>
-                  <h1 style={{ textWrap: "nowrap" }}>
-                    <b>Hóa đơn khám sức khỏe</b>
-                  </h1>
+                <Col span={24}>
+                  <h1>HÓA ĐƠN DỊCH VỤ</h1>
+                  <div style={{ textAlign: "center" }}>
+                    Ngày thu: {dayjs().format("DD/MM/YYYY HH:mm:ss")}
+                  </div>
                 </Col>
               </Row>
             </div>
             <br />
             <br />
-
-            <Row>
+            {/* <Row>
               <Col span={24}>
                 <h2>
                   <b>Thông tin bệnh nhân</b>
                 </h2>
               </Col>
-            </Row>
+            </Row> */}
             <br />
             <Row>
-              <Col span={8}>
-                <b>Họ tên bệnh nhân</b>
+              <Col span={4}>
+                <b>Họ tên bệnh nhân:</b>
               </Col>
-              <Col span={16}>{patient?.name}</Col>
+              <Col span={20}>
+                <b>{patient?.name.toUpperCase()}</b>
+              </Col>
             </Row>
             <Row>
-              <Col span={8}>
-                <b>Địa chỉ</b>
+              <Col span={4}>
+                <b>Năm sinh:</b>
               </Col>
-              <Col span={16}>{patient?.address}</Col>
-            </Row>
-            <Row>
-              <Col span={8}>
-                <b>Số điện thoại</b>
-              </Col>
-              <Col span={16}>{patient?.phone}</Col>
-            </Row>
-            <Row>
-              <Col span={8}>
-                <b>Ngày sinh</b>
-              </Col>
-              <Col span={16}>
+              <Col span={20}>
                 {dayjs(patient.dob).format("YYYY-MM-DD HH:mm:ss")}
               </Col>
+            </Row>
+            <Row>
+              <Col span={4}>
+                <b>Số điện thoại:</b>
+              </Col>
+              <Col span={20}>{patient?.phone}</Col>
+            </Row>
+            <Row>
+              <Col span={4}>
+                <b>Địa chỉ:</b>
+              </Col>
+              <Col span={20}>{patient?.address}</Col>
+            </Row>
+            <Row>
+              <Col span={4}>
+                <b>Đối tượng:</b>
+              </Col>
+              <Col span={20}>Dịch vụ</Col>
             </Row>
             <br />
             <br />
@@ -249,6 +350,191 @@ const InvoiceForm = ({
           </Row>
         </div>
       </div>
+      {/*=================Modal================= */}
+      <Modal
+        destroyOnClose={true}
+        open={isPrintInvoiceModalOpen}
+        onCancel={() => setIsPrintInvoiceModalOpen(false)}
+        onOk={()=>generatePDF(getTargetElement)}
+        style={{ width: "max-content", minWidth: "80vw" }}
+      >
+        <div id="printInvoice" style={{ padding: "20px" }}>
+          {patient !== undefined ? (
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                    fontSize: "15px",
+                  }}
+                >
+                  <div>
+                    <div>
+                      <b>PHÒNG KHÁM HCS</b>
+                    </div>
+                    <div>
+                      <i>Hola University</i>
+                    </div>
+                    <div>
+                      <i>0123456789</i>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <b>Kí hiệu: HCS</b>
+                    </div>
+                    <div>
+                      Số: <b>{medicalRecordId}</b>
+                    </div>
+                    <div>Ngày thu: {dayjs().format("DD/MM/YYYY HH:mm:ss")}</div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Row>
+                  <Col span={24}>
+                    <h1>BIÊN LAI THU TIỀN</h1>
+                    <div style={{ textAlign: "center" }}>
+                      Ngày thu: {dayjs().format("DD/MM/YYYY HH:mm:ss")}
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+              <br />
+              <br />
+              <br />
+              <Row>
+                <Col span={4}>
+                  <b>Họ tên bệnh nhân:</b>
+                </Col>
+                <Col span={20}>
+                  <b>{patient?.name.toUpperCase()}</b>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Năm sinh:</b>
+                </Col>
+                <Col span={20}>
+                  {dayjs(patient.dob).format("YYYY-MM-DD HH:mm:ss")}
+                </Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Số điện thoại:</b>
+                </Col>
+                <Col span={20}>{patient?.phone}</Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Địa chỉ:</b>
+                </Col>
+                <Col span={20}>{patient?.address}</Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Đối tượng:</b>
+                </Col>
+                <Col span={20}>Dịch vụ</Col>
+              </Row>
+              <br />
+              <br />
+            </div>
+          ) : (
+            <></>
+          )}
+          <div style={{ minWidth: "100%", width: "max-content" }}>
+            <Table
+              columns={invoicePrintColumns}
+              dataSource={invoice.filter(
+                (examDetail) => examDetail.isPaid === true
+              )}
+              rowKey={(record) => record.serviceId}
+              pagination={false}
+              summary={() => (
+                <Table.Summary fixed>
+                  <TableFooter />
+                </Table.Summary>
+              )}
+            />
+            <br />
+            <Row>
+              <Col span={6}>
+                <div>
+                  <b>Tổng người bệnh phải nộp: </b>
+                </div>
+              </Col>
+              <Col span={4} />
+              <Col span={14}>
+                <div>
+                  <b>
+                    {(invoice
+                      .filter((detail) => detail.isPaid === true)
+                      .reduce(
+                        (total, detail) => total + detail!.price!,
+                        0
+                      )).toLocaleString()}{" "}
+                    VND
+                  </b>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <div style={{ fontSize: "15px" }}>
+                  <span>
+                    <i>Hình thức thanh toán: </i>
+                    <b>
+                      <i>Tiền mặt</i>
+                    </b>
+                  </span>
+                </div>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <br />
+            <div
+              style={{
+                width: "90%",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <div>
+                <div>
+                  <b>Người thu tiền</b>
+                </div>
+                <div>
+                  <i>Ký, ghi rõ họ tên</i>
+                </div>
+                <br />
+                <div>{name}</div>
+                <br />
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

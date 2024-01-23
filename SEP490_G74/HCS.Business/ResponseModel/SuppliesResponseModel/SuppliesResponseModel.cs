@@ -19,4 +19,6 @@ public class SuppliesResponseModel
     public DateTime Inputday { get; set; } = DateTime.Now;
 
     public int SuppliesTypeId { get; set; }
+
+    public bool IsDeleted { get; set; } = false;
 }

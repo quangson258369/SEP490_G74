@@ -38,6 +38,7 @@ export interface MedicalRecord extends PatientTableModel {
   selectedDoctorIds: number[];
   selectedReCheckUpServiceTypeIds?: number[];
   selectedReCheckUpServiceIds?: number[];
+  selectedDoctorId?: number;
 }
 
 export interface MedicalRecordTableModel {
@@ -48,6 +49,9 @@ export interface MedicalRecordTableModel {
   isPaid: boolean;
   isCheckUp: boolean;
   key: string;
+  priority: number;
+  isCheckUpCompleted: string;
+  index: number;
 }
 
 export interface PatientTableModel {

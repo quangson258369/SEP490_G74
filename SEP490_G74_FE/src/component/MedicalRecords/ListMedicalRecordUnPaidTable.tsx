@@ -1,24 +1,23 @@
-import { Button, message, Row, Col, InputRef, Space, Input } from "antd";
-import Table, { ColumnsType } from "antd/es/table";
+import { Space, Button, message, Row, Col, Input, InputRef, Modal } from "antd";
+import Table, { ColumnType, ColumnsType } from "antd/es/table";
 import { MedicalRecordTableModel } from "../../Models/MedicalRecordModel";
 import { useContext, useEffect, useRef, useState } from "react";
 import MedicalRecordDetailForm from "./MedicalRecordDetailForm";
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
 import medicalRecordService from "../../Services/MedicalRecordService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import GenericModal from "../Generic/GenericModal";
-import ExaminationForm from "./ExaminationForm";
 import InvoiceForm from "./InvoiceForm";
 import SupplyPrescriptionDetailForm from "./SupplyPrescriptionDetailForm";
 import { ApiResponseModel } from "../../Models/PatientModel";
-import { ColumnType, FilterConfirmProps } from "antd/es/table/interface";
-import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
+import { FilterConfirmProps } from "antd/es/table/interface";
+import Highlighter from "react-highlight-words";
 
-const MedicalRecordTable = () => {
-  const { id } = useParams<{ id: string }>();
+const ListMedicalRecordUnCheckTable = () => {
+  //const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState<boolean>(false);
   const [openExaminate, setOpenExaminate] = useState<boolean>(false);
   const [selectedPatientId, setSelectedPatientId] = useState<number>(1);
@@ -30,13 +29,20 @@ const MedicalRecordTable = () => {
   const [isSupplyPresReload, setIsSupplyPresReload] = useState<boolean>(false);
   const [openInvoice, setOpenInvoice] = useState<boolean>(false);
   const [openSupplyPres, setOpenSupplyPres] = useState<boolean>(false);
-  const [isSelectedMrPaid, setIsSelectedMrPaid ] = useState<boolean>(false);
+  const [isSelectedMrPaid, setIsSelectedMrPaid] = useState<boolean>(false);
+
+  //Pagination
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 20,
+    total: 0,
+  });
 
   //Search
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  type DataIndex = keyof MedicalRecordTableModel
+  type DataIndex = keyof MedicalRecordTableModel;
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -54,9 +60,7 @@ const MedicalRecordTable = () => {
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
-  ): ColumnType<
-  MedicalRecordTableModel
-  > => ({
+  ): ColumnType<MedicalRecordTableModel> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -145,13 +149,6 @@ const MedicalRecordTable = () => {
       ),
   });
 
-  //Pagination
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 20,
-    total: 0,
-  });
-
   const handleViewMedicalRecord = (id: number, mrId: number) => {
     setOpen(true);
     setSelectedPatientId(id);
@@ -163,14 +160,8 @@ const MedicalRecordTable = () => {
     MedicalRecordTableModel[]
   >([]);
 
-  const navigate = useNavigate();
-
   const handleCancel = () => {
     setOpen(false);
-  };
-
-  const handleCancelExaminate = () => {
-    setOpenExaminate(false);
   };
 
   const handleCancelInvoice = () => {
@@ -209,25 +200,49 @@ const MedicalRecordTable = () => {
     ) {
       message.error("Chức năng chỉ dành cho thu ngân", 2);
     } else {
-      if (
-        medicalRecords.find((item) => item.medicalRecordId === id)?.isPaid ===
-        true
-      ) {
-        message.info("Hồ sơ đã thanh toán", 2);
-        return;
-      }
-      var statusCode = await medicalRecordService.updateMrPaidStatus(id);
-      if (statusCode === 200) {
-        message.success("Đã thanh toán hồ sơ: " + id, 2).then(() => {
-          window.location.reload();
-        });
-      } else {
-        message.error("Lỗi khi thanh toán hồ sơ: " + id, 2);
-      }
+      // show confirm dialog, if yes then process
+
+      Modal.confirm({
+        title: 'Hoàn tất hóa đơn ?',
+        onOk: async () => {
+          if (
+            medicalRecords.find((item) => item.medicalRecordId === id)?.isPaid ===
+            true
+          ) {
+            message.info("Hồ sơ đã thanh toán", 2);
+            return;
+          }
+          var statusCode = await medicalRecordService.updateMrPaidStatus(id);
+          if (statusCode === 200) {
+            message.success("Đã thanh toán hồ sơ: " + id, 2).then(() => {
+              window.location.reload();
+            });
+          }
+        },
+        onCancel() {
+          return;
+        },
+      });
+
+      // if (
+      //   medicalRecords.find((item) => item.medicalRecordId === id)?.isPaid ===
+      //   true
+      // ) {
+      //   message.info("Hồ sơ đã thanh toán", 2);
+      //   return;
+      // }
+      // var statusCode = await medicalRecordService.updateMrPaidStatus(id);
+      // if (statusCode === 200) {
+      //   message.success("Đã thanh toán hồ sơ: " + id, 2).then(() => {
+      //     window.location.reload();
+      //   });
+      // } else {
+      //   message.error("Lỗi khi thanh toán hồ sơ: " + id, 2);
+      // }
     }
   };
 
-  const handleInvoice = (mrId: number, isPaid:boolean) => {
+  const handleInvoice = (mrId: number, isPaid: boolean) => {
     setIsSelectedMrPaid(isPaid);
     setIsInvoiceReload(!isInvoiceReload);
     setOpenInvoice(true);
@@ -246,27 +261,36 @@ const MedicalRecordTable = () => {
       dataIndex: "medicalRecordId",
       key: "medicalRecordId",
       render: (text) => <a>{text}</a>,
+      sorter: (a, b) => a.medicalRecordId - b.medicalRecordId,
     },
     {
       title: "Mã bệnh nhân",
       dataIndex: "patientId",
       key: "patientId",
       render: (text) => <a>{text}</a>,
+      sorter: (a, b) => a.patientId - b.patientId,
     },
+    // {
+    //   title: "Độ ưu tiên",
+    //   dataIndex: "priority",
+    //   key: "priority",
+    //   render: (text) => <a>{text}</a>,
+    //   sorter: (a, b) => a.priority - b.priority,
+    // },
     {
       title: "Tên bệnh nhân",
       dataIndex: "name",
       key: "name",
       render: (text) => <a>{text}</a>,
+      sorter: (a, b) => a.name.localeCompare(b.name),
       ...getColumnSearchProps("name"),
     },
     {
       title: "Ngày tháng",
       dataIndex: "medicalRecordDate",
       key: "medicalRecordDate",
-      ...getColumnSearchProps("medicalRecordDate"),
       render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
-      sorter: (a, b) => dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix(),
+      sorter: (a, b) => a.medicalRecordDate.localeCompare(b.medicalRecordDate),
     },
     {
       title: "Thanh toán",
@@ -275,18 +299,26 @@ const MedicalRecordTable = () => {
       render: (record) => (
         <a>{record === true ? "Đã thanh toán" : "Chưa thanh toán"}</a>
       ),
+      sorter: (a, b) => +a.isPaid - +b.isPaid,
     },
     {
       title: "Khám",
       dataIndex: "isCheckUp",
       key: "isCheckUp",
       render: (record) => <a>{record === true ? "Đã khám" : "Chưa khám"}</a>,
+      sorter: (a, b) => +a.isCheckUp - +b.isCheckUp,
     },
     {
       title: "",
       key: "action-1",
       render: (_, record) => (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
           <Row gutter={[5, 5]}>
             <Col>
               <Button
@@ -317,24 +349,6 @@ const MedicalRecordTable = () => {
             flexDirection: "column",
           }}
         >
-          {/* <Row gutter={[5, 5]}>
-            <Col>
-              {authenticated?.role !== Roles.Cashier &&
-              authenticated?.role !== Roles.Admin ? (
-                <></>
-              ) : (
-                <Button
-                  key="checkout"
-                  type="primary"
-                  style={{ backgroundColor: "#0cb39d" }}
-                  onClick={() => handleCheckout(record.medicalRecordId)}
-                >
-                  Chốt hóa đơn
-                </Button>
-              )}
-            </Col>
-          </Row> */}
-          {/* <div style={{ height: "5px" }} /> */}
           <Row gutter={[5, 5]}>
             <Col>
               <Button
@@ -353,7 +367,9 @@ const MedicalRecordTable = () => {
                 <Button
                   key="checkout"
                   type="primary"
-                  onClick={() => handleInvoice(record.medicalRecordId, record.isPaid)}
+                  onClick={() =>
+                    handleInvoice(record.medicalRecordId, record.isPaid)
+                  }
                 >
                   Hóa đơn
                 </Button>
@@ -363,14 +379,14 @@ const MedicalRecordTable = () => {
           <div style={{ height: "5px" }} />
           <Row gutter={[5, 5]}>
             <Col>
-              {authenticated?.role !== Roles.Cashier &&
-              authenticated?.role !== Roles.Admin ? (
+              {authenticated?.role !== Roles.Admin &&
+              authenticated?.role !== Roles.Cashier ? (
                 <></>
               ) : (
                 <Button
+                  style={{ backgroundColor: "#0cb39d" }}
                   key="checkout"
                   type="primary"
-                  style={{ backgroundColor: "#0cb39d" }}
                   onClick={() => handleCheckout(record.medicalRecordId)}
                 >
                   Chốt hóa đơn
@@ -384,37 +400,24 @@ const MedicalRecordTable = () => {
   ];
 
   const fetchMedicalRecords = async () => {
-    if (id !== undefined) {
-      const patientId = parseInt(id);
-      if (patientId === undefined || patientId === null || isNaN(patientId)) {
-        message
-          .error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2)
-          .then(() => navigate("/"));
-      } else {
-        var response: ApiResponseModel | undefined =
-          await medicalRecordService.getMedicalRecordsByPatientId(
-            patientId,
-            pagination.current,
-            pagination.pageSize
-          );
-        if (response === undefined) {
-          message.error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2);
-        } else {
-          console.log(response);
-          const mappedResponse: MedicalRecordTableModel[] = response.items.map(
-            (item) => ({ ...item, key: item.medicalRecordId + "" })
-          );
-          setMedicalRecords(mappedResponse);
-          setPagination({
-            ...pagination,
-            total: response.totalCount, // Update total count
-          });
-        }
-      }
+    var response: ApiResponseModel | undefined =
+      await medicalRecordService.getMedicalRecordsUnPaidByPatientId(
+        0,
+        pagination.current,
+        pagination.pageSize
+      );
+    if (response === undefined) {
+      message.error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2);
     } else {
-      message
-        .error("Lỗi khi lấy dữ liệu hồ sơ bệnh nhân", 2)
-        .then(() => navigate("/"));
+      console.log(response);
+      const mappedResponse: MedicalRecordTableModel[] = response.items.map(
+        (item) => ({ ...item, key: item.medicalRecordId + "" })
+      );
+      setMedicalRecords(mappedResponse);
+      setPagination({
+        ...pagination,
+        total: response.totalCount, // Update total count
+      });
     }
   };
 
@@ -554,4 +557,4 @@ const MedicalRecordTable = () => {
   );
 };
 
-export default MedicalRecordTable;
+export default ListMedicalRecordUnCheckTable;

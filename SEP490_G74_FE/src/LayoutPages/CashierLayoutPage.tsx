@@ -71,7 +71,7 @@ const CashierLayoutPage = (props: any) => {
             <Menu
               theme="light"
               mode="inline"
-              defaultSelectedKeys={["3"]}
+              defaultSelectedKeys={["1"]}
               style={{ background: "#146C94", color: "white" }}
             >
               {/* <Menu.Item key="1">
@@ -83,8 +83,22 @@ const CashierLayoutPage = (props: any) => {
               <Menu.Item key="2">
                 <Link to={"/"}>Hóa đơn dịch vụ</Link>
               </Menu.Item> */}
-              <Menu.Item key="3">
-                <Link to={ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}>Hồ sơ bệnh án</Link>
+              <Menu.Item key="1">
+                <Link
+                  to={
+                    ROUTE_URLS.CASHIER +
+                    ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_PAID_PAGE
+                  }
+                >
+                  Hồ sơ chưa thanh toán
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link
+                  to={ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
+                >
+                  Hồ sơ bệnh án
+                </Link>
               </Menu.Item>
               {/* <Menu.Item key="5">
                 <Link to={"/"}>Nhân sự</Link>

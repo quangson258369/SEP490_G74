@@ -142,7 +142,8 @@ public class SuppliesTypeService : ISuppliesTypeService
                 SName = x.SName,
                 UnitInStock = x.UnitInStock,
                 Uses = x.Uses,
-                SuppliesTypeId = x.SuppliesTypeId
+                SuppliesTypeId = x.SuppliesTypeId,
+                IsDeleted = x.IsDeleted
             }).ToList()
         };
 
@@ -184,6 +185,7 @@ public class SuppliesTypeService : ISuppliesTypeService
             SupplyName = x.Supply.SName,
             Quantity = x.Quantity,
             Price = x.Supply.Price,
+            Uses = x.Supply.Uses
         }).ToList();
         return new ApiResponse().SetOk(supplyPresResponse);
     }

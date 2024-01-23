@@ -134,6 +134,7 @@ export interface SelectedSuppliesResponseModel {
   supplyName: string
   quantity: number
   price: number
+  uses: string
 }
 
 export interface ServiceTypeUpdateModel{

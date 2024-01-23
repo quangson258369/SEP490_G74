@@ -262,6 +262,7 @@ const ListMedicalRecordUnCheckTable = () => {
       dataIndex: "medicalRecordDate",
       key: "medicalRecordDate",
       render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
+      sorter: (a, b) => dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix()
     },
     {
       title: "Thanh toán",
@@ -270,12 +271,21 @@ const ListMedicalRecordUnCheckTable = () => {
       render: (record) => (
         <a>{record === true ? "Đã thanh toán" : "Chưa thanh toán"}</a>
       ),
+      sorter: (a, b) => a.isPaid === b.isPaid ? 0 : a.isPaid ? 1 : -1
     },
     {
       title: "Khám",
+      dataIndex: "isCheckUpCompleted",
+      key: "isCheckUpCompleted",
+      render: (text) => <a>{text}</a>,
+      sorter: (a, b) => a.isCheckUpCompleted.localeCompare(b.isCheckUpCompleted)
+    },
+    {
+      title: "Khám hoàn tất",
       dataIndex: "isCheckUp",
       key: "isCheckUp",
-      render: (record) => <a>{record === true ? "Đã khám" : "Chưa khám"}</a>,
+      render: (record) => <a>{record === true ? "Hoàn tất" : "Chưa"}</a>,
+      sorter: (a, b) => a.isCheckUp === b.isCheckUp ? 0 : a.isCheckUp ? 1 : -1
     },
     {
       title: "",
@@ -502,6 +512,7 @@ const ListMedicalRecordUnCheckTable = () => {
           <SupplyPrescriptionDetailForm
             isReload={isSupplyPresReload}
             medicalRecordId={selectedMrId}
+            patientId={selectedPatientId}
           />
         }
         footer={[

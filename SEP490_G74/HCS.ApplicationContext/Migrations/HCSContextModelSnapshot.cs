@@ -251,6 +251,9 @@ namespace HCS.ApplicationContext.Migrations
                     b.Property<int?>("ExaminationResultId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsCheckUp")
                         .HasColumnType("bit");
 
@@ -264,6 +267,9 @@ namespace HCS.ApplicationContext.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("PreviousMedicalRecordId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Priority")
                         .HasColumnType("int");
 
                     b.HasKey("MedicalRecordId");

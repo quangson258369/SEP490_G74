@@ -38,5 +38,9 @@ namespace HCS.Domain.Models
         public int? PreviousMedicalRecordId { get; set; }
 
         public MedicalRecord? PreviousMedicalRecordNavigation { get; set; }
+
+        //==== add new for indexing
+        public int Priority { get; set; }
+        public int Index { get; set; }
     }
 }

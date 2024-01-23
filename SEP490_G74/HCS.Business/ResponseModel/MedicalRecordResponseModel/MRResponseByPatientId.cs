@@ -12,6 +12,9 @@ public class MrResponseByPatientId
 
     public bool IsPaid { get; set; } = false;
     public bool IsCheckUp { get; set; } = false;
+    public int Priority { get; set; }
+    public int Index { get; set; }
+    public string IsCheckUpCompleted { get; set; } = string.Empty;
 }
 
 public class MedicalRecordDetailResponseModel

@@ -298,12 +298,14 @@ const ListMedicalRecordTable = () => {
       render: (record) => (
         <a>{record === true ? "Đã thanh toán" : "Chưa thanh toán"}</a>
       ),
+      sorter: (a, b) => +(a.isPaid) - +(b.isPaid),
     },
     {
       title: "Khám",
       dataIndex: "isCheckUp",
       key: "isCheckUp",
       render: (record) => <a>{record === true ? "Đã khám" : "Chưa khám"}</a>,
+      sorter: (a, b) => +(a.isCheckUp) - +(b.isCheckUp),
     },
     {
       title: "",
@@ -348,23 +350,6 @@ const ListMedicalRecordTable = () => {
         >
           <Row gutter={[5, 5]}>
             <Col>
-              {authenticated?.role !== Roles.Admin &&
-              authenticated?.role !== Roles.Cashier ? (
-                <></>
-              ) : (
-                <Button
-                  key="checkout"
-                  type="primary"
-                  onClick={() => handleCheckout(record.medicalRecordId)}
-                >
-                  Thanh toán
-                </Button>
-              )}
-            </Col>
-          </Row>
-          <div style={{ height: "5px" }} />
-          <Row gutter={[5, 5]}>
-            <Col>
               <Button
                 key="checkout"
                 type="primary"
@@ -386,6 +371,24 @@ const ListMedicalRecordTable = () => {
                   }
                 >
                   Hóa đơn
+                </Button>
+              )}
+            </Col>
+          </Row>
+          <div style={{ height: "5px" }} />
+          <Row gutter={[5, 5]}>
+            <Col>
+              {authenticated?.role !== Roles.Admin &&
+              authenticated?.role !== Roles.Cashier ? (
+                <></>
+              ) : (
+                <Button
+                  key="checkout"
+                  type="primary"
+                  style={{ backgroundColor: "#0cb39d" }}
+                  onClick={() => handleCheckout(record.medicalRecordId)}
+                >
+                  Chốt hóa đơn
                 </Button>
               )}
             </Col>
@@ -532,6 +535,7 @@ const ListMedicalRecordTable = () => {
           <SupplyPrescriptionDetailForm
             isReload={isSupplyPresReload}
             medicalRecordId={selectedMrId}
+            patientId={selectedPatientId}
           />
         }
         footer={[

@@ -190,6 +190,8 @@ namespace HCS.Business.Service
 
             var listOfPatients = _mapper.Map<List<PatientResponseModel>>(patients);
 
+            listOfPatients = listOfPatients.OrderByDescending(p => p.PatientId).ToList();
+
             var patientsResponse = listOfPatients.Paginate(pageIndex, pageSize);
 
             return res.SetOk(patientsResponse);

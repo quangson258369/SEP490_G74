@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,5 +18,12 @@ namespace HCS.Domain.Commons
     public static class DefaultText
     {
         public static string NOT_AVAILABLE { get; } = "N/A";
+    }
+
+    public static class MedicalRecordStatus
+    {
+        public static string NOT_CHECK_UP { get; } = "Chưa khám";
+        public static string CHECKING_UP { get; } = "Đang khám";
+        public static string CHECKED_UP { get; } = "Đã khám";
     }
 }

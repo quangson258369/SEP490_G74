@@ -296,6 +296,8 @@ const CategoryTable: React.FC = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        height: "auto",
+        minHeight: "100vh",
       }}
     >
       {/*===================== Category =====================*/}

@@ -32,7 +32,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { RcFile } from "antd/es/upload";
 import axios from "axios";
 import generatePDF from "react-to-pdf";
-import { lte } from "cypress/types/lodash";
+import { lte, set } from "cypress/types/lodash";
 import patientService from "../../Services/PatientService";
 import medicalRecordService from "../../Services/MedicalRecordService";
 import { TOKEN } from "../../Commons/Global";
@@ -55,6 +55,7 @@ const ExaminationForm = ({
     undefined
   );
   const [isExamConclused, setIsExamConclused] = useState<boolean>(false);
+  const [isDefaultDoctor, serIsDefaultDoctor] = useState<boolean>(false);
 
   const fetchExamination = async () => {
     if (medicalRecordId === undefined) {
@@ -188,13 +189,28 @@ const ExaminationForm = ({
         setIsLoaded(true);
       }
     }
+    return true;
+  };
+
+  const checkIsDefaultDoctor = async () => {
+    var res = await categoryService.postIsDefaultDoctor();
+    if (res !== undefined && res === 200) {
+      return true;
+    }
+    return false;
+  };
+
+  const setUpData = async () => {
+    var res = await Promise.all([checkIsDefaultDoctor(), fetchExam()]);
+    if (res !== undefined && res.length > 0) {
+      if (res[0] === true) {
+        serIsDefaultDoctor(true);
+      }
+    }
   };
 
   useEffect(() => {
-    const getExamData = async () => {
-      await fetchExam();
-    };
-    getExamData();
+    setUpData();
   }, [isReload, isLoaded, selectedServiceId]);
 
   //======== upload file============
@@ -539,34 +555,38 @@ const ExaminationForm = ({
             <Divider dashed />
           </div>
         ))}
-        <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col span={24}>
-            <Form.Item<ExaminationsResultModel>
-              label="Chẩn đoán sơ bộ"
-              name={"diagnosis"}
-              rules={[
-                { required: true, message: "Vui lòng nhập chẩn đoán sơ bộ" },
-              ]}
-            >
-              <TextArea disabled={isExamConclused} placeholder="Diagnosis" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col span={24}>
-            <Form.Item<ExaminationsResultModel>
-              label="Kết luận tổng"
-              name={"conclusion"}
-              rules={[
-                { required: true, message: "Vui lòng nhập kết luận tổng" },
-              ]}
-            >
-              <TextArea disabled={isExamConclused} placeholder="Conclusion" />
-            </Form.Item>
-          </Col>
-        </Row>
+        <div
+          style={{ display: isDefaultDoctor === false ? "none" : undefined }}
+        >
+          <Row style={{ display: "flex", alignItems: "center" }}>
+            <Col span={24}>
+              <Form.Item<ExaminationsResultModel>
+                label="Chẩn đoán sơ bộ"
+                name={"diagnosis"}
+                rules={[
+                  { required: true, message: "Vui lòng nhập chẩn đoán sơ bộ" },
+                ]}
+              >
+                <TextArea disabled={isExamConclused} placeholder="Diagnosis" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row style={{ display: "flex", alignItems: "center" }}>
+            <Col span={24}>
+              <Form.Item<ExaminationsResultModel>
+                label="Kết luận tổng"
+                name={"conclusion"}
+                rules={[
+                  { required: true, message: "Vui lòng nhập kết luận tổng" },
+                ]}
+              >
+                <TextArea disabled={isExamConclused} placeholder="Conclusion" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </div>
       </Form>
-      <Row>
+      <Row style={{ display: isDefaultDoctor === false ? "none" : undefined }}>
         <Col span={10} />
         <Col span={14}>
           {authenticated?.role !== Roles.Admin &&

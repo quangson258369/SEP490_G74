@@ -3,6 +3,7 @@ using HCS.Business.Pagination;
 using HCS.Business.RequestModel.CategoryRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
+using HCS.DataAccess.Repository;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Commons;
 using HCS.Domain.Enums;
@@ -18,6 +19,7 @@ public interface ICategoryService
     Task<ApiResponse> UpdateCategory(int categoryId, CategoryUpdateModel category);
     Task DeleteCategory(int categoryId);
     Task<ApiResponse> GetDoctorCategoryByServiceId(int serviceId, int mrId);
+    Task<ApiResponse> IsDefaultDoctor(int userId);
 }
 
 public class CategoryService : ICategoryService
@@ -56,7 +58,10 @@ public class CategoryService : ICategoryService
 
         var user = await _unitOfWork.UserRepo.GetAsync(entry => entry.UserId == userId);
 
-        if(user != null && user.RoleId == (int)UserRole.Doctor && user.UserId != DefaultMrOption.DefaultDoctorId)
+        if(user != null 
+            && user.RoleId == (int)UserRole.Doctor 
+            && user.CategoryId != null 
+            && user.CategoryId != DefaultMrOption.DefaultCategoryId)
         {
             categories = categories.Where(c => c.CategoryId == user.CategoryId).ToList();
         }
@@ -120,6 +125,19 @@ public class CategoryService : ICategoryService
         };
 
         return new ApiResponse().SetOk(result);
+    }
+
+    public async Task<ApiResponse> IsDefaultDoctor(int userId)
+    {
+        var user = await _unitOfWork.UserRepo.GetAsync(u => u.UserId == userId);
+        if(user is not null 
+            && user.RoleId == (int)UserRole.Doctor 
+            && user.CategoryId is not null 
+            && user.CategoryId == DefaultMrOption.DefaultCategoryId)
+        {
+            return new ApiResponse().SetOk(true);
+        }
+        return new ApiResponse().SetNotFound(false);
     }
 }
 

@@ -9,10 +9,12 @@ import {
   Button,
   InputNumber,
   Divider,
+  Modal,
 } from "antd";
 import { ExaminationProps } from "../../Models/MedicalRecordModel";
 import { useContext, useEffect, useState } from "react";
 import {
+  ExamDetail,
   SelectedSuppliesResponseModel,
   SuppliesPresAddModel,
   SupplyIdPreAddModel,
@@ -26,10 +28,20 @@ import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 import Roles from "../../Enums/Enums";
 import { AuthContext } from "../../ContextProvider/AuthContext";
+import { PatientAddModel } from "../../Models/PatientModel";
+import patientService from "../../Services/PatientService";
+import Table, { ColumnsType } from "antd/es/table";
+import dayjs from "dayjs";
+import { TOKEN } from "../../Commons/Global";
+import { JWTTokenModel } from "../../Models/AuthModel";
+import { jwtDecode } from "jwt-decode";
+import { text } from "stream/consumers";
+import ExaminationService from "../../Services/ExaminationService";
 
 const SupplyPrescriptionDetailForm = ({
   medicalRecordId,
   isReload,
+  patientId,
 }: ExaminationProps) => {
   const [supplyPresForm] = Form.useForm();
   const { authenticated } = useContext(AuthContext);
@@ -49,6 +61,47 @@ const SupplyPrescriptionDetailForm = ({
   const [selectedSupplies, setSelectedSupplies] = useState<
     SelectedSuppliesResponseModel[]
   >([]);
+
+  const [patient, setPatient] = useState<PatientAddModel | undefined>(
+    undefined
+  );
+
+  const [isPrintSuppliesModalOpen, setIsPrintSuppliesModalOpen] =
+    useState<boolean>(false);
+
+  const [examResult, setExamResult] = useState<string>("");
+
+  const suppliesPrintColumns: ColumnsType<SelectedSuppliesResponseModel> = [
+    {
+      title: "STT",
+      key: "STT",
+      render: (text, record, index) => index + 1,
+    },
+    {
+      title: "Tên thuốc",
+      key: "suppliesName",
+      dataIndex: "supplyName",
+    },
+    {
+      title: "Cách dùng",
+      key: "uses",
+      dataIndex: "uses",
+    },
+    {
+      title: "Đơn giá",
+      key: "price",
+      dataIndex: "price",
+      render: (text, record, index) => (
+        <span>{text.toLocaleString()} VND</span>
+      ),
+    },
+    {
+      title: "Số lượng",
+      key: "STT",
+      dataIndex: "quantity",
+      render: (text, record, index) => <span>{text} Viên</span>,
+    },
+  ];
 
   const onFinish = async (values: any) => {
     console.log(availableSupplies);
@@ -110,7 +163,7 @@ const SupplyPrescriptionDetailForm = ({
     }
     var newSupplyOptions: SelectProps["options"] = [];
     var suppliesByType: SupplyResponseModel[] = await fetchSupplies(values);
-
+    suppliesByType = suppliesByType.filter((item) => item.isDeleted === false);
     console.log(suppliesByType);
     if (suppliesByType.length > 0) {
       suppliesByType.forEach((element) => {
@@ -154,12 +207,14 @@ const SupplyPrescriptionDetailForm = ({
   }
 
   const fetchSupplyType = async () => {
-    var response = await subService.getAllSupplyTypes();
+    var response: SupplyTypeResponseModel[] | undefined =
+      await subService.getAllSupplyTypes();
     console.log(response);
     if (response === undefined) {
       message.error("Get Supply Type Failed", 2);
       return;
     } else {
+      response = response.filter((element) => element.isDeleted === false);
       var newOptions: SelectProps["options"] = [];
       response.forEach((element) => {
         newOptions!.push({
@@ -245,18 +300,53 @@ const SupplyPrescriptionDetailForm = ({
     },
   ];
 
+  const fetchPatient = async () => {
+    if (patientId === undefined) return;
+    //PatientAddModel
+    var response: PatientAddModel | undefined =
+      await patientService.getPatientById(patientId);
+    if (response === undefined) {
+      message.error("Get Patient Failed", 2);
+    } else {
+      console.log(response);
+      setPatient(response);
+    }
+  };
+
+  const fetchExaminationResult = async () =>{
+    var res = await ExaminationService.getExamResultByMrId(medicalRecordId);
+    if(res !== undefined){
+      var diagnose = res.conclusion;
+      setExamResult(diagnose);
+    }
+  }
+
+  const [name, setName] = useState<string>("");
+
   useEffect(() => {
+    var token = localStorage.getItem(TOKEN);
+    if (token !== null) {
+      var user: JWTTokenModel | undefined = jwtDecode(token);
+      if (user !== undefined) {
+        if (user.unique_name === undefined) user.unique_name = "";
+        setName(user.unique_name);
+      }
+    }
+
+    fetchPatient();
+    fetchExaminationResult();
+
     if (medicalRecordId !== undefined) {
       fetchSelectedSupplies(medicalRecordId);
       fetchSupplyType();
     }
   }, [medicalRecordId, isReload]);
 
-  const getTargetElement = () => document.getElementById("printTargetSuppPres");
+  const getTargetElement = () => document.getElementById("printSupplies");
   return supplyTypes !== undefined ? (
     <div style={{ minWidth: "1000px", width: "max-content" }}>
-      <Button type="link" onClick={() => generatePDF(getTargetElement)}>
-        Tải xuống dưới dạng PDF
+      <Button type="primary" onClick={() => setIsPrintSuppliesModalOpen(true)}>
+        In đơn thuốc
       </Button>
       <div id="main-container">
         <Form
@@ -411,6 +501,185 @@ const SupplyPrescriptionDetailForm = ({
           )}
         </Form>
       </div>
+      {/*=================Modal================= */}
+      <Modal
+        destroyOnClose={true}
+        open={isPrintSuppliesModalOpen}
+        onCancel={() => setIsPrintSuppliesModalOpen(false)}
+        onOk={() => generatePDF(getTargetElement)}
+        style={{ width: "max-content", minWidth: "80vw" }}
+      >
+        <div id="printSupplies" style={{ padding: "20px" }}>
+          {patient !== undefined ? (
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                    fontSize: "15px",
+                  }}
+                >
+                  <div>
+                    <div>
+                      <b>PHÒNG KHÁM HCS</b>
+                    </div>
+                    <div>
+                      <i>Hola University</i>
+                    </div>
+                    <div>
+                      <i>0123456789</i>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <b>Kí hiệu: HCS</b>
+                    </div>
+                    <div>
+                      Số: <b>{medicalRecordId}</b>
+                    </div>
+                    <div>Ngày: {dayjs().format("DD/MM/YYYY HH:mm:ss")}</div>
+                  </div>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Row>
+                  <Col span={24}>
+                    <h1>ĐƠN THUỐC BHYT</h1>
+                  </Col>
+                </Row>
+              </div>
+              <br />
+              <br />
+              <br />
+              <Row>
+                <Col span={4}>
+                  <b>Họ tên bệnh nhân:</b>
+                </Col>
+                <Col span={20}>
+                  <b>{patient?.name.toUpperCase()}</b>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Năm sinh:</b>
+                </Col>
+                <Col span={20}>
+                  {dayjs(patient.dob).format("YYYY-MM-DD HH:mm:ss")}
+                </Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Số điện thoại:</b>
+                </Col>
+                <Col span={20}>{patient?.phone}</Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Địa chỉ:</b>
+                </Col>
+                <Col span={20}>{patient?.address}</Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Hình thức đến:</b>
+                </Col>
+                <Col span={20}>
+                  <b>Tự đến</b>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={4}>
+                  <b>Chẩn đoán:</b>
+                </Col>
+                <Col span={20}><b>{examResult}</b></Col>
+              </Row>
+              <br />
+              <br />
+            </div>
+          ) : (
+            <></>
+          )}
+          <div style={{ minWidth: "100%", width: "max-content" }}>
+            <Table
+              columns={suppliesPrintColumns}
+              dataSource={selectedSupplies}
+              rowKey={(record) => record.supplyId}
+              pagination={false}
+            />
+            <br />
+            <br />
+            <div>
+              Cộng khoản: <b>{selectedSupplies.length}</b>
+            </div>
+            <div>
+              <u>*Lời dặn: </u>
+            </div>
+            <br />
+            <br />
+            <div
+              style={{
+                width: "90%",
+                display: "flex",
+                justifyContent: "space-around",
+              }}
+            >
+              <div>
+                <div> </div>
+                <br />
+                <div>
+                  <b>NGƯỜI BỆNH</b>
+                </div>
+                <div>
+                  <i>Ký, ghi rõ họ tên</i>
+                </div>
+                <br />
+                <div>
+                  <b>{patient?.name}</b>
+                </div>
+                <div>
+                  <i>Họ tên bố hoặc mẹ bệnh nhân dưới 72 tháng tuổi</i>
+                </div>
+                <br />
+              </div>
+              <div>
+                <div>
+                  <i>{dayjs().format("DD/MM/YYYY")}</i>
+                </div>
+                <div>
+                  <b>BÁC SĨ</b>
+                </div>
+                <div>
+                  <i>Ký, ghi rõ họ tên</i>
+                </div>
+                <br />
+                <div>
+                  <b>{name}</b>
+                </div>
+                <br />
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   ) : (
     <div>An Error Occurs When Getting Patient</div>

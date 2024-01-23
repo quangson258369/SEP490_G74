@@ -18,7 +18,9 @@ const HomePage = () => {
         break;
       }
       case Roles.Doctor: {
-        navigate(ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE);
+        navigate(
+          ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_CHECK_PAGE
+        );
         break;
       }
       case Roles.Nurse: {
@@ -26,7 +28,9 @@ const HomePage = () => {
         break;
       }
       case Roles.Cashier: {
-        navigate(ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE);
+        navigate(
+          ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_PAID_PAGE
+        );
         break;
       }
       default: {

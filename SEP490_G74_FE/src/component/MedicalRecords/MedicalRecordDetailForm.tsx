@@ -56,7 +56,7 @@ const MedicalRecordDetailForm = ({
   const { authenticated } = useContext(AuthContext);
   const [isServiceTypeDisable, setIsServiceTypeDisable] =
     useState<boolean>(false);
-  const [isDoctorDisable, setIsDoctorDisable] = useState<boolean>(false);
+  const [isDoctorDisable, setIsDoctorDisable] = useState<boolean>(true);
   const [isCheckUp, setIsCheckUp] = useState<boolean>(false);
   const [isPaid, setIsPaid] = useState<boolean>(false);
   const [prevMrId, setPrevMrId] = useState<number | undefined>(undefined);
@@ -76,6 +76,7 @@ const MedicalRecordDetailForm = ({
   >([]);
 
   const [isExamReload, setIsExamReload] = useState<boolean>(false);
+  const [isDefaultDoctor, setIsDefaultDoctor] = useState<boolean>(false);
 
   const onFinish = async (values: MedicalRecord) => {
     if (authenticated?.role === Roles.Admin) {
@@ -329,12 +330,6 @@ const MedicalRecordDetailForm = ({
     if (authenticated?.role === Roles.Nurse) {
       setIsServiceTypeDisable(true);
     }
-    if (
-      authenticated?.role === Roles.Doctor &&
-      authenticated?.userId !== defaultMrOption.defaultDoctorId
-    ) {
-      setIsDoctorDisable(true);
-    }
   };
 
   const fetchPatient = async () => {
@@ -514,60 +509,109 @@ const MedicalRecordDetailForm = ({
   };
 
   const handleReCheckUp = async () => {
-    var mrDetail = mrDetailform.getFieldsValue();
-    console.log(mrDetail);
-    var reCheckUpMrModel: MedicalRecordAddModel = {
-      categoryIds: mrDetail.selectedCategoryIds,
-      doctorIds: mrDetail.selectedDoctorIds,
-      patientId: patientId,
-      examReason: "Tái khám",
-      previousMedicalRecordId: medicalRecordId,
-    };
+    var resDefaultDoc = await categoryService.postIsDefaultDoctor();
+    if (resDefaultDoc !== 200) {
+      message.error("Bạn không có quyền sử dụng chức năng này", 2);
+      return;
+    } else {
+      var mrDetail = mrDetailform.getFieldsValue();
+      console.log(mrDetail);
+      var reCheckUpMrModel: MedicalRecordAddModel = {
+        categoryIds: mrDetail.selectedCategoryIds,
+        doctorIds: mrDetail.selectedDoctorIds,
+        patientId: patientId,
+        examReason: "Tái khám",
+        previousMedicalRecordId: medicalRecordId,
+      };
 
-    var response = await medicalRecordService.addMedicalRecord(
-      reCheckUpMrModel
-    );
-    if (response === 200 || response === 201) {
-      var createdMrId = await medicalRecordService.getReCheckUpByPrevMrId(
-        medicalRecordId!
+      var response = await medicalRecordService.addMedicalRecord(
+        reCheckUpMrModel
       );
-
-      if (createdMrId !== undefined) {
-        var medUpdate: MedicalRecordUpdateModel = {
-          categoryIds: mrDetail.selectedCategoryIds,
-          doctorIds: mrDetail.selectedDoctorIds,
-          serviceIds: mrDetail.selectedReCheckUpServiceIds,
-          serviceDetails: mrDetail.selectedReCheckUpServiceIds.map(
-            (serviceId: number) => ({
-              serviceId: serviceId,
-              doctorId:
-                selectedServices.find(
-                  (service) => service.serviceId === serviceId
-                )?.doctorId ?? defaultMrOption.defaultDoctorId,
-            })
-          ),
-        };
-
-        if (medicalRecordId === undefined) {
-          message.error(
-            "Update MR Failed Because Of Invalid Medical Record ID",
-            2
-          );
-          return;
-        }
-
-        var response2 = await medicalRecordService.updateMedicalRecord(
-          createdMrId,
-          medUpdate
+      if (response === 200 || response === 201) {
+        var createdMrId = await medicalRecordService.getReCheckUpByPrevMrId(
+          medicalRecordId!
         );
 
-        if (response2 === 200) {
-          message
-            .success("Update ReCheckUp MR Success", 2)
-            .then(() => window.location.reload());
-        } else {
-          message.error("Update ReCheckUp MR Failed", 2);
+        if (createdMrId !== undefined) {
+          var medUpdate: MedicalRecordUpdateModel = {
+            categoryIds: mrDetail.selectedCategoryIds,
+            doctorIds: mrDetail.selectedDoctorIds,
+            serviceIds: mrDetail.selectedReCheckUpServiceIds,
+            serviceDetails: mrDetail.selectedReCheckUpServiceIds.map(
+              (serviceId: number) => ({
+                serviceId: serviceId,
+                doctorId:
+                  selectedServices.find(
+                    (service) => service.serviceId === serviceId
+                  )?.doctorId ?? defaultMrOption.defaultDoctorId,
+              })
+            ),
+          };
+
+          // medUpdate.serviceDetails.forEach(async (s) => {
+          //   var service: ServiceResponseModel | undefined = services.find(
+          //     (x) => x.serviceId === s.serviceId
+          //   );
+          //   if (service !== undefined) {
+          //     var cate = types.find(
+          //       (x) => x.serviceTypeId === service?.serviceTypeId
+          //     );
+          //     if (cate !== undefined) {
+          //       var assignedDoc =
+          //         await subService.getLeastAssignedDoctorByCategoryId(
+          //           cate.categoryId!
+          //         );
+          //       if (assignedDoc !== undefined) {
+          //         s.doctorId = assignedDoc.userId;
+          //       }
+          //     }
+          //   }
+          // });
+
+          for (const s of medUpdate.serviceDetails) {
+            var service: ServiceResponseModel | undefined = services.find(
+              (x) => x.serviceId === s.serviceId
+            );
+            if (service !== undefined) {
+              var cate = types.find(
+                (x) => x.serviceTypeId === service?.serviceTypeId
+              );
+              if (cate !== undefined) {
+                var assignedDoc =
+                  await subService.getLeastAssignedDoctorByCategoryId(
+                    cate.categoryId!
+                  );
+                if (assignedDoc !== undefined) {
+                  s.doctorId = assignedDoc.userId;
+                }
+              }
+            }
+          }
+
+          if (medicalRecordId === undefined) {
+            message.error(
+              "Mã hồ sơ bệnh án không hợp lệ",
+              2
+            );
+            return;
+          }
+
+          var response2 = await medicalRecordService.updateMedicalRecord(
+            createdMrId,
+            medUpdate
+          );
+
+          if (response2 === 200) {
+            message
+              .success("Tạo hồ sơ tái khám thành công", 2)
+              .then(() => window.location.reload());
+          } else {
+            message.error("Tạo hồ sơ tái khám thất bại", 2);
+          }
         }
+      }else{
+        message.error("Hồ sơ đã có hồ sơ tái khám, không thể tạo thêm", 2);
+        return;
       }
     }
   };
@@ -649,6 +693,14 @@ const MedicalRecordDetailForm = ({
     },
   ];
 
+  const checkIsDefaultDoctor = async () => {
+    var res = await categoryService.postIsDefaultDoctor();
+    if (res !== undefined && res === 200) {
+      return true;
+    }
+    return false;
+  };
+
   const fetchData = async () => {
     if (medicalRecordId === undefined) {
       message.error("Mã hồ sơ không hợp lệ", 2).then(() => navigate("/"));
@@ -657,8 +709,13 @@ const MedicalRecordDetailForm = ({
       var responses = await Promise.all([
         fetchPatient(),
         fetchMedicalRecordDetail(medicalRecordId),
+        checkIsDefaultDoctor(),
       ]);
-      if (responses !== undefined && responses.length === 2) {
+      if (responses !== undefined && responses.length >= 2) {
+        if (responses[2] === true) {
+          setIsDefaultDoctor(true);
+          setIsDoctorDisable(false);
+        }
         setPatient(responses[0]);
         setMrDetail(responses[1]);
         var currentMrDetail = responses[1];
@@ -674,9 +731,8 @@ const MedicalRecordDetailForm = ({
             setDoctors(docs.filter((doc) => doc.isDeleted === false));
             setTypes(types.filter((type) => type.isDeleted === false));
             // get services by selectedTypes
-            var typeIds: number[] | undefined = currentMrDetail?.serviceTypes.map(
-              (t) => t.serviceTypeId
-            );
+            var typeIds: number[] | undefined =
+              currentMrDetail?.serviceTypes.map((t) => t.serviceTypeId);
             var services: ServiceResponseModel[] = [];
             if (typeIds !== undefined) {
               services = await fetchServices(typeIds);
@@ -874,10 +930,7 @@ const MedicalRecordDetailForm = ({
           <div
             style={{
               // display: isPaid === true || isCheckUp === true ? "none" : "block",
-              display:
-                authenticated?.userId !== defaultMrOption.defaultDoctorId
-                  ? "none"
-                  : undefined,
+              display: isDefaultDoctor !== true ? "none" : undefined,
             }}
           >
             <Row gutter={10}>
@@ -917,10 +970,7 @@ const MedicalRecordDetailForm = ({
           {/*=========Select Service Type=========== */}
           <div
             style={{
-              display:
-                authenticated?.userId !== defaultMrOption.defaultDoctorId
-                  ? "none"
-                  : undefined,
+              display: isDefaultDoctor !== true ? "none" : undefined,
             }}
           >
             {isPaid === false && isCheckUp === false && (
@@ -968,38 +1018,43 @@ const MedicalRecordDetailForm = ({
         </Form>
       </div>
       <Divider />
-      <Row style={{ fontWeight: "bold" }}>
-        <Col span={8}>Dịch vụ đã chọn: </Col>
-        <Col span={8}>Giá tiền: </Col>
-        <Col span={8}>Bác sĩ khám: </Col>
-      </Row>
-      <br />
-      <div id="listServicePrice">
-        {selectedServices.map((service) => (
-          <div key={service.serviceId}>
-            <Row>
-              <Col span={8}>{service.serviceName}</Col>
-              <Col span={8}>{service.price.toLocaleString()} VND</Col>
-              <Col span={8}>{service.doctorName}</Col>
-            </Row>
-          </div>
-        ))}
+      <div style={{ display: isDefaultDoctor !== true ? "none" : undefined }}>
+        <Row style={{ fontWeight: "bold" }}>
+          <Col span={8}>Dịch vụ đã chọn: </Col>
+          <Col span={8}>Giá tiền: </Col>
+          <Col span={8}>Bác sĩ khám: </Col>
+        </Row>
+        <br />
+        <div id="listServicePrice">
+          {selectedServices.map((service) => (
+            <div key={service.serviceId}>
+              <Row>
+                <Col span={8}>{service.serviceName}</Col>
+                <Col span={8}>{service.price.toLocaleString()} VND</Col>
+                <Col span={8}>{service.doctorName}</Col>
+              </Row>
+            </div>
+          ))}
+        </div>
+        <Divider dashed />
+        <Row>
+          <Col span={12}>
+            <b>Tạm tính: </b>
+          </Col>
+          <Col span={12}>
+            {selectedServices
+              .reduce((total, s) => total + s.price, 0)
+              .toLocaleString()}{" "}
+            VND
+          </Col>
+        </Row>
+        <br />
       </div>
-      <Divider dashed />
-      <Row>
-        <Col span={12}>
-          <b>Tạm tính: </b>
-        </Col>
-        <Col span={12}>
-          {selectedServices
-            .reduce((total, s) => total + s.price, 0)
-            .toLocaleString()}{" "}
-          VND
-        </Col>
-      </Row>
-      <br />
       {/*=========Examination=========== */}
       <Collapse
+        style={{
+          display: authenticated?.role === Roles.Cashier ? "none" : undefined,
+        }}
         destroyInactivePanel
         items={itemsExamination}
         onChange={handleChangeCollapse}

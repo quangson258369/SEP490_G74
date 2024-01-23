@@ -116,6 +116,34 @@ const getMedicalRecordsUnCheckByPatientId = async (
   }
 };
 
+const getMedicalRecordsUnPaidByPatientId = async (
+  patientId: number,
+  pageIndex: number,
+  pageSize: number
+): Promise<ApiResponseModel | undefined> => {
+  try {
+    const token = localStorage.getItem(TOKEN);
+    if (token !== null) {
+      var uToken: JWTTokenModel = jwtDecode(token);
+
+      if (uToken !== null) {
+        var url = `${
+          apiLinks.medicalRecords.getMedicalRecordsUnPaidByPatientId
+        }${patientId}?pageIndex=${pageIndex}&pageSize=${pageSize}`;
+        const response = await httpClient.get({
+          url: url,
+          authorization: `Bearer ${token}`,
+        });
+        return response.data.result as ApiResponseModel;
+      }
+    }
+    return undefined;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+
 const getMedicalRecordDetailById = async (
   id: number
 ): Promise<MedicalRecordDetailModel | undefined> => {
@@ -219,6 +247,7 @@ const medicalRecordService = {
   updateMedicalRecord: updateMedicalRecord,
   getReCheckUpByPrevMrId: getReCheckUpByPrevMrId,
   getMedicalRecordsUnCheckByPatientId: getMedicalRecordsUnCheckByPatientId,
+  getMedicalRecordsUnPaidByPatientId: getMedicalRecordsUnPaidByPatientId,
 };
 
 export default medicalRecordService;

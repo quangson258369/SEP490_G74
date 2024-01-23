@@ -22,6 +22,7 @@ import ListMedicalRecordUnCheckPage from "../Pages/ListMedicalRecordUnCheckPage"
 import AccountsTable from "../component/Admin/AccountsTable";
 import ServiceTable from "../component/Admin/ServiceTable";
 import SupplyTable from "../component/Admin/SupplyTable";
+import ListMedicalRecordUnPaidPage from "../Pages/ListMedicalRecordUnPaidPage";
 
 const AppRoutes = () => {
   return (
@@ -145,7 +146,7 @@ const AppRoutes = () => {
         </Route>
 
         <Route
-            path={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
+          path={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_PAGE}
           element={<ProtectedRoute role={[Roles.Doctor]} />}
         >
           <Route
@@ -159,14 +160,18 @@ const AppRoutes = () => {
         </Route>
 
         <Route
-            path={ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_CHECK_PAGE}
+          path={
+            ROUTE_URLS.DOCTOR + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_CHECK_PAGE
+          }
           element={<ProtectedRoute role={[Roles.Doctor]} />}
         >
           <Route
             path=""
             element={
               <DoctorLayoutPage
-                childComp={<DoctorPage childComp={<ListMedicalRecordUnCheckPage />} />}
+                childComp={
+                  <DoctorPage childComp={<ListMedicalRecordUnCheckPage />} />
+                }
               />
             }
           />
@@ -240,7 +245,28 @@ const AppRoutes = () => {
             path=""
             element={
               <CashierLayoutPage
-                childComp={<CashierPage childComp={<ListMedicalRecordPage />} />}
+                childComp={
+                  <CashierPage childComp={<ListMedicalRecordPage />} />
+                }
+              />
+            }
+          />
+        </Route>
+
+        <Route
+          path={
+            ROUTE_URLS.CASHIER +
+            ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_PAID_PAGE
+          }
+          element={<ProtectedRoute role={[Roles.Cashier]} />}
+        >
+          <Route
+            path=""
+            element={
+              <CashierLayoutPage
+                childComp={
+                  <CashierPage childComp={<ListMedicalRecordUnPaidPage />} />
+                }
               />
             }
           />

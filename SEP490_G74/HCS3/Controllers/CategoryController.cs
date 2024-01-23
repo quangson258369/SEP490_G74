@@ -76,5 +76,22 @@ namespace HCS.API.Controllers
             var result = await _categoryService.GetDoctorCategoryByServiceId(id, mrId);
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+
+        [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
+        [HttpPost("is-default-doctor")]
+        public async Task<IActionResult> IsDefaultDoctor()
+        {
+            var roleClaims = User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+            if (roleClaims is not null)
+            {
+                var userIdString = roleClaims.Value;
+                var userId = int.Parse(userIdString);
+                var result = await _categoryService.IsDefaultDoctor(userId);
+                return result.IsSuccess ? Ok(result) : BadRequest(result);
+            }
+            return Unauthorized();
+        }
     }
 }

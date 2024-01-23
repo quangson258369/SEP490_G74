@@ -1,7 +1,9 @@
 using HCS.Business.RequestModel.ExaminationResultRequestModel;
 using HCS.Business.Service;
+using HCS.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HCS.API.Controllers;
 
@@ -33,7 +35,6 @@ public class ExaminationResultController : ControllerBase
     public async Task<IActionResult> GetExaminationResultByMedicalRecordId(int medicalRecordId)
     {
         var result = await _service.GetExaminationResultByMedicalRecordId(medicalRecordId);
-
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
@@ -41,9 +42,20 @@ public class ExaminationResultController : ControllerBase
     [HttpGet("detail/id/{id:int}")]
     public async Task<IActionResult> GetListExamDetailByMedicalRecordId(int id)
     {
-        var result = await _service.GetListExamDetailByMedicalRecordId(id);
+        //var result = await _service.GetListExamDetailByMedicalRecordId(id);
 
-        return result.IsSuccess ? Ok(result) : BadRequest(result);
+        //return result.IsSuccess ? Ok(result) : BadRequest(result);
+        var roleClaims = User.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+        if (roleClaims is not null)
+        {
+            var userIdString = roleClaims.Value;
+            var userId = int.Parse(userIdString);
+            var result = await _service.GetListExamDetailByMedicalRecordId(id, userId);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+        return Unauthorized(); ;
     }
 
     [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]

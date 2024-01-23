@@ -22,6 +22,7 @@ const apiLinks = {
         // getMedicalRecordsByPatientId:`${baseUrls}MedicalRecords/id/:patientId?pageIndex=1&pageSize=5`,
         getMedicalRecordsByPatientId:`${baseUrls}MedicalRecords/id/`,
         getMedicalRecordsUnCheckByPatientId:`${baseUrls}MedicalRecords/id/un-check/`,
+        getMedicalRecordsUnPaidByPatientId:`${baseUrls}MedicalRecords/id/un-paid/`,
         postMedicalRecord:`${baseUrls}MedicalRecords`,
         getMedicalRecordById:`${baseUrls}MedicalRecords/detail/id/`,
         patchMrStatusPaid:`${baseUrls}MedicalRecords/payment/id/`,
@@ -35,6 +36,7 @@ const apiLinks = {
         putCategory:`${baseUrls}Category/`,
         deleteCategory:`${baseUrls}Category/`,
         getDoctorCategory: `${baseUrls}Category/doctor-category/`,
+        postIsDefaultDoctor: `${baseUrls}Category/is-default-doctor`,
     },
     serviceType:{
         getServicesType:`${baseUrls}ServiceType/`,

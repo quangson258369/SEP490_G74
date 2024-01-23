@@ -3,6 +3,8 @@ using HCS.Business.RequestModel.ExaminationResultRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.ExaminationResultResponseModel;
 using HCS.DataAccess.UnitOfWork;
+using HCS.Domain.Commons;
+using HCS.Domain.Enums;
 using HCS.Domain.Models;
 
 namespace HCS.Business.Service;
@@ -11,7 +13,7 @@ public interface IExaminationResultService
 {
     Task<ApiResponse> AddExaminationResult(ExaminationResultAddModel examinationResultAddModel);
     Task<ApiResponse> GetExaminationResultByMedicalRecordId(int medicalRecordId);
-    Task<ApiResponse> GetListExamDetailByMedicalRecordId(int medicalRecordId);
+    Task<ApiResponse> GetListExamDetailByMedicalRecordId(int medicalRecordId, int userId);
     Task<ApiResponse> AddExamDetailsByMedicalRecordId(int medicalRecordId, ExaminationDetaislResponseModel examDetails);
     Task<ApiResponse> PayServiceMr(int medicalRecordId, int serviceId);
 }
@@ -73,7 +75,7 @@ public class ExaminationResultService : IExaminationResultService
         return response.SetOk(exampleResponse);
     }
 
-    public async Task<ApiResponse> GetListExamDetailByMedicalRecordId(int medicalRecordId)
+    public async Task<ApiResponse> GetListExamDetailByMedicalRecordId(int medicalRecordId, int userId)
     {
         var response = new ApiResponse();
         var mr = await _unitOfWork.MedicalRecordRepo.GetMrById(medicalRecordId);
@@ -98,6 +100,31 @@ public class ExaminationResultService : IExaminationResultService
             Status = x.Status ?? false,
             IsPaid = x.IsPaid
         }).ToList();
+
+        var user = await _unitOfWork.UserRepo.GetAsync(x => x.UserId == userId);
+        if(user is not null 
+            && user.RoleId == (int)UserRole.Doctor
+            && user.CategoryId is not null
+            && user.CategoryId != DefaultMrOption.DefaultCategoryId)
+        {
+            var listDetailOfDoctor = new List<ExamDetail>();
+            foreach(var detail in details)
+            {
+                var mrCheckDoc = await _unitOfWork.MedicalRecordRepo.GetMrById(medicalRecordId);
+                if(mrCheckDoc is not null && mrCheckDoc.ServiceMedicalRecords is not null)
+                {
+                    var sm = mrCheckDoc.ServiceMedicalRecords.FirstOrDefault(x => x.ServiceId == detail.ServiceId);
+                    if(sm is not null)
+                    {
+                        if(sm.DoctorId == userId)
+                        {
+                            listDetailOfDoctor.Add(detail);
+                        }
+                    }
+                }
+            }
+            details = listDetailOfDoctor;
+        }
 
         return response.SetOk(new ExaminationDetaislResponseModel() { MedicalRecordId = medicalRecordId, ExamDetails = details });
     }
@@ -132,6 +159,36 @@ public class ExaminationResultService : IExaminationResultService
         var isPaid = await _unitOfWork.ExaminationResultRepo.PayService(medicalRecordId, serviceId);
         if (isPaid)
         {
+            await _unitOfWork.SaveChangeAsync();
+            var mrDetail = await _unitOfWork.MedicalRecordRepo.GetMrById(medicalRecordId);
+            if (mrDetail is not null)
+            {
+                var listMr = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
+                listMr = listMr.OrderBy(x => x.Index).ToList();
+                var lastEditMr = listMr.FindLast(x => x.Priority == 0);
+                if (lastEditMr is not null)
+                {
+                    mrDetail.Index = lastEditMr.Index + 1;
+                    listMr = listMr.Where(x => x.Index >= mrDetail.Index && x.MedicalRecordId != mrDetail.MedicalRecordId).ToList();
+                    for (int i = 0; i < listMr.Count; i++)
+                    {
+                        var index = i;
+                        var highestIndexItem = listMr.OrderByDescending(x => x.Index).FirstOrDefault();
+                        if (highestIndexItem is not null)
+                        {
+                            listMr[index].Index = highestIndexItem.Index + 1;
+                        }
+                    }
+                }
+                else
+                {
+                    var lastMr = listMr.Last();
+                    if (lastMr is not null)
+                    {
+                        mrDetail.Index = lastMr.Index + 1;
+                    }
+                }
+            }
             await _unitOfWork.SaveChangeAsync();
             return new ApiResponse().SetOk("Paid");
         }

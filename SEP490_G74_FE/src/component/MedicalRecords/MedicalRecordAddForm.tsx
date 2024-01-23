@@ -44,11 +44,14 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
   const [doctors, setDoctors] = useState<DoctorResponseModel[]>([]);
 
   const onFinish = async (values: MedicalRecord) => {
+    if(values.selectedDoctorId === undefined || values.selectedDoctorId === null){
+      message.error("Hãy chọn bác sĩ cho bệnh án");
+      return;
+    }
     let isCateHasDoc = true;
-
     var medAddForm: MedicalRecordAddModel = {
       categoryIds: values.selectedCategoryIds,
-      doctorIds: values.selectedDoctorIds,
+      doctorIds: [values.selectedDoctorId],
       examReason: "",
       patientId: values.patientId,
     };
@@ -197,7 +200,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
           var leastAssignedDefaultDoctor = await subService.getLeastAssignedDoctorByCategoryId(defaultCate.categoryId);
           if(leastAssignedDefaultDoctor){
             mrAddform.setFieldsValue({
-              selectedDoctorIds: [leastAssignedDefaultDoctor.userId],
+              selectedDoctorId: leastAssignedDefaultDoctor.userId,
             });
           }
           
@@ -337,7 +340,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
             label="Chọn khoa khám"
           >
             <Select
-              mode="multiple"
+              //mode="multiple"
               disabled
               onChange={handleChangeCategory}
               options={cates.map((category) => ({
@@ -349,12 +352,11 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
         </Col>
         <Col span={12}>
           <Form.Item<MedicalRecord>
-            name="selectedDoctorIds"
+            name="selectedDoctorId"
             label="Chọn bác sĩ khám"
           >
             <Select
-              mode="multiple"
-              disabled
+              //mode="multiple"
               options={doctors.map((doctor) => ({
                 value: doctor.userId,
                 label: doctor.userName,

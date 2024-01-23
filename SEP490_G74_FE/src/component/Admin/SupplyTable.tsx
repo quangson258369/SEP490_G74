@@ -40,7 +40,7 @@ const CategoryTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  type DataIndex = keyof CategoryResponseModel
+  type DataIndex = keyof CategoryResponseModel;
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -58,9 +58,7 @@ const CategoryTable: React.FC = () => {
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
-  ): ColumnType<
-    CategoryResponseModel
-  > => ({
+  ): ColumnType<CategoryResponseModel> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -391,7 +389,6 @@ const CategoryTable: React.FC = () => {
 
   //================= Handle Add Call API =================
   const handleInsertSupplyType = async (values: SupplyTypeResponseModel) => {
-
     var supplyTypeAdd: SupplyTypeAddModel = {
       suppliesTypeName: values.suppliesTypeName,
     };
@@ -501,157 +498,6 @@ const CategoryTable: React.FC = () => {
   };
 
   //===================== Columns =====================
-
-  const cateColumns: ColumnsType<CategoryResponseModel> = [
-    {
-      title: "ID",
-      dataIndex: "categoryId",
-      key: "actionC_categoryId",
-      sorter: (a, b) => a.categoryId - b.categoryId,
-    },
-    {
-      title: "Name",
-      dataIndex: "categoryName",
-      key: "actionC_categoryName",
-      sorter: (a, b) => a.categoryName.length - b.categoryName.length,
-      ...getColumnSearchProps("categoryName"),
-    },
-    {
-      title: "",
-      key: `actionC`,
-      render: (_, record) => (
-        <Space size="middle" key={`space_${record.categoryId}`}>
-          <Button
-            key={`editC_${record.categoryId}`}
-            type="primary"
-            onClick={() => handleOpenEditCategory(record.categoryId)}
-          >
-            Chỉnh sửa
-          </Button>
-          <Button
-            key={`removeC_${record.categoryId}`}
-            danger
-            type="primary"
-            onClick={() => handleDeleteCategory(record.categoryId)}
-          >
-            Vô hiệu hóa
-          </Button>
-          <Button
-            key={`addTypeC_${record.categoryId}`}
-            type="primary"
-            onClick={() => handleAddServiceType(record.categoryId)}
-          >
-            Thêm mới loại dịch vụ
-          </Button>
-        </Space>
-      ),
-    },
-  ];
-
-  const typeColumns: ColumnsType<ServiceTypeResponseModel> = [
-    {
-      title: "ID",
-      dataIndex: "serviceTypeId",
-      key: "actionT_serviceTypeId",
-      sorter: (a, b) => a.serviceTypeId - b.serviceTypeId,
-    },
-    {
-      title: "Name",
-      dataIndex: "serviceTypeName",
-      key: "actionT_serviceTypeName",
-      sorter: (a, b) => a.serviceTypeName.length - b.serviceTypeName.length,
-    },
-    {
-      title: "Category",
-      dataIndex: "categoryName",
-      key: "actionT_categoryName",
-      sorter: (a, b) => a.categoryName!.length - b.categoryName!.length,
-    },
-    {
-      title: "",
-      key: "actionT",
-      render: (_, record) => (
-        <Space size="middle" key={`spaceT_${record.serviceTypeId}`}>
-          <Button
-            key={`editT_${record.serviceTypeId}`}
-            type="primary"
-            onClick={() =>
-              handleOpenEditServiceType(record.serviceTypeId, record.categoryId)
-            }
-          >
-            Chỉnh sửa
-          </Button>
-          <Button
-            key={`removeT_${record.serviceTypeId}`}
-            danger
-            type="primary"
-            onClick={() => handleDeleteServiceType(record.serviceTypeId)}
-          >
-            Vô hiệu hóa
-          </Button>
-          <Button
-            key={`addTypeC_${record.serviceTypeId}`}
-            type="primary"
-            onClick={() => handleAddService(record.serviceTypeId)}
-          >
-            Thêm mới dịch vụ
-          </Button>
-        </Space>
-      ),
-    },
-  ];
-
-  const servicesColumns: ColumnsType<ServiceResponseModel> = [
-    {
-      title: "ID",
-      dataIndex: "serviceId",
-      key: "actionC_serviceId",
-      sorter: (a, b) => a.serviceId - b.serviceId,
-    },
-    {
-      title: "Name",
-      dataIndex: "serviceName",
-      key: "actionC_serviceName",
-      sorter: (a, b) => a.serviceName.length - b.serviceName.length,
-    },
-    {
-      title: "Giá",
-      dataIndex: "price",
-      key: "actionC_price",
-      sorter: (a, b) => a.price - b.price,
-    },
-    {
-      title: "Type",
-      dataIndex: "serviceTypeName",
-      key: "actionC_serviceTypeName",
-      sorter: (a, b) => a.serviceTypeName!.length - b.serviceTypeName!.length,
-    },
-    {
-      title: "",
-      key: "actionC",
-      render: (_, record) => (
-        <Space size="middle" key={`spaceS_${record.serviceId}`}>
-          <Button
-            key={`editS_${record.serviceId}`}
-            type="primary"
-            onClick={() =>
-              handleOpenEditService(record.serviceId, record.serviceTypeId)
-            }
-          >
-            Chỉnh sửa
-          </Button>
-          <Button
-            key={`removeS_${record.serviceId}`}
-            danger
-            type="primary"
-            onClick={() => handleDeleteService(record.serviceId)}
-          >
-            Vô hiệu hóa
-          </Button>
-        </Space>
-      ),
-    },
-  ];
 
   const supplyTypeColumns: ColumnsType<SupplyTypeResponseModel> = [
     {
@@ -774,59 +620,6 @@ const CategoryTable: React.FC = () => {
     },
   ];
 
-  //===================== Fetch Data =====================
-
-  const fetchCategories = async () => {
-    var response = await categoryService.getCategories();
-    if (response === undefined) {
-      message.error("Get Categories Failed", 2);
-    } else {
-      console.log(response);
-      setCates(response);
-      return response;
-    }
-  };
-
-  const fetchServiceTypes = async (cates: CategoryResponseModel[]) => {
-    var response = await subService.getServicesType(0);
-    if (response === undefined) {
-      message.error("Get Categories Failed", 2);
-    } else {
-      console.log(response);
-      //map category name to service type
-      response.map((item: ServiceTypeResponseModel) => {
-        item.categoryName = cates.find(
-          (cate) => cate.categoryId === item.categoryId
-        )?.categoryName;
-        item.categoryId = cates.find(
-          (cate) => cate.categoryId === item.categoryId
-        )?.categoryId;
-      });
-      setServiceTypes(response);
-      return response;
-    }
-  };
-
-  const fetchServices = async (serviceTypes: ServiceTypeResponseModel[]) => {
-    var response = await subService.getServices(0);
-    if (response === undefined) {
-      message.error("Get Categories Failed", 2);
-    } else {
-      console.log(response);
-      //map service type name to service
-      response.map((item: ServiceResponseModel) => {
-        item.serviceTypeName = serviceTypes.find(
-          (type) => type.serviceTypeId === item.serviceTypeId
-        )?.serviceTypeName;
-        item.serviceTypeId = serviceTypes.find(
-          (type) => type.serviceTypeId === item.serviceTypeId
-        )?.serviceTypeId;
-      });
-      setServices(response);
-      return response;
-    }
-  };
-
   const fetchSupplyTypes = async () => {
     var response = await subService.getAllSupplyTypes();
     if (response === undefined) {
@@ -862,45 +655,6 @@ const CategoryTable: React.FC = () => {
   };
 
   //==============Delete=================
-  //show confirm dialog before delete
-  const handleDeleteCategory = (id: number) => {
-    Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
-      onOk: () => {
-        removeCategory(id);
-      },
-      onCancel: () => {
-        // Do nothing
-      },
-    });
-  };
-
-  const handleDeleteServiceType = (id: number) => {
-    Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
-      onOk: () => {
-        removeServiceType(id);
-      },
-      onCancel: () => {
-        // Do nothing
-      },
-    });
-  };
-
-  const handleDeleteService = (id: number) => {
-    Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
-      onOk: () => {
-        removeService(id);
-      },
-      onCancel: () => {
-        // Do nothing
-      },
-    });
-  };
 
   const handleDeleteSupplyType = (id: number) => {
     Modal.confirm({
@@ -928,38 +682,6 @@ const CategoryTable: React.FC = () => {
     });
   };
   //===========Delete API=============
-  const removeCategory = async (id: number) => {
-    var response = await categoryService.deleteCategories(id);
-    if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
-        window.location.reload();
-      });
-    } else {
-      message.error("Vô hiệu hóa thất bại", 2);
-    }
-  };
-
-  const removeServiceType = async (id: number) => {
-    var response = await subService.deleteServiceType(id);
-    if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
-        window.location.reload();
-      });
-    } else {
-      message.error("Vô hiệu hóa thất bại", 2);
-    }
-  };
-
-  const removeService = async (id: number) => {
-    var response = await subService.deleteService(id);
-    if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
-        window.location.reload();
-      });
-    } else {
-      message.error("Vô hiệu hóa thất bại", 2);
-    }
-  };
 
   const removeSupplyType = async (id: number) => {
     var response = await subService.deleteSupplyType(id);
@@ -987,18 +709,9 @@ const CategoryTable: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      var cates = await fetchCategories();
-      if (cates !== undefined) {
-        var types = await fetchServiceTypes(cates);
-        if (types !== undefined) {
-          var services = await fetchServices(types);
-          if (services !== undefined) {
-            var supplyTypes = await fetchSupplyTypes();
-            if (supplyTypes !== undefined) {
-              var supplies = await fetchSupplies(supplyTypes);
-            }
-          }
-        }
+      var supplyTypes = await fetchSupplyTypes();
+      if (supplyTypes !== undefined) {
+        var supplies = await fetchSupplies(supplyTypes);
       }
     };
     fetchData();
@@ -1015,73 +728,6 @@ const CategoryTable: React.FC = () => {
         alignItems: "center",
       }}
     >
-      {/*===================== Category =====================*/}
-      {/* <h2>Khoa khám</h2>
-      <Row>
-        <Col span={24}></Col>
-      </Row>
-      <div>
-        <br />
-      </div>
-      <Row>
-        <Col span={24}>
-          <Table<CategoryResponseModel>
-            rowKey={(record) => `idC_${record.categoryId}`}
-            dataSource={cates}
-            columns={cateColumns}
-            pagination={{ pageSize: 5 }}
-            style={{ width: "auto", minWidth: "400px" }}
-            onRow={(record) => ({
-              onClick: () => setSelectedCategoryId(record.categoryId), // set the selected id when a row is clicked
-            })}
-          />
-        </Col>
-      </Row> */}
-      {/*===================== Service Type =====================*/}
-      {/* <h2>Loại dịch vụ</h2>
-      <Row>
-        <Col span={24}></Col>
-      </Row>
-      <div>
-        <br />
-      </div>
-      <Row>
-        <Col span={24}>
-          <Table<ServiceTypeResponseModel>
-            rowKey={(record) => `idT_${record.serviceTypeId}`}
-            dataSource={serviceTypes}
-            pagination={{ pageSize: 5 }}
-            columns={typeColumns}
-            style={{ width: "auto", minWidth: "400px" }}
-            onRow={(record) => ({
-              onClick: () => setSelectedTypeId(record.serviceTypeId), // set the selected id when a row is clicked
-            })}
-          />
-        </Col>
-      </Row> */}
-      {/*===================== Service =====================*/}
-      {/* <h2>Dịch vụ</h2>
-      <Row>
-        <Col span={24}></Col>
-      </Row>
-      <div>
-        <br />
-      </div>
-      <Row>
-        <Col span={24}>
-          <Table<ServiceResponseModel>
-            rowKey={(record) => `idS_${record.serviceId}`}
-            dataSource={services}
-            pagination={{ pageSize: 5 }}
-            columns={servicesColumns}
-            style={{ width: "auto", minWidth: "400px" }}
-            onRow={(record) => ({
-              onClick: () => setSelectedServiceId(record.serviceId), // set the selected id when a row is clicked
-            })}
-          />
-        </Col>
-      </Row> */}
-
       {/*============== Supply type ==================*/}
 
       <Row
@@ -1152,177 +798,6 @@ const CategoryTable: React.FC = () => {
       </Row>
 
       {/*======================== PopUp Modal ==========================*/}
-
-      {/*=============== Edit category modal ========================*/}
-      <Modal
-        title="Chỉnh sửa khoa khám"
-        key="editSubModal"
-        onCancel={handleCancelCateEdit}
-        open={editCateModalVisible}
-        footer={[
-          <Button
-            key="submitF"
-            form="editForm"
-            type="primary"
-            htmlType="submit"
-          >
-            Chỉnh sửa
-          </Button>,
-          <Button key="removeF" type="primary" onClick={handleCancelCateEdit}>
-            Hủy
-          </Button>,
-        ]}
-      >
-        {/* Edit category form */}
-        <Form
-          id="editForm"
-          form={editCateForm}
-          layout="vertical"
-          name="basic"
-          onFinish={handleEditCategory}
-        >
-          <Form.Item<CategoryResponseModel> label="ID" name="categoryId">
-            <Input placeholder="ID" disabled />
-          </Form.Item>
-          <Form.Item<CategoryResponseModel> label="Tên" name="categoryName">
-            <Input placeholder="Nhập tên" />
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/*=============== Add service type modal ========================*/}
-      <Modal
-        title="Thêm mới loại dịch vụ"
-        open={openServiceType}
-        onCancel={handleCancelServiceType}
-        maskClosable={false}
-        width="500px"
-        footer={[
-          <Button key="back" onClick={handleCancelServiceType}>
-            Hủy
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            form="serviceTypeAddForm"
-            htmlType="submit"
-          >
-            Lưu
-          </Button>,
-        ]}
-      >
-        <ServiceTypeAddForm id={selectedCategoryId} />
-      </Modal>
-
-      {/*=============== Edit service type modal ========================*/}
-      <Modal
-        title="Chỉnh sửa loại dịch vụ"
-        key="editTypeModal"
-        onCancel={handleCancelTypeEdit}
-        open={editTypeModalVisible}
-        footer={[
-          <Button
-            key="submitTypeF"
-            form="editTypeForm"
-            type="primary"
-            htmlType="submit"
-          >
-            Chỉnh sửa
-          </Button>,
-          <Button key="removeF" type="primary" onClick={handleCancelTypeEdit}>
-            Hủy
-          </Button>,
-        ]}
-      >
-        {/*==== Edit service type form ===== */}
-        <Form
-          id="editTypeForm"
-          form={editTypeForm}
-          layout="vertical"
-          name="basicT"
-          onFinish={handleEditType}
-        >
-          <Form.Item<ServiceTypeResponseModel> label="ID" name="serviceTypeId">
-            <Input placeholder="ID" disabled />
-          </Form.Item>
-          <Form.Item<ServiceTypeResponseModel>
-            label="Tên"
-            name="serviceTypeName"
-          >
-            <Input placeholder="Nhập tên" />
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/*=============== Add service modal ========================*/}
-      <Modal
-        title="Thêm mới dịch vụ"
-        open={openService}
-        onCancel={handleCancelService}
-        maskClosable={false}
-        width="500px"
-        footer={[
-          <Button key="back" onClick={handleCancelService}>
-            Hủy
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            form="serviceAddForm"
-            htmlType="submit"
-          >
-            Lưu
-          </Button>,
-        ]}
-      >
-        {/*====== Form Add Service ============*/}
-        <ServiceAddForm id={selectedTypeId} />
-      </Modal>
-
-      {/*================== Edit service modal ===================*/}
-      <Modal
-        title="Chỉnh sửa dịch vụ"
-        key="editServiceModal"
-        onCancel={handleCancelServiceEdit}
-        open={editServiceModalVisible}
-        footer={[
-          <Button
-            key="submitTypeF"
-            form="editServiceForm"
-            type="primary"
-            htmlType="submit"
-          >
-            Chỉnh sửa
-          </Button>,
-          <Button
-            key="removeF"
-            type="primary"
-            onClick={handleCancelServiceEdit}
-          >
-            Hủy
-          </Button>,
-        ]}
-      >
-        {/*===== Edit service form =========*/}
-        <Form
-          id="editServiceForm"
-          form={editServiceForm}
-          layout="vertical"
-          name="basic"
-          onFinish={handleEditService}
-        >
-          <Form.Item<ServiceResponseModel> label="ID" name="serviceId">
-            <Input placeholder="ID" disabled />
-          </Form.Item>
-          <Form.Item<ServiceResponseModel> label="Tên" name="serviceName">
-            <Input placeholder="Nhập tên" />
-          </Form.Item>
-          <Form.Item<ServiceResponseModel> label="Tên" name="price">
-            <InputNumber min={1} max={900000} placeholder="Giá dịch vụ"/>
-          </Form.Item>
-        </Form>
-      </Modal>
-
       {/*=============== Edit supply type modal ========================*/}
       <Modal
         title="Chỉnh sửa loại thuốc"
