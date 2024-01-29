@@ -1,5 +1,6 @@
 using HCS.Business.RequestModel.ExaminationResultRequestModel;
 using HCS.Business.Service;
+using HCS.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -29,7 +30,7 @@ public class ExaminationResultController : ControllerBase
         return result.IsSuccess ? Ok(result) : BadRequest(result);
     }
 
-    [Authorize(Roles = "Admin, Doctor, Nurse")]
+    [Authorize(Roles = "Admin, Doctor, Nurse, Cashier")]
     [HttpGet("id/{medicalRecordId:int}")]
     public async Task<IActionResult> GetExaminationResultByMedicalRecordId(int medicalRecordId)
     {

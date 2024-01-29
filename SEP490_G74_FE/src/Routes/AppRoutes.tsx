@@ -23,6 +23,7 @@ import AccountsTable from "../component/Admin/AccountsTable";
 import ServiceTable from "../component/Admin/ServiceTable";
 import SupplyTable from "../component/Admin/SupplyTable";
 import ListMedicalRecordUnPaidPage from "../Pages/ListMedicalRecordUnPaidPage";
+import MrDetailPage from "../Pages/MrDetailPage";
 
 const AppRoutes = () => {
   return (
@@ -255,8 +256,7 @@ const AppRoutes = () => {
 
         <Route
           path={
-            ROUTE_URLS.CASHIER +
-            ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_PAID_PAGE
+            ROUTE_URLS.CASHIER + ROUTE_URLS.LIST_MEDICAL_RECORDS_UN_PAID_PAGE
           }
           element={<ProtectedRoute role={[Roles.Cashier]} />}
         >
@@ -276,6 +276,10 @@ const AppRoutes = () => {
         <Route
           path={ROUTE_URLS.UNAUTHORIZED_PAGE}
           element={<UnauthorizedPage />}
+        />
+        <Route
+          path={ROUTE_URLS.MEDICAL_RECORD_DETAIL_PAGE}
+          element={<DoctorLayoutPage childComp={<MrDetailPage/>} />}
         />
       </Routes>
     </BrowserRouter>

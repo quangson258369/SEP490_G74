@@ -15,6 +15,8 @@ import { ApiResponseModel } from "../../Models/PatientModel";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
+import { PrescriptionDiagnosIsPaidModel } from "../../Models/SubEntityModel";
+import subService from "../../Services/SubService";
 
 const ListMedicalRecordUnCheckTable = () => {
   //const { id } = useParams<{ id: string }>();
@@ -29,7 +31,7 @@ const ListMedicalRecordUnCheckTable = () => {
   const [isSupplyPresReload, setIsSupplyPresReload] = useState<boolean>(false);
   const [openInvoice, setOpenInvoice] = useState<boolean>(false);
   const [openSupplyPres, setOpenSupplyPres] = useState<boolean>(false);
-  const [isSelectedMrPaid, setIsSelectedMrPaid ] = useState<boolean>(false);
+  const [isSelectedMrPaid, setIsSelectedMrPaid] = useState<boolean>(false);
 
   //Pagination
   const [pagination, setPagination] = useState({
@@ -160,11 +162,9 @@ const ListMedicalRecordUnCheckTable = () => {
     MedicalRecordTableModel[]
   >([]);
 
-
   const handleCancel = () => {
     setOpen(false);
   };
-
 
   const handleCancelInvoice = () => {
     setOpenInvoice(false);
@@ -220,9 +220,8 @@ const ListMedicalRecordUnCheckTable = () => {
     }
   };
 
-
-  const handleInvoice = (mrId: number, isPaid:boolean) => {
-    setIsSelectedMrPaid(isPaid)
+  const handleInvoice = (mrId: number, isPaid: boolean) => {
+    setIsSelectedMrPaid(isPaid);
     setIsInvoiceReload(!isInvoiceReload);
     setOpenInvoice(true);
     setSelectedMrId(mrId);
@@ -240,14 +239,14 @@ const ListMedicalRecordUnCheckTable = () => {
       dataIndex: "medicalRecordId",
       key: "medicalRecordId",
       render: (text) => <a>{text}</a>,
-      sorter : (a, b) => a.medicalRecordId - b.medicalRecordId
+      sorter: (a, b) => a.medicalRecordId - b.medicalRecordId,
     },
     {
       title: "Mã bệnh nhân",
       dataIndex: "patientId",
       key: "patientId",
       render: (text) => <a>{text}</a>,
-      sorter : (a, b) => a.patientId - b.patientId
+      sorter: (a, b) => a.patientId - b.patientId,
     },
     {
       title: "Tên bệnh nhân",
@@ -262,7 +261,8 @@ const ListMedicalRecordUnCheckTable = () => {
       dataIndex: "medicalRecordDate",
       key: "medicalRecordDate",
       render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
-      sorter: (a, b) => dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix()
+      sorter: (a, b) =>
+        dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix(),
     },
     {
       title: "Thanh toán",
@@ -271,21 +271,23 @@ const ListMedicalRecordUnCheckTable = () => {
       render: (record) => (
         <a>{record === true ? "Đã thanh toán" : "Chưa thanh toán"}</a>
       ),
-      sorter: (a, b) => a.isPaid === b.isPaid ? 0 : a.isPaid ? 1 : -1
+      sorter: (a, b) => (a.isPaid === b.isPaid ? 0 : a.isPaid ? 1 : -1),
     },
     {
       title: "Khám",
       dataIndex: "isCheckUpCompleted",
       key: "isCheckUpCompleted",
       render: (text) => <a>{text}</a>,
-      sorter: (a, b) => a.isCheckUpCompleted.localeCompare(b.isCheckUpCompleted)
+      sorter: (a, b) =>
+        a.isCheckUpCompleted.localeCompare(b.isCheckUpCompleted),
     },
     {
       title: "Khám hoàn tất",
       dataIndex: "isCheckUp",
       key: "isCheckUp",
       render: (record) => <a>{record === true ? "Hoàn tất" : "Chưa"}</a>,
-      sorter: (a, b) => a.isCheckUp === b.isCheckUp ? 0 : a.isCheckUp ? 1 : -1
+      sorter: (a, b) =>
+        a.isCheckUp === b.isCheckUp ? 0 : a.isCheckUp ? 1 : -1,
     },
     {
       title: "",
@@ -363,7 +365,9 @@ const ListMedicalRecordUnCheckTable = () => {
                 <Button
                   key="checkout"
                   type="primary"
-                  onClick={() => handleInvoice(record.medicalRecordId, record.isPaid)}
+                  onClick={() =>
+                    handleInvoice(record.medicalRecordId, record.isPaid)
+                  }
                 >
                   Hóa đơn
                 </Button>
@@ -374,6 +378,21 @@ const ListMedicalRecordUnCheckTable = () => {
       ),
     },
   ];
+
+  const checkMrHavePrescription = async (meds: MedicalRecordTableModel[]) => {
+    for (let index = 0; index < meds.length; index++) {
+      var i = index;
+      let mrId = meds[i].medicalRecordId;
+      var isHavePres = await medicalRecordService.getPreDiagnoseByMrId(mrId);
+      if (isHavePres !== undefined && isHavePres.isPaid === true) {
+        meds[i] = { ...meds[i], isHaveUnpaidPrescription: true };
+      } else {
+        meds[i] = { ...meds[i], isHaveUnpaidPrescription: false };
+      }
+    }
+    var updatedMeds = [...meds];
+    setMedicalRecords(updatedMeds);
+  };
 
   const fetchMedicalRecords = async () => {
     var response: ApiResponseModel | undefined =
@@ -390,6 +409,7 @@ const ListMedicalRecordUnCheckTable = () => {
         (item) => ({ ...item, key: item.medicalRecordId + "" })
       );
       setMedicalRecords(mappedResponse);
+      //checkMrHavePrescription(mappedResponse);
       setPagination({
         ...pagination,
         total: response.totalCount, // Update total count
@@ -399,6 +419,37 @@ const ListMedicalRecordUnCheckTable = () => {
 
   const handleTableChange = (pagination: any) => {
     setPagination(pagination);
+  };
+
+  const handlePayPrescription = async () => {
+    if (selectedMrId === undefined) {
+      message.error("Lỗi khi lấy mã hóa đơn", 2);
+      return;
+    }
+
+    var res: PrescriptionDiagnosIsPaidModel | undefined =
+      await medicalRecordService.getPreDiagnoseByMrId(selectedMrId);
+    if (res !== undefined) {
+      if (res.isPaid === true) {
+        message.info("Đơn thuốc đã được thanh toán", 2);
+        return;
+      } else {
+        var statusCode = await medicalRecordService.payPrescriptionByMrId(
+          selectedMrId
+        );
+        if (statusCode === 200) {
+          message.success("Thanh toán đơn thuốc thành công", 2).then(() => {
+            window.location.reload();
+          });
+        } else {
+          message.error("Đơn thuốc trống", 2);
+          return;
+        }
+      }
+    } else {
+      message.error("Hồ sơ chưa có đơn thuốc", 2);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -519,6 +570,11 @@ const ListMedicalRecordUnCheckTable = () => {
           <Button key="back" onClick={handleCancelSupplyPres}>
             Hủy
           </Button>,
+          authenticated?.role === Roles.Cashier && (
+            <Button type="primary" onClick={handlePayPrescription}>
+              Thanh toán
+            </Button>
+          ),
           <Button
             key="submit"
             type="primary"

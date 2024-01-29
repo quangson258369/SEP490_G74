@@ -23,7 +23,7 @@ public class SuppliesRepo : GenericRepo<Supply>, ISuppliesRepo
         }
         else
         {
-            entity.IsDeleted = true;
+            entity.IsDeleted = !entity.IsDeleted;
             return true;
         }
     }

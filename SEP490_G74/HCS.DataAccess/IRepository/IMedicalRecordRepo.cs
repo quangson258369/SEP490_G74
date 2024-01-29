@@ -10,4 +10,6 @@ public interface IMedicalRecordRepo : IGenericRepo<MedicalRecord>
     // Task UpdateMrStatusToPaid(int mrId);
     Task UpdateMrStatusToPaid(int mrId, int? userId);
     Task UpdateMrStatusToCheckUp(int mrId);
+    Task<MedicalRecord?> GetPrescriptionDiagnoseByMrId(int mrId);
+    Task<List<int>> GetListNextMrIds(int mrId);
 }

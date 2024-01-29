@@ -7,7 +7,7 @@ import categoryService from "../../Services/CategoryService";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { create } from "cypress/types/lodash";
 
-const AccountAddForm = () => {
+const AccountEditForm = () => {
   const [roles, setRoles] = useState<RoleResponseModel[]>([]);
   const [cates, setCates] = useState<CategoryResponseModel[]>([]);
   const [isDoctor, setIsDoctor] = useState<boolean>(false);
@@ -117,4 +117,4 @@ const AccountAddForm = () => {
   );
 };
 
-export default AccountAddForm;
+export default AccountEditForm;

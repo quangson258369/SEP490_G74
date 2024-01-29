@@ -101,16 +101,19 @@ export interface SupplyResponseModel {
   isDeleted:boolean
   suppliesTypeId: number
   suppliesTypeName?: string
+  dose?: string
 }
 
 export interface SuppliesPresAddModel {
   medicalRecordId: number
+  diagnose: string
   supplyIds: SupplyIdPreAddModel[]
 }
 
 export interface SupplyIdPreAddModel {
   supplyId: number
   quantity: number
+  dose: string
 }
 
 export interface SupplyPresSelectFormModel {
@@ -122,6 +125,7 @@ export interface SupplyPresSelectFormModel {
 export interface SupplyIdSelectFormModel {
   supplyId: number
   quantity: number
+  dose: string
 }
 
 export interface SupplyTypeIdSelectFormModel {
@@ -135,6 +139,7 @@ export interface SelectedSuppliesResponseModel {
   quantity: number
   price: number
   uses: string
+  dose: string
 }
 
 export interface ServiceTypeUpdateModel{
@@ -162,4 +167,9 @@ export interface SupplyAddModel {
 export interface DoctorCategoryByServiceModel{
   categoryName: string
   doctorName: string
+}
+
+export interface PrescriptionDiagnosIsPaidModel{
+  diagnose: string
+  isPaid:boolean
 }

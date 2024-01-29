@@ -160,15 +160,44 @@ public class SuppliesTypeService : ISuppliesTypeService
             {
                 SupplyId = supplyPres.SupplyId,
                 Quantity = supplyPres.Quantity,
+                Dose = supplyPres.Dose,
             };
             supplyPresEntity.Add(supplyPreEntity);
         }
-        var isSuccess = await _unitOfWork.SuppliesTypeRepo.AddSuppliesPrescription(mrId, supplyPresEntity);
+        var isSuccess = await _unitOfWork.SuppliesTypeRepo.AddSuppliesPrescription(mrId, supplyPresEntity, supplyPresAddModel.Diagnose);
         
         response.SetBadRequest("add failed");
 
         if(isSuccess)
         {
+            var existMed = await _unitOfWork.MedicalRecordRepo.GetMrById(mrId);
+            if (existMed is null) return new ApiResponse().SetNotFound("Mr Not Found");
+            #region Indexing
+            existMed.Priority = 0;
+            var mrList = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
+            mrList = mrList.OrderBy(x => x.Index).ToList();
+            var lastEditMr = mrList.FindLast(x => x.Priority == 0);
+            if (lastEditMr is not null)
+            {
+                existMed.Index = lastEditMr.Index + 1;
+                //move behinds item index + 1
+                mrList = mrList.Where(x => x.Index >= existMed.Index && x.MedicalRecordId != existMed.MedicalRecordId).ToList();
+                for (int i = 0; i < mrList.Count; i++)
+                {
+                    var index = i;
+                    var highestIndexItem = mrList.OrderByDescending(x => x.Index).FirstOrDefault();
+                    if (highestIndexItem is not null)
+                    {
+                        mrList[index].Index = highestIndexItem.Index + 1;
+                    }
+                }
+            }
+            else
+            {
+                var lastMr = mrList.Last();
+                existMed.Index = lastMr.Index + 1;
+            }
+            #endregion
             await _unitOfWork.SaveChangeAsync();
             response.SetOk("add success");
         }
@@ -185,7 +214,8 @@ public class SuppliesTypeService : ISuppliesTypeService
             SupplyName = x.Supply.SName,
             Quantity = x.Quantity,
             Price = x.Supply.Price,
-            Uses = x.Supply.Uses
+            Uses = x.Supply.Uses,
+            Dose = x.Dose
         }).ToList();
         return new ApiResponse().SetOk(supplyPresResponse);
     }

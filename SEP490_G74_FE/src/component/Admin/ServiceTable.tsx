@@ -416,11 +416,11 @@ const ServiceTable: React.FC = () => {
           </Button>
           <Button
             key={`removeT_${record.serviceTypeId}`}
-            danger
+            danger = {record.isDeleted !== true ? true : false}
             type="primary"
             onClick={() => handleDeleteServiceType(record.serviceTypeId)}
           >
-            Vô hiệu hóa
+            {record.isDeleted !== true ? <>Vô hiệu hóa</> : <>Kích hoạt</>}
           </Button>
           <Button
             key={`addTypeC_${record.serviceTypeId}`}
@@ -477,11 +477,11 @@ const ServiceTable: React.FC = () => {
           </Button>
           <Button
             key={`removeS_${record.serviceId}`}
-            danger
+            danger = {record.isDeleted !== true ? true : false}
             type="primary"
             onClick={() => handleDeleteService(record.serviceId)}
           >
-            Vô hiệu hóa
+            {record.isDeleted !== true ? <>Vô hiệu hóa</> : <>Kích hoạt</>}
           </Button>
         </Space>
       ),
@@ -495,7 +495,8 @@ const ServiceTable: React.FC = () => {
       message.error("Get Categories Failed", 2);
     } else {
       console.log(response);
-      setCates(response.filter((c) => c.isDeleted === false));
+      //setCates(response.filter((c) => c.isDeleted === false));
+      setCates(response);
       return response;
     }
   };
@@ -515,7 +516,8 @@ const ServiceTable: React.FC = () => {
           (cate) => cate.categoryId === item.categoryId
         )?.categoryId;
       });
-      setServiceTypes(response.filter((c) => c.isDeleted === false));
+      //setServiceTypes(response.filter((c) => c.isDeleted === false));
+      setServiceTypes(response);
       return response;
     }
   };
@@ -535,15 +537,16 @@ const ServiceTable: React.FC = () => {
           (type) => type.serviceTypeId === item.serviceTypeId
         )?.serviceTypeId;
       });
-      setServices(response.filter((c) => c.isDeleted === false));
+      //setServices(response.filter((c) => c.isDeleted === false));
+      setServices(response);
       return response;
     }
   };
   //==============Delete=================
   const handleDeleteServiceType = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
+      title: "Xác nhận thay đổi",
+      content: "Bạn có chắc chắn muốn thay đổi?",
       onOk: () => {
         removeServiceType(id);
       },
@@ -555,8 +558,8 @@ const ServiceTable: React.FC = () => {
 
   const handleDeleteService = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
+      title: "Xác nhận thay đổi",
+      content: "Bạn có chắc chắn muốn thay đổi?",
       onOk: () => {
         removeService(id);
       },
@@ -570,22 +573,22 @@ const ServiceTable: React.FC = () => {
   const removeServiceType = async (id: number) => {
     var response = await subService.deleteServiceType(id);
     if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
+      message.success("Thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Vô hiệu hóa thất bại", 2);
+      message.error("Thất bại", 2);
     }
   };
 
   const removeService = async (id: number) => {
     var response = await subService.deleteService(id);
     if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
+      message.success("Thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Vô hiệu hóa thất bại", 2);
+      message.error("Thất bại", 2);
     }
   };
   //=============================

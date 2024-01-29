@@ -30,13 +30,13 @@ const MedicalRecordTable = () => {
   const [isSupplyPresReload, setIsSupplyPresReload] = useState<boolean>(false);
   const [openInvoice, setOpenInvoice] = useState<boolean>(false);
   const [openSupplyPres, setOpenSupplyPres] = useState<boolean>(false);
-  const [isSelectedMrPaid, setIsSelectedMrPaid ] = useState<boolean>(false);
+  const [isSelectedMrPaid, setIsSelectedMrPaid] = useState<boolean>(false);
 
   //Search
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  type DataIndex = keyof MedicalRecordTableModel
+  type DataIndex = keyof MedicalRecordTableModel;
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -54,9 +54,7 @@ const MedicalRecordTable = () => {
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
-  ): ColumnType<
-  MedicalRecordTableModel
-  > => ({
+  ): ColumnType<MedicalRecordTableModel> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -227,7 +225,7 @@ const MedicalRecordTable = () => {
     }
   };
 
-  const handleInvoice = (mrId: number, isPaid:boolean) => {
+  const handleInvoice = (mrId: number, isPaid: boolean) => {
     setIsSelectedMrPaid(isPaid);
     setIsInvoiceReload(!isInvoiceReload);
     setOpenInvoice(true);
@@ -266,7 +264,8 @@ const MedicalRecordTable = () => {
       key: "medicalRecordDate",
       ...getColumnSearchProps("medicalRecordDate"),
       render: (text) => <a>{dayjs(text).format("YYYY-MM-DD HH:mm:ss")}</a>,
-      sorter: (a, b) => dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix(),
+      sorter: (a, b) =>
+        dayjs(a.medicalRecordDate).unix() - dayjs(b.medicalRecordDate).unix(),
     },
     {
       title: "Thanh toán",
@@ -317,24 +316,6 @@ const MedicalRecordTable = () => {
             flexDirection: "column",
           }}
         >
-          {/* <Row gutter={[5, 5]}>
-            <Col>
-              {authenticated?.role !== Roles.Cashier &&
-              authenticated?.role !== Roles.Admin ? (
-                <></>
-              ) : (
-                <Button
-                  key="checkout"
-                  type="primary"
-                  style={{ backgroundColor: "#0cb39d" }}
-                  onClick={() => handleCheckout(record.medicalRecordId)}
-                >
-                  Chốt hóa đơn
-                </Button>
-              )}
-            </Col>
-          </Row> */}
-          {/* <div style={{ height: "5px" }} /> */}
           <Row gutter={[5, 5]}>
             <Col>
               <Button
@@ -353,7 +334,9 @@ const MedicalRecordTable = () => {
                 <Button
                   key="checkout"
                   type="primary"
-                  onClick={() => handleInvoice(record.medicalRecordId, record.isPaid)}
+                  onClick={() =>
+                    handleInvoice(record.medicalRecordId, record.isPaid)
+                  }
                 >
                   Hóa đơn
                 </Button>

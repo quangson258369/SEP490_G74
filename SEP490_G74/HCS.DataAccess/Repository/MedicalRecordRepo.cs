@@ -24,7 +24,7 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
                 .ThenInclude(c => c.Doctor!)
                     .ThenInclude(c => c!.Contact)
             .Include(c => c!.ServiceMedicalRecords!)
-                .ThenInclude(x=>x.Service)
+                .ThenInclude(x => x.Service)
             .FirstOrDefaultAsync();
         return mrById;
     }
@@ -37,8 +37,8 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
             .Include(exam => exam.ExaminationResult)
             .ThenInclude(pre => pre.Prescription)
             .ThenInclude(temp => temp.SuppliesPrescriptions)
-            .ThenInclude(x=> x.Supply)
-            .ThenInclude(x=> x.SuppliesType)
+            .ThenInclude(x => x.Supply)
+            .ThenInclude(x => x.SuppliesType)
             .FirstOrDefaultAsync();
 
         return medicalRecord;
@@ -51,16 +51,16 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
             .Include(c => c.Patient)
             .ThenInclude(n => n.Contact)
             .ToListAsync();
-            
+
         return listMrByPatientId;
     }
 
     public async Task UpdateMrStatusToCheckUp(int mrId)
     {
         var mr = await _context.MedicalRecords.FindAsync(mrId);
-        if(mr != null)
+        if (mr != null)
         {
-            if(mr.IsPaid == false) 
+            if (mr.IsPaid == false)
                 throw new MedicalRecordNotPaidBeforeCheckUpException("Medical record is not paid yet");
             mr.IsCheckUp = true;
         }
@@ -81,7 +81,7 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
             var newInvoice = new Invoice()
             {
                 PatientId = mr.PatientId,
-                CashierId = userId??= 1,
+                CashierId = userId ??= 1,
                 ServiceMedicalRecords = mr.ServiceMedicalRecords,
                 Total = mr.ServiceMedicalRecords != null ? mr.ServiceMedicalRecords.Sum(s => s.IsPaid == true && s.Service != null ? s.Service.Price : 0) : 0,
                 Status = true,
@@ -135,5 +135,29 @@ public class MedicalRecordRepo : GenericRepo<MedicalRecord>, IMedicalRecordRepo
 
             await _context.Invoices.AddAsync(newInvoice);
         }
+    }
+
+    public async Task<MedicalRecord?> GetPrescriptionDiagnoseByMrId(int mrId)
+    {
+        var mr = await _context.MedicalRecords
+            .Where(x => x.MedicalRecordId == mrId)
+            .Include(x => x.ExaminationResult)
+            .ThenInclude(s => s.Prescription)
+            .FirstOrDefaultAsync();
+        if (mr is not null && mr.ExaminationResult is not null && mr.ExaminationResult.Prescription is not null)
+        {
+            return mr;
+        }
+        return null;
+    }
+
+    public async Task<List<int>> GetListNextMrIds(int mrId)
+    {
+        var result = await _context.MedicalRecords
+            .Where(x => x.PreviousMedicalRecordId == mrId)
+            .Select(x => x.MedicalRecordId)
+            .ToListAsync();
+        result ??= new List<int>();
+        return result;
     }
 }

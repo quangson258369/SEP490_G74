@@ -32,6 +32,8 @@ const LIST_MEDICAL_RECORDS_UN_CHECK_PAGE = "/medical-records/un-check";
 
 const LIST_MEDICAL_RECORDS_UN_PAID_PAGE = "/medical-records/un-paid";
 
+const MEDICAL_RECORD_DETAIL_PAGE ="/medical-record-detail/:id";
+
 const ADMIN_CATEGORY_PAGE = "/admin/categories";
 const ADMIN_SERVICE_PAGE = "/admin/services";
 const ADMIN_SUPPLY_PAGE = "/admin/supplies";
@@ -64,5 +66,6 @@ export const ROUTE_URLS = {
   HOME_PAGE: HOME_PAGE,
   LOGIN_PAGE: LOGIN_PAGE,
   ERROR_PAGE: ERROR_PAGE,
-  UNAUTHORIZED_PAGE: UNAUTHORIZED_PAGE
+  UNAUTHORIZED_PAGE: UNAUTHORIZED_PAGE,
+  MEDICAL_RECORD_DETAIL_PAGE: MEDICAL_RECORD_DETAIL_PAGE
 };

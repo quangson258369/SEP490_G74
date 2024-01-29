@@ -36,19 +36,19 @@ const AdminPage: React.FC<ParentCompProps> = (props: any) => {
       <div>
         <Row>
           <Col span={6}>
-            <Button type="primary" onClick={handleAddPatient}>
+            {/* <Button type="primary" onClick={handleAddPatient}>
               Thêm mới bệnh nhân
-            </Button>
+            </Button> */}
           </Col>
           <Col span={6}>
-            <Button type="primary" onClick={handleAddCategory}>
+            {/* <Button type="primary" onClick={handleAddCategory}>
               Thêm mới khoa khám
-            </Button>
+            </Button> */}
           </Col>
           <Col span={6}>
-            <Button type="primary" onClick={handleAddAccount}>
+            {/* <Button type="primary" onClick={handleAddAccount}>
               Thêm mới tài khoản
-            </Button>
+            </Button> */}
           </Col>
         </Row>
         <Modal

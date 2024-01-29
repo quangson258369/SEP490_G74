@@ -2,6 +2,7 @@ using HCS.ApplicationContext;
 using HCS.DataAccess.IRepository;
 using HCS.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace HCS.DataAccess.Repository;
 
@@ -32,7 +33,7 @@ public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
         }
         else
         {
-            category.IsDeleted = true;
+            category.IsDeleted = !category.IsDeleted;
             return true;
         }
     }

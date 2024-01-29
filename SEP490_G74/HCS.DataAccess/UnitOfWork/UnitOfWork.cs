@@ -1,6 +1,12 @@
 ﻿using HCS.ApplicationContext;
 using HCS.DataAccess.IRepository;
 using HCS.DataAccess.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using HCS.Domain.Models;
 
 namespace HCS.DataAccess.UnitOfWork
 {

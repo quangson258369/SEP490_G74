@@ -40,7 +40,7 @@ import { jwtDecode } from "jwt-decode";
 import { JWTTokenModel } from "../../Models/AuthModel";
 import categoryService from "../../Services/CategoryService";
 
-const ExaminationForm = ({
+const ExaminationFormViewOnly = ({
   medicalRecordId,
   isReload,
   patientId,
@@ -473,7 +473,7 @@ const ExaminationForm = ({
                       />
                     }
                   </div>
-                  <Upload {...uploadProps}>
+                  {/* <Upload {...uploadProps}>
                     <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
                   </Upload>
                   <Button
@@ -489,7 +489,7 @@ const ExaminationForm = ({
                     style={{ marginTop: 16 }}
                   >
                     {uploading ? "Đang tải" : "Tải ảnh lên"}
-                  </Button>
+                  </Button> */}
                 </Col>
               </Row>
               <Row key={examDetail.serviceId}>
@@ -497,9 +497,8 @@ const ExaminationForm = ({
                   <Form.Item<ExaminationsResultModel>
                     label="Mô tả"
                     name={["examDetails", index, "description"]}
-                    required
                   >
-                    <TextArea showCount placeholder="Description" />
+                    <TextArea showCount disabled placeholder="Description" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -508,9 +507,8 @@ const ExaminationForm = ({
                   <Form.Item<ExaminationsResultModel>
                     label="Kết luận"
                     name={["examDetails", index, "diagnose"]}
-                    required
                   >
-                    <TextArea showCount placeholder="Diagnose" />
+                    <TextArea showCount disabled placeholder="Diagnose" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -532,7 +530,7 @@ const ExaminationForm = ({
                   </Button>
                 )}
               </Col>
-              <Col
+              {/* <Col
                 span={12}
                 style={{ display: "flex", justifyContent: "flex-end" }}
               >
@@ -550,7 +548,7 @@ const ExaminationForm = ({
                     Đã khám
                   </Button>
                 )}
-              </Col>
+              </Col> */}
             </Row>
             <Divider dashed />
           </div>
@@ -563,11 +561,8 @@ const ExaminationForm = ({
               <Form.Item<ExaminationsResultModel>
                 label="Chẩn đoán sơ bộ"
                 name={"diagnosis"}
-                rules={[
-                  { required: true, message: "Vui lòng nhập chẩn đoán sơ bộ" },
-                ]}
               >
-                <TextArea disabled={isExamConclused} placeholder="Diagnosis" />
+                <TextArea disabled placeholder="Diagnosis" />
               </Form.Item>
             </Col>
           </Row>
@@ -576,17 +571,14 @@ const ExaminationForm = ({
               <Form.Item<ExaminationsResultModel>
                 label="Kết luận tổng"
                 name={"conclusion"}
-                rules={[
-                  { required: true, message: "Vui lòng nhập kết luận tổng" },
-                ]}
               >
-                <TextArea disabled={isExamConclused} placeholder="Conclusion" />
+                <TextArea disabled placeholder="Conclusion" />
               </Form.Item>
             </Col>
           </Row>
         </div>
       </Form>
-      <Row style={{ display: isDefaultDoctor === false ? "none" : undefined }}>
+      {/* <Row style={{ display: isDefaultDoctor === false ? "none" : undefined }}>
         <Col span={10} />
         <Col span={14}>
           {authenticated?.role !== Roles.Admin &&
@@ -604,7 +596,7 @@ const ExaminationForm = ({
             </Button>
           )}
         </Col>
-      </Row>
+      </Row> */}
       <Modal
         open={openPrintModal}
         onOk={() => printModal()}
@@ -618,34 +610,26 @@ const ExaminationForm = ({
             id={"targetExamServicePrint" + selectedServiceId}
             style={{ padding: "20px" }}
           >
-            {/* <Row gutter={10}>
+            <Row gutter={10}>
               <Col span={12}>
                 <b>Mã hồ sơ:</b> {printModel?.id}
               </Col>
               <Col span={12}>
                 <b>Ngày:</b> {printModel?.editDate}
               </Col>
-            </Row> */}
-            {/* <Row gutter={10}>
+            </Row>
+            <Row gutter={10}>
               <Col span={24}>
                 <b>Mã bệnh nhân:</b> {printModel?.patientId}
               </Col>
-            </Row> */}
-            <div
-              style={{
-                width: "100%",
-                color: "red",
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
-            >
-              {printModel?.serviceName.toLocaleUpperCase()}
-            </div><br/>
+            </Row>
             <Row>
-              <Col span={12}>
-                <b>Tên :</b> {printModel?.name.toLocaleUpperCase()}
+              <Col span={24}>
+                <b>Tên bệnh nhân:</b> {printModel?.name.toLocaleUpperCase()}
               </Col>
-              <Col span={12}>
+            </Row>
+            <Row>
+              <Col>
                 <b>Ngày sinh:</b>{" "}
                 {dayjs(printModel?.dob).format("DD/MM/YYYY hh:mm:ss")}
               </Col>
@@ -654,24 +638,21 @@ const ExaminationForm = ({
               <Col span={12}>
                 <b>Giới tính:</b> {printModel?.gender === true ? "Nam" : " Nữ"}
               </Col>
-              {printModel?.address !== "" &&
-                printModel?.address !== undefined && (
-                  <Col span={12}>
-                    <b>Địa chỉ:</b> {printModel?.address.toLocaleUpperCase()}
-                  </Col>
-                )}
             </Row>
-            <Row>
-              {printModel?.blood !== "" && printModel?.blood !== undefined && (
-                <Col span={12}>
-                  <b>Nhóm máu:</b> {printModel?.blood.toUpperCase()}
-                </Col>
-              )}
+            <Row gutter={10}>
+              <Col span={12}>
+                <b>Địa chỉ:</b> {printModel?.address.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row gutter={10}>
+              <Col span={12}>
+                <b>Nhóm máu:</b> {printModel?.blood.toUpperCase()}
+              </Col>
               <Col span={12}>
                 <b>Huyết áp:</b> {printModel?.bloodPressure} (mmHg)
               </Col>
             </Row>
-            <Row>
+            <Row gutter={10}>
               <Col span={12}>
                 <b>Chiều cao:</b> {printModel?.height} (cm)
               </Col>
@@ -680,34 +661,34 @@ const ExaminationForm = ({
               </Col>
             </Row>
             <Divider dashed />
-            {/* <Row>
+            <Row>
               <Col>
                 <b>Khoa khám: </b>
                 {printModel?.categoryName.toLocaleUpperCase()}
               </Col>
-            </Row> */}
-            {/* <Row>
+            </Row>
+            <Row>
+              <Col>
+                <b>Bác sĩ khám: </b>
+                {printModel?.doctorName.toLocaleUpperCase()}
+              </Col>
+            </Row>
+            <Row>
               <Col>
                 <b>Dịch vụ khám: </b>
                 {printModel?.serviceName.toLocaleUpperCase()}
               </Col>
-            </Row> */}
-
+            </Row>
+            <Row gutter={10}>
+              <Col>
+                <b>Hình ảnh:</b>{" "}
+              </Col>
+            </Row>
             <Row>
               <Col span={18}>
                 <Image src={printModel?.image} />
               </Col>
             </Row>
-            <div
-              style={{
-                width: "100%",
-                textAlign: "center",
-                fontWeight: "bold",
-                color: "red",
-              }}
-            >
-              KẾT QUẢ KHÁM
-            </div>
             <Row gutter={10}>
               <Col>
                 <b>Mô tả:</b> {printModel?.diagnose.toLocaleUpperCase()}
@@ -715,20 +696,8 @@ const ExaminationForm = ({
             </Row>
             <Row gutter={10}>
               <Col>
-                <b>Kết luận:</b> {printModel?.conclusion.toLocaleUpperCase()}
-              </Col>
-            </Row>
-            <Row gutter={10}>
-              <Col span={10}>
-                <b>Hình ảnh:</b>{" "}
-              </Col>
-              <Col span={2} />
-              <Col span={12} style={{ textAlign: "center" }}>
-                <div>{printModel?.editDate}</div>
-                <div>Bác sĩ khám</div>
-                <br />
-                <br />
-                <div>{printModel?.doctorName.toLocaleUpperCase()}</div>
+                <b>Chẩn đoán sơ bộ:</b>{" "}
+                {printModel?.conclusion.toLocaleUpperCase()}
               </Col>
             </Row>
           </div>
@@ -738,4 +707,4 @@ const ExaminationForm = ({
   );
 };
 
-export default ExaminationForm;
+export default ExaminationFormViewOnly;

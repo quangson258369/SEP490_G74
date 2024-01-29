@@ -1,7 +1,9 @@
 using AutoMapper;
+using HCS.Business.Pagination;
 using HCS.Business.RequestModel.CategoryRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
+using HCS.DataAccess.Repository;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Commons;
 using HCS.Domain.Enums;

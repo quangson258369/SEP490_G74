@@ -15,6 +15,7 @@ import { ApiResponseModel } from "../../Models/PatientModel";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
+import { PrescriptionDiagnosIsPaidModel } from "../../Models/SubEntityModel";
 
 const ListMedicalRecordUnCheckTable = () => {
   //const { id } = useParams<{ id: string }>();
@@ -203,11 +204,11 @@ const ListMedicalRecordUnCheckTable = () => {
       // show confirm dialog, if yes then process
 
       Modal.confirm({
-        title: 'Hoàn tất hóa đơn ?',
+        title: "Hoàn tất hóa đơn ?",
         onOk: async () => {
           if (
-            medicalRecords.find((item) => item.medicalRecordId === id)?.isPaid ===
-            true
+            medicalRecords.find((item) => item.medicalRecordId === id)
+              ?.isPaid === true
           ) {
             message.info("Hồ sơ đã thanh toán", 2);
             return;
@@ -351,28 +352,32 @@ const ListMedicalRecordUnCheckTable = () => {
         >
           <Row gutter={[5, 5]}>
             <Col>
-              <Button
-                key="checkout"
-                type="primary"
-                onClick={() => handleSupplyPres(record.medicalRecordId)}
-              >
-                Đơn thuốc
-              </Button>
+              {record.isHaveUnpaidPrescription === true && (
+                <Button
+                  key="checkout"
+                  type="primary"
+                  onClick={() => handleSupplyPres(record.medicalRecordId)}
+                >
+                  Đơn thuốc
+                </Button>
+              )}
             </Col>
             <Col>
               {authenticated?.role !== Roles.Admin &&
               authenticated?.role !== Roles.Cashier ? (
                 <></>
               ) : (
-                <Button
-                  key="checkout"
-                  type="primary"
-                  onClick={() =>
-                    handleInvoice(record.medicalRecordId, record.isPaid)
-                  }
-                >
-                  Hóa đơn
-                </Button>
+                record.isHaveUnpaidPrescription !== true && (
+                  <Button
+                    key="checkout"
+                    type="primary"
+                    onClick={() =>
+                      handleInvoice(record.medicalRecordId, record.isPaid)
+                    }
+                  >
+                    Hóa đơn
+                  </Button>
+                )
               )}
             </Col>
           </Row>
@@ -383,14 +388,16 @@ const ListMedicalRecordUnCheckTable = () => {
               authenticated?.role !== Roles.Cashier ? (
                 <></>
               ) : (
-                <Button
-                  style={{ backgroundColor: "#0cb39d" }}
-                  key="checkout"
-                  type="primary"
-                  onClick={() => handleCheckout(record.medicalRecordId)}
-                >
-                  Chốt hóa đơn
-                </Button>
+                record.isHaveUnpaidPrescription !== true && (
+                  <Button
+                    style={{ backgroundColor: "#0cb39d" }}
+                    key="checkout"
+                    type="primary"
+                    onClick={() => handleCheckout(record.medicalRecordId)}
+                  >
+                    Chốt hóa đơn
+                  </Button>
+                )
               )}
             </Col>
           </Row>
@@ -414,6 +421,7 @@ const ListMedicalRecordUnCheckTable = () => {
         (item) => ({ ...item, key: item.medicalRecordId + "" })
       );
       setMedicalRecords(mappedResponse);
+      checkMrHavePrescription(mappedResponse);
       setPagination({
         ...pagination,
         total: response.totalCount, // Update total count
@@ -423,6 +431,52 @@ const ListMedicalRecordUnCheckTable = () => {
 
   const handleTableChange = (pagination: any) => {
     setPagination(pagination);
+  };
+
+  const checkMrHavePrescription = async (meds: MedicalRecordTableModel[]) => {
+    for (let index = 0; index < meds.length; index++) {
+      var i = index;
+      let mrId = meds[i].medicalRecordId;
+      var isHavePres = await medicalRecordService.getPreDiagnoseByMrId(mrId);
+      if (isHavePres !== undefined && isHavePres.isPaid !== true) {
+        meds[i] = { ...meds[i], isHaveUnpaidPrescription: true };
+      } else {
+        meds[i] = { ...meds[i], isHaveUnpaidPrescription: false };
+      }
+    }
+    var updatedMeds = [...meds];
+    setMedicalRecords(updatedMeds);
+  };
+
+  const handlePayPrescription = async () => {
+    if (selectedMrId === undefined) {
+      message.error("Lỗi khi lấy mã hóa đơn", 2);
+      return;
+    }
+
+    var res: PrescriptionDiagnosIsPaidModel | undefined =
+      await medicalRecordService.getPreDiagnoseByMrId(selectedMrId);
+    if (res !== undefined) {
+      if (res.isPaid === true) {
+        message.info("Đơn thuốc đã được thanh toán", 2);
+        return;
+      } else {
+        var statusCode = await medicalRecordService.payPrescriptionByMrId(
+          selectedMrId
+        );
+        if (statusCode === 200) {
+          message.success("Thanh toán đơn thuốc thành công", 2).then(() => {
+            window.location.reload();
+          });
+        } else {
+          message.error("Đơn thuốc trống", 2);
+          return;
+        }
+      }
+    } else {
+      message.error("Hồ sơ chưa có đơn thuốc", 2);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -543,6 +597,11 @@ const ListMedicalRecordUnCheckTable = () => {
           <Button key="back" onClick={handleCancelSupplyPres}>
             Hủy
           </Button>,
+          authenticated?.role === Roles.Cashier && (
+            <Button type="primary" onClick={handlePayPrescription}>
+              Thanh toán
+            </Button>
+          ),
           <Button
             key="submit"
             type="primary"

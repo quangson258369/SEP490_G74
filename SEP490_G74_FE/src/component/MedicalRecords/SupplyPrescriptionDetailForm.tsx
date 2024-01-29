@@ -15,6 +15,7 @@ import { ExaminationProps } from "../../Models/MedicalRecordModel";
 import { useContext, useEffect, useState } from "react";
 import {
   ExamDetail,
+  PrescriptionDiagnosIsPaidModel,
   SelectedSuppliesResponseModel,
   SuppliesPresAddModel,
   SupplyIdPreAddModel,
@@ -37,6 +38,8 @@ import { JWTTokenModel } from "../../Models/AuthModel";
 import { jwtDecode } from "jwt-decode";
 import { text } from "stream/consumers";
 import ExaminationService from "../../Services/ExaminationService";
+import TextArea from "antd/es/input/TextArea";
+import medicalRecordService from "../../Services/MedicalRecordService";
 
 const SupplyPrescriptionDetailForm = ({
   medicalRecordId,
@@ -71,6 +74,8 @@ const SupplyPrescriptionDetailForm = ({
 
   const [examResult, setExamResult] = useState<string>("");
 
+  const [diagnose, setDiagnose] = useState<string>("");
+
   const suppliesPrintColumns: ColumnsType<SelectedSuppliesResponseModel> = [
     {
       title: "STT",
@@ -87,19 +92,25 @@ const SupplyPrescriptionDetailForm = ({
       key: "uses",
       dataIndex: "uses",
     },
-    {
-      title: "Đơn giá",
-      key: "price",
-      dataIndex: "price",
-      render: (text, record, index) => (
-        <span>{text.toLocaleString()} VND</span>
-      ),
-    },
+    // {
+    //   title: "Đơn giá",
+    //   key: "price",
+    //   dataIndex: "price",
+    //   render: (text, record, index) => (
+    //     <span>{text.toLocaleString()} VND</span>
+    //   ),
+    // },
     {
       title: "Số lượng",
       key: "STT",
       dataIndex: "quantity",
       render: (text, record, index) => <span>{text} Viên</span>,
+    },
+    {
+      title: "Liều dùng",
+      key: "dose",
+      dataIndex: "dose",
+      render: (text, record, index) => <span>{text}</span>,
     },
   ];
 
@@ -107,28 +118,40 @@ const SupplyPrescriptionDetailForm = ({
     console.log(availableSupplies);
     console.log(values);
 
+    if(authenticated?.role !== Roles.Doctor){
+      message.error("Bạn không có quyền chỉnh sửa đơn thuốc", 2);
+      return;
+    }
+
     var selectedSupplies: SupplyIdPreAddModel[] = [];
 
     availableSupplies.forEach((element) => {
       var nameSelectedSupply = `selected_supply_${element.sId}`;
       var quantity = values[nameSelectedSupply];
+      var doseName = `selected_supply_dose_${element.sId}`;
+      var dose = values[doseName];
+
       if (quantity !== undefined) {
         var newSupplyId: SupplyIdPreAddModel = {
           supplyId: element.sId,
           quantity: quantity,
+          dose: dose,
         };
         selectedSupplies.push(newSupplyId);
       }
     });
 
     if (selectedSupplies.length === 0) {
-      message.error("Please Select At Least One Supply", 2);
+      message.info("Hãy chọn thuốc cần thêm", 2);
       return;
     }
 
+    var diagnoseAdd: string = values["diagnose"];
     var supplyPresUpdate: SuppliesPresAddModel = {
       medicalRecordId: medicalRecordId,
-      supplyIds: selectedSupplies.filter((element) => element.quantity > 0),
+      diagnose: diagnoseAdd,
+      // supplyIds: selectedSupplies.filter((element) => element.quantity > 0),
+      supplyIds: selectedSupplies,
     };
 
     if (medicalRecordId === undefined) {
@@ -260,15 +283,15 @@ const SupplyPrescriptionDetailForm = ({
             />
           </Form.Item>
           <Row gutter={10}>
-            <Col span={10}>
+            <Col span={6}>
               <b>Tên thuốc</b>
             </Col>
-            <Col span={6}>
+            <Col span={5}>
               <b>Giá tiền (VND)</b>
             </Col>
-            {/* <Col span={4}>
-              <b>Số lượng còn lại</b>
-            </Col> */}
+            <Col span={5}>
+              <b>Liều dùng</b>
+            </Col>
             <Col span={4}>
               <b>Số lượng đã chọn</b>
             </Col>
@@ -278,16 +301,18 @@ const SupplyPrescriptionDetailForm = ({
             return (
               <div key={element.sId}>
                 <Row gutter={10}>
-                  <Col span={10}>{element.sName}</Col>
-                  <Col span={6}>{element.price.toLocaleString()} VND</Col>
-                  {/* <Col span={4}>{element.unitInStock}</Col> */}
+                  <Col span={6}>{element.sName}</Col>
+                  <Col span={5}>{element.price.toLocaleString()} VND</Col>
+                  <Col span={5}>
+                    <Form.Item name={`selected_supply_dose_${element.sId}`}>
+                      <Input placeholder="Liều dùng" />
+                    </Form.Item>
+                  </Col>
                   <Col span={4}>
                     <Form.Item name={`selected_supply_${element.sId}`}>
                       <InputNumber
                         defaultValue={0}
-                        min={0}
-                        max={element.unitInStock}
-                        placeholder="Quantity"
+                        placeholder="Số lượng"
                       />
                     </Form.Item>
                   </Col>
@@ -295,6 +320,9 @@ const SupplyPrescriptionDetailForm = ({
               </div>
             );
           })}
+          <Form.Item name="diagnose">
+            <TextArea rows={5} required placeholder="Thông tin thêm"/>
+          </Form.Item>
         </div>
       ),
     },
@@ -313,13 +341,27 @@ const SupplyPrescriptionDetailForm = ({
     }
   };
 
-  const fetchExaminationResult = async () =>{
+  const [isPresPaid, setIsPresPaid] = useState<boolean>(false);
+
+  const fetchDiagnose = async () => {
+    var res: PrescriptionDiagnosIsPaidModel | undefined =
+      await medicalRecordService.getPreDiagnoseByMrId(medicalRecordId);
+    if (res !== undefined) {
+      setDiagnose(res.diagnose);
+      setIsPresPaid(res.isPaid);
+      supplyPresForm.setFieldsValue({
+        diagnose: res.diagnose,
+      })
+    }
+  };
+
+  const fetchExaminationResult = async () => {
     var res = await ExaminationService.getExamResultByMrId(medicalRecordId);
-    if(res !== undefined){
+    if (res !== undefined) {
       var diagnose = res.conclusion;
       setExamResult(diagnose);
     }
-  }
+  };
 
   const [name, setName] = useState<string>("");
 
@@ -333,6 +375,7 @@ const SupplyPrescriptionDetailForm = ({
       }
     }
 
+    fetchDiagnose();
     fetchPatient();
     fetchExaminationResult();
 
@@ -369,6 +412,17 @@ const SupplyPrescriptionDetailForm = ({
                     <Input disabled />
                   </Form.Item>
                 </Col>
+                <Col span={10} />
+                <Col span={6} style={{textAlign:"center"}}>
+                  Trạng thái đơn thuốc
+                  <div>
+                    {isPresPaid === true ? (
+                      <b>Đã thanh toán</b>
+                    ) : (
+                      <b>Chưa thanh toán</b>
+                    )}
+                  </div>
+                </Col>
               </Row>
               <Row gutter={10}></Row>
             </div>
@@ -387,11 +441,14 @@ const SupplyPrescriptionDetailForm = ({
               </Row>
               <Divider />
               <Row gutter={10}>
-                <Col span={12}>
+                <Col span={6}>
                   <b>Tên thuốc</b>
                 </Col>
                 <Col span={4}>
                   <b>Số lượng</b>
+                </Col>
+                <Col span={6}>
+                  <b>Liều dùng</b>
                 </Col>
                 <Col span={4}>
                   <b>Giá tiền (VND)</b>
@@ -405,8 +462,9 @@ const SupplyPrescriptionDetailForm = ({
                 return (
                   <div key={element.supplyId}>
                     <Row gutter={10}>
-                      <Col span={12}>{element.supplyName}</Col>
+                      <Col span={6}>{element.supplyName}</Col>
                       <Col span={4}>{element.quantity}</Col>
+                      <Col span={6}>{element.dose}</Col>
                       <Col span={4}>{element.price.toLocaleString()} VND</Col>
                       <Col span={4}>
                         {(element.price * element.quantity).toLocaleString()}{" "}
@@ -436,63 +494,18 @@ const SupplyPrescriptionDetailForm = ({
                 </Col>
               </Row>
             </div>
+            <br />
+            <Row gutter={[10, 10]}>
+              <Col span={24}>
+                <b>Thông tin thêm:</b>
+              </Col>
+              <Col span={24}>
+                <TextArea contentEditable={false} rows={5} value={diagnose} />
+              </Col>
+            </Row>
             <Divider />
           </div>
-          {/* <div id="add-supplies-container">
-          <Row>
-            <Col>
-              <b>Chọn thêm thuốc</b>
-            </Col>
-          </Row>
           <br />
-          <Form.Item<SupplyPresSelectFormModel>
-            name="selectedSupplyTypes"
-            label="Chọn loại thuốc"
-          >
-            <Select
-              mode="multiple"
-              onChange={handleChangeSupplyType}
-              allowClear
-              //set supply type options
-              options={supplyTypeOptions}
-            />
-          </Form.Item>
-          <Row gutter={10}>
-            <Col span={10}>
-              <b>Tên thuốc</b>
-            </Col>
-            <Col span={6}>
-              <b>Giá tiền (VND)</b>
-            </Col>
-            <Col span={4}>
-              <b>Số lượng còn lại</b>
-            </Col>
-            <Col span={4}>
-              <b>Số lượng đã chọn</b>
-            </Col>
-          </Row>
-          <Divider dashed />
-          {availableSupplies.map((element) => {
-            return (
-              <div key={element.sId}>
-                <Row gutter={10}>
-                  <Col span={10}>{element.sName}</Col>
-                  <Col span={6}>{element.price.toLocaleString()} VND</Col>
-                  <Col span={4}>{element.unitInStock}</Col>
-                  <Col span={4}>
-                    <Form.Item name={`selected_supply_${element.sId}`}>
-                      <InputNumber
-                        min={0}
-                        max={element.unitInStock}
-                        placeholder="Quantity"
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </div>
-            );
-          })}
-          </div> */}
           {authenticated?.role !== Roles.Admin &&
           authenticated?.role !== Roles.Doctor ? (
             <></>
@@ -609,7 +622,9 @@ const SupplyPrescriptionDetailForm = ({
                 <Col span={4}>
                   <b>Chẩn đoán:</b>
                 </Col>
-                <Col span={20}><b>{examResult}</b></Col>
+                <Col span={20}>
+                  <b>{examResult}</b>
+                </Col>
               </Row>
               <br />
               <br />

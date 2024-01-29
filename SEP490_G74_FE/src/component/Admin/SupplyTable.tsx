@@ -405,7 +405,7 @@ const CategoryTable: React.FC = () => {
   };
 
   const handleUpdateSupplyType = async (values: SupplyTypeResponseModel) => {
-    message.error(`Check supply type add click: ${values.suppliesTypeName}`, 2);
+    //message.error(`Check supply type add click: ${values.suppliesTypeName}`, 2);
 
     if (selectedSupplyTypeId === null || selectedSupplyTypeId === undefined) {
       message.error("Loại thuốc không hợp lệ", 2);
@@ -532,11 +532,11 @@ const CategoryTable: React.FC = () => {
           </Button>
           <Button
             key={`removeT_${record.suppliesTypeId}`}
-            danger
+            danger={record.isDeleted !== true ? true : false}
             type="primary"
             onClick={() => handleDeleteSupplyType(record.suppliesTypeId)}
           >
-            Vô hiệu hóa
+            {record.isDeleted !== true ? <>Vô hiệu hóa</> : <>Kích hoạt</>}
           </Button>
           <Button
             key={`addTypeC_${record.suppliesTypeId}`}
@@ -609,11 +609,11 @@ const CategoryTable: React.FC = () => {
           </Button>
           <Button
             key={`removeS_${record.sId}`}
-            danger
+            danger={record.isDeleted !== true ? true : false}
             type="primary"
             onClick={() => handleDeleteSupply(record.sId)}
           >
-            Vô hiệu hóa
+            {record.isDeleted !== true ? <>Vô hiệu hóa</> : <>Kích hoạt</>}
           </Button>
         </Space>
       ),
@@ -627,7 +627,8 @@ const CategoryTable: React.FC = () => {
     } else {
       console.log(response);
       //map category name to service type
-      setSupplyTypes(response.filter((c) => c.isDeleted === false));
+      //setSupplyTypes(response.filter((c) => c.isDeleted === false));
+      setSupplyTypes(response);
       return response;
     }
   };
@@ -649,7 +650,8 @@ const CategoryTable: React.FC = () => {
             (type) => type.suppliesTypeId === item.suppliesTypeId
           )?.suppliesTypeId ?? 0;
       });
-      setSupplies(response.filter((c) => c.isDeleted === false));
+      // setSupplies(response.filter((c) => c.isDeleted === false));
+      setSupplies(response);
       return response;
     }
   };
@@ -658,8 +660,8 @@ const CategoryTable: React.FC = () => {
 
   const handleDeleteSupplyType = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
+      title: "Xác nhận thay đổi",
+      content: "Bạn có chắc chắn muốn thay đổi?",
       onOk: () => {
         removeSupplyType(id);
       },
@@ -671,8 +673,8 @@ const CategoryTable: React.FC = () => {
 
   const handleDeleteSupply = (id: number) => {
     Modal.confirm({
-      title: "Xác nhận Vô hiệu hóa",
-      content: "Bạn có chắc chắn muốn Vô hiệu hóa?",
+      title: "Xác nhận thay đổi",
+      content: "Bạn có chắc chắn muốn thay đổi?",
       onOk: () => {
         removeSupply(id);
       },
@@ -686,22 +688,22 @@ const CategoryTable: React.FC = () => {
   const removeSupplyType = async (id: number) => {
     var response = await subService.deleteSupplyType(id);
     if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
+      message.success("Thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Vô hiệu hóa thất bại", 2);
+      message.error("Thất bại", 2);
     }
   };
 
   const removeSupply = async (id: number) => {
     var response = await subService.deleteSupply(id);
     if (response === 200) {
-      message.success("Vô hiệu hóa thành công", 2).then(() => {
+      message.success("Thành công", 2).then(() => {
         window.location.reload();
       });
     } else {
-      message.error("Vô hiệu hóa thất bại", 2);
+      message.error("Thất bại", 2);
     }
   };
 

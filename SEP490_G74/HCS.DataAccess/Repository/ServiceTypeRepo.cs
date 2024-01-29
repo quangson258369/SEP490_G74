@@ -23,7 +23,7 @@ public class ServiceTypeRepo : GenericRepo<ServiceType>, IServiceTypeRepo
         }
         else
         {
-            entity.IsDeleted = true;
+            entity.IsDeleted = !entity.IsDeleted;
             return true;
         }
     }

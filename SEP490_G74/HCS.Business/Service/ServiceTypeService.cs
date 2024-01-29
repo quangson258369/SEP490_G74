@@ -4,6 +4,7 @@ using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.ServiceTypeResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Models;
+using System.Security.Authentication.ExtendedProtection;
 
 namespace HCS.Business.Service;
 

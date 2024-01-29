@@ -42,7 +42,7 @@ import medicalRecordService from "../../Services/MedicalRecordService";
 import generatePDF, { usePDF } from "react-to-pdf";
 import ExaminationForm from "./ExaminationForm";
 import { useNavigate } from "react-router-dom";
-import { defaultMrOption } from "../../Commons/Global";
+import { ROUTE_URLS, defaultMrOption } from "../../Commons/Global";
 
 const MedicalRecordDetailForm = ({
   patientId,
@@ -589,10 +589,7 @@ const MedicalRecordDetailForm = ({
           }
 
           if (medicalRecordId === undefined) {
-            message.error(
-              "Mã hồ sơ bệnh án không hợp lệ",
-              2
-            );
+            message.error("Mã hồ sơ bệnh án không hợp lệ", 2);
             return;
           }
 
@@ -609,7 +606,7 @@ const MedicalRecordDetailForm = ({
             message.error("Tạo hồ sơ tái khám thất bại", 2);
           }
         }
-      }else{
+      } else {
         message.error("Hồ sơ đã có hồ sơ tái khám, không thể tạo thêm", 2);
         return;
       }
@@ -701,6 +698,17 @@ const MedicalRecordDetailForm = ({
     return false;
   };
 
+  const [nextMrIds, setNextMrIds] = useState<number[]>([]);
+
+  const fetchNextMrIds = async () => {
+    if (medicalRecordId !== undefined) {
+      var res = await medicalRecordService.getNextMrIdsByMrId(medicalRecordId);
+      if (res !== undefined) {
+        setNextMrIds(res);
+      }
+    }
+  };
+
   const fetchData = async () => {
     if (medicalRecordId === undefined) {
       message.error("Mã hồ sơ không hợp lệ", 2).then(() => navigate("/"));
@@ -753,6 +761,7 @@ const MedicalRecordDetailForm = ({
       patientId: patientId,
     });
     checkRole();
+    fetchNextMrIds();
     fetchData();
   }, [patientId, medicalRecordId, isReload]);
 
@@ -790,6 +799,14 @@ const MedicalRecordDetailForm = ({
 
   const getTargetElement = () => document.getElementById("printTarget");
 
+  const handleViewPrevMed = () => {
+    if (prevMrId !== undefined) {
+      navigate(
+        `${ROUTE_URLS.MEDICAL_RECORD_DETAIL_PAGE.replace(":id", "") + prevMrId}`
+      );
+    }
+  };
+
   return patient !== undefined ? (
     <div>
       <Button type="link" onClick={() => generatePDF(getTargetElement)}>
@@ -816,6 +833,7 @@ const MedicalRecordDetailForm = ({
             bloodPressure: patient.bloodPressure,
             description: patient.allergieshistory,
             prevMedicalRecordId: prevMrId,
+            examReason: mrDetail?.examReason,
           }}
           autoComplete="off"
         >
@@ -831,12 +849,13 @@ const MedicalRecordDetailForm = ({
               </Form.Item>
             </Col>
             {prevMrId !== undefined && prevMrId !== null ? (
-              <Col span={8}>
+              <Col span={8} onClick={handleViewPrevMed}>
                 <Form.Item
                   label="Mã hồ sơ khám trước"
                   name="prevMedicalRecordId"
+                  help="Click để xem hồ sơ khám trước"
                 >
-                  <Input disabled />
+                  <Input contentEditable={false} />
                 </Form.Item>
               </Col>
             ) : (
@@ -923,9 +942,40 @@ const MedicalRecordDetailForm = ({
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item<MedicalRecord> label="Lí do khám" name="description">
+          <Form.Item<MedicalRecord>
+            label="Tiền sử bệnh dị ứng"
+            name="description"
+          >
+            <TextArea placeholder="Tiền sử bệnh" />
+          </Form.Item>
+          <Form.Item<MedicalRecord> label="Lí do khám" name="examReason">
             <TextArea placeholder="Lí do khám" />
           </Form.Item>
+          {/*=========Next=========== */}
+          <div>{nextMrIds.length > 0 && <span>Các hồ sơ tái khám</span>}</div>
+          <div>
+            {nextMrIds.map((id) => {
+              return (
+                <div key={id}>
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      navigate(
+                        `${
+                          ROUTE_URLS.MEDICAL_RECORD_DETAIL_PAGE.replace(
+                            ":id",
+                            ""
+                          ) + id
+                        }`
+                      );
+                    }}
+                  >
+                    {id}
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
           {/*=========Select Category and Doctor=========== */}
           <div
             style={{
@@ -1009,12 +1059,12 @@ const MedicalRecordDetailForm = ({
             )}
           </div>
           {/*=========Tai kham=========== */}
-          {isCheckUp === true && (
+          {/* {isCheckUp === true && (
             <Collapse
               items={itemsReCheckUp}
               onChange={handleChangeCheckUpCollapse}
             />
-          )}
+          )} */}
         </Form>
       </div>
       <Divider />

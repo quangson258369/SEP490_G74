@@ -29,6 +29,9 @@ const apiLinks = {
         patchMrStatusCheckUp:`${baseUrls}MedicalRecords/check-up/id/`,
         pathUpdateMr:`${baseUrls}MedicalRecords/id/`,
         getReCheckUpMrByPrevMrId:`${baseUrls}MedicalRecords/recheck-up/id/`,
+        getPreDiagnoseByMrId:`${baseUrls}MedicalRecords/prescription-diagnose/id/`,
+        getNextMrIdsByMrId:`${baseUrls}MedicalRecords/next-mrs/id/`,
+        postPayPrescriptionByMrId: `${baseUrls}MedicalRecords/pay-prescription/id/`,
     },
     category:{
         getCategories:`${baseUrls}Category`,

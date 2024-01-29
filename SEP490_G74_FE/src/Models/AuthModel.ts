@@ -28,24 +28,41 @@ export interface AccountResponseModel {
   email: string;
   roleId: number;
   roleName: string;
+  isDeleted: boolean;
+  name: string;
+  gender: boolean;
+  phone: string;
+  dob: string;
+  address: string;
+  categoryId: number;
 }
 
 export interface AddAccountModel {
-  password: string
-  confirmPassword: string
-  email: string
-  status: boolean
-  roleId: number
-  categoryId: number
-  roles?: RoleResponseModel[]
+  password: string;
+  confirmPassword: string;
+  email: string;
+  status: boolean;
+  roleId: number;
+  categoryId: number;
+  roles?: RoleResponseModel[];
+  name: string;
+  gender: boolean;
+  phone: string;
+  dob: string;
+  address: string;
 }
 
 export interface UpdateAccountModel {
-  userId: number
-  password: string
-  confirmPassword: string
-  roleId: number
-  categoryId: number
+  userId: number;
+  password: string;
+  confirmPassword: string;
+  roleId: number;
+  categoryId: number;
+  name: string;
+  gender: boolean;
+  phone: string;
+  dob: string;
+  address: string;
 }
 
 export interface RoleResponseModel {

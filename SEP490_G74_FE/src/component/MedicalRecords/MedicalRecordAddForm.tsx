@@ -52,7 +52,7 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
     var medAddForm: MedicalRecordAddModel = {
       categoryIds: values.selectedCategoryIds,
       doctorIds: [values.selectedDoctorId],
-      examReason: "",
+      examReason: mrAddform.getFieldValue("examReason") as string,
       patientId: values.patientId,
     };
 
@@ -326,9 +326,9 @@ const MedicalRecordAddForm = ({ patientId }: PatientProps) => {
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item<MedicalRecord>
+      <Form.Item
         label="Lí do khám"
-        name="description"
+        name="examReason"
         rules={[{ required: true, message: "Hãy nhập lí do khám" }]}
       >
         <TextArea placeholder="Lí do khám" />

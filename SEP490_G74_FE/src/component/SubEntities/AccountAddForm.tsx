@@ -1,4 +1,4 @@
-import { Form, Input, message, Select } from "antd";
+import { Col, DatePicker, Form, Input, message, Radio, Row, Select } from "antd";
 import { AddAccountModel, RoleResponseModel } from "../../Models/AuthModel";
 import authService from "../../Services/AuthService";
 import { useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import { CategoryResponseModel } from "../../Models/SubEntityModel";
 import categoryService from "../../Services/CategoryService";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { create } from "cypress/types/lodash";
+import { Rule } from "antd/es/form";
 
 const AccountAddForm = () => {
   const [roles, setRoles] = useState<RoleResponseModel[]>([]);
@@ -18,7 +19,7 @@ const AccountAddForm = () => {
     }
     var response = await authService.register(values);
     if (response !== undefined && response === 200) {
-      message.success("Create Success",1).then(()=>{
+      message.success("Create Success", 1).then(()=>{
         window.location.reload();
       });
     } else {
@@ -62,6 +63,12 @@ const AccountAddForm = () => {
     } else {
       setIsDoctor(false);
     }
+  };
+
+  const phoneValidationRule: Rule = {
+    required: true,
+    pattern: /^\d{10,11}$/,
+    message: "Vui lòng nhập số điện thoại hợp lệ",
   };
 
   useEffect(() => {
@@ -112,6 +119,53 @@ const AccountAddForm = () => {
             label: cate.categoryName,
           }))}
         />
+      </Form.Item>
+      <Col span={8}>
+        <Form.Item<AddAccountModel>
+          label="Họ và tên"
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Vui lòng nhập tên của bạn",
+            },
+          ]}
+        >
+          <Input placeholder="Họ và tên" />
+        </Form.Item>
+      </Col>
+      <Row gutter={10}>
+        <Col span={12}>
+          <Form.Item<AddAccountModel> label="Ngày sinh" name="dob">
+            <DatePicker format={"MM/DD/YYYY HH:mm:ss"} />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item<AddAccountModel> label="Giới tính" name="gender">
+            <Radio.Group>
+              <Radio value={true}>Nam</Radio>
+              <Radio value={false}>Nữ</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={8}>
+          <Form.Item<AddAccountModel>
+            label="Số điện thoại"
+            name="phone"
+            rules={[phoneValidationRule]}
+          >
+            <Input placeholder="0983872xxx" />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Form.Item<AddAccountModel>
+        label="Địa chỉ"
+        name="address"
+        rules={[{ required: true, message: "Hãy nhập địa chỉ" }]}
+      >
+        <Input placeholder="Địa chỉ" />
       </Form.Item>
     </Form>
   );

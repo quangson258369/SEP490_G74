@@ -22,7 +22,7 @@ public class ServiceRepo : GenericRepo<Service>, IServiceRepo
         }
         else
         {
-            entity.IsDeleted = true;
+            entity.IsDeleted = !entity.IsDeleted;
             return true;
         }
     }

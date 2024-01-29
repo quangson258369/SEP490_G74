@@ -1,7 +1,9 @@
 ﻿using HCS.Business.RequestModel.MedicalRecordRequestModel;
 using HCS.Business.Service;
+using HCS.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 
 namespace HCS.API.Controllers
@@ -168,6 +170,33 @@ namespace HCS.API.Controllers
         public async Task<IActionResult> GetRecheckUpMrByPrevMrId(int id)
         {
             var result = await _medicalRecordService.GetReCheckUpMedicalRecordByPreviosMedicalRecordId(id);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [Authorize(Roles = "Admin, Nurse, Doctor, Cashier")]
+        [HttpGet("prescription-diagnose/id/{id:int}")]
+        public async Task<IActionResult> GetPreDiagnose(int id)
+        {
+            var result = await _medicalRecordService.GetPrescriptonDiagnoseByMrId(id);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [Authorize(Roles = "Admin, Nurse, Doctor, Cashier")]
+        [HttpGet("next-mrs/id/{id:int}")]
+        public async Task<IActionResult> GetNextMrIds(int id)
+        {
+            var result = await _medicalRecordService.GetListNextMrIdsByMrId(id);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [Authorize(Roles = "Admin, Cashier")]
+        [HttpPost("pay-prescription/id/{id:int}")]
+        public async Task<IActionResult> PayPrescriptionByMrId(int id)
+        {
+            var result = await _medicalRecordService.PayPrescriptionByMrId(id);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }

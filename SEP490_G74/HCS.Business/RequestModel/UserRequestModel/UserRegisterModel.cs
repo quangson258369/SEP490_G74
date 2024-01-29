@@ -12,6 +12,20 @@ public class UserRegisterModel
     public int RoleId { get; set; }
 
     public int? CategoryId { get; set; } = null;
+
+    //Contact form
+
+    public string Name { get; set; } = string.Empty;
+
+    public bool Gender { get; set; }
+
+    public string Phone { get; set; } = string.Empty;
+
+    public DateTime Dob { get; set; }
+
+    public string Address { get; set; } = string.Empty;
+
+    //public string Img { get; set; } = string.Empty;
 }
 
 public class AccountUpdateModel
@@ -23,4 +37,18 @@ public class AccountUpdateModel
     public int RoleId { get; set; }
 
     public int? CategoryId { get; set; } = null;
+
+    //Contact form
+
+    public string Name { get; set; } = string.Empty;
+
+    public bool Gender { get; set; }
+
+    public string Phone { get; set; } = string.Empty;
+
+    public DateTime Dob { get; set; }
+
+    public string Address { get; set; } = string.Empty;
+
+    //public string Img { get; set; } = string.Empty;
 }

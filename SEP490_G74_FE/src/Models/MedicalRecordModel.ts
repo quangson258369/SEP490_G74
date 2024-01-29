@@ -30,6 +30,7 @@ export interface MedicalRecord extends PatientTableModel {
   bloodPressure: number;
   editDate: string;
   description: string;
+  examReason: string;
   isPaid: boolean;
   isCheckUp: boolean;
   selectedCategoryIds: number[];
@@ -52,6 +53,7 @@ export interface MedicalRecordTableModel {
   priority: number;
   isCheckUpCompleted: string;
   index: number;
+  isHaveUnpaidPrescription :boolean
 }
 
 export interface PatientTableModel {

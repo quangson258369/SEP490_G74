@@ -1,4 +1,9 @@
 ﻿using HCS.DataAccess.IRepository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using HCS.DataAccess.Repository;
 
 namespace HCS.DataAccess.UnitOfWork

@@ -3,11 +3,16 @@ using HCS.Business.Pagination;
 using HCS.Business.RequestModel.MedicalRecordRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.CategoryResponse;
+using HCS.Business.ResponseModel.ExaminationResultResponseModel;
 using HCS.Business.ResponseModel.MedicalRecordResponseModel;
 using HCS.DataAccess.UnitOfWork;
 using HCS.Domain.Commons;
 using HCS.Domain.Enums;
 using HCS.Domain.Models;
+using Microsoft.Extensions.Logging.Abstractions;
+using System.Collections;
+using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HCS.Business.Service;
 public interface IMedicalRecordService
@@ -22,6 +27,10 @@ public interface IMedicalRecordService
     Task<ApiResponse> GetReCheckUpMedicalRecordByPreviosMedicalRecordId(int prevMrId);
     Task<ApiResponse> GetListMrUnCheckByPatientId(int patientId, int pageIndex, int pageSize, int userId);
     Task<ApiResponse> GetListMrUnPaidByPatientId(int patientId, int pageIndex, int pageSize, int userId);
+    Task<ApiResponse> GetPrescriptonDiagnoseByMrId(int mrId);
+    Task<ApiResponse> GetListNextMrIdsByMrId(int mrId);
+    Task<ApiResponse> PayPrescriptionByMrId(int mrId);
+
 }
 public class MedicalRecordService : IMedicalRecordService
 {
@@ -77,17 +86,17 @@ public class MedicalRecordService : IMedicalRecordService
 
         var docs = new List<User>();
 
-        foreach(var docId in medicalRecord.DoctorIds)
+        foreach (var docId in medicalRecord.DoctorIds)
         {
             var doc = await _unitOfWork.UserRepo.GetAsync(x => x.UserId == docId);
-            if(doc is not null && doc.CategoryId is not null)
+            if (doc is not null && doc.CategoryId is not null)
             {
                 docs.Add(doc);
             }
         }
 
         var selectedDefaultDoctor = docs.Where(d => d.CategoryId == DefaultMrOption.DefaultCategoryId).FirstOrDefault();
-        if(selectedDefaultDoctor is null)
+        if (selectedDefaultDoctor is null)
         {
             return new ApiResponse().SetNotFound("Not Found Default Doctor");
         }
@@ -109,7 +118,7 @@ public class MedicalRecordService : IMedicalRecordService
 
         var mrList = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
         var lastMr = mrList.OrderByDescending(x => x.Index).FirstOrDefault();
-        if(lastMr is not null)
+        if (lastMr is not null)
         {
             medicalRecordEntity.Index = lastMr.Index + 1;
         }
@@ -179,7 +188,7 @@ public class MedicalRecordService : IMedicalRecordService
         }
 
         // order list by date
-        listItemResponse = listItemResponse.OrderByDescending(x => x.MedicalRecordDate).ToList();
+        listItemResponse = listItemResponse.OrderBy(x => x.MedicalRecordDate).ToList();
         var paginationResult = listItemResponse.Paginate(pageIndex, pageSize);
         return response.SetOk(paginationResult);
     }
@@ -218,19 +227,20 @@ public class MedicalRecordService : IMedicalRecordService
         }
         listItemResponse = listItemResponse.Where(x => x.IsCheckUp == false).ToList();
 
-        foreach(var item in listItemResponse)
+        foreach (var item in listItemResponse)
         {
             var mrCheckDetail = await _unitOfWork.MedicalRecordRepo.GetMrById(item.MedicalRecordId);
-            if(mrCheckDetail is not null && mrCheckDetail.ServiceMedicalRecords is not null)
+            if (mrCheckDetail is not null && mrCheckDetail.ServiceMedicalRecords is not null)
             {
                 string status = MedicalRecordStatus.NOT_CHECK_UP;
                 var servicesByRole = mrCheckDetail.ServiceMedicalRecords.Where(m => m.DoctorId == userId).ToList();
                 var countServicesCheckUp = servicesByRole.Count(s => s.Status == true);
 
-                if(countServicesCheckUp > 0 && countServicesCheckUp < servicesByRole.Count)
+                if (countServicesCheckUp > 0 && countServicesCheckUp < servicesByRole.Count)
                 {
                     status = MedicalRecordStatus.CHECKING_UP;
-                }else if(countServicesCheckUp == servicesByRole.Count)
+                }
+                else if (countServicesCheckUp == servicesByRole.Count)
                 {
                     status = MedicalRecordStatus.CHECKED_UP;
                 }
@@ -239,7 +249,7 @@ public class MedicalRecordService : IMedicalRecordService
         }
 
         // order list by date
-        listItemResponse = listItemResponse.OrderByDescending(x => x.MedicalRecordDate).ToList();
+        listItemResponse = listItemResponse.OrderBy(x => x.MedicalRecordDate).ToList();
         var paginationResult = listItemResponse.Paginate(pageIndex, pageSize);
         return response.SetOk(paginationResult);
     }
@@ -285,30 +295,27 @@ public class MedicalRecordService : IMedicalRecordService
             var mrDetail = await _unitOfWork.MedicalRecordRepo.GetMrById(item.MedicalRecordId);
             if (mrDetail is not null && mrDetail.ServiceMedicalRecords is not null)
             {
+                // neu ho so co dich vu can thanh toan = 0 hoac ho so da thanh toan => xoa ho so
                 if (mrDetail.ServiceMedicalRecords.Count(x => x.IsPaid) == mrDetail.ServiceMedicalRecords.Count
                     || mrDetail.IsPaid == true)
                 {
-                    listItemResponse.Remove(item);
+                    var checkPreMr = await _unitOfWork.MedicalRecordRepo.GetMrForPrescriptionByMedicalRecordId(mrDetail.MedicalRecordId);
+                    if (checkPreMr is null) return new ApiResponse().SetNotFound("Mr not found");
+                    // neu ho so khong co don thuoc => xoa
+                    if (checkPreMr.ExaminationResult is null || checkPreMr.ExaminationResult.Prescription is null)
+                    {
+                        listItemResponse.Remove(item);
+                    }
+                    else // neu ho so co don thuoc
+                    {
+                        // neu don thuoc da thanh toan => xoa
+                        if (checkPreMr.ExaminationResult.Prescription.IsPaid == true)
+                        {
+                            listItemResponse.Remove(item);
+                        }
+                        // neu ho so khong co dich vu can thanh toan nhung co don thuoc can thanh toan => ko xoa
+                    }
                 }
-                //var servicesPaid = mrDetail.ServiceMedicalRecords.Count(s => s.IsPaid);
-                //switch (servicesPaid)
-                //{
-                //    case 0:
-                //        {
-                //            item.Priority = 3; //chua thanh toan dich vu nao
-                //            break;
-                //        }
-                //    case 1:
-                //        {
-                //            item.Priority = 1; // da thanh toan 1 dich vu dau tien
-                //            break;
-                //        }
-                //    default:
-                //        {
-                //            item.Priority = 2; // da thanh toan nhieu hon 1 dich vu
-                //            break;
-                //        }
-                //}
             }
         }
         // order list by date
@@ -384,15 +391,15 @@ public class MedicalRecordService : IMedicalRecordService
                 }
             }
 
-            foreach(var type in mrByIdResponse.ServiceTypes)
+            foreach (var type in mrByIdResponse.ServiceTypes)
             {
-                foreach(var service in type.Services)
+                foreach (var service in type.Services)
                 {
                     var doctor = await _unitOfWork.UserRepo.GetAsync(x => x.UserId == service.DoctorId);
-                    if(doctor is not null)
+                    if (doctor is not null)
                     {
                         var contact = await _unitOfWork.UserRepo.GetProfile(doctor.Email);
-                        if(contact is not null)
+                        if (contact is not null)
                         {
                             service.DoctorName = contact.UserName;
                         }
@@ -485,12 +492,12 @@ public class MedicalRecordService : IMedicalRecordService
                     await _unitOfWork.MedicalRecordRepo.UpdateMrStatusToPaid(mrId, userId);
                     await _unitOfWork.SaveChangeAsync();
                     var mrDetail = await _unitOfWork.MedicalRecordRepo.GetMrById(mrId);
-                    if(mrDetail is not null)
+                    if (mrDetail is not null)
                     {
                         var listMr = await _unitOfWork.MedicalRecordRepo.GetAllAsync(null);
                         listMr = listMr.OrderBy(x => x.Index).ToList();
                         var lastEditMr = listMr.FindLast(x => x.Priority == 0);
-                        if(lastEditMr is not null)
+                        if (lastEditMr is not null)
                         {
                             mrDetail.Index = lastEditMr.Index + 1;
                             listMr = listMr.Where(x => x.Index >= mrDetail.Index && x.MedicalRecordId != mrDetail.MedicalRecordId).ToList();
@@ -507,7 +514,7 @@ public class MedicalRecordService : IMedicalRecordService
                         else
                         {
                             var lastMr = listMr.Last();
-                            if(lastMr is not null)
+                            if (lastMr is not null)
                             {
                                 mrDetail.Index = lastMr.Index + 1;
                             }
@@ -549,9 +556,9 @@ public class MedicalRecordService : IMedicalRecordService
                         DoctorId = s.DoctorId,
                     }).ToList();
                 //add default 
-                if(currentDefaultServicesSelected is not null)
+                if (currentDefaultServicesSelected is not null)
                 {
-                    foreach(var service in currentDefaultServicesSelected)
+                    foreach (var service in currentDefaultServicesSelected)
                     {
                         //neu srv mr moi co chu srv cu thi update status va ispaid
                         if (existMed.ServiceMedicalRecords.Any(x => x.ServiceId == service.ServiceId))
@@ -572,9 +579,9 @@ public class MedicalRecordService : IMedicalRecordService
                             {
                                 CategoryId = 0
                             };
-                            if (service.IsPaid 
-                                || service.Status is not null 
-                                || service.Status == true 
+                            if (service.IsPaid
+                                || service.Status is not null
+                                || service.Status == true
                                 || defaultCate.CategoryId == DefaultMrOption.DefaultCategoryId)
                             {
                                 existMed.ServiceMedicalRecords.Add(new ServiceMedicalRecord()
@@ -594,9 +601,9 @@ public class MedicalRecordService : IMedicalRecordService
                 //Add doctors
                 existMed.MedicalRecordDoctors?.Clear();
                 var docIs = new List<int>();
-                foreach(var detail in existMed.ServiceMedicalRecords)
+                foreach (var detail in existMed.ServiceMedicalRecords)
                 {
-                    if(!docIs.Any(x => x == detail.DoctorId))
+                    if (!docIs.Any(x => x == detail.DoctorId))
                     {
                         docIs.Add(detail.DoctorId);
                         existMed.MedicalRecordDoctors?.Add(new()
@@ -612,12 +619,12 @@ public class MedicalRecordService : IMedicalRecordService
                     //add cates
                     var cateIds = new List<int>();
 
-                    foreach(var service in existMed.ServiceMedicalRecords)
+                    foreach (var service in existMed.ServiceMedicalRecords)
                     {
                         var cate = await _unitOfWork.CategoryRepo.GetCategoryByServiceId(service.ServiceId);
-                        if(cate is not null)
+                        if (cate is not null)
                         {
-                            if(cateIds.All(x => x != cate.CategoryId))
+                            if (cateIds.All(x => x != cate.CategoryId))
                             {
                                 cateIds.Add(cate.CategoryId);
                             }
@@ -626,7 +633,7 @@ public class MedicalRecordService : IMedicalRecordService
 
                     foreach (var cateId in cateIds)
                     {
-                        if (existMed.MedicalRecordCategories is not null 
+                        if (existMed.MedicalRecordCategories is not null
                             && !existMed.MedicalRecordCategories.Any(x => x.CategoryId == cateId))
                         {
                             existMed.MedicalRecordCategories ??= new List<MedicalRecordCategory>();
@@ -651,17 +658,17 @@ public class MedicalRecordService : IMedicalRecordService
                 existMed.Index = lastEditMr.Index + 1;
                 //move behinds item index + 1
                 mrList = mrList.Where(x => x.Index >= existMed.Index && x.MedicalRecordId != existMed.MedicalRecordId).ToList();
-                for (int i = 0;  i < mrList.Count; i++)
+                for (int i = 0; i < mrList.Count; i++)
                 {
                     var index = i;
                     var highestIndexItem = mrList.OrderByDescending(x => x.Index).FirstOrDefault();
-                    if(highestIndexItem is not null)
+                    if (highestIndexItem is not null)
                     {
                         mrList[index].Index = highestIndexItem.Index + 1;
                     }
                 }
             }
-            else 
+            else
             {
                 var lastMr = mrList.Last();
                 existMed.Index = lastMr.Index + 1;
@@ -712,4 +719,43 @@ public class MedicalRecordService : IMedicalRecordService
         }
         return filteredListMr;
     }
+
+    public async Task<ApiResponse> GetPrescriptonDiagnoseByMrId(int mrId)
+    {
+        var mr = await _unitOfWork.MedicalRecordRepo.GetPrescriptionDiagnoseByMrId(mrId);
+        if (mr is null) return new ApiResponse().SetNotFound("Mr not found");
+        PresciptionStatusPaidModel result = new()
+        {
+            Diagnose = mr?.ExaminationResult?.Prescription?.Diagnose ?? string.Empty,
+            IsPaid = mr?.ExaminationResult?.Prescription?.IsPaid ?? false
+        };
+        return new ApiResponse().SetOk(result);
+    }
+
+    public async Task<ApiResponse> GetListNextMrIdsByMrId(int mrId)
+    {
+        var response = await _unitOfWork.MedicalRecordRepo.GetListNextMrIds(mrId);
+        if (response is not null)
+        {
+            return new ApiResponse().SetOk(response);
+        }
+        return new ApiResponse().SetBadRequest("Id not found");
+    }
+
+    public async Task<ApiResponse> PayPrescriptionByMrId(int mrId)
+    {
+        var response = await _unitOfWork.PrescriptionRepo.PayPrescription(mrId);
+        if (response == true)
+        {
+            await _unitOfWork.SaveChangeAsync();
+            return new ApiResponse().SetOk("Paid Prescription");
+        };
+        return new ApiResponse().SetBadRequest("Paid failed");
+    }
+}
+
+public class PresciptionStatusPaidModel
+{
+    public string Diagnose { get; set; } = string.Empty;
+    public bool IsPaid { get; set; } = false;
 }

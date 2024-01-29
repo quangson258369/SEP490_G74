@@ -7,7 +7,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../ContextProvider/AuthContext";
 import Roles from "../../Enums/Enums";
 import patientService from "../../Services/PatientService";
-import { ApiResponseModel, PatientTableResponseModel } from "../../Models/PatientModel";
+import {
+  ApiResponseModel,
+  PatientTableResponseModel,
+} from "../../Models/PatientModel";
 import { SearchOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/es/table/interface";
 import Highlighter from "react-highlight-words";
@@ -30,7 +33,7 @@ const PatientTable = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  type DataIndex = keyof PatientTableResponseModel
+  type DataIndex = keyof PatientTableResponseModel;
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -48,9 +51,7 @@ const PatientTable = () => {
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
-  ): ColumnType<
-  PatientTableResponseModel
-  > => ({
+  ): ColumnType<PatientTableResponseModel> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -139,7 +140,6 @@ const PatientTable = () => {
       ),
   });
 
-
   const { authenticated } = useContext(AuthContext);
 
   const handleCancel = () => {
@@ -204,12 +204,17 @@ const PatientTable = () => {
       key: "action",
       render: (record: PatientTableResponseModel) => (
         <Space size="middle">
-          <Button
-            type="primary"
-            onClick={() => handleViewPatient(record.patientId)}
-          >
-            Thêm bệnh án
-          </Button>
+          {authenticated?.role === Roles.Nurse ||
+          authenticated?.role === Roles.Admin ? (
+            <Button
+              type="primary"
+              onClick={() => handleViewPatient(record.patientId)}
+            >
+              Thêm bệnh án
+            </Button>
+          ) : (
+            <></>
+          )}
           <Button
             type="primary"
             onClick={() => handleViewMRs(record.patientId)}
@@ -238,8 +243,10 @@ const PatientTable = () => {
     //     total: result.length, // Update total count
     //   });
     // }
-    var result: ApiResponseModel | undefined =
-      await patientService.getPatients(pagination.current, pagination.pageSize);
+    var result: ApiResponseModel | undefined = await patientService.getPatients(
+      pagination.current,
+      pagination.pageSize
+    );
     if (result === undefined) {
       message.error("Lỗi lấy danh sách bệnh nhân", 2);
     } else {

@@ -1,4 +1,5 @@
 using AutoMapper;
+using HCS.Business.Pagination;
 using HCS.Business.RequestModel.SuppliesRequestModel;
 using HCS.Business.ResponseModel.ApiResponse;
 using HCS.Business.ResponseModel.SuppliesResponseModel;
